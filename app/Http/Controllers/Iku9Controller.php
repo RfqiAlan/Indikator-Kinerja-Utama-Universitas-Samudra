@@ -59,6 +59,18 @@ class Iku9Controller extends Controller
             'keterangan' => 'nullable|string',
         ]);
 
+        // Validate sum of pendapatan fields doesn't exceed total pendapatan
+        $totalNonUkt = $validated['hibah_riset'] + $validated['konsultasi'] + 
+                       $validated['unit_bisnis'] + $validated['royalti'] + 
+                       $validated['inkubator'] + $validated['lainnya'];
+        
+        if ($totalNonUkt > $validated['total_pendapatan']) {
+            return back()->withInput()->withErrors([
+                'total_pendapatan' => 'Total pendapatan non-UKT (' . number_format($totalNonUkt, 0, ',', '.') . ') tidak boleh melebihi total pendapatan (' . number_format($validated['total_pendapatan'], 0, ',', '.') . ').'
+            ]);
+        }
+
+        $validated['fakultas'] = auth()->user()->fakultas;
         Iku9Pendapatan::create($validated);
 
         return redirect()->route('user.iku9.index')

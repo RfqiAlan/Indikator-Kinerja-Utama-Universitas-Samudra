@@ -62,6 +62,7 @@ class Iku10Controller extends Controller
 
         $validated['dokumen_lengkap'] = $request->has('dokumen_lengkap');
         $validated['terdaftar_kemenpan'] = $request->has('terdaftar_kemenpan');
+        $validated['fakultas'] = auth()->user()->fakultas;
 
         Iku10ZonaIntegritas::create($validated);
 

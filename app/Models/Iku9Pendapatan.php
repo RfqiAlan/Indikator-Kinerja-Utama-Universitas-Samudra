@@ -13,6 +13,7 @@ class Iku9Pendapatan extends Model
 
     protected $fillable = [
         'tahun_akademik',
+        'fakultas',
         'total_pendapatan',
         'hibah_riset',
         'konsultasi',

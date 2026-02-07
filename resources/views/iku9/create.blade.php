@@ -7,20 +7,25 @@
             <div><h2 class="text-2xl font-bold text-slate-800">Tambah Data IKU 9</h2><p class="text-sm text-slate-500 mt-1">{{ auth()->user()->fakultas_nama ?? 'Fakultas' }} - Pendapatan Non-UKT</p></div>
         </x-slot>
         <div class="py-6 max-w-4xl mx-auto" x-data="formIku9()">
+            @if($errors->any())
+            <div class="mb-4 p-4 bg-rose-100 border border-rose-200 text-rose-700 rounded-lg">
+                <ul class="list-disc list-inside">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
+            </div>
+            @endif
             <form action="{{ route('user.iku9.store') }}" method="POST" class="bg-white rounded-2xl shadow-sm p-6 space-y-6">
                 @csrf
-                <input type="hidden" name="fakultas" value="{{ auth()->user()->fakultas }}">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Tahun Akademik</label><input type="text" name="tahun_akademik" value="{{ old('tahun_akademik', $tahunAkademik) }}" class="w-full rounded-lg border-slate-300" required></div>
-                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Total Pendapatan (Rp)</label><input type="number" name="total_pendapatan" x-model.number="totalPendapatan" class="w-full rounded-lg border-slate-300" required min="1"></div>
+                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Tahun Akademik <span class="text-rose-500">*</span></label><input type="text" name="tahun_akademik" value="{{ old('tahun_akademik', $tahunAkademik) }}" class="w-full rounded-lg border-slate-300" required></div>
+                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Total Pendapatan (Rp) <span class="text-rose-500">*</span></label><input type="number" name="total_pendapatan" x-model.number="totalPendapatan" value="{{ old('total_pendapatan', 0) }}" class="w-full rounded-lg border-slate-300" required min="0"></div>
                 </div>
                 <div class="border-t pt-6"><h3 class="font-semibold text-slate-800 mb-4">Sumber Pendapatan Non-UKT</h3>
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                        <div class="bg-emerald-50 p-3 rounded-lg"><label class="block text-sm font-medium text-emerald-700 mb-1">Hibah Riset (Rp)</label><input type="number" name="hibah_riset" x-model.number="hibah" class="w-full rounded-lg border-emerald-200" min="0" value="0"></div>
-                        <div class="bg-cyan-50 p-3 rounded-lg"><label class="block text-sm font-medium text-cyan-700 mb-1">Konsultasi (Rp)</label><input type="number" name="konsultasi" x-model.number="konsultasi" class="w-full rounded-lg border-cyan-200" min="0" value="0"></div>
-                        <div class="bg-teal-50 p-3 rounded-lg"><label class="block text-sm font-medium text-teal-700 mb-1">Unit Bisnis (Rp)</label><input type="number" name="unit_bisnis" x-model.number="bisnis" class="w-full rounded-lg border-teal-200" min="0" value="0"></div>
-                        <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">Royalti (Rp)</label><input type="number" name="royalti" x-model.number="royalti" class="w-full rounded-lg border-blue-200" min="0" value="0"></div>
-                        <div class="bg-indigo-50 p-3 rounded-lg"><label class="block text-sm font-medium text-indigo-700 mb-1">Inkubator (Rp)</label><input type="number" name="inkubator" x-model.number="inkubator" class="w-full rounded-lg border-indigo-200" min="0" value="0"></div>
+                        <div class="bg-emerald-50 p-3 rounded-lg"><label class="block text-sm font-medium text-emerald-700 mb-1">Hibah Riset (Rp)</label><input type="number" name="hibah_riset" x-model.number="hibah" value="{{ old('hibah_riset', 0) }}" class="w-full rounded-lg border-emerald-200" min="0"></div>
+                        <div class="bg-cyan-50 p-3 rounded-lg"><label class="block text-sm font-medium text-cyan-700 mb-1">Konsultasi (Rp)</label><input type="number" name="konsultasi" x-model.number="konsultasi" value="{{ old('konsultasi', 0) }}" class="w-full rounded-lg border-cyan-200" min="0"></div>
+                        <div class="bg-teal-50 p-3 rounded-lg"><label class="block text-sm font-medium text-teal-700 mb-1">Unit Bisnis (Rp)</label><input type="number" name="unit_bisnis" x-model.number="bisnis" value="{{ old('unit_bisnis', 0) }}" class="w-full rounded-lg border-teal-200" min="0"></div>
+                        <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">Royalti (Rp)</label><input type="number" name="royalti" x-model.number="royalti" value="{{ old('royalti', 0) }}" class="w-full rounded-lg border-blue-200" min="0"></div>
+                        <div class="bg-indigo-50 p-3 rounded-lg"><label class="block text-sm font-medium text-indigo-700 mb-1">Inkubator (Rp)</label><input type="number" name="inkubator" x-model.number="inkubator" value="{{ old('inkubator', 0) }}" class="w-full rounded-lg border-indigo-200" min="0"></div>
+                        <div class="bg-amber-50 p-3 rounded-lg"><label class="block text-sm font-medium text-amber-700 mb-1">Lainnya (Rp)</label><input type="number" name="lainnya" x-model.number="lainnya" value="{{ old('lainnya', 0) }}" class="w-full rounded-lg border-amber-200" min="0"></div>
                     </div>
                 </div>
                 <div class="bg-gradient-to-r from-emerald-50 to-cyan-50 rounded-xl p-6">
@@ -36,9 +41,17 @@
         </div>
         <script>
             function formIku9() {
-                return { totalPendapatan: 0, hibah: 0, konsultasi: 0, bisnis: 0, royalti: 0, inkubator: 0,
-                    get totalNonUkt() { return this.hibah + this.konsultasi + this.bisnis + this.royalti + this.inkubator; },
-                    get persentase() { if (this.totalPendapatan <= 0) return 0; return (this.totalNonUkt / this.totalPendapatan) * 100; } }
+                return { 
+                    totalPendapatan: {{ old('total_pendapatan', 0) }}, 
+                    hibah: {{ old('hibah_riset', 0) }}, 
+                    konsultasi: {{ old('konsultasi', 0) }}, 
+                    bisnis: {{ old('unit_bisnis', 0) }}, 
+                    royalti: {{ old('royalti', 0) }}, 
+                    inkubator: {{ old('inkubator', 0) }},
+                    lainnya: {{ old('lainnya', 0) }},
+                    get totalNonUkt() { return this.hibah + this.konsultasi + this.bisnis + this.royalti + this.inkubator + this.lainnya; },
+                    get persentase() { if (this.totalPendapatan <= 0) return 0; return (this.totalNonUkt / this.totalPendapatan) * 100; } 
+                }
             }
         </script>
     </x-user-layout>

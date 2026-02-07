@@ -7,27 +7,32 @@
             <div><h2 class="text-2xl font-bold text-slate-800">Tambah Data IKU 7</h2><p class="text-sm text-slate-500 mt-1">{{ auth()->user()->fakultas_nama ?? 'Fakultas' }} - Keterlibatan SDGs</p></div>
         </x-slot>
         <div class="py-6 max-w-4xl mx-auto" x-data="formIku7()">
+            @if($errors->any())
+            <div class="mb-4 p-4 bg-rose-100 border border-rose-200 text-rose-700 rounded-lg">
+                <ul class="list-disc list-inside">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
+            </div>
+            @endif
             <form action="{{ route('user.iku7.store') }}" method="POST" class="bg-white rounded-2xl shadow-sm p-6 space-y-6">
                 @csrf
-                <input type="hidden" name="fakultas" value="{{ auth()->user()->fakultas }}">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Tahun Akademik</label><input type="text" name="tahun_akademik" value="{{ old('tahun_akademik', $tahunAkademik) }}" class="w-full rounded-lg border-slate-300" required></div>
-                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Total Program</label><input type="number" name="total_program" x-model.number="totalProgram" class="w-full rounded-lg border-slate-300" required min="1"></div>
+                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Tahun Akademik <span class="text-rose-500">*</span></label><input type="text" name="tahun_akademik" value="{{ old('tahun_akademik', $tahunAkademik) }}" class="w-full rounded-lg border-slate-300" required></div>
+                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Total Program <span class="text-rose-500">*</span></label><input type="number" name="total_program" x-model.number="totalProgram" value="{{ old('total_program', 0) }}" class="w-full rounded-lg border-slate-300" required min="1"></div>
                 </div>
                 <div class="border-t pt-6"><h3 class="font-semibold text-slate-800 mb-4">SDGs Wajib (1, 4, 17) & Pilihan</h3>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div class="bg-rose-50 p-3 rounded-lg"><label class="block text-sm font-medium text-rose-700 mb-1">SDG 1 (No Poverty)</label><input type="number" name="sdg_1" x-model.number="sdg1" class="w-full rounded-lg border-rose-200" min="0" value="0"></div>
-                        <div class="bg-amber-50 p-3 rounded-lg"><label class="block text-sm font-medium text-amber-700 mb-1">SDG 4 (Education)</label><input type="number" name="sdg_4" x-model.number="sdg4" class="w-full rounded-lg border-amber-200" min="0" value="0"></div>
-                        <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">SDG 17 (Partnership)</label><input type="number" name="sdg_17" x-model.number="sdg17" class="w-full rounded-lg border-blue-200" min="0" value="0"></div>
-                        <div class="bg-emerald-50 p-3 rounded-lg"><label class="block text-sm font-medium text-emerald-700 mb-1">SDG Pilihan Lainnya</label><input type="number" name="sdg_pilihan" x-model.number="sdgPilihan" class="w-full rounded-lg border-emerald-200" min="0" value="0"></div>
+                        <div class="bg-rose-50 p-3 rounded-lg"><label class="block text-sm font-medium text-rose-700 mb-1">SDG 1 (No Poverty)</label><input type="number" name="sdg_1" x-model.number="sdg1" value="{{ old('sdg_1', 0) }}" class="w-full rounded-lg border-rose-200" min="0"></div>
+                        <div class="bg-amber-50 p-3 rounded-lg"><label class="block text-sm font-medium text-amber-700 mb-1">SDG 4 (Education)</label><input type="number" name="sdg_4" x-model.number="sdg4" value="{{ old('sdg_4', 0) }}" class="w-full rounded-lg border-amber-200" min="0"></div>
+                        <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">SDG 17 (Partnership)</label><input type="number" name="sdg_17" x-model.number="sdg17" value="{{ old('sdg_17', 0) }}" class="w-full rounded-lg border-blue-200" min="0"></div>
+                        <div class="bg-emerald-50 p-3 rounded-lg"><label class="block text-sm font-medium text-emerald-700 mb-1">SDG Pilihan Lainnya</label><input type="number" name="sdg_pilihan" x-model.number="sdgPilihan" value="{{ old('sdg_pilihan', 0) }}" class="w-full rounded-lg border-emerald-200" min="0"></div>
                     </div>
                 </div>
                 <div class="border-t pt-6"><h3 class="font-semibold text-slate-800 mb-4">Bidang Kegiatan</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div class="bg-slate-50 p-3 rounded-lg"><label class="block text-sm text-slate-700 mb-1">Pendidikan</label><input type="number" name="bidang_pendidikan" x-model.number="pendidikan" class="w-full rounded-lg border-slate-200" min="0" value="0"></div>
-                        <div class="bg-slate-50 p-3 rounded-lg"><label class="block text-sm text-slate-700 mb-1">Penelitian</label><input type="number" name="bidang_penelitian" x-model.number="penelitian" class="w-full rounded-lg border-slate-200" min="0" value="0"></div>
-                        <div class="bg-slate-50 p-3 rounded-lg"><label class="block text-sm text-slate-700 mb-1">PKM</label><input type="number" name="bidang_pkm" x-model.number="pkm" class="w-full rounded-lg border-slate-200" min="0" value="0"></div>
-                        <div class="bg-slate-50 p-3 rounded-lg"><label class="block text-sm text-slate-700 mb-1">Tata Kelola</label><input type="number" name="bidang_tatakelola" x-model.number="tatakelola" class="w-full rounded-lg border-slate-200" min="0" value="0"></div>
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                        <div class="bg-slate-50 p-3 rounded-lg"><label class="block text-sm text-slate-700 mb-1">Pendidikan</label><input type="number" name="pendidikan" x-model.number="pendidikan" value="{{ old('pendidikan', 0) }}" class="w-full rounded-lg border-slate-200" min="0"></div>
+                        <div class="bg-slate-50 p-3 rounded-lg"><label class="block text-sm text-slate-700 mb-1">Penelitian</label><input type="number" name="penelitian" x-model.number="penelitian" value="{{ old('penelitian', 0) }}" class="w-full rounded-lg border-slate-200" min="0"></div>
+                        <div class="bg-slate-50 p-3 rounded-lg"><label class="block text-sm text-slate-700 mb-1">PKM</label><input type="number" name="pkm" x-model.number="pkm" value="{{ old('pkm', 0) }}" class="w-full rounded-lg border-slate-200" min="0"></div>
+                        <div class="bg-slate-50 p-3 rounded-lg"><label class="block text-sm text-slate-700 mb-1">Kerjasama</label><input type="number" name="kerjasama" x-model.number="kerjasama" value="{{ old('kerjasama', 0) }}" class="w-full rounded-lg border-slate-200" min="0"></div>
+                        <div class="bg-slate-50 p-3 rounded-lg"><label class="block text-sm text-slate-700 mb-1">Kebijakan</label><input type="number" name="kebijakan" x-model.number="kebijakan" value="{{ old('kebijakan', 0) }}" class="w-full rounded-lg border-slate-200" min="0"></div>
                     </div>
                 </div>
                 <div class="bg-gradient-to-r from-emerald-50 to-cyan-50 rounded-xl p-6">
@@ -43,9 +48,20 @@
         </div>
         <script>
             function formIku7() {
-                return { totalProgram: 0, sdg1: 0, sdg4: 0, sdg17: 0, sdgPilihan: 0, pendidikan: 0, penelitian: 0, pkm: 0, tatakelola: 0,
-                    get totalSdgs() { return this.sdg1 + this.sdg4 + this.sdg17 + this.sdgPilihan; },
-                    get persentase() { if (this.totalProgram <= 0) return 0; return (this.totalSdgs / this.totalProgram) * 100; } }
+                return { 
+                    totalProgram: {{ old('total_program', 0) }}, 
+                    sdg1: {{ old('sdg_1', 0) }}, 
+                    sdg4: {{ old('sdg_4', 0) }}, 
+                    sdg17: {{ old('sdg_17', 0) }}, 
+                    sdgPilihan: {{ old('sdg_pilihan', 0) }}, 
+                    pendidikan: {{ old('pendidikan', 0) }}, 
+                    penelitian: {{ old('penelitian', 0) }}, 
+                    pkm: {{ old('pkm', 0) }}, 
+                    kerjasama: {{ old('kerjasama', 0) }}, 
+                    kebijakan: {{ old('kebijakan', 0) }},
+                    get totalSdgs() { return this.pendidikan + this.penelitian + this.pkm + this.kerjasama + this.kebijakan; },
+                    get persentase() { if (this.totalProgram <= 0) return 0; return (this.totalSdgs / this.totalProgram) * 100; } 
+                }
             }
         </script>
     </x-user-layout>

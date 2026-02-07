@@ -69,9 +69,11 @@ class Iku1Controller extends Controller
             'tahun_akademik' => 'required|string',
             'jenjang' => 'required|string',
             'program_studi' => 'nullable|string',
-            'jumlah_lulus_tepat_waktu' => 'required|integer|min:0',
             'total_mahasiswa_aktif' => 'required|integer|min:1',
+            'jumlah_lulus_tepat_waktu' => 'required|integer|min:0|lte:total_mahasiswa_aktif',
             'keterangan' => 'nullable|string',
+        ], [
+            'jumlah_lulus_tepat_waktu.lte' => 'Jumlah lulus tepat waktu tidak boleh melebihi total mahasiswa aktif.',
         ]);
 
         $fakultas = auth()->user()->fakultas;

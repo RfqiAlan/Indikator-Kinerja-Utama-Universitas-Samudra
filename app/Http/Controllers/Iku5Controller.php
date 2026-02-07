@@ -58,6 +58,18 @@ class Iku5Controller extends Controller
             'keterangan' => 'nullable|string',
         ]);
 
+        // Validate sum of luaran doesn't exceed total dosen
+        $totalLuaran = $validated['artikel_kolaborasi'] + $validated['produk_terapan'] + 
+                       $validated['studi_kasus'] + $validated['ttg'] + 
+                       $validated['karya_seni_kolaboratif'];
+        
+        if ($totalLuaran > $validated['total_dosen']) {
+            return back()->withInput()->withErrors([
+                'total_dosen' => 'Total luaran (' . $totalLuaran . ') tidak boleh melebihi total dosen (' . $validated['total_dosen'] . ').'
+            ]);
+        }
+
+        $validated['fakultas'] = auth()->user()->fakultas;
         Iku5LuaranKerjasama::create($validated);
 
         return redirect()->route('user.iku5.index')

@@ -58,7 +58,6 @@ class Iku2Controller extends Controller
     {
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
-            'fakultas' => 'required|string',
             'program_studi' => 'required|string',
             'total_lulusan' => 'required|integer|min:1',
             'bekerja_bobot_10' => 'required|integer|min:0',
@@ -69,6 +68,31 @@ class Iku2Controller extends Controller
             'wirausaha_freelancer' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
         ]);
+
+        // Validate sum of sub-fields doesn't exceed total
+        $totalKategori = $validated['bekerja_bobot_10'] + $validated['bekerja_bobot_6'] + 
+                         $validated['bekerja_bobot_4'] + $validated['studi_lanjut'] + 
+                         $validated['wirausaha_founder'] + $validated['wirausaha_freelancer'];
+        
+        if ($totalKategori > $validated['total_lulusan']) {
+            return back()->withInput()->withErrors([
+                'total_lulusan' => 'Total kategori (' . $totalKategori . ') tidak boleh melebihi total lulusan (' . $validated['total_lulusan'] . ').'
+            ]);
+        }
+
+        $fakultas = auth()->user()->fakultas;
+        $validated['fakultas'] = $fakultas;
+
+        // Check for duplicate
+        $existing = Iku2LulusanBekerja::where('tahun_akademik', $validated['tahun_akademik'])
+            ->where('fakultas', $validated['fakultas'])
+            ->where('program_studi', $validated['program_studi'])
+            ->first();
+        
+        if ($existing) {
+            return redirect()->route('user.iku2.edit', $existing->id)
+                ->with('warning', 'Data untuk prodi ini sudah ada. Silakan edit data yang sudah ada.');
+        }
 
         Iku2LulusanBekerja::create($validated);
 

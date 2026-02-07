@@ -7,20 +7,24 @@
             <div><h2 class="text-2xl font-bold text-slate-800">Tambah Data IKU 4</h2><p class="text-sm text-slate-500 mt-1">{{ auth()->user()->fakultas_nama ?? 'Fakultas' }} - Dosen Rekognisi Internasional</p></div>
         </x-slot>
         <div class="py-6 max-w-4xl mx-auto" x-data="formIku4()">
+            @if($errors->any())
+            <div class="mb-4 p-4 bg-rose-100 border border-rose-200 text-rose-700 rounded-lg">
+                <ul class="list-disc list-inside">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
+            </div>
+            @endif
             <form action="{{ route('user.iku4.store') }}" method="POST" class="bg-white rounded-2xl shadow-sm p-6 space-y-6">
                 @csrf
-                <input type="hidden" name="fakultas" value="{{ auth()->user()->fakultas }}">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div><label class="block text-sm font-medium text-slate-700 mb-1">Tahun Akademik <span class="text-rose-500">*</span></label><input type="text" name="tahun_akademik" value="{{ old('tahun_akademik', $tahunAkademik) }}" class="w-full rounded-lg border-slate-300" required></div>
-                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Total Dosen <span class="text-rose-500">*</span></label><input type="number" name="total_dosen" x-model.number="totalDosen" class="w-full rounded-lg border-slate-300" required min="1"></div>
+                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Total Dosen <span class="text-rose-500">*</span></label><input type="number" name="total_dosen" x-model.number="totalDosen" value="{{ old('total_dosen', 0) }}" class="w-full rounded-lg border-slate-300" required min="1"></div>
                 </div>
                 <div class="border-t pt-6"><h3 class="font-semibold text-slate-800 mb-4">Jenis Rekognisi Internasional</h3>
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                        <div class="bg-emerald-50 p-3 rounded-lg"><label class="block text-sm font-medium text-emerald-700 mb-1">Publikasi Internasional</label><input type="number" name="publikasi_internasional" x-model.number="publikasi" class="w-full rounded-lg border-emerald-200" min="0" value="0"></div>
-                        <div class="bg-cyan-50 p-3 rounded-lg"><label class="block text-sm font-medium text-cyan-700 mb-1">Buku Global</label><input type="number" name="buku_global" x-model.number="buku" class="w-full rounded-lg border-cyan-200" min="0" value="0"></div>
-                        <div class="bg-teal-50 p-3 rounded-lg"><label class="block text-sm font-medium text-teal-700 mb-1">Hak Paten</label><input type="number" name="hak_paten" x-model.number="paten" class="w-full rounded-lg border-teal-200" min="0" value="0"></div>
-                        <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">Karya Seni Internasional</label><input type="number" name="karya_seni" x-model.number="seni" class="w-full rounded-lg border-blue-200" min="0" value="0"></div>
-                        <div class="bg-indigo-50 p-3 rounded-lg"><label class="block text-sm font-medium text-indigo-700 mb-1">Inovasi Global</label><input type="number" name="inovasi_global" x-model.number="inovasi" class="w-full rounded-lg border-indigo-200" min="0" value="0"></div>
+                        <div class="bg-emerald-50 p-3 rounded-lg"><label class="block text-sm font-medium text-emerald-700 mb-1">Publikasi Internasional</label><input type="number" name="publikasi_internasional" x-model.number="publikasi" value="{{ old('publikasi_internasional', 0) }}" class="w-full rounded-lg border-emerald-200" min="0"></div>
+                        <div class="bg-cyan-50 p-3 rounded-lg"><label class="block text-sm font-medium text-cyan-700 mb-1">Buku Global</label><input type="number" name="buku_global" x-model.number="buku" value="{{ old('buku_global', 0) }}" class="w-full rounded-lg border-cyan-200" min="0"></div>
+                        <div class="bg-teal-50 p-3 rounded-lg"><label class="block text-sm font-medium text-teal-700 mb-1">Hak Paten</label><input type="number" name="hak_paten" x-model.number="paten" value="{{ old('hak_paten', 0) }}" class="w-full rounded-lg border-teal-200" min="0"></div>
+                        <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">Karya Seni Internasional</label><input type="number" name="karya_seni_internasional" x-model.number="seni" value="{{ old('karya_seni_internasional', 0) }}" class="w-full rounded-lg border-blue-200" min="0"></div>
+                        <div class="bg-indigo-50 p-3 rounded-lg"><label class="block text-sm font-medium text-indigo-700 mb-1">Produk Inovasi</label><input type="number" name="produk_inovasi" x-model.number="inovasi" value="{{ old('produk_inovasi', 0) }}" class="w-full rounded-lg border-indigo-200" min="0"></div>
                     </div>
                 </div>
                 <div class="bg-gradient-to-r from-emerald-50 to-cyan-50 rounded-xl p-6">
@@ -36,9 +40,16 @@
         </div>
         <script>
             function formIku4() {
-                return { totalDosen: 0, publikasi: 0, buku: 0, paten: 0, seni: 0, inovasi: 0,
+                return { 
+                    totalDosen: {{ old('total_dosen', 0) }}, 
+                    publikasi: {{ old('publikasi_internasional', 0) }}, 
+                    buku: {{ old('buku_global', 0) }}, 
+                    paten: {{ old('hak_paten', 0) }}, 
+                    seni: {{ old('karya_seni_internasional', 0) }}, 
+                    inovasi: {{ old('produk_inovasi', 0) }},
                     get totalRekognisi() { return this.publikasi + this.buku + this.paten + this.seni + this.inovasi; },
-                    get persentase() { if (this.totalDosen <= 0) return 0; return (this.totalRekognisi / this.totalDosen) * 100; } }
+                    get persentase() { if (this.totalDosen <= 0) return 0; return (this.totalRekognisi / this.totalDosen) * 100; } 
+                }
             }
         </script>
     </x-user-layout>

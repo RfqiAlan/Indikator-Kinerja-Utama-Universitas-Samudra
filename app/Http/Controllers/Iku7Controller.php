@@ -62,6 +62,18 @@ class Iku7Controller extends Controller
             'keterangan' => 'nullable|string',
         ]);
 
+        // Validate sum of bidang fields doesn't exceed total program
+        $totalBidang = $validated['pendidikan'] + $validated['penelitian'] + 
+                       $validated['pkm'] + $validated['kerjasama'] + 
+                       $validated['kebijakan'];
+        
+        if ($totalBidang > $validated['total_program']) {
+            return back()->withInput()->withErrors([
+                'total_program' => 'Total bidang kegiatan (' . $totalBidang . ') tidak boleh melebihi total program (' . $validated['total_program'] . ').'
+            ]);
+        }
+
+        $validated['fakultas'] = auth()->user()->fakultas;
         Iku7Sdgs::create($validated);
 
         return redirect()->route('user.iku7.index')

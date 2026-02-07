@@ -57,6 +57,17 @@ class Iku8Controller extends Controller
             'keterangan' => 'nullable|string',
         ]);
 
+        // Validate sum of keterlibatan fields doesn't exceed total SDM
+        $totalKeterlibatan = $validated['tim_penyusun'] + $validated['narasumber'] + 
+                             $validated['ahli_hukum'] + $validated['kontributor_regulasi'];
+        
+        if ($totalKeterlibatan > $validated['total_sdm']) {
+            return back()->withInput()->withErrors([
+                'total_sdm' => 'Total yang terlibat (' . $totalKeterlibatan . ') tidak boleh melebihi total SDM (' . $validated['total_sdm'] . ').'
+            ]);
+        }
+
+        $validated['fakultas'] = auth()->user()->fakultas;
         Iku8SdmKebijakan::create($validated);
 
         return redirect()->route('user.iku8.index')

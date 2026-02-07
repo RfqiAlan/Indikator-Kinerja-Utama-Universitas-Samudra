@@ -25,7 +25,7 @@ class DashboardController extends Controller
         $user = auth()->user();
         
         if ($user->isAdmin()) {
-            return redirect()->route('admin.index');
+            return redirect()->route('admin.dashboard');
         }
         
         return redirect()->route('user.iku.index');

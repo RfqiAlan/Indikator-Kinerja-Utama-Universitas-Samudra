@@ -13,6 +13,7 @@ class Iku8SdmKebijakan extends Model
 
     protected $fillable = [
         'tahun_akademik',
+        'fakultas',
         'total_sdm',
         'tim_penyusun',
         'narasumber',

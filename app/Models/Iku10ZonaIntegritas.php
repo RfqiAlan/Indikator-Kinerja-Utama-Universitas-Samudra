@@ -13,6 +13,7 @@ class Iku10ZonaIntegritas extends Model
 
     protected $fillable = [
         'tahun_akademik',
+        'fakultas',
         'nama_unit',
         'status',
         'tanggal_pengajuan',

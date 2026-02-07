@@ -51,6 +51,7 @@ class Iku11Controller extends Controller
             'keterangan' => 'nullable|string',
         ]);
 
+        $validated['fakultas'] = auth()->user()->fakultas;
         Iku11TataKelola::create($validated);
 
         return redirect()->route('user.iku11.index')

@@ -58,6 +58,18 @@ class Iku4Controller extends Controller
             'keterangan' => 'nullable|string',
         ]);
 
+        // Validate sum of rekognisi doesn't exceed total dosen
+        $totalRekognisi = $validated['publikasi_internasional'] + $validated['buku_global'] + 
+                          $validated['hak_paten'] + $validated['karya_seni_internasional'] + 
+                          $validated['produk_inovasi'];
+        
+        if ($totalRekognisi > $validated['total_dosen']) {
+            return back()->withInput()->withErrors([
+                'total_dosen' => 'Total rekognisi (' . $totalRekognisi . ') tidak boleh melebihi total dosen (' . $validated['total_dosen'] . ').'
+            ]);
+        }
+
+        $validated['fakultas'] = auth()->user()->fakultas;
         Iku4RekognisiDosen::create($validated);
 
         return redirect()->route('user.iku4.index')

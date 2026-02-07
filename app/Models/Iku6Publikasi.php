@@ -13,6 +13,7 @@ class Iku6Publikasi extends Model
 
     protected $fillable = [
         'tahun_akademik',
+        'fakultas',
         'total_publikasi',
         'publikasi_q1',
         'publikasi_q2',

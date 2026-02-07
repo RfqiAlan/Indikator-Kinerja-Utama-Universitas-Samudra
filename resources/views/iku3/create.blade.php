@@ -10,9 +10,23 @@
             </div>
         </x-slot>
         <div class="py-6 max-w-4xl mx-auto" x-data="formIku3()">
+            @if(session('warning'))
+            <div class="mb-4 p-4 bg-amber-100 border border-amber-200 text-amber-700 rounded-lg">
+                {{ session('warning') }}
+            </div>
+            @endif
+            @if($errors->any())
+            <div class="mb-4 p-4 bg-rose-100 border border-rose-200 text-rose-700 rounded-lg">
+                <ul class="list-disc list-inside">
+                    @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+            
             <form action="{{ route('user.iku3.store') }}" method="POST" class="bg-white rounded-2xl shadow-sm p-6 space-y-6">
                 @csrf
-                <input type="hidden" name="fakultas" value="{{ auth()->user()->fakultas }}">
                 
                 <div class="border-b pb-6">
                     <h3 class="font-semibold text-slate-800 mb-4">Informasi Akademik</h3>
@@ -26,13 +40,13 @@
                             <select name="program_studi" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500" required>
                                 <option value="">-- Pilih Program Studi --</option>
                                 @foreach(auth()->user()->prodi_list as $kode => $nama)
-                                    <option value="{{ $kode }}">{{ $nama }}</option>
+                                    <option value="{{ $kode }}" {{ old('program_studi') == $kode ? 'selected' : '' }}>{{ $nama }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">Total Mahasiswa <span class="text-rose-500">*</span></label>
-                            <input type="number" name="total_mahasiswa" x-model.number="totalMahasiswa" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500" required min="1">
+                            <input type="number" name="total_mahasiswa" x-model.number="totalMahasiswa" value="{{ old('total_mahasiswa', 0) }}" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500" required min="1">
                         </div>
                     </div>
                 </div>
@@ -42,27 +56,27 @@
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                         <div class="bg-emerald-50 p-3 rounded-lg">
                             <label class="block text-sm font-medium text-emerald-700 mb-1">Magang Industri</label>
-                            <input type="number" name="magang" x-model.number="magang" class="w-full rounded-lg border-emerald-200" min="0" value="0">
+                            <input type="number" name="magang" x-model.number="magang" value="{{ old('magang', 0) }}" class="w-full rounded-lg border-emerald-200" min="0">
                         </div>
                         <div class="bg-cyan-50 p-3 rounded-lg">
                             <label class="block text-sm font-medium text-cyan-700 mb-1">Riset/Asistensi</label>
-                            <input type="number" name="riset" x-model.number="riset" class="w-full rounded-lg border-cyan-200" min="0" value="0">
+                            <input type="number" name="riset" x-model.number="riset" value="{{ old('riset', 0) }}" class="w-full rounded-lg border-cyan-200" min="0">
                         </div>
                         <div class="bg-teal-50 p-3 rounded-lg">
                             <label class="block text-sm font-medium text-teal-700 mb-1">Pertukaran Pelajar</label>
-                            <input type="number" name="pertukaran" x-model.number="pertukaran" class="w-full rounded-lg border-teal-200" min="0" value="0">
+                            <input type="number" name="pertukaran" x-model.number="pertukaran" value="{{ old('pertukaran', 0) }}" class="w-full rounded-lg border-teal-200" min="0">
                         </div>
                         <div class="bg-blue-50 p-3 rounded-lg">
                             <label class="block text-sm font-medium text-blue-700 mb-1">KKN Tematik</label>
-                            <input type="number" name="kkn_tematik" x-model.number="kkn" class="w-full rounded-lg border-blue-200" min="0" value="0">
+                            <input type="number" name="kkn_tematik" x-model.number="kkn" value="{{ old('kkn_tematik', 0) }}" class="w-full rounded-lg border-blue-200" min="0">
                         </div>
                         <div class="bg-indigo-50 p-3 rounded-lg">
-                            <label class="block text-sm font-medium text-indigo-700 mb-1">Proyek Kemanusiaan</label>
-                            <input type="number" name="proyek_kemanusiaan" x-model.number="proyek" class="w-full rounded-lg border-indigo-200" min="0" value="0">
+                            <label class="block text-sm font-medium text-indigo-700 mb-1">Lomba/Kompetisi</label>
+                            <input type="number" name="lomba" x-model.number="lomba" value="{{ old('lomba', 0) }}" class="w-full rounded-lg border-indigo-200" min="0">
                         </div>
                         <div class="bg-amber-50 p-3 rounded-lg">
                             <label class="block text-sm font-medium text-amber-700 mb-1">Wirausaha</label>
-                            <input type="number" name="wirausaha" x-model.number="wirausaha" class="w-full rounded-lg border-amber-200" min="0" value="0">
+                            <input type="number" name="wirausaha" x-model.number="wirausaha" value="{{ old('wirausaha', 0) }}" class="w-full rounded-lg border-amber-200" min="0">
                         </div>
                     </div>
                 </div>
@@ -90,8 +104,14 @@
         <script>
             function formIku3() {
                 return {
-                    totalMahasiswa: 0, magang: 0, riset: 0, pertukaran: 0, kkn: 0, proyek: 0, wirausaha: 0,
-                    get totalKegiatan() { return this.magang + this.riset + this.pertukaran + this.kkn + this.proyek + this.wirausaha; },
+                    totalMahasiswa: {{ old('total_mahasiswa', 0) }}, 
+                    magang: {{ old('magang', 0) }}, 
+                    riset: {{ old('riset', 0) }}, 
+                    pertukaran: {{ old('pertukaran', 0) }}, 
+                    kkn: {{ old('kkn_tematik', 0) }}, 
+                    lomba: {{ old('lomba', 0) }}, 
+                    wirausaha: {{ old('wirausaha', 0) }},
+                    get totalKegiatan() { return this.magang + this.riset + this.pertukaran + this.kkn + this.lomba + this.wirausaha; },
                     get persentase() { if (this.totalMahasiswa <= 0) return 0; return (this.totalKegiatan / this.totalMahasiswa) * 100; }
                 }
             }

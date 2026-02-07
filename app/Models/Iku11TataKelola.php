@@ -13,6 +13,7 @@ class Iku11TataKelola extends Model
 
     protected $fillable = [
         'tahun_akademik',
+        'fakultas',
         'opini_audit',
         'nilai_sakip',
         'predikat_sakip',

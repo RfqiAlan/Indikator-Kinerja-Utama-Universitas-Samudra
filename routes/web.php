@@ -69,8 +69,19 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(f
 
 // Admin routes (view all activities)
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/', [AdminController::class, 'index'])->name('index');
+    Route::get('/', [AdminController::class, 'index'])->name('dashboard');
     Route::get('/activities', [AdminController::class, 'activities'])->name('activities');
+    
+    // User management
+    Route::get('/users', [AdminController::class, 'users'])->name('users');
+    Route::get('/users/create', [AdminController::class, 'createUser'])->name('users.create');
+    Route::post('/users', [AdminController::class, 'storeUser'])->name('users.store');
+    Route::get('/users/{user}/edit', [AdminController::class, 'editUser'])->name('users.edit');
+    Route::put('/users/{user}', [AdminController::class, 'updateUser'])->name('users.update');
+    Route::delete('/users/{user}', [AdminController::class, 'destroyUser'])->name('users.destroy');
+    
+    // Faculty detail
+    Route::get('/fakultas/{kode}', [AdminController::class, 'fakultasDetail'])->name('fakultas');
 });
 
 require __DIR__.'/auth.php';

@@ -58,6 +58,17 @@ class Iku6Controller extends Controller
             'keterangan' => 'nullable|string',
         ]);
 
+        // Validate sum of quartiles doesn't exceed total publikasi
+        $totalQuartile = $validated['publikasi_q1'] + $validated['publikasi_q2'] + 
+                         $validated['publikasi_q3'] + $validated['publikasi_q4'];
+        
+        if ($totalQuartile > $validated['total_publikasi']) {
+            return back()->withInput()->withErrors([
+                'total_publikasi' => 'Total publikasi quartile (' . $totalQuartile . ') tidak boleh melebihi total publikasi (' . $validated['total_publikasi'] . ').'
+            ]);
+        }
+
+        $validated['fakultas'] = auth()->user()->fakultas;
         Iku6Publikasi::create($validated);
 
         return redirect()->route('user.iku6.index')
