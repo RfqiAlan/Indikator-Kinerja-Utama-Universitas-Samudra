@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Tambah IKU 3</title>@vite(['resources/css/app.css', 'resources/js/app.js'])</head>
+<body class="font-sans antialiased bg-white text-slate-900">
+    <x-user-layout activeIku="IKU 3">
+        <x-slot name="header">
+            <div>
+                <h2 class="text-2xl font-bold text-slate-800">Tambah Data IKU 3</h2>
+                <p class="text-sm text-slate-500 mt-1">{{ auth()->user()->fakultas_nama ?? 'Fakultas' }} - Mahasiswa Berkegiatan di Luar Prodi</p>
+            </div>
+        </x-slot>
+        <div class="py-6 max-w-4xl mx-auto" x-data="formIku3()">
+            <form action="{{ route('user.iku3.store') }}" method="POST" class="bg-white rounded-2xl shadow-sm p-6 space-y-6">
+                @csrf
+                <input type="hidden" name="fakultas" value="{{ auth()->user()->fakultas }}">
+                
+                <div class="border-b pb-6">
+                    <h3 class="font-semibold text-slate-800 mb-4">Informasi Akademik</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Tahun Akademik <span class="text-rose-500">*</span></label>
+                            <input type="text" name="tahun_akademik" value="{{ old('tahun_akademik', $tahunAkademik) }}" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Program Studi <span class="text-rose-500">*</span></label>
+                            <select name="program_studi" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500" required>
+                                <option value="">-- Pilih Program Studi --</option>
+                                @foreach(auth()->user()->prodi_list as $kode => $nama)
+                                    <option value="{{ $kode }}">{{ $nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Total Mahasiswa <span class="text-rose-500">*</span></label>
+                            <input type="number" name="total_mahasiswa" x-model.number="totalMahasiswa" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500" required min="1">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-b pb-6">
+                    <h3 class="font-semibold text-slate-800 mb-4">Jenis Kegiatan di Luar Prodi</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div class="bg-emerald-50 p-3 rounded-lg">
+                            <label class="block text-sm font-medium text-emerald-700 mb-1">Magang Industri</label>
+                            <input type="number" name="magang" x-model.number="magang" class="w-full rounded-lg border-emerald-200" min="0" value="0">
+                        </div>
+                        <div class="bg-cyan-50 p-3 rounded-lg">
+                            <label class="block text-sm font-medium text-cyan-700 mb-1">Riset/Asistensi</label>
+                            <input type="number" name="riset" x-model.number="riset" class="w-full rounded-lg border-cyan-200" min="0" value="0">
+                        </div>
+                        <div class="bg-teal-50 p-3 rounded-lg">
+                            <label class="block text-sm font-medium text-teal-700 mb-1">Pertukaran Pelajar</label>
+                            <input type="number" name="pertukaran" x-model.number="pertukaran" class="w-full rounded-lg border-teal-200" min="0" value="0">
+                        </div>
+                        <div class="bg-blue-50 p-3 rounded-lg">
+                            <label class="block text-sm font-medium text-blue-700 mb-1">KKN Tematik</label>
+                            <input type="number" name="kkn_tematik" x-model.number="kkn" class="w-full rounded-lg border-blue-200" min="0" value="0">
+                        </div>
+                        <div class="bg-indigo-50 p-3 rounded-lg">
+                            <label class="block text-sm font-medium text-indigo-700 mb-1">Proyek Kemanusiaan</label>
+                            <input type="number" name="proyek_kemanusiaan" x-model.number="proyek" class="w-full rounded-lg border-indigo-200" min="0" value="0">
+                        </div>
+                        <div class="bg-amber-50 p-3 rounded-lg">
+                            <label class="block text-sm font-medium text-amber-700 mb-1">Wirausaha</label>
+                            <input type="number" name="wirausaha" x-model.number="wirausaha" class="w-full rounded-lg border-amber-200" min="0" value="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-emerald-50 to-cyan-50 rounded-xl p-6">
+                    <h4 class="font-semibold text-slate-800 mb-4">Preview Perhitungan</h4>
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div><p class="text-xs text-slate-500">Total Berkegiatan</p><p class="text-2xl font-bold text-emerald-600" x-text="totalKegiatan">0</p></div>
+                        <div><p class="text-xs text-slate-500">Total Mahasiswa</p><p class="text-2xl font-bold text-slate-600" x-text="totalMahasiswa">0</p></div>
+                        <div><p class="text-xs text-slate-500">Persentase IKU 3</p><p class="text-2xl font-bold" :class="persentase >= 20 ? 'text-emerald-600' : 'text-rose-600'" x-text="persentase.toFixed(2) + '%'">0%</p></div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Keterangan</label>
+                    <textarea name="keterangan" rows="2" class="w-full rounded-lg border-slate-300">{{ old('keterangan') }}</textarea>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-4">
+                    <a href="{{ route('user.iku3.index') }}" class="px-4 py-2 text-slate-600">Batal</a>
+                    <button type="submit" class="px-6 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold shadow-md">Simpan Data</button>
+                </div>
+            </form>
+        </div>
+        <script>
+            function formIku3() {
+                return {
+                    totalMahasiswa: 0, magang: 0, riset: 0, pertukaran: 0, kkn: 0, proyek: 0, wirausaha: 0,
+                    get totalKegiatan() { return this.magang + this.riset + this.pertukaran + this.kkn + this.proyek + this.wirausaha; },
+                    get persentase() { if (this.totalMahasiswa <= 0) return 0; return (this.totalKegiatan / this.totalMahasiswa) * 100; }
+                }
+            }
+        </script>
+    </x-user-layout>
+</body>
+</html>

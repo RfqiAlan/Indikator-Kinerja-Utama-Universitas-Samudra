@@ -1,0 +1,163 @@
+[
+    {
+        "jenis_iku": "IKU 1",
+        "kriteria": "Data Lulusan S1 yang Berhasil Memiliki Pekarjaan  Dalam Jangka Waktu Kurang Dari Atau Sama Dengan 12 Bulan (\u2264 12 Bulan) Setelah Tanggal Terbit Ijazah",
+        "jumlah": 62.61802575107296,
+        "persentase_capaian": 13.082353672948935,
+        "target": 40.0
+    },
+    {
+        "jenis_iku": "IKU 1",
+        "kriteria": "Data Lulusan S1 yang  Melanjutkan Studi  Dalam Masa Tunggu   Kurang  Dari Atau Sama Dengan 12 Bulan (\u2264 12 Bulan) Setelah Tanggal Terbit Ijazah",
+        "jumlah": 15.593705293276109,
+        "persentase_capaian": null,
+        "target": null
+    },
+    {
+        "jenis_iku": "IKU 1",
+        "kriteria": "Data Kelulusan S1 yang  menjadi wiraswasta Kurang Dari Atau Sama Dengan 12 Bulan (\u2264 12 Bulan) Setelah Tanggal Terbit Ijazah",
+        "jumlah": 42.14592274678112,
+        "persentase_capaian": null,
+        "target": null
+    },
+    {
+        "jenis_iku": "IKU 1",
+        "kriteria": "Total jumlah responden lulusan",
+        "jumlah": 920.0,
+        "persentase_capaian": null,
+        "target": null
+    },
+    {
+        "jenis_iku": "IKU 2",
+        "kriteria": "Mahasiswa Berkegiatan Pembelajaran Di Luar Program Studi Lebih Dari 10 SKS Atau Sama Dengan 20 SKS (>10 \u2264 20 SKS)",
+        "jumlah": 16.05095541401274,
+        "persentase_capaian": 16.910502456220286,
+        "target": 20.0
+    },
+    {
+        "jenis_iku": "IKU 2",
+        "kriteria": "Mahasiswa  Meraih Prestasi ",
+        "jumlah": 0.08247697851327906,
+        "persentase_capaian": null,
+        "target": null
+    },
+    {
+        "jenis_iku": "IKU 2",
+        "kriteria": "In bound",
+        "jumlah": 0.7770700636942676,
+        "persentase_capaian": null,
+        "target": null
+    },
+    {
+        "jenis_iku": "IKU 2",
+        "kriteria": "Total jumlah Mahasiswa aktif",
+        "jumlah": 7493.0,
+        "persentase_capaian": null,
+        "target": null
+    },
+    {
+        "jenis_iku": "IKU 3",
+        "kriteria": "Dosen Yang Berkegiatan Tridarma di Perguruan Tinggi Lain (dalam 5 tahun terakhir)",
+        "jumlah": 33.33333333333333,
+        "persentase_capaian": 12.087418923267117,
+        "target": 15.0
+    },
+    {
+        "jenis_iku": "IKU 3",
+        "kriteria": "Dosen Yang Bekerja Sebagai Praktisi (dalam 5 tahun terakhir)",
+        "jumlah": 13.991769547325102,
+        "persentase_capaian": null,
+        "target": null
+    },
+    {
+        "jenis_iku": "IKU 3",
+        "kriteria": "Membimbing Mahasiswa Berkegiatan Diluar Program Studi (I tahun terakhir)",
+        "jumlah": 11.419753086419753,
+        "persentase_capaian": null,
+        "target": null
+    },
+    {
+        "jenis_iku": "IKU 3",
+        "kriteria": "Total jumlah dosen",
+        "jumlah": 486.0,
+        "persentase_capaian": null,
+        "target": null
+    },
+    {
+        "jenis_iku": "IKU 4",
+        "kriteria": "Kriteria Sertifikat Kompetensi/Profesi",
+        "jumlah": 36.172839506172835,
+        "persentase_capaian": 40.45267489711934,
+        "target": 15.0
+    },
+    {
+        "jenis_iku": "IKU 4",
+        "kriteria": "Kriteria Pengajar Yang Berasal Dari kalangan Praktisi",
+        "jumlah": 4.279835390946502,
+        "persentase_capaian": null,
+        "target": null
+    },
+    {
+        "jenis_iku": "IKU 4",
+        "kriteria": "Total jumlah dosen",
+        "jumlah": 486.0,
+        "persentase_capaian": null,
+        "target": null
+    },
+    {
+        "jenis_iku": "IKU 5",
+        "kriteria": "Penerapan Karya Dosen",
+        "jumlah": 1.0792181069958848,
+        "persentase_capaian": 0.22206133888804216,
+        "target": 0.3
+    },
+    {
+        "jenis_iku": "IKU 5",
+        "kriteria": "Total jumlah dosen",
+        "jumlah": 486.0,
+        "persentase_capaian": null,
+        "target": null
+    },
+    {
+        "jenis_iku": "IKU 6",
+        "kriteria": "Kemitraan Program Studi",
+        "jumlah": 1.1173076923076923,
+        "persentase_capaian": 4.297337278106509,
+        "target": 0.5
+    },
+    {
+        "jenis_iku": "IKU 6",
+        "kriteria": "Total jumlah program studi",
+        "jumlah": 26.0,
+        "persentase_capaian": null,
+        "target": null
+    },
+    {
+        "jenis_iku": "IKU 7",
+        "kriteria": "Kelas Yang Kolaboratif dan Partisipatif",
+        "jumlah": 18.31628926223521,
+        "persentase_capaian": 18.31628926223521,
+        "target": 25.0
+    },
+    {
+        "jenis_iku": "IKU 7",
+        "kriteria": "Total jumlah mata kuliah",
+        "jumlah": 1173.0,
+        "persentase_capaian": null,
+        "target": null
+    },
+    {
+        "jenis_iku": "IKU 8",
+        "kriteria": "Program studi Berstandar Internasional",
+        "jumlah": 0.0,
+        "persentase_capaian": 0.0,
+        "target": 2.5
+    },
+    {
+        "jenis_iku": "IKU 8",
+        "kriteria": "Total jumlah program studi",
+        "jumlah": 26.0,
+        "persentase_capaian": null,
+        "target": null
+    }
+]
