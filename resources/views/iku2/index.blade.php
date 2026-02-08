@@ -33,26 +33,48 @@
 
         <div class="py-6 space-y-6">
             <!-- Summary Card -->
+            @php 
+                $targetIku2 = 50;
+                $meetsTarget = $overallPercentage >= $targetIku2;
+                $bgColor = $meetsTarget ? 'bg-emerald-50 dark:bg-emerald-900/30' : 'bg-rose-50 dark:bg-rose-900/30';
+                $textColor = $meetsTarget ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400';
+                $valueColor = $meetsTarget ? 'text-emerald-700 dark:text-emerald-300' : 'text-rose-700 dark:text-rose-300';
+            @endphp
             <div class="relative overflow-hidden bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 sm:p-8">
-                <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-emerald-50 dark:bg-emerald-900/20 blur-3xl opacity-60"></div>
+                <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full {{ $meetsTarget ? 'bg-emerald-50' : 'bg-rose-50' }} dark:bg-opacity-20 blur-3xl opacity-60"></div>
                 <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-cyan-50 dark:bg-cyan-900/20 blur-3xl opacity-60"></div>
                 
-                <div class="relative grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <div class="text-center p-4 bg-emerald-50 dark:bg-emerald-900/30 rounded-xl">
-                        <p class="text-sm text-emerald-600 dark:text-emerald-400 font-medium">Persentase IKU 2</p>
-                        <p class="text-3xl font-bold text-emerald-700 dark:text-emerald-300">{{ number_format($overallPercentage, 2) }}%</p>
+                <div class="relative flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="flex-1 grid grid-cols-1 sm:grid-cols-4 gap-4">
+                        <div class="text-center p-4 {{ $bgColor }} rounded-xl">
+                            <p class="text-sm {{ $textColor }} font-medium">Persentase IKU 2</p>
+                            <p class="text-3xl font-bold {{ $valueColor }}">{{ number_format($overallPercentage, 2) }}%</p>
+                            <p class="text-xs {{ $textColor }}">Target: {{ $targetIku2 }}%</p>
+                        </div>
+                        <div class="text-center p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
+                            <p class="text-sm text-slate-600 dark:text-slate-400 font-medium">Total Lulusan</p>
+                            <p class="text-3xl font-bold text-slate-700 dark:text-slate-300">{{ number_format($totalLulusan) }}</p>
+                        </div>
+                        <div class="text-center p-4 bg-cyan-50 dark:bg-cyan-900/30 rounded-xl">
+                            <p class="text-sm text-cyan-600 dark:text-cyan-400 font-medium">Bekerja (Skor)</p>
+                            <p class="text-3xl font-bold text-cyan-700 dark:text-cyan-300">{{ number_format($totalBekerja, 1) }}</p>
+                        </div>
+                        <div class="text-center p-4 bg-teal-50 dark:bg-teal-900/30 rounded-xl">
+                            <p class="text-sm text-teal-600 dark:text-teal-400 font-medium">Studi Lanjut</p>
+                            <p class="text-3xl font-bold text-teal-700 dark:text-teal-300">{{ number_format($totalStudiLanjut) }}</p>
+                        </div>
                     </div>
-                    <div class="text-center p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
-                        <p class="text-sm text-slate-600 dark:text-slate-400 font-medium">Total Lulusan</p>
-                        <p class="text-3xl font-bold text-slate-700 dark:text-slate-300">{{ number_format($totalLulusan) }}</p>
-                    </div>
-                    <div class="text-center p-4 bg-cyan-50 dark:bg-cyan-900/30 rounded-xl">
-                        <p class="text-sm text-cyan-600 dark:text-cyan-400 font-medium">Bekerja (Skor)</p>
-                        <p class="text-3xl font-bold text-cyan-700 dark:text-cyan-300">{{ number_format($totalBekerja, 1) }}</p>
-                    </div>
-                    <div class="text-center p-4 bg-teal-50 dark:bg-teal-900/30 rounded-xl">
-                        <p class="text-sm text-teal-600 dark:text-teal-400 font-medium">Studi Lanjut</p>
-                        <p class="text-3xl font-bold text-teal-700 dark:text-teal-300">{{ number_format($totalStudiLanjut) }}</p>
+                    
+                    <!-- Circular Progress -->
+                    <div class="relative w-32 h-32 flex items-center justify-center">
+                        <svg class="transform -rotate-90 w-full h-full" viewBox="0 0 36 36">
+                            <path class="text-slate-100 dark:text-slate-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" />
+                            <path class="{{ $meetsTarget ? 'text-emerald-500' : 'text-rose-500' }}" stroke-dasharray="{{ min($overallPercentage, 100) }}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                        </svg>
+                        <div class="absolute flex flex-col items-center">
+                            <span class="text-xs font-bold text-slate-400 uppercase">Score</span>
+                            <span class="text-xl font-black {{ $meetsTarget ? 'text-emerald-500' : 'text-rose-500' }}">{{ number_format($overallPercentage, 1) }}%</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -65,47 +87,67 @@
                 
                 @if($data->count() > 0)
                 <div class="overflow-x-auto">
-                    <table class="w-full">
-                        <thead class="bg-slate-50 dark:bg-slate-700/50">
+                    <table class="w-full text-sm text-left">
+                        <thead class="text-xs text-slate-500 uppercase bg-slate-50/80 dark:bg-slate-700/50 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase">Fakultas</th>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase">Program Studi</th>
-                                <th class="px-6 py-3 text-center text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase">Total</th>
-                                <th class="px-6 py-3 text-center text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase">Bekerja</th>
-                                <th class="px-6 py-3 text-center text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase">Studi</th>
-                                <th class="px-6 py-3 text-center text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase">Wirausaha</th>
-                                <th class="px-6 py-3 text-center text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase">%</th>
-                                <th class="px-6 py-3 text-center text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase">Aksi</th>
+                                <th scope="col" class="px-6 py-4 font-medium">Fakultas & Prodi</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Total Lulusan</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Bekerja</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Studi Lanjut</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Wirausaha</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Capaian</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-right">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                        <tbody class="divide-y divide-slate-100 dark:divide-slate-700/50">
                             @foreach($data as $item)
                             @php
                                 $fakultasData = config('unsam.fakultas.' . $item->fakultas);
                                 $fakultasNama = $fakultasData['nama'] ?? $item->fakultas ?? '-';
                                 $prodiNama = $fakultasData['prodi'][$item->program_studi] ?? $item->program_studi ?? '-';
                             @endphp
-                            <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30">
-                                <td class="px-6 py-4 text-sm text-slate-900 dark:text-slate-100">{{ Str::limit($fakultasNama, 25) }}</td>
-                                <td class="px-6 py-4 text-sm text-slate-900 dark:text-slate-100">{{ $prodiNama }}</td>
-                                <td class="px-6 py-4 text-sm text-center text-slate-600 dark:text-slate-300">{{ $item->total_lulusan }}</td>
-                                <td class="px-6 py-4 text-sm text-center text-slate-600 dark:text-slate-300">{{ $item->total_bekerja }}</td>
-                                <td class="px-6 py-4 text-sm text-center text-slate-600 dark:text-slate-300">{{ $item->studi_lanjut }}</td>
-                                <td class="px-6 py-4 text-sm text-center text-slate-600 dark:text-slate-300">{{ $item->total_wirausaha }}</td>
+                            <tr class="group hover:bg-slate-50/50 dark:hover:bg-slate-700/30 transition-colors duration-150">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-lg bg-emerald-100 text-emerald-600 dark:bg-emerald-900/50 dark:text-emerald-300 font-bold text-xs ring-4 ring-white dark:ring-slate-800">
+                                            {{ substr($fakultasNama, 0, 2) }}
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-semibold text-slate-900 dark:text-white">
+                                                {{ $prodiNama }}
+                                            </div>
+                                            <div class="text-xs text-slate-500 dark:text-slate-400">
+                                                {{ Str::limit($fakultasNama, 30) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <div class="text-sm text-slate-900 dark:text-white font-medium">{{ number_format($item->total_lulusan) }}</div>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <div class="text-sm text-slate-600 dark:text-slate-300">{{ number_format($item->total_bekerja) }}</div>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <div class="text-sm text-slate-600 dark:text-slate-300">{{ number_format($item->studi_lanjut) }}</div>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <div class="text-sm text-slate-600 dark:text-slate-300">{{ number_format($item->total_wirausaha) }}</div>
+                                </td>
                                 <td class="px-6 py-4 text-center">
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $item->persentase_iku2 >= 50 ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300' }}">
                                         {{ number_format($item->persentase_iku2, 2) }}%
                                     </span>
                                 </td>
-                                <td class="px-6 py-4 text-center">
-                                    <div class="flex justify-center gap-2">
-                                        <a href="{{ route('user.iku2.edit', $item) }}" class="text-cyan-600 hover:text-cyan-800 dark:text-cyan-400">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                        <a href="{{ route('user.iku2.edit', $item) }}" class="p-2 text-cyan-600 hover:bg-cyan-50 rounded-lg dark:text-cyan-400 dark:hover:bg-cyan-900/50 transition-colors" title="Edit">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                                         </a>
-                                        <form action="{{ route('user.iku2.destroy', $item) }}" method="POST" onsubmit="return confirm('Hapus data ini?')">
+                                        <form id="delete-iku2-{{ $item->id }}" action="{{ route('user.iku2.destroy', $item) }}" method="POST" class="inline">
                                             @csrf @method('DELETE')
-                                            <button type="submit" class="text-rose-600 hover:text-rose-800 dark:text-rose-400">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                            <button type="button" onclick="confirmDelete('delete-iku2-{{ $item->id }}')" class="p-2 text-rose-600 hover:bg-rose-50 rounded-lg dark:text-rose-400 dark:hover:bg-rose-900/50 transition-colors" title="Hapus">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                             </button>
                                         </form>
                                     </div>

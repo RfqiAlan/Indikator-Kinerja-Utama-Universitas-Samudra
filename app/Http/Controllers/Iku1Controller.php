@@ -68,7 +68,7 @@ class Iku1Controller extends Controller
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
             'jenjang' => 'required|string',
-            'program_studi' => 'nullable|string',
+            'program_studi' => 'required|string',
             'total_mahasiswa_aktif' => 'required|integer|min:1',
             'jumlah_lulus_tepat_waktu' => 'required|integer|min:0|lte:total_mahasiswa_aktif',
             'keterangan' => 'nullable|string',

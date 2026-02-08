@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Force HTTPS when behind ngrok/proxy
-        if (str_contains(config('app.url'), 'ngrok')) {
+        if (str_contains(config('app.url'), 'ngrok') || str_contains(request()->getHost(), 'ngrok-free.app')) {
             URL::forceScheme('https');
         }
     }

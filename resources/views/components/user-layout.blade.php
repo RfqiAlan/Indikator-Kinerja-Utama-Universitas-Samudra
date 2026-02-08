@@ -151,6 +151,7 @@ $ikuItems = [
 
             <!-- Page Content -->
             <main class="flex-1 overflow-y-auto bg-white p-4 lg:p-6">
+                <x-sweet-alert />
                 {{ $slot }}
             </main>
         </div>
