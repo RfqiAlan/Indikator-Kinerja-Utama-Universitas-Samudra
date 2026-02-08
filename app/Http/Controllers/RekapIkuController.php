@@ -41,7 +41,7 @@ class RekapIkuController extends Controller
      */
     public function index()
     {
-        $tahunAkademik = request()->get('tahun', date('Y') . '/' . (date('Y') + 1));
+        $tahunAkademik = request()->get('tahun', get_tahun_akademik());
         $fakultas = auth()->user()->fakultas;
 
         $iku1Data = Iku1Aee::where('tahun_akademik', $tahunAkademik)

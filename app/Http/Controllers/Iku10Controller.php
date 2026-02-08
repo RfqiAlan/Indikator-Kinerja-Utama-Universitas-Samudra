@@ -9,7 +9,7 @@ class Iku10Controller extends Controller
 {
     public function index(Request $request)
     {
-        $tahunAkademik = $request->get('tahun', date('Y') . '/' . (date('Y') + 1));
+        $tahunAkademik = $request->get('tahun', get_tahun_akademik());
         $fakultas = auth()->user()->fakultas;
         
         $data = Iku10ZonaIntegritas::where('tahun_akademik', $tahunAkademik)
@@ -42,7 +42,7 @@ class Iku10Controller extends Controller
 
     public function create()
     {
-        $tahunAkademik = date('Y') . '/' . (date('Y') + 1);
+        $tahunAkademik = get_tahun_akademik();
         $statusOptions = Iku10ZonaIntegritas::STATUS_OPTIONS;
         return view('iku10.create', compact('tahunAkademik', 'statusOptions'));
     }

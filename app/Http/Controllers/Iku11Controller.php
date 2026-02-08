@@ -9,7 +9,7 @@ class Iku11Controller extends Controller
 {
     public function index(Request $request)
     {
-        $tahunAkademik = $request->get('tahun', date('Y') . '/' . (date('Y') + 1));
+        $tahunAkademik = $request->get('tahun', get_tahun_akademik());
         
         $data = Iku11TataKelola::where('tahun_akademik', $tahunAkademik)->first();
 
@@ -36,7 +36,7 @@ class Iku11Controller extends Controller
 
     public function create()
     {
-        $tahunAkademik = date('Y') . '/' . (date('Y') + 1);
+        $tahunAkademik = get_tahun_akademik();
         $opiniOptions = Iku11TataKelola::OPINI_OPTIONS;
         return view('iku11.create', compact('tahunAkademik', 'opiniOptions'));
     }

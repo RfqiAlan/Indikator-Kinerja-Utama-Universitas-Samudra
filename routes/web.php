@@ -82,6 +82,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     
     // Faculty detail
     Route::get('/fakultas/{kode}', [AdminController::class, 'fakultasDetail'])->name('fakultas');
+    
+    // Export rekap
+    Route::get('/export', [AdminController::class, 'exportRekap'])->name('export');
 });
 
 require __DIR__.'/auth.php';

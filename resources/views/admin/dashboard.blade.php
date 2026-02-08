@@ -47,6 +47,39 @@
         </div>
     </div>
 
+    <!-- Export Section -->
+    <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 mb-6 lg:mb-8 text-white">
+        <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+            <div>
+                <h2 class="text-lg lg:text-xl font-bold flex items-center gap-2">
+                    <svg class="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    Download Rekap IKU
+                </h2>
+                <p class="text-emerald-100 text-sm mt-1">Export data IKU dalam format Excel (XLSX)</p>
+            </div>
+            <form action="{{ route('admin.export') }}" method="GET" class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full lg:w-auto">
+                <select name="fakultas" class="px-3 py-2 rounded-lg bg-white/20 border border-white/30 text-white text-sm focus:ring-2 focus:ring-white/50 focus:border-transparent backdrop-blur-sm">
+                    <option value="" class="text-slate-800">Semua Fakultas</option>
+                    @foreach(config('unsam.fakultas') as $kode => $data)
+                        <option value="{{ $kode }}" class="text-slate-800">{{ $data['nama'] }}</option>
+                    @endforeach
+                </select>
+                <select name="tahun" class="px-3 py-2 rounded-lg bg-white/20 border border-white/30 text-white text-sm focus:ring-2 focus:ring-white/50 focus:border-transparent backdrop-blur-sm">
+                    @foreach($availableYears as $year)
+                        <option value="{{ $year }}" class="text-slate-800" {{ $tahunAkademik === $year ? 'selected' : '' }}>{{ $year }}</option>
+                    @endforeach
+                </select>
+                <button type="submit" class="inline-flex items-center justify-center px-4 py-2 bg-white text-emerald-600 rounded-lg font-semibold text-sm hover:bg-emerald-50 transition-colors shadow-md">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                    </svg>
+                    Download XLSX
+                </button>
+            </form>
+        </div>
+    </div>
     <!-- Faculty Overview -->
     <div class="bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 mb-6 lg:mb-8">
         <h2 class="text-lg lg:text-xl font-bold text-slate-800 mb-4 lg:mb-6">Data per Fakultas ({{ $tahunAkademik }})</h2>

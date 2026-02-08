@@ -18,7 +18,7 @@ class AdminController extends Controller
     public function index()
     {
         $fakultasConfig = config('unsam.fakultas');
-        $tahunAkademik = date('Y') . '/' . (date('Y') + 1);
+        $tahunAkademik = get_tahun_akademik();
         
         // Get stats per fakultas
         $fakultasStats = [];
@@ -35,8 +35,23 @@ class AdminController extends Controller
         $totalUsers = User::count();
         $totalActivities = ActivityLog::count();
         $recentActivities = ActivityLog::with('user')->orderBy('created_at', 'desc')->take(10)->get();
+        
+        // Get available years from all IKU tables (realtime)
+        $availableYears = collect()
+            ->merge(Iku1Aee::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
+            ->merge(Iku2LulusanBekerja::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
+            ->merge(Iku3KegiatanMahasiswa::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
+            ->unique()
+            ->sort()
+            ->reverse()
+            ->values();
+        
+        // Add current year if no data exists
+        if ($availableYears->isEmpty()) {
+            $availableYears = collect([$tahunAkademik]);
+        }
             
-        return view('admin.dashboard', compact('fakultasStats', 'totalUsers', 'totalActivities', 'recentActivities', 'tahunAkademik'));
+        return view('admin.dashboard', compact('fakultasStats', 'totalUsers', 'totalActivities', 'recentActivities', 'tahunAkademik', 'availableYears'));
     }
 
     /**
@@ -146,7 +161,7 @@ class AdminController extends Controller
         $fakultas = $fakultasConfig[$kode];
         $fakultas['kode'] = $kode;
         
-        $tahunAkademik = request()->get('tahun', date('Y') . '/' . (date('Y') + 1));
+        $tahunAkademik = request()->get('tahun', get_tahun_akademik());
         
         $iku1Data = Iku1Aee::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
         $iku2Data = Iku2LulusanBekerja::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
@@ -155,5 +170,26 @@ class AdminController extends Controller
         $users = User::where('fakultas', $kode)->get();
 
         return view('admin.fakultas-detail', compact('fakultas', 'iku1Data', 'iku2Data', 'iku3Data', 'users', 'tahunAkademik'));
+    }
+
+    /**
+     * Export IKU recap data to Excel
+     */
+    public function exportRekap(Request $request)
+    {
+        $fakultas = $request->get('fakultas');
+        $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        
+        $fakultasName = $fakultas 
+            ? config("unsam.fakultas.{$fakultas}.nama", $fakultas)
+            : 'Semua_Fakultas';
+        
+        $filename = "Rekap_IKU_{$fakultasName}_{$tahunAkademik}.xlsx";
+        $filename = str_replace(['/', ' '], ['_', '_'], $filename);
+        
+        return \Maatwebsite\Excel\Facades\Excel::download(
+            new \App\Exports\RekapIkuExport($fakultas, $tahunAkademik),
+            $filename
+        );
     }
 }
