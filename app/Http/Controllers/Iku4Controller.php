@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Iku4RekognisiDosen;
+use App\Services\GoogleDriveService;
 use Illuminate\Http\Request;
 
 class Iku4Controller extends Controller
@@ -56,6 +57,7 @@ class Iku4Controller extends Controller
             'karya_seni_internasional' => 'required|integer|min:0',
             'produk_inovasi' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
+            'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
         // Validate sum of rekognisi doesn't exceed total dosen
@@ -70,6 +72,16 @@ class Iku4Controller extends Controller
         }
 
         $validated['fakultas'] = auth()->user()->fakultas;
+
+        // Upload lampiran to Google Drive
+        if ($request->hasFile('lampiran')) {
+            $driveService = new GoogleDriveService();
+            $link = $driveService->upload($request->file('lampiran'), 'IKU4');
+            if ($link) {
+                $validated['lampiran_link'] = $link;
+            }
+        }
+
         Iku4RekognisiDosen::create($validated);
 
         return redirect()->route('user.iku4.index')
@@ -94,7 +106,16 @@ class Iku4Controller extends Controller
             'keterangan' => 'nullable|string',
         ]);
 
-        $iku4->update($validated);
+        // Upload lampiran to Google Drive
+    if ($request->hasFile('lampiran')) {
+        $driveService = new GoogleDriveService();
+        $link = $driveService->upload($request->file('lampiran'), 'IKU4');
+        if ($link) {
+            $validated['lampiran_link'] = $link;
+        }
+    }
+
+    $iku4->update($validated);
 
         return redirect()->route('user.iku4.index')
             ->with('success', 'Data IKU 4 berhasil diperbarui.');

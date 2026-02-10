@@ -10,7 +10,7 @@
             </div>
         </x-slot>
         <div class="py-6 max-w-4xl mx-auto" x-data="formIku2()">
-            <form action="{{ route('user.iku2.store') }}" method="POST" class="bg-white rounded-2xl shadow-sm p-6 space-y-6">
+            <form action="{{ route('user.iku2.store') }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl shadow-sm p-6 space-y-6">
                 @csrf
                 <input type="hidden" name="fakultas" value="{{ auth()->user()->fakultas }}">
                 
@@ -102,6 +102,7 @@
                     <textarea name="keterangan" rows="2" class="w-full rounded-lg border-slate-300">{{ old('keterangan') }}</textarea>
                 </div>
 
+                @include("components.lampiran-upload")
                 <div class="flex justify-end gap-3 pt-4">
                     <a href="{{ route('user.iku2.index') }}" class="px-4 py-2 text-slate-600 hover:text-slate-800">Batal</a>
                     <button type="submit" class="px-6 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold shadow-md">Simpan Data</button>

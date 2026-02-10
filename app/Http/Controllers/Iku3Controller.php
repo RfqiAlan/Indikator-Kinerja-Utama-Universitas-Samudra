@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Iku3KegiatanMahasiswa;
+use App\Services\GoogleDriveService;
 use Illuminate\Http\Request;
 
 class Iku3Controller extends Controller
@@ -60,6 +61,7 @@ class Iku3Controller extends Controller
             'lomba' => 'required|integer|min:0',
             'wirausaha' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
+            'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
         // Validate sum of kegiatan doesn't exceed total
@@ -87,6 +89,16 @@ class Iku3Controller extends Controller
         }
 
         $validated['fakultas'] = $fakultas;
+
+        // Upload lampiran to Google Drive
+        if ($request->hasFile('lampiran')) {
+            $driveService = new GoogleDriveService();
+            $link = $driveService->upload($request->file('lampiran'), 'IKU3');
+            if ($link) {
+                $validated['lampiran_link'] = $link;
+            }
+        }
+
         Iku3KegiatanMahasiswa::create($validated);
 
         return redirect()->route('user.iku3.index')
@@ -113,7 +125,16 @@ class Iku3Controller extends Controller
             'keterangan' => 'nullable|string',
         ]);
 
-        $iku3->update($validated);
+        // Upload lampiran to Google Drive
+    if ($request->hasFile('lampiran')) {
+        $driveService = new GoogleDriveService();
+        $link = $driveService->upload($request->file('lampiran'), 'IKU3');
+        if ($link) {
+            $validated['lampiran_link'] = $link;
+        }
+    }
+
+    $iku3->update($validated);
 
         return redirect()->route('user.iku3.index')
             ->with('success', 'Data IKU 3 berhasil diperbarui.');

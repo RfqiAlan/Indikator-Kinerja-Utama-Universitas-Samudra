@@ -10,8 +10,8 @@
         <x-slot name="header">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100">IKU 6: Publikasi Scopus/WoS</h2>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Proporsi publikasi Q1-Q4 dengan bobot berbeda.</p>
+                    <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 tracking-tight antialiased">IKU 6: Publikasi Scopus/WoS</h2>
+                    <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1 antialiased">Proporsi publikasi Q1-Q4 dengan bobot berbeda.</p>
                 </div>
                 <div class="flex items-center gap-3">
                     <form method="GET" action="{{ route('user.iku6.index') }}"><select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 focus:border-emerald-500 rounded-lg">@foreach($availableYears as $year)<option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>@endforeach</select></form>

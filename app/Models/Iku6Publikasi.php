@@ -23,6 +23,7 @@ class Iku6Publikasi extends Model
         'skor_publikasi',
         'persentase_iku6',
         'keterangan',
+        'lampiran_link',
     ];
 
     protected $casts = [

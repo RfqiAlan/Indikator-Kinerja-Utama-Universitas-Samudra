@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Iku5LuaranKerjasama;
+use App\Services\GoogleDriveService;
 use Illuminate\Http\Request;
 
 class Iku5Controller extends Controller
@@ -56,6 +57,7 @@ class Iku5Controller extends Controller
             'ttg' => 'required|integer|min:0',
             'karya_seni_kolaboratif' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
+            'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
         // Validate sum of luaran doesn't exceed total dosen
@@ -70,6 +72,16 @@ class Iku5Controller extends Controller
         }
 
         $validated['fakultas'] = auth()->user()->fakultas;
+
+        // Upload lampiran to Google Drive
+        if ($request->hasFile('lampiran')) {
+            $driveService = new GoogleDriveService();
+            $link = $driveService->upload($request->file('lampiran'), 'IKU5');
+            if ($link) {
+                $validated['lampiran_link'] = $link;
+            }
+        }
+
         Iku5LuaranKerjasama::create($validated);
 
         return redirect()->route('user.iku5.index')
@@ -94,7 +106,16 @@ class Iku5Controller extends Controller
             'keterangan' => 'nullable|string',
         ]);
 
-        $iku5->update($validated);
+        // Upload lampiran to Google Drive
+    if ($request->hasFile('lampiran')) {
+        $driveService = new GoogleDriveService();
+        $link = $driveService->upload($request->file('lampiran'), 'IKU5');
+        if ($link) {
+            $validated['lampiran_link'] = $link;
+        }
+    }
+
+    $iku5->update($validated);
 
         return redirect()->route('user.iku5.index')
             ->with('success', 'Data IKU 5 berhasil diperbarui.');

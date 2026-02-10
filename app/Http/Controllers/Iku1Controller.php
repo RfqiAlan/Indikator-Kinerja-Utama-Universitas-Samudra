@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Iku1Aee;
+use App\Services\GoogleDriveService;
 use Illuminate\Http\Request;
 
 class Iku1Controller extends Controller
@@ -72,6 +73,7 @@ class Iku1Controller extends Controller
             'total_mahasiswa_aktif' => 'required|integer|min:1',
             'jumlah_lulus_tepat_waktu' => 'required|integer|min:0|lte:total_mahasiswa_aktif',
             'keterangan' => 'nullable|string',
+            'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ], [
             'jumlah_lulus_tepat_waktu.lte' => 'Jumlah lulus tepat waktu tidak boleh melebihi total mahasiswa aktif.',
         ]);
@@ -92,6 +94,15 @@ class Iku1Controller extends Controller
         // Set AEE Ideal based on jenjang
         $validated['aee_ideal'] = Iku1Aee::getAeeIdeal($validated['jenjang']);
         $validated['fakultas'] = $fakultas;
+
+        // Upload lampiran to Google Drive
+        if ($request->hasFile('lampiran')) {
+            $driveService = new GoogleDriveService();
+            $link = $driveService->upload($request->file('lampiran'), 'IKU1');
+            if ($link) {
+                $validated['lampiran_link'] = $link;
+            }
+        }
 
         Iku1Aee::create($validated);
 
@@ -123,10 +134,20 @@ class Iku1Controller extends Controller
             'jumlah_lulus_tepat_waktu' => 'required|integer|min:0',
             'total_mahasiswa_aktif' => 'required|integer|min:1',
             'keterangan' => 'nullable|string',
+            'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
         // Set AEE Ideal based on jenjang
         $validated['aee_ideal'] = Iku1Aee::getAeeIdeal($validated['jenjang']);
+
+        // Upload lampiran to Google Drive
+        if ($request->hasFile('lampiran')) {
+            $driveService = new GoogleDriveService();
+            $link = $driveService->upload($request->file('lampiran'), 'IKU1');
+            if ($link) {
+                $validated['lampiran_link'] = $link;
+            }
+        }
 
         $iku1->update($validated);
 

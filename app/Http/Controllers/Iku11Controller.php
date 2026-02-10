@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Iku11TataKelola;
+use App\Services\GoogleDriveService;
 use Illuminate\Http\Request;
 
 class Iku11Controller extends Controller
@@ -49,9 +50,20 @@ class Iku11Controller extends Controller
             'nilai_sakip' => 'nullable|numeric|min:0|max:100',
             'jumlah_pelanggaran' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
+            'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
         $validated['fakultas'] = auth()->user()->fakultas;
+
+        // Upload lampiran to Google Drive
+        if ($request->hasFile('lampiran')) {
+            $driveService = new GoogleDriveService();
+            $link = $driveService->upload($request->file('lampiran'), 'IKU11');
+            if ($link) {
+                $validated['lampiran_link'] = $link;
+            }
+        }
+
         Iku11TataKelola::create($validated);
 
         return redirect()->route('user.iku11.index')
@@ -72,7 +84,17 @@ class Iku11Controller extends Controller
             'nilai_sakip' => 'nullable|numeric|min:0|max:100',
             'jumlah_pelanggaran' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
+            'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
+
+        // Upload lampiran to Google Drive
+        if ($request->hasFile('lampiran')) {
+            $driveService = new GoogleDriveService();
+            $link = $driveService->upload($request->file('lampiran'), 'IKU11');
+            if ($link) {
+                $validated['lampiran_link'] = $link;
+            }
+        }
 
         $iku11->update($validated);
 

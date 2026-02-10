@@ -25,6 +25,7 @@ class Iku3KegiatanMahasiswa extends Model
         'total_berkegiatan',
         'persentase_iku3',
         'keterangan',
+        'lampiran_link',
     ];
 
     protected $casts = [

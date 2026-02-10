@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Iku6Publikasi;
+use App\Services\GoogleDriveService;
 use Illuminate\Http\Request;
 
 class Iku6Controller extends Controller
@@ -56,6 +57,7 @@ class Iku6Controller extends Controller
             'publikasi_q4' => 'required|integer|min:0',
             'publikasi_kolaborasi' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
+            'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
         // Validate sum of quartiles doesn't exceed total publikasi
@@ -69,6 +71,16 @@ class Iku6Controller extends Controller
         }
 
         $validated['fakultas'] = auth()->user()->fakultas;
+
+        // Upload lampiran to Google Drive
+        if ($request->hasFile('lampiran')) {
+            $driveService = new GoogleDriveService();
+            $link = $driveService->upload($request->file('lampiran'), 'IKU6');
+            if ($link) {
+                $validated['lampiran_link'] = $link;
+            }
+        }
+
         Iku6Publikasi::create($validated);
 
         return redirect()->route('user.iku6.index')
@@ -91,7 +103,17 @@ class Iku6Controller extends Controller
             'publikasi_q4' => 'required|integer|min:0',
             'publikasi_kolaborasi' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
+            'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
+
+        // Upload lampiran to Google Drive
+        if ($request->hasFile('lampiran')) {
+            $driveService = new GoogleDriveService();
+            $link = $driveService->upload($request->file('lampiran'), 'IKU6');
+            if ($link) {
+                $validated['lampiran_link'] = $link;
+            }
+        }
 
         $iku6->update($validated);
 

@@ -24,6 +24,7 @@ class Iku9Pendapatan extends Model
         'total_non_ukt',
         'persentase_iku9',
         'keterangan',
+        'lampiran_link',
     ];
 
     protected $casts = [

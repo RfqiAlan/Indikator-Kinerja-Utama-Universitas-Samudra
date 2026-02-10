@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Iku7Sdgs;
+use App\Services\GoogleDriveService;
 use Illuminate\Http\Request;
 
 class Iku7Controller extends Controller
@@ -60,6 +61,7 @@ class Iku7Controller extends Controller
             'kerjasama' => 'required|integer|min:0',
             'kebijakan' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
+            'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
         // Validate sum of bidang fields doesn't exceed total program
@@ -74,6 +76,16 @@ class Iku7Controller extends Controller
         }
 
         $validated['fakultas'] = auth()->user()->fakultas;
+
+        // Upload lampiran to Google Drive
+        if ($request->hasFile('lampiran')) {
+            $driveService = new GoogleDriveService();
+            $link = $driveService->upload($request->file('lampiran'), 'IKU7');
+            if ($link) {
+                $validated['lampiran_link'] = $link;
+            }
+        }
+
         Iku7Sdgs::create($validated);
 
         return redirect()->route('user.iku7.index')
@@ -100,7 +112,17 @@ class Iku7Controller extends Controller
             'kerjasama' => 'required|integer|min:0',
             'kebijakan' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
+            'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
+
+        // Upload lampiran to Google Drive
+        if ($request->hasFile('lampiran')) {
+            $driveService = new GoogleDriveService();
+            $link = $driveService->upload($request->file('lampiran'), 'IKU7');
+            if ($link) {
+                $validated['lampiran_link'] = $link;
+            }
+        }
 
         $iku7->update($validated);
 

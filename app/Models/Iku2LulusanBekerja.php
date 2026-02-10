@@ -26,6 +26,7 @@ class Iku2LulusanBekerja extends Model
         'skor_wirausaha',
         'persentase_iku2',
         'keterangan',
+        'lampiran_link',
     ];
 
     protected $casts = [

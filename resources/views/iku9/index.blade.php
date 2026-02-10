@@ -5,7 +5,10 @@
     <x-user-layout activeIku="IKU 9">
         <x-slot name="header">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div><h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100">IKU 9: Pendapatan Non-UKT</h2><p class="text-sm text-slate-500 mt-1">Hibah riset, konsultasi, unit bisnis, royalti, inkubator.</p></div>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 tracking-tight antialiased">IKU 9: Pendapatan Non-UKT</h2>
+                    <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1 antialiased">Hibah riset, konsultasi, unit bisnis, royalti, inkubator.</p>
+                </div>
                 <div class="flex items-center gap-3">
                     <form method="GET" action="{{ route('user.iku9.index') }}"><select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 focus:border-emerald-500 rounded-lg">@foreach($availableYears as $year)<option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>@endforeach</select></form>
                     <a href="{{ route('user.iku9.create') }}" class="inline-flex items-center px-4 py-2 bg-emerald-600 rounded-lg text-xs text-white uppercase hover:bg-emerald-700 shadow-md"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>Tambah</a>

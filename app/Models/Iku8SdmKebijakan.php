@@ -22,6 +22,7 @@ class Iku8SdmKebijakan extends Model
         'total_terlibat',
         'persentase_iku8',
         'keterangan',
+        'lampiran_link',
     ];
 
     protected $casts = [

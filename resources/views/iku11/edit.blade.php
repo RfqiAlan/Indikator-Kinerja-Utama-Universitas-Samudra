@@ -7,7 +7,7 @@
             <div><h2 class="text-2xl font-bold text-slate-800">Edit Data IKU 11</h2><p class="text-sm text-slate-500 mt-1">{{ auth()->user()->fakultas_nama ?? 'Fakultas' }} - Tata Kelola Keuangan</p></div>
         </x-slot>
         <div class="py-6 max-w-4xl mx-auto">
-            <form action="{{ route('user.iku11.update', $iku11) }}" method="POST" class="bg-white rounded-2xl shadow-sm p-6 space-y-6">
+            <form action="{{ route('user.iku11.update', $iku11) }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl shadow-sm p-6 space-y-6">
                 @csrf
                 @method('PUT')
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -19,6 +19,7 @@
                     <div><label class="block text-sm font-medium text-slate-700 mb-1">Jumlah Pelanggaran</label><input type="number" name="jumlah_pelanggaran" min="0" value="{{ old('jumlah_pelanggaran', $iku11->jumlah_pelanggaran) }}" class="w-full rounded-lg border-slate-300" required></div>
                 </div>
                 <div><label class="block text-sm font-medium text-slate-700 mb-1">Keterangan</label><textarea name="keterangan" rows="2" class="w-full rounded-lg border-slate-300">{{ old('keterangan', $iku11->keterangan) }}</textarea></div>
+                @include("components.lampiran-upload", ["existingLink" => $iku11->lampiran_link ?? null])
                 <div class="flex justify-end gap-3"><a href="{{ route('user.iku11.index') }}" class="px-4 py-2 text-slate-600">Batal</a><button type="submit" class="px-6 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold">Simpan</button></div>
             </form>
         </div>

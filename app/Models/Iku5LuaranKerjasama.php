@@ -23,6 +23,7 @@ class Iku5LuaranKerjasama extends Model
         'total_luaran',
         'persentase_iku5',
         'keterangan',
+        'lampiran_link',
     ];
 
     protected $casts = [

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Iku2LulusanBekerja;
+use App\Services\GoogleDriveService;
 use Illuminate\Http\Request;
 
 class Iku2Controller extends Controller
@@ -67,6 +68,7 @@ class Iku2Controller extends Controller
             'wirausaha_founder' => 'required|integer|min:0',
             'wirausaha_freelancer' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
+            'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
         // Validate sum of sub-fields doesn't exceed total
@@ -92,6 +94,15 @@ class Iku2Controller extends Controller
         if ($existing) {
             return redirect()->route('user.iku2.edit', $existing->id)
                 ->with('warning', 'Data untuk prodi ini sudah ada. Silakan edit data yang sudah ada.');
+        }
+
+        // Upload lampiran to Google Drive
+        if ($request->hasFile('lampiran')) {
+            $driveService = new GoogleDriveService();
+            $link = $driveService->upload($request->file('lampiran'), 'IKU2');
+            if ($link) {
+                $validated['lampiran_link'] = $link;
+            }
         }
 
         Iku2LulusanBekerja::create($validated);
@@ -121,7 +132,16 @@ class Iku2Controller extends Controller
             'keterangan' => 'nullable|string',
         ]);
 
-        $iku2->update($validated);
+        // Upload lampiran to Google Drive
+    if ($request->hasFile('lampiran')) {
+        $driveService = new GoogleDriveService();
+        $link = $driveService->upload($request->file('lampiran'), 'IKU2');
+        if ($link) {
+            $validated['lampiran_link'] = $link;
+        }
+    }
+
+    $iku2->update($validated);
 
         return redirect()->route('user.iku2.index')
             ->with('success', 'Data IKU 2 berhasil diperbarui.');

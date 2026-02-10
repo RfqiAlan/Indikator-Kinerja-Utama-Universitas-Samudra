@@ -12,8 +12,8 @@
         <x-slot name="header">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100">IKU 2: Lulusan Bekerja/Studi/Wirausaha</h2>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Persentase lulusan produktif dalam 12 bulan setelah kelulusan.</p>
+                    <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 tracking-tight antialiased">IKU 2: Lulusan Bekerja/Studi/Wirausaha</h2>
+                    <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1 antialiased">Persentase lulusan produktif dalam 12 bulan setelah kelulusan.</p>
                 </div>
                 <div class="flex items-center gap-3">
                     <form method="GET" action="{{ route('user.iku2.index') }}" class="flex items-center">

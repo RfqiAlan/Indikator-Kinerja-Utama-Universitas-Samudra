@@ -18,7 +18,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- Main Form Area -->
                 <div class="lg:col-span-2 space-y-6">
-                    <form action="{{ route('user.iku1.update', $iku1) }}" method="POST" class="space-y-6">
+                    <form action="{{ route('user.iku1.update', $iku1) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                         @csrf
                         @method('PUT')
                         
@@ -102,6 +102,8 @@
                                     placeholder="Tambahkan keterangan jika diperlukan...">{{ old('keterangan', $iku1->keterangan) }}</textarea>
                             </div>
                         </div>
+
+                        @include("components.lampiran-upload", ["existingLink" => $iku1->lampiran_link ?? null])
 
                         <!-- Action Buttons -->
                         <div class="flex items-center justify-end gap-3 pt-4">

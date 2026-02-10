@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Iku10ZonaIntegritas;
+use App\Services\GoogleDriveService;
 use Illuminate\Http\Request;
 
 class Iku10Controller extends Controller
@@ -58,11 +59,21 @@ class Iku10Controller extends Controller
             'dokumen_lengkap' => 'boolean',
             'terdaftar_kemenpan' => 'boolean',
             'keterangan' => 'nullable|string',
+            'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
         $validated['dokumen_lengkap'] = $request->has('dokumen_lengkap');
         $validated['terdaftar_kemenpan'] = $request->has('terdaftar_kemenpan');
         $validated['fakultas'] = auth()->user()->fakultas;
+
+        // Upload lampiran to Google Drive
+        if ($request->hasFile('lampiran')) {
+            $driveService = new GoogleDriveService();
+            $link = $driveService->upload($request->file('lampiran'), 'IKU10');
+            if ($link) {
+                $validated['lampiran_link'] = $link;
+            }
+        }
 
         Iku10ZonaIntegritas::create($validated);
 
@@ -87,10 +98,20 @@ class Iku10Controller extends Controller
             'dokumen_lengkap' => 'boolean',
             'terdaftar_kemenpan' => 'boolean',
             'keterangan' => 'nullable|string',
+            'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
         $validated['dokumen_lengkap'] = $request->has('dokumen_lengkap');
         $validated['terdaftar_kemenpan'] = $request->has('terdaftar_kemenpan');
+
+        // Upload lampiran to Google Drive
+        if ($request->hasFile('lampiran')) {
+            $driveService = new GoogleDriveService();
+            $link = $driveService->upload($request->file('lampiran'), 'IKU10');
+            if ($link) {
+                $validated['lampiran_link'] = $link;
+            }
+        }
 
         $iku10->update($validated);
 

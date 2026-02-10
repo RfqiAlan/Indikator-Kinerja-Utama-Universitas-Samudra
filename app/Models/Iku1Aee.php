@@ -21,6 +21,7 @@ class Iku1Aee extends Model
         'aee_realisasi',
         'tingkat_pencapaian',
         'keterangan',
+        'lampiran_link',
     ];
 
     /**

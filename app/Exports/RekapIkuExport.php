@@ -103,7 +103,7 @@ class Iku1Sheet extends BaseIkuSheet
 
     public function headings(): array
     {
-        return ['Fakultas', 'Program Studi', 'Jenjang', 'Total Mahasiswa', 'Lulus Tepat Waktu', 'AEE Realisasi (%)', 'Tingkat Pencapaian (%)'];
+        return ['Fakultas', 'Program Studi', 'Jenjang', 'Total Mahasiswa', 'Lulus Tepat Waktu', 'AEE Realisasi (%)', 'Tingkat Pencapaian (%)', 'Link Bukti Pendukung'];
     }
 
     public function collection(): Collection
@@ -122,6 +122,7 @@ class Iku1Sheet extends BaseIkuSheet
                 $item->jumlah_lulus_tepat_waktu,
                 number_format($item->aee_realisasi, 2),
                 number_format($item->tingkat_pencapaian, 2),
+                $item->lampiran_link ?? '-',
             ];
         });
     }
@@ -137,7 +138,7 @@ class Iku2Sheet extends BaseIkuSheet
 
     public function headings(): array
     {
-        return ['Fakultas', 'Program Studi', 'Total Lulusan', 'Bekerja', 'Studi Lanjut', 'Wirausaha', 'Persentase IKU2 (%)'];
+        return ['Fakultas', 'Program Studi', 'Total Lulusan', 'Bekerja', 'Studi Lanjut', 'Wirausaha', 'Persentase IKU2 (%)', 'Link Bukti Pendukung'];
     }
 
     public function collection(): Collection
@@ -156,6 +157,7 @@ class Iku2Sheet extends BaseIkuSheet
                 $item->studi_lanjut,
                 $item->total_wirausaha ?? 0,
                 number_format($item->persentase_iku2, 2),
+                $item->lampiran_link ?? '-',
             ];
         });
     }
@@ -171,7 +173,7 @@ class Iku3Sheet extends BaseIkuSheet
 
     public function headings(): array
     {
-        return ['Fakultas', 'Program Studi', 'Total Mahasiswa', 'MBKM', 'Magang', 'Penelitian', 'Persentase (%)'];
+        return ['Fakultas', 'Program Studi', 'Total Mahasiswa', 'MBKM', 'Magang', 'Penelitian', 'Persentase (%)', 'Link Bukti Pendukung'];
     }
 
     public function collection(): Collection
@@ -190,6 +192,7 @@ class Iku3Sheet extends BaseIkuSheet
                 $item->jumlah_magang ?? 0,
                 $item->jumlah_penelitian ?? 0,
                 number_format($item->persentase_iku3 ?? 0, 2),
+                $item->lampiran_link ?? '-',
             ];
         });
     }
@@ -205,7 +208,7 @@ class Iku4Sheet extends BaseIkuSheet
 
     public function headings(): array
     {
-        return ['Fakultas', 'Nama Dosen', 'Jenis Rekognisi', 'Tingkat', 'Tahun', 'Keterangan'];
+        return ['Fakultas', 'Nama Dosen', 'Jenis Rekognisi', 'Tingkat', 'Tahun', 'Keterangan', 'Link Bukti Pendukung'];
     }
 
     public function collection(): Collection
@@ -223,6 +226,7 @@ class Iku4Sheet extends BaseIkuSheet
                 $item->tingkat ?? '-',
                 $item->tahun_akademik,
                 $item->keterangan ?? '-',
+                $item->lampiran_link ?? '-',
             ];
         });
     }
@@ -238,7 +242,7 @@ class Iku5Sheet extends BaseIkuSheet
 
     public function headings(): array
     {
-        return ['Fakultas', 'Nama Kerjasama', 'Jenis', 'Mitra', 'Tahun', 'Keterangan'];
+        return ['Fakultas', 'Nama Kerjasama', 'Jenis', 'Mitra', 'Tahun', 'Keterangan', 'Link Bukti Pendukung'];
     }
 
     public function collection(): Collection
@@ -256,6 +260,7 @@ class Iku5Sheet extends BaseIkuSheet
                 $item->mitra ?? '-',
                 $item->tahun_akademik,
                 $item->keterangan ?? '-',
+                $item->lampiran_link ?? '-',
             ];
         });
     }
@@ -271,7 +276,7 @@ class Iku6Sheet extends BaseIkuSheet
 
     public function headings(): array
     {
-        return ['Fakultas', 'Judul', 'Penulis', 'Jenis Publikasi', 'Indeksasi', 'Tahun'];
+        return ['Fakultas', 'Judul', 'Penulis', 'Jenis Publikasi', 'Indeksasi', 'Tahun', 'Link Bukti Pendukung'];
     }
 
     public function collection(): Collection
@@ -289,6 +294,7 @@ class Iku6Sheet extends BaseIkuSheet
                 $item->jenis_publikasi ?? '-',
                 $item->indeksasi ?? '-',
                 $item->tahun_akademik,
+                $item->lampiran_link ?? '-',
             ];
         });
     }
@@ -304,7 +310,7 @@ class Iku7Sheet extends BaseIkuSheet
 
     public function headings(): array
     {
-        return ['Fakultas', 'Nama Kegiatan', 'SDGs Terkait', 'Jenis', 'Tahun', 'Keterangan'];
+        return ['Fakultas', 'Nama Kegiatan', 'SDGs Terkait', 'Jenis', 'Tahun', 'Keterangan', 'Link Bukti Pendukung'];
     }
 
     public function collection(): Collection
@@ -322,6 +328,7 @@ class Iku7Sheet extends BaseIkuSheet
                 $item->jenis ?? '-',
                 $item->tahun_akademik,
                 $item->keterangan ?? '-',
+                $item->lampiran_link ?? '-',
             ];
         });
     }
@@ -337,7 +344,7 @@ class Iku8Sheet extends BaseIkuSheet
 
     public function headings(): array
     {
-        return ['Fakultas', 'Nama SDM', 'Jabatan', 'Lingkup', 'Tahun', 'Keterangan'];
+        return ['Fakultas', 'Nama SDM', 'Jabatan', 'Lingkup', 'Tahun', 'Keterangan', 'Link Bukti Pendukung'];
     }
 
     public function collection(): Collection
@@ -355,6 +362,7 @@ class Iku8Sheet extends BaseIkuSheet
                 $item->lingkup ?? '-',
                 $item->tahun_akademik,
                 $item->keterangan ?? '-',
+                $item->lampiran_link ?? '-',
             ];
         });
     }
@@ -370,7 +378,7 @@ class Iku9Sheet extends BaseIkuSheet
 
     public function headings(): array
     {
-        return ['Fakultas', 'Sumber Pendapatan', 'Nominal (Rp)', 'Jenis', 'Tahun', 'Keterangan'];
+        return ['Fakultas', 'Sumber Pendapatan', 'Nominal (Rp)', 'Jenis', 'Tahun', 'Keterangan', 'Link Bukti Pendukung'];
     }
 
     public function collection(): Collection
@@ -388,6 +396,7 @@ class Iku9Sheet extends BaseIkuSheet
                 $item->jenis ?? '-',
                 $item->tahun_akademik,
                 $item->keterangan ?? '-',
+                $item->lampiran_link ?? '-',
             ];
         });
     }
@@ -403,7 +412,7 @@ class Iku10Sheet extends BaseIkuSheet
 
     public function headings(): array
     {
-        return ['Fakultas', 'Status ZI', 'Level', 'Tanggal Penetapan', 'Tahun', 'Keterangan'];
+        return ['Fakultas', 'Status ZI', 'Level', 'Tanggal Penetapan', 'Tahun', 'Keterangan', 'Link Bukti Pendukung'];
     }
 
     public function collection(): Collection
@@ -421,6 +430,7 @@ class Iku10Sheet extends BaseIkuSheet
                 $item->tanggal_penetapan ?? '-',
                 $item->tahun_akademik,
                 $item->keterangan ?? '-',
+                $item->lampiran_link ?? '-',
             ];
         });
     }
@@ -436,7 +446,7 @@ class Iku11Sheet extends BaseIkuSheet
 
     public function headings(): array
     {
-        return ['Fakultas', 'Komponen', 'Status', 'Nilai', 'Tahun', 'Keterangan'];
+        return ['Fakultas', 'Komponen', 'Status', 'Nilai', 'Tahun', 'Keterangan', 'Link Bukti Pendukung'];
     }
 
     public function collection(): Collection
@@ -454,6 +464,7 @@ class Iku11Sheet extends BaseIkuSheet
                 $item->nilai ?? '-',
                 $item->tahun_akademik,
                 $item->keterangan ?? '-',
+                $item->lampiran_link ?? '-',
             ];
         });
     }

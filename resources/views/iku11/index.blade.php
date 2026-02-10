@@ -5,7 +5,10 @@
     <x-user-layout activeIku="IKU 11">
         <x-slot name="header">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div><h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100">IKU 11: Tata Kelola Keuangan</h2><p class="text-sm text-slate-500 mt-1">Opini WTP, Predikat SAKIP, Integritas Akademik.</p></div>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 tracking-tight antialiased">IKU 11: Tata Kelola Keuangan</h2>
+                    <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1 antialiased">Opini WTP, Predikat SAKIP, Integritas Akademik.</p>
+                </div>
                 <div class="flex items-center gap-3">
                     <form method="GET" action="{{ route('user.iku11.index') }}"><select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 rounded-lg">@foreach($availableYears as $year)<option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>@endforeach</select></form>
                     <a href="{{ route('user.iku11.create') }}" class="px-4 py-2 bg-emerald-600 rounded-lg text-xs text-white">Tambah</a>

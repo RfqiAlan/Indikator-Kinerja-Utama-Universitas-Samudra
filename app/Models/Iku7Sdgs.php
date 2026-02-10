@@ -27,6 +27,7 @@ class Iku7Sdgs extends Model
         'total_program_sdgs',
         'persentase_iku7',
         'keterangan',
+        'lampiran_link',
     ];
 
     protected $casts = [

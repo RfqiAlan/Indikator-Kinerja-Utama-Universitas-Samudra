@@ -21,6 +21,7 @@ class Iku10ZonaIntegritas extends Model
         'dokumen_lengkap',
         'terdaftar_kemenpan',
         'keterangan',
+        'lampiran_link',
     ];
 
     protected $casts = [

@@ -19,6 +19,7 @@ class Iku11TataKelola extends Model
         'predikat_sakip',
         'jumlah_pelanggaran',
         'keterangan',
+        'lampiran_link',
     ];
 
     protected $casts = [

@@ -23,6 +23,7 @@ class Iku4RekognisiDosen extends Model
         'total_rekognisi',
         'persentase_iku4',
         'keterangan',
+        'lampiran_link',
     ];
 
     protected $casts = [

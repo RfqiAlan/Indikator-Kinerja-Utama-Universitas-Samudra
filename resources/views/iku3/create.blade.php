@@ -25,7 +25,7 @@
             </div>
             @endif
             
-            <form action="{{ route('user.iku3.store') }}" method="POST" class="bg-white rounded-2xl shadow-sm p-6 space-y-6">
+            <form action="{{ route('user.iku3.store') }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl shadow-sm p-6 space-y-6">
                 @csrf
                 
                 <div class="border-b pb-6">
@@ -95,6 +95,7 @@
                     <textarea name="keterangan" rows="2" class="w-full rounded-lg border-slate-300">{{ old('keterangan') }}</textarea>
                 </div>
 
+                @include("components.lampiran-upload")
                 <div class="flex justify-end gap-3 pt-4">
                     <a href="{{ route('user.iku3.index') }}" class="px-4 py-2 text-slate-600">Batal</a>
                     <button type="submit" class="px-6 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold shadow-md">Simpan Data</button>
