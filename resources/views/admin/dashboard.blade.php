@@ -1,7 +1,15 @@
 <x-admin-layout activePage="dashboard">
-    <div class="mb-6 lg:mb-8">
-        <h1 class="text-2xl lg:text-3xl font-bold text-slate-800">Dashboard Admin</h1>
-        <p class="text-slate-500 mt-1 text-sm lg:text-base">Pantau data IKU seluruh fakultas</p>
+    <div class="mb-6 lg:mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+            <h1 class="text-2xl lg:text-3xl font-bold text-slate-800">Dashboard Admin</h1>
+            <p class="text-slate-500 mt-1 text-sm lg:text-base">Pantau data IKU seluruh fakultas</p>
+        </div>
+        <form method="POST" action="{{ route('logout') }}" class="self-start sm:self-auto">
+            @csrf
+            <button type="submit" class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-rose-600 text-white text-sm font-semibold hover:bg-rose-700 transition">
+                Logout
+            </button>
+        </form>
     </div>
 
     <!-- Stats Cards -->

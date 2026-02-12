@@ -33,30 +33,45 @@ class GoogleDriveService
             // Determine target folder
             $parentId = $subfolder ? $this->getOrCreateSubfolder($subfolder) : $this->folderId;
 
-            // Create Drive file metadata
             $driveFile = new DriveFile([
                 'name' => time() . '_' . $file->getClientOriginalName(),
                 'parents' => [$parentId],
             ]);
 
-            // Upload
+            // Upload (Shared Drive: supportsAllDrives wajib)
             $result = $this->driveService->files->create($driveFile, [
                 'data' => file_get_contents($file->getRealPath()),
                 'mimeType' => $file->getMimeType(),
                 'uploadType' => 'multipart',
                 'fields' => 'id, webViewLink',
+                'supportsAllDrives' => true,
             ]);
 
             // Set permission: anyone with link can view
-            $this->driveService->permissions->create($result->id, new Permission([
-                'type' => 'anyone',
-                'role' => 'reader',
-            ]));
+            // NOTE: di sebagian Shared Drive, permission "anyone" bisa diblok oleh admin.
+            try {
+                $this->driveService->permissions->create(
+                    $result->id,
+                    new Permission([
+                        'type' => 'anyone',
+                        'role' => 'reader',
+                    ]),
+                    [
+                        'supportsAllDrives' => true,
+                    ]
+                );
+            } catch (\Exception $permEx) {
+                Log::warning('Google Drive permission set failed (file uploaded but may be private): ' . $permEx->getMessage());
+                // Tetap return webViewLink, tapi mungkin perlu login/akses drive.
+            }
 
             return $result->webViewLink;
 
         } catch (\Exception $e) {
-            Log::error('Google Drive upload failed: ' . $e->getMessage());
+            Log::error('Google Drive upload failed: ' . $e->getMessage(), [
+                'folderId' => $this->folderId,
+                'subfolder' => $subfolder,
+            ]);
             return null;
         }
     }
@@ -69,7 +84,9 @@ class GoogleDriveService
         try {
             $fileId = $this->extractFileId($link);
             if ($fileId) {
-                $this->driveService->files->delete($fileId);
+                $this->driveService->files->delete($fileId, [
+                    'supportsAllDrives' => true,
+                ]);
                 return true;
             }
         } catch (\Exception $e) {
@@ -83,26 +100,34 @@ class GoogleDriveService
      */
     protected function getOrCreateSubfolder(string $name): string
     {
-        // Check if folder exists
-        $query = "name='{$name}' and '{$this->folderId}' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false";
+        // Shared Drive: listFiles perlu supportsAllDrives + includeItemsFromAllDrives
+        $safeName = addslashes($name);
+        $query = "name='{$safeName}' and '{$this->folderId}' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false";
+
         $results = $this->driveService->files->listFiles([
             'q' => $query,
             'fields' => 'files(id)',
             'pageSize' => 1,
+            'supportsAllDrives' => true,
+            'includeItemsFromAllDrives' => true,
         ]);
 
         if (count($results->getFiles()) > 0) {
             return $results->getFiles()[0]->getId();
         }
 
-        // Create folder
+        // Create folder (Shared Drive: supportsAllDrives)
         $folder = new DriveFile([
             'name' => $name,
             'mimeType' => 'application/vnd.google-apps.folder',
             'parents' => [$this->folderId],
         ]);
 
-        $created = $this->driveService->files->create($folder, ['fields' => 'id']);
+        $created = $this->driveService->files->create($folder, [
+            'fields' => 'id',
+            'supportsAllDrives' => true,
+        ]);
+
         return $created->getId();
     }
 
@@ -111,7 +136,6 @@ class GoogleDriveService
      */
     protected function extractFileId(string $link): ?string
     {
-        // Pattern: /file/d/{id}/... or id={id}
         if (preg_match('/\/file\/d\/([a-zA-Z0-9_-]+)/', $link, $m)) {
             return $m[1];
         }
