@@ -20,13 +20,32 @@ class Iku1Controller extends Controller
         'Profesi' => ['name' => 'Program Profesi', 'aee_ideal' => 50, 'masa_studi' => 'Sesuai kurikulum'],
     ];
 
+    private function resolveFakultas(?string $userFakultas, ?string $programStudi): ?string
+    {
+        if ($userFakultas) {
+            return $userFakultas;
+        }
+
+        if (!$programStudi) {
+            return null;
+        }
+
+        foreach (config('unsam.fakultas', []) as $key => $fakultas) {
+            if (!empty($fakultas['prodi'][$programStudi])) {
+                return $key;
+            }
+        }
+
+        return null;
+    }
+
     /**
      * Display IKU 1 dashboard
      */
     public function index(Request $request)
     {
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
-        $fakultas = auth()->user()->fakultas;
+        $fakultas = $this->resolveFakultas(auth()->user()->fakultas, $validated['program_studi']);
         
         $data = Iku1Aee::where('tahun_akademik', $tahunAkademik)
                        ->where('fakultas', $fakultas)
@@ -139,6 +158,9 @@ class Iku1Controller extends Controller
 
         // Set AEE Ideal based on jenjang
         $validated['aee_ideal'] = Iku1Aee::getAeeIdeal($validated['jenjang']);
+
+        $resolvedFakultas = $this->resolveFakultas(auth()->user()->fakultas, $validated['program_studi'] ?? $iku1->program_studi);
+        $validated['fakultas'] = $resolvedFakultas ?? $iku1->fakultas;
 
         // Upload lampiran to Google Drive
         if ($request->hasFile('lampiran')) {

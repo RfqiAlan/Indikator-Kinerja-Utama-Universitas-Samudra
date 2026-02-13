@@ -13,6 +13,7 @@ class Iku1Aee extends Model
 
     protected $fillable = [
         'tahun_akademik',
+        'fakultas',
         'jenjang',
         'program_studi',
         'jumlah_lulus_tepat_waktu',

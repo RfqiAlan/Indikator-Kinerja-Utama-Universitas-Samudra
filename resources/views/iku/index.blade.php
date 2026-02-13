@@ -10,7 +10,11 @@
 <body class="font-sans antialiased bg-white text-slate-900">
     <x-user-layout :activeIku="$activeIku ?? null">
         <x-slot name="header">
-            <h2 class="text-xl font-semibold text-slate-800">Semua Data IKU</h2>
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-emerald-700 dark:text-emerald-700 tracking-tight">Semua Data IKU</h2>
+                </div>
+            </div>
         </x-slot>
         @php
             $ikuInfos = [
