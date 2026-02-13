@@ -45,7 +45,7 @@ class Iku1Controller extends Controller
     public function index(Request $request)
     {
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
-        $fakultas = $this->resolveFakultas(auth()->user()->fakultas, $validated['program_studi']);
+        $fakultas = $this->resolveFakultas(auth()->user()->fakultas, null);
         
         $data = Iku1Aee::where('tahun_akademik', $tahunAkademik)
                        ->where('fakultas', $fakultas)
