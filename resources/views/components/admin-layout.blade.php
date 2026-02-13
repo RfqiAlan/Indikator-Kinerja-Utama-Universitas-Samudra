@@ -25,7 +25,7 @@
         <div x-show="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 bg-black/50 z-40 lg:hidden" x-transition:enter="transition-opacity ease-out duration-300" x-transition:leave="transition-opacity ease-in duration-200"></div>
 
         <!-- Sidebar -->
-        <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="w-64 bg-gradient-to-b from-slate-800 to-slate-900 text-white flex-shrink-0 fixed inset-y-0 z-50 transition-transform duration-300 lg:translate-x-0 lg:static lg:h-screen flex flex-col">
+        <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="w-64 bg-gradient-to-b from-slate-800 to-slate-900 text-white flex-shrink-0 fixed inset-y-0 z-50 transition-transform duration-300 lg:translate-x-0 lg:static lg:h-auto">
             <div class="p-6 border-b border-slate-700 hidden lg:block">
                 <h1 class="text-xl font-bold text-emerald-400">IKU UNSAM</h1>
                 <p class="text-xs text-slate-400 mt-1">Admin Panel</p>
@@ -40,7 +40,7 @@
                 </button>
             </div>
             
-            <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+            <nav class="p-4 space-y-2">
                 <a href="{{ route('admin.dashboard') }}" @click="sidebarOpen = false"
                    class="flex items-center gap-3 px-4 py-3 rounded-lg transition {{ $activePage === 'dashboard' ? 'bg-emerald-600 text-white' : 'text-slate-300 hover:bg-slate-700' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -77,7 +77,7 @@
                 </div>
             </nav>
 
-            <div class="mt-auto p-4 border-t border-slate-700 bg-slate-900">
+            <div class="p-4 border-t border-slate-700 bg-slate-900">
                 <div class="flex items-center gap-3 mb-3">
                     <div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center text-white font-semibold">
                         {{ substr(auth()->user()->name, 0, 1) }}

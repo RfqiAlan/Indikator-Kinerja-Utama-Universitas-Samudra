@@ -88,9 +88,86 @@
             </form>
         </div>
     </div>
+
+    @php
+        $chartLabels = collect($fakultasStats)->pluck('nama')->values();
+        $iku1Counts = collect($fakultasStats)->pluck('iku1_count')->values();
+        $iku2Counts = collect($fakultasStats)->pluck('iku2_count')->values();
+        $iku3Counts = collect($fakultasStats)->pluck('iku3_count')->values();
+        $iku4Counts = collect($fakultasStats)->pluck('iku4_count')->values();
+        $iku5Counts = collect($fakultasStats)->pluck('iku5_count')->values();
+        $iku6Counts = collect($fakultasStats)->pluck('iku6_count')->values();
+        $iku7Counts = collect($fakultasStats)->pluck('iku7_count')->values();
+        $iku8Counts = collect($fakultasStats)->pluck('iku8_count')->values();
+        $iku9Counts = collect($fakultasStats)->pluck('iku9_count')->values();
+        $iku10Counts = collect($fakultasStats)->pluck('iku10_count')->values();
+        $iku11Counts = collect($fakultasStats)->pluck('iku11_count')->values();
+        $userCounts = collect($fakultasStats)->pluck('user_count')->values();
+        $totalIkuByFaculty = collect($fakultasStats)->map(fn ($item) =>
+            $item['iku1_count'] + $item['iku2_count'] + $item['iku3_count'] + $item['iku4_count'] +
+            $item['iku5_count'] + $item['iku6_count'] + $item['iku7_count'] + $item['iku8_count'] +
+            $item['iku9_count'] + $item['iku10_count'] + $item['iku11_count']
+        )->values();
+        $ikuTotals = [
+            $iku1Counts->sum(),
+            $iku2Counts->sum(),
+            $iku3Counts->sum(),
+            $iku4Counts->sum(),
+            $iku5Counts->sum(),
+            $iku6Counts->sum(),
+            $iku7Counts->sum(),
+            $iku8Counts->sum(),
+            $iku9Counts->sum(),
+            $iku10Counts->sum(),
+            $iku11Counts->sum(),
+        ];
+    @endphp
+
+    <!-- Charts Section -->
+    <div class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
+        <div class="bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6">
+            <h2 class="text-base lg:text-lg font-bold text-slate-800 mb-4">Sebaran IKU per Fakultas</h2>
+            <div class="h-64">
+                <canvas id="ikuStackedChart"></canvas>
+            </div>
+        </div>
+        <div class="bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6">
+            <h2 class="text-base lg:text-lg font-bold text-slate-800 mb-4">Jumlah User per Fakultas</h2>
+            <div class="h-64">
+                <canvas id="userFacultyChart"></canvas>
+            </div>
+        </div>
+        <div class="bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6">
+            <h2 class="text-base lg:text-lg font-bold text-slate-800 mb-4">Proporsi Total IKU 1-11</h2>
+            <div class="h-64">
+                <canvas id="ikuShareChart"></canvas>
+            </div>
+        </div>
+        <div class="bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6">
+            <h2 class="text-base lg:text-lg font-bold text-slate-800 mb-4">Total Data IKU per Fakultas</h2>
+            <div class="h-64">
+                <canvas id="ikuTotalFacultyChart"></canvas>
+            </div>
+        </div>
+    </div>
     <!-- Faculty Overview -->
     <div class="bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 mb-6 lg:mb-8">
         <h2 class="text-lg lg:text-xl font-bold text-slate-800 mb-4 lg:mb-6">Data per Fakultas ({{ $tahunAkademik }})</h2>
+        @php
+            $ikuMeta = [
+                ['key' => 'iku1_count', 'label' => 'IKU1', 'text_class' => 'text-emerald-600', 'badge_class' => 'bg-emerald-100 text-emerald-600'],
+                ['key' => 'iku2_count', 'label' => 'IKU2', 'text_class' => 'text-cyan-600', 'badge_class' => 'bg-cyan-100 text-cyan-600'],
+                ['key' => 'iku3_count', 'label' => 'IKU3', 'text_class' => 'text-teal-600', 'badge_class' => 'bg-teal-100 text-teal-600'],
+                ['key' => 'iku4_count', 'label' => 'IKU4', 'text_class' => 'text-blue-600', 'badge_class' => 'bg-blue-100 text-blue-600'],
+                ['key' => 'iku5_count', 'label' => 'IKU5', 'text_class' => 'text-indigo-600', 'badge_class' => 'bg-indigo-100 text-indigo-600'],
+                ['key' => 'iku6_count', 'label' => 'IKU6', 'text_class' => 'text-violet-600', 'badge_class' => 'bg-violet-100 text-violet-600'],
+                ['key' => 'iku7_count', 'label' => 'IKU7', 'text_class' => 'text-purple-600', 'badge_class' => 'bg-purple-100 text-purple-600'],
+                ['key' => 'iku8_count', 'label' => 'IKU8', 'text_class' => 'text-fuchsia-600', 'badge_class' => 'bg-fuchsia-100 text-fuchsia-600'],
+                ['key' => 'iku9_count', 'label' => 'IKU9', 'text_class' => 'text-amber-600', 'badge_class' => 'bg-amber-100 text-amber-600'],
+                ['key' => 'iku10_count', 'label' => 'IKU10', 'text_class' => 'text-orange-600', 'badge_class' => 'bg-orange-100 text-orange-600'],
+                ['key' => 'iku11_count', 'label' => 'IKU11', 'text_class' => 'text-rose-600', 'badge_class' => 'bg-rose-100 text-rose-600'],
+            ];
+        @endphp
         
         <!-- Mobile Cards -->
         <div class="lg:hidden space-y-4">
@@ -103,23 +180,17 @@
                     </div>
                     <a href="{{ route('admin.fakultas', $kode) }}" class="text-sm text-emerald-600 font-medium">Detail →</a>
                 </div>
-                <div class="grid grid-cols-4 gap-2 text-center">
+                <div class="grid grid-cols-3 gap-2 text-center">
                     <div class="bg-slate-50 rounded-lg p-2">
                         <p class="text-xs text-slate-500">User</p>
                         <p class="font-bold text-emerald-600">{{ $data['user_count'] }}</p>
                     </div>
+                    @foreach($ikuMeta as $iku)
                     <div class="bg-slate-50 rounded-lg p-2">
-                        <p class="text-xs text-slate-500">IKU1</p>
-                        <p class="font-bold {{ $data['iku1_count'] > 0 ? 'text-emerald-600' : 'text-slate-400' }}">{{ $data['iku1_count'] }}</p>
+                        <p class="text-xs text-slate-500">{{ $iku['label'] }}</p>
+                        <p class="font-bold {{ $data[$iku['key']] > 0 ? $iku['text_class'] : 'text-slate-400' }}">{{ $data[$iku['key']] }}</p>
                     </div>
-                    <div class="bg-slate-50 rounded-lg p-2">
-                        <p class="text-xs text-slate-500">IKU2</p>
-                        <p class="font-bold {{ $data['iku2_count'] > 0 ? 'text-cyan-600' : 'text-slate-400' }}">{{ $data['iku2_count'] }}</p>
-                    </div>
-                    <div class="bg-slate-50 rounded-lg p-2">
-                        <p class="text-xs text-slate-500">IKU3</p>
-                        <p class="font-bold {{ $data['iku3_count'] > 0 ? 'text-teal-600' : 'text-slate-400' }}">{{ $data['iku3_count'] }}</p>
-                    </div>
+                    @endforeach
                 </div>
             </div>
             @endforeach
@@ -132,9 +203,9 @@
                     <tr class="bg-slate-50">
                         <th class="px-4 py-3 text-left text-sm font-semibold text-slate-600">Fakultas</th>
                         <th class="px-4 py-3 text-center text-sm font-semibold text-slate-600">User</th>
-                        <th class="px-4 py-3 text-center text-sm font-semibold text-slate-600">IKU 1</th>
-                        <th class="px-4 py-3 text-center text-sm font-semibold text-slate-600">IKU 2</th>
-                        <th class="px-4 py-3 text-center text-sm font-semibold text-slate-600">IKU 3</th>
+                        @foreach($ikuMeta as $iku)
+                        <th class="px-4 py-3 text-center text-sm font-semibold text-slate-600">{{ $iku['label'] }}</th>
+                        @endforeach
                         <th class="px-4 py-3 text-center text-sm font-semibold text-slate-600">Aksi</th>
                     </tr>
                 </thead>
@@ -150,21 +221,13 @@
                                 {{ $data['user_count'] }}
                             </span>
                         </td>
+                        @foreach($ikuMeta as $iku)
                         <td class="px-4 py-4 text-center">
-                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full {{ $data['iku1_count'] > 0 ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-100 text-slate-400' }} font-semibold">
-                                {{ $data['iku1_count'] }}
+                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full {{ $data[$iku['key']] > 0 ? $iku['badge_class'] : 'bg-slate-100 text-slate-400' }} font-semibold">
+                                {{ $data[$iku['key']] }}
                             </span>
                         </td>
-                        <td class="px-4 py-4 text-center">
-                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full {{ $data['iku2_count'] > 0 ? 'bg-cyan-100 text-cyan-600' : 'bg-slate-100 text-slate-400' }} font-semibold">
-                                {{ $data['iku2_count'] }}
-                            </span>
-                        </td>
-                        <td class="px-4 py-4 text-center">
-                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full {{ $data['iku3_count'] > 0 ? 'bg-teal-100 text-teal-600' : 'bg-slate-100 text-slate-400' }} font-semibold">
-                                {{ $data['iku3_count'] }}
-                            </span>
-                        </td>
+                        @endforeach
                         <td class="px-4 py-4 text-center">
                             <a href="{{ route('admin.fakultas', $kode) }}" class="text-sm text-emerald-600 hover:text-emerald-800 font-medium">
                                 Detail →
@@ -177,33 +240,133 @@
         </div>
     </div>
 
-    <!-- Recent Activities -->
-    <div class="bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6">
-        <div class="flex items-center justify-between mb-4 lg:mb-6">
-            <h2 class="text-lg lg:text-xl font-bold text-slate-800">Aktivitas Terbaru</h2>
-            <a href="{{ route('admin.activities') }}" class="text-sm text-emerald-600 hover:text-emerald-800">Lihat Semua →</a>
-        </div>
-        <div class="space-y-3 lg:space-y-4">
-            @forelse($recentActivities as $activity)
-            <div class="flex items-start gap-3 lg:gap-4 p-3 rounded-lg bg-slate-50">
-                <div class="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 font-semibold flex-shrink-0 text-sm">
-                    {{ substr($activity->user->name ?? 'S', 0, 1) }}
-                </div>
-                <div class="flex-1 min-w-0">
-                    <p class="text-sm text-slate-800"><span class="font-semibold">{{ $activity->user->name ?? 'System' }}</span> <span class="hidden sm:inline">{{ $activity->description }}</span></p>
-                    <p class="text-xs text-slate-500 mt-1">{{ $activity->created_at->diffForHumans() }}</p>
-                </div>
-                <span class="px-2 py-1 rounded-full text-xs font-medium flex-shrink-0
-                    {{ $activity->action === 'create' ? 'bg-emerald-100 text-emerald-700' : '' }}
-                    {{ $activity->action === 'update' ? 'bg-amber-100 text-amber-700' : '' }}
-                    {{ $activity->action === 'delete' ? 'bg-rose-100 text-rose-700' : '' }}
-                    {{ $activity->action === 'login' ? 'bg-cyan-100 text-cyan-700' : '' }}">
-                    {{ ucfirst($activity->action) }}
-                </span>
-            </div>
-            @empty
-            <p class="text-slate-500 text-center py-4">Belum ada aktivitas</p>
-            @endforelse
-        </div>
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script>
+        const chartLabels = @json($chartLabels);
+        const iku1Counts = @json($iku1Counts);
+        const iku2Counts = @json($iku2Counts);
+        const iku3Counts = @json($iku3Counts);
+        const iku4Counts = @json($iku4Counts);
+        const iku5Counts = @json($iku5Counts);
+        const iku6Counts = @json($iku6Counts);
+        const iku7Counts = @json($iku7Counts);
+        const iku8Counts = @json($iku8Counts);
+        const iku9Counts = @json($iku9Counts);
+        const iku10Counts = @json($iku10Counts);
+        const iku11Counts = @json($iku11Counts);
+        const userCounts = @json($userCounts);
+        const ikuTotals = @json($ikuTotals);
+        const totalIkuByFaculty = @json($totalIkuByFaculty);
+
+        const ikuLabels = [
+            'IKU 1', 'IKU 2', 'IKU 3', 'IKU 4', 'IKU 5',
+            'IKU 6', 'IKU 7', 'IKU 8', 'IKU 9', 'IKU 10', 'IKU 11'
+        ];
+        const ikuColors = [
+            '#10b981', '#0ea5e9', '#14b8a6', '#a855f7', '#f97316',
+            '#facc15', '#22c55e', '#38bdf8', '#fb7185', '#6366f1', '#f59e0b'
+        ];
+
+        const stackedCtx = document.getElementById('ikuStackedChart');
+        if (stackedCtx) {
+            new Chart(stackedCtx, {
+                type: 'bar',
+                data: {
+                    labels: chartLabels,
+                    datasets: [
+                        { label: 'IKU 1', data: iku1Counts, backgroundColor: ikuColors[0] },
+                        { label: 'IKU 2', data: iku2Counts, backgroundColor: ikuColors[1] },
+                        { label: 'IKU 3', data: iku3Counts, backgroundColor: ikuColors[2] },
+                        { label: 'IKU 4', data: iku4Counts, backgroundColor: ikuColors[3] },
+                        { label: 'IKU 5', data: iku5Counts, backgroundColor: ikuColors[4] },
+                        { label: 'IKU 6', data: iku6Counts, backgroundColor: ikuColors[5] },
+                        { label: 'IKU 7', data: iku7Counts, backgroundColor: ikuColors[6] },
+                        { label: 'IKU 8', data: iku8Counts, backgroundColor: ikuColors[7] },
+                        { label: 'IKU 9', data: iku9Counts, backgroundColor: ikuColors[8] },
+                        { label: 'IKU 10', data: iku10Counts, backgroundColor: ikuColors[9] },
+                        { label: 'IKU 11', data: iku11Counts, backgroundColor: ikuColors[10] },
+                    ],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' },
+                    },
+                    scales: {
+                        x: { stacked: true },
+                        y: { stacked: true, beginAtZero: true, ticks: { precision: 0 } },
+                    },
+                },
+            });
+        }
+
+        const userCtx = document.getElementById('userFacultyChart');
+        if (userCtx) {
+            new Chart(userCtx, {
+                type: 'bar',
+                data: {
+                    labels: chartLabels,
+                    datasets: [
+                        { label: 'Jumlah User', data: userCounts, backgroundColor: '#fbbf24' },
+                    ],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
+                },
+            });
+        }
+
+        const shareCtx = document.getElementById('ikuShareChart');
+        if (shareCtx) {
+            new Chart(shareCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ikuLabels,
+                    datasets: [{
+                        data: ikuTotals,
+                        backgroundColor: ikuColors,
+                        borderWidth: 0,
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' },
+                    },
+                    cutout: '65%',
+                },
+            });
+        }
+
+        const totalFacultyCtx = document.getElementById('ikuTotalFacultyChart');
+        if (totalFacultyCtx) {
+            new Chart(totalFacultyCtx, {
+                type: 'line',
+                data: {
+                    labels: chartLabels,
+                    datasets: [{
+                        label: 'Total Data IKU',
+                        data: totalIkuByFaculty,
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                        fill: true,
+                        tension: 0.3,
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, ticks: { precision: 0 } },
+                    },
+                },
+            });
+        }
+    </script>
 </x-admin-layout>

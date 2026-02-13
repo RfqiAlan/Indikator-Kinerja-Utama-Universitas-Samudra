@@ -7,6 +7,14 @@ use App\Models\User;
 use App\Models\Iku1Aee;
 use App\Models\Iku2LulusanBekerja;
 use App\Models\Iku3KegiatanMahasiswa;
+use App\Models\Iku4RekognisiDosen;
+use App\Models\Iku5LuaranKerjasama;
+use App\Models\Iku6Publikasi;
+use App\Models\Iku7Sdgs;
+use App\Models\Iku8SdmKebijakan;
+use App\Models\Iku9Pendapatan;
+use App\Models\Iku10ZonaIntegritas;
+use App\Models\Iku11TataKelola;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -25,22 +33,37 @@ class AdminController extends Controller
         foreach ($fakultasConfig as $kode => $data) {
             $fakultasStats[$kode] = [
                 'nama' => $data['nama'],
-                'iku1_count' => Iku1Aee::where('fakultas', $kode)->count(),
-                'iku2_count' => Iku2LulusanBekerja::where('fakultas', $kode)->count(),
-                'iku3_count' => Iku3KegiatanMahasiswa::where('fakultas', $kode)->count(),
+                'iku1_count' => Iku1Aee::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->count(),
+                'iku2_count' => Iku2LulusanBekerja::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->count(),
+                'iku3_count' => Iku3KegiatanMahasiswa::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->count(),
+                'iku4_count' => Iku4RekognisiDosen::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->count(),
+                'iku5_count' => Iku5LuaranKerjasama::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->count(),
+                'iku6_count' => Iku6Publikasi::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->count(),
+                'iku7_count' => Iku7Sdgs::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->count(),
+                'iku8_count' => Iku8SdmKebijakan::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->count(),
+                'iku9_count' => Iku9Pendapatan::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->count(),
+                'iku10_count' => Iku10ZonaIntegritas::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->count(),
+                'iku11_count' => Iku11TataKelola::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->count(),
                 'user_count' => User::where('fakultas', $kode)->count(),
             ];
         }
 
         $totalUsers = User::count();
         $totalActivities = ActivityLog::count();
-        $recentActivities = ActivityLog::with('user')->orderBy('created_at', 'desc')->take(10)->get();
         
         // Get available years from all IKU tables (realtime)
         $availableYears = collect()
             ->merge(Iku1Aee::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
             ->merge(Iku2LulusanBekerja::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
             ->merge(Iku3KegiatanMahasiswa::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
+            ->merge(Iku4RekognisiDosen::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
+            ->merge(Iku5LuaranKerjasama::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
+            ->merge(Iku6Publikasi::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
+            ->merge(Iku7Sdgs::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
+            ->merge(Iku8SdmKebijakan::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
+            ->merge(Iku9Pendapatan::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
+            ->merge(Iku10ZonaIntegritas::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
+            ->merge(Iku11TataKelola::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
             ->unique()
             ->sort()
             ->reverse()
@@ -51,7 +74,7 @@ class AdminController extends Controller
             $availableYears = collect([$tahunAkademik]);
         }
             
-        return view('admin.dashboard', compact('fakultasStats', 'totalUsers', 'totalActivities', 'recentActivities', 'tahunAkademik', 'availableYears'));
+        return view('admin.dashboard', compact('fakultasStats', 'totalUsers', 'totalActivities', 'tahunAkademik', 'availableYears'));
     }
 
     /**
@@ -166,10 +189,33 @@ class AdminController extends Controller
         $iku1Data = Iku1Aee::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
         $iku2Data = Iku2LulusanBekerja::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
         $iku3Data = Iku3KegiatanMahasiswa::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
+        $iku4Data = Iku4RekognisiDosen::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
+        $iku5Data = Iku5LuaranKerjasama::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
+        $iku6Data = Iku6Publikasi::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
+        $iku7Data = Iku7Sdgs::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
+        $iku8Data = Iku8SdmKebijakan::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
+        $iku9Data = Iku9Pendapatan::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
+        $iku10Data = Iku10ZonaIntegritas::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
+        $iku11Data = Iku11TataKelola::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
         
         $users = User::where('fakultas', $kode)->get();
 
-        return view('admin.fakultas-detail', compact('fakultas', 'iku1Data', 'iku2Data', 'iku3Data', 'users', 'tahunAkademik'));
+        return view('admin.fakultas-detail', compact(
+            'fakultas',
+            'iku1Data',
+            'iku2Data',
+            'iku3Data',
+            'iku4Data',
+            'iku5Data',
+            'iku6Data',
+            'iku7Data',
+            'iku8Data',
+            'iku9Data',
+            'iku10Data',
+            'iku11Data',
+            'users',
+            'tahunAkademik'
+        ));
     }
 
     /**
