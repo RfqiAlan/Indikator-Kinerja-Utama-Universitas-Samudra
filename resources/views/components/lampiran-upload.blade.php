@@ -7,6 +7,13 @@
         Lampiran Bukti Pendukung
     </h3>
     <div>
+        @php($driveConnected = auth()->check() && auth()->user()->googleDriveToken)
+        @if(!$driveConnected)
+            <div class="mb-3 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-700">
+                Google Drive belum terhubung.
+                <a href="{{ route('user.drive.connect') }}" class="font-semibold underline">Hubungkan Google Drive</a>
+            </div>
+        @endif
         <label class="block text-sm font-medium text-slate-700 mb-2">Upload File (PDF, JPG, PNG, DOC - Max 10MB)</label>
         <input type="file" name="lampiran" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
             class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer border border-slate-300 rounded-lg focus:ring-emerald-500">

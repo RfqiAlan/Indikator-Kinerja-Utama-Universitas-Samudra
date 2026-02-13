@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GoogleDriveOauthController;
 use App\Http\Controllers\RekapIkuController;
 use App\Http\Controllers\Iku1Controller;
 use App\Http\Controllers\AdminController;
@@ -65,6 +66,13 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(f
     // General IKU routes
     Route::get('/iku/filter', [RekapIkuController::class, 'filter'])->name('iku.filter');
     Route::resource('iku', RekapIkuController::class);
+
+    Route::get('/drive/connect', [GoogleDriveOauthController::class, 'redirectToGoogle'])->name('drive.connect');
+    Route::post('/drive/disconnect', [GoogleDriveOauthController::class, 'disconnect'])->name('drive.disconnect');
+});
+
+Route::middleware(['auth', 'role:user'])->group(function () {
+    Route::get('/auth/google/callback', [GoogleDriveOauthController::class, 'handleCallback'])->name('user.drive.callback');
 });
 
 // Admin routes (view all activities)

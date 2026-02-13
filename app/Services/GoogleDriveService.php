@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\GoogleDriveToken;
 use Google\Client;
 use Google\Service\Drive;
 use Google\Service\Drive\DriveFile;
@@ -11,17 +12,14 @@ use Illuminate\Support\Facades\Log;
 
 class GoogleDriveService
 {
-    protected Drive $driveService;
+    protected ?Drive $driveService = null;
     protected string $folderId;
+    protected ?GoogleDriveToken $token;
 
     public function __construct()
     {
-        $client = new Client();
-        $client->setAuthConfig(config('google.service_account_json'));
-        $client->addScope(Drive::DRIVE_FILE);
-
-        $this->driveService = new Drive($client);
         $this->folderId = config('google.drive_folder_id');
+        $this->token = auth()->check() ? auth()->user()->googleDriveToken : null;
     }
 
     /**
@@ -30,6 +28,11 @@ class GoogleDriveService
     public function upload(UploadedFile $file, string $subfolder = ''): ?string
     {
         try {
+            $driveService = $this->getDriveService();
+            if (!$driveService) {
+                return null;
+            }
+
             // Determine target folder
             $parentId = $subfolder ? $this->getOrCreateSubfolder($subfolder) : $this->folderId;
 
@@ -39,7 +42,7 @@ class GoogleDriveService
             ]);
 
             // Upload (Shared Drive: supportsAllDrives wajib)
-            $result = $this->driveService->files->create($driveFile, [
+            $result = $driveService->files->create($driveFile, [
                 'data' => file_get_contents($file->getRealPath()),
                 'mimeType' => $file->getMimeType(),
                 'uploadType' => 'multipart',
@@ -50,7 +53,7 @@ class GoogleDriveService
             // Set permission: anyone with link can view
             // NOTE: di sebagian Shared Drive, permission "anyone" bisa diblok oleh admin.
             try {
-                $this->driveService->permissions->create(
+                $driveService->permissions->create(
                     $result->id,
                     new Permission([
                         'type' => 'anyone',
@@ -84,7 +87,11 @@ class GoogleDriveService
         try {
             $fileId = $this->extractFileId($link);
             if ($fileId) {
-                $this->driveService->files->delete($fileId, [
+                $driveService = $this->getDriveService();
+                if (!$driveService) {
+                    return false;
+                }
+                $driveService->files->delete($fileId, [
                     'supportsAllDrives' => true,
                 ]);
                 return true;
@@ -100,11 +107,16 @@ class GoogleDriveService
      */
     protected function getOrCreateSubfolder(string $name): string
     {
+        $driveService = $this->getDriveService();
+        if (!$driveService) {
+            return $this->folderId;
+        }
+
         // Shared Drive: listFiles perlu supportsAllDrives + includeItemsFromAllDrives
         $safeName = addslashes($name);
         $query = "name='{$safeName}' and '{$this->folderId}' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false";
 
-        $results = $this->driveService->files->listFiles([
+        $results = $driveService->files->listFiles([
             'q' => $query,
             'fields' => 'files(id)',
             'pageSize' => 1,
@@ -123,7 +135,7 @@ class GoogleDriveService
             'parents' => [$this->folderId],
         ]);
 
-        $created = $this->driveService->files->create($folder, [
+        $created = $driveService->files->create($folder, [
             'fields' => 'id',
             'supportsAllDrives' => true,
         ]);
@@ -143,5 +155,107 @@ class GoogleDriveService
             return $m[1];
         }
         return null;
+    }
+
+    protected function getDriveService(): ?Drive
+    {
+        if ($this->driveService) {
+            return $this->driveService;
+        }
+
+        $client = $this->buildClient();
+        if (!$client) {
+            return null;
+        }
+
+        $this->driveService = new Drive($client);
+        return $this->driveService;
+    }
+
+    protected function buildClient(): ?Client
+    {
+        if ($this->shouldUseOauth()) {
+            if (!$this->token) {
+                Log::warning('Google Drive OAuth token missing for user.', [
+                    'user_id' => auth()->id(),
+                ]);
+                return null;
+            }
+
+            $client = new Client();
+            $client->setAuthConfig(config('google.oauth_client_json'));
+            $client->setRedirectUri(config('google.redirect_uri'));
+            $client->setAccessType('offline');
+            $client->setPrompt('consent');
+            $client->addScope(Drive::DRIVE);
+            $client->setAccessToken([
+                'access_token' => $this->token->access_token,
+                'refresh_token' => $this->token->refresh_token,
+                'token_type' => $this->token->token_type,
+                'expires_in' => $this->token->expires_at?->diffInSeconds(now()) ?? 0,
+                'created' => $this->token->updated_at?->timestamp ?? now()->timestamp,
+            ]);
+
+            if ($client->isAccessTokenExpired()) {
+                $refreshToken = $client->getRefreshToken();
+                if (!$refreshToken) {
+                    Log::warning('Google Drive refresh token missing for user.', [
+                        'user_id' => auth()->id(),
+                    ]);
+                    return null;
+                }
+
+                $newToken = $client->fetchAccessTokenWithRefreshToken($refreshToken);
+                if (isset($newToken['error'])) {
+                    Log::warning('Google Drive token refresh failed.', [
+                        'user_id' => auth()->id(),
+                        'error' => $newToken['error'],
+                    ]);
+                    return null;
+                }
+
+                $this->updateToken($newToken);
+            }
+
+            return $client;
+        }
+
+        $client = new Client();
+        $client->setAuthConfig(config('google.service_account_json'));
+        $client->addScope(Drive::DRIVE_FILE);
+
+        return $client;
+    }
+
+    protected function shouldUseOauth(): bool
+    {
+        return auth()->check()
+            && is_file(config('google.oauth_client_json'))
+            && config('google.redirect_uri');
+    }
+
+    protected function updateToken(array $newToken): void
+    {
+        if (!$this->token) {
+            return;
+        }
+
+        if (!empty($newToken['access_token'])) {
+            $this->token->access_token = $newToken['access_token'];
+        }
+        if (!empty($newToken['refresh_token'])) {
+            $this->token->refresh_token = $newToken['refresh_token'];
+        }
+        if (!empty($newToken['token_type'])) {
+            $this->token->token_type = $newToken['token_type'];
+        }
+        if (!empty($newToken['scope'])) {
+            $this->token->scopes = $newToken['scope'];
+        }
+        if (!empty($newToken['expires_in'])) {
+            $this->token->expires_at = now()->addSeconds($newToken['expires_in']);
+        }
+
+        $this->token->save();
     }
 }
