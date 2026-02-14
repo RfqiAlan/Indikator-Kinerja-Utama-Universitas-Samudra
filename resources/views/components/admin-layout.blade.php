@@ -24,8 +24,11 @@
         <!-- Sidebar Overlay -->
         <div x-show="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 bg-black/50 z-40 lg:hidden" x-transition:enter="transition-opacity ease-out duration-300" x-transition:leave="transition-opacity ease-in duration-200"></div>
 
+        <!-- Sidebar Spacer (Desktop) -->
+        <div class="hidden lg:block w-64 flex-shrink-0"></div>
+
         <!-- Sidebar -->
-        <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="w-64 bg-gradient-to-b from-slate-800 to-slate-900 text-white flex-shrink-0 fixed inset-y-0 z-50 transition-transform duration-300 lg:translate-x-0 lg:static lg:h-auto">
+        <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="w-64 bg-gradient-to-b from-slate-800 to-slate-900 text-white flex-shrink-0 fixed inset-y-0 z-50 transition-transform duration-300 lg:translate-x-0 lg:h-screen lg:overflow-y-auto flex flex-col">
             <div class="p-6 border-b border-slate-700 hidden lg:block">
                 <h1 class="text-xl font-bold text-emerald-400">IKU UNSAM</h1>
                 <p class="text-xs text-slate-400 mt-1">Admin Panel</p>
@@ -77,7 +80,7 @@
                 </div>
             </nav>
 
-            <div class="p-4 border-t border-slate-700 bg-slate-900">
+            <div class="p-4 border-t border-slate-700 bg-slate-900 mt-auto">
                 <div class="flex items-center gap-3 mb-3">
                     <div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center text-white font-semibold">
                         {{ substr(auth()->user()->name, 0, 1) }}
@@ -97,7 +100,7 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 p-4 lg:p-8 lg:ml-0">
+        <main class="flex-1 p-4 lg:p-8">
             @if(session('success'))
             <div class="mb-4 p-4 bg-emerald-100 border border-emerald-200 text-emerald-700 rounded-lg text-sm">
                 {{ session('success') }}

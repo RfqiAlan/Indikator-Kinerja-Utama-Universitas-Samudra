@@ -221,7 +221,6 @@
                 </div>
                 @endif
             </div>
-
             <!-- Helper Section (Collapsible) -->
             <div x-data="{ open: false }" class="bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden">
                 <button @click="open = !open" class="w-full flex items-center justify-between px-6 py-4 bg-slate-50/50 dark:bg-slate-700/30 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-left">
