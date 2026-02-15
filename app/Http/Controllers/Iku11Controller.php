@@ -38,6 +38,16 @@ class Iku11Controller extends Controller
     public function create()
     {
         $tahunAkademik = get_tahun_akademik();
+        $fakultas = auth()->user()->fakultas;
+        $existing = Iku11TataKelola::where('tahun_akademik', $tahunAkademik)
+            ->where('fakultas', $fakultas)
+            ->first();
+
+        if ($existing) {
+            return redirect()->route('user.iku11.edit', $existing->id)
+                ->with('warning', 'Data IKU 11 untuk tahun ini sudah ada. Silakan edit data yang sudah ada.');
+        }
+
         $opiniOptions = Iku11TataKelola::OPINI_OPTIONS;
         return view('iku11.create', compact('tahunAkademik', 'opiniOptions'));
     }
@@ -53,7 +63,17 @@ class Iku11Controller extends Controller
             'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
-        $validated['fakultas'] = auth()->user()->fakultas;
+        $fakultas = auth()->user()->fakultas;
+        $existing = Iku11TataKelola::where('tahun_akademik', $validated['tahun_akademik'])
+            ->where('fakultas', $fakultas)
+            ->first();
+
+        if ($existing) {
+            return redirect()->route('user.iku11.edit', $existing->id)
+                ->with('warning', 'Data IKU 11 untuk tahun ini sudah ada. Silakan edit data yang sudah ada.');
+        }
+
+        $validated['fakultas'] = $fakultas;
 
         // Upload lampiran to Google Drive
         if ($request->hasFile('lampiran')) {
