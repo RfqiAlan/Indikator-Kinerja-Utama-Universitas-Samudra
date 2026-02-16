@@ -49,6 +49,22 @@
                             <input type="number" name="total_mahasiswa" x-model.number="totalMahasiswa" value="{{ old('total_mahasiswa', 0) }}" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500" required min="1">
                         </div>
                     </div>
+                    <div class="mt-4">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Total Responden <span class="text-rose-500">*</span></label>
+                        <div class="flex items-center gap-4">
+                            <input type="number" name="total_responden" x-model.number="totalResponden" value="{{ old('total_responden', 0) }}" class="w-full md:w-1/3 rounded-lg border-slate-300 focus:ring-emerald-500" required min="0">
+                            <template x-if="totalMahasiswa > 0">
+                                <span class="text-xs font-medium" :class="totalResponden >= (totalMahasiswa * 0.75) ? 'text-emerald-600' : 'text-rose-600'" x-text="((totalResponden / totalMahasiswa) * 100).toFixed(1) + '% dari mahasiswa'"></span>
+                            </template>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-1">Min. 75% dari total mahasiswa. Tidak boleh melebihi total mahasiswa.</p>
+                    </div>
+                    <template x-if="totalMahasiswa > 0 && totalResponden < (totalMahasiswa * 0.75)">
+                        <div class="mt-3 flex items-center gap-2 px-3 py-2 bg-rose-50 border border-rose-200 rounded-lg text-rose-700 text-xs font-medium">
+                            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path></svg>
+                            <span>Total responden kurang dari 75% total mahasiswa (minimal <span x-text="Math.ceil(totalMahasiswa * 0.75)"></span> responden)</span>
+                        </div>
+                    </template>
                 </div>
 
                 <div class="border-b pb-6">
@@ -106,6 +122,7 @@
             function formIku3() {
                 return {
                     totalMahasiswa: {{ old('total_mahasiswa', 0) }}, 
+                    totalResponden: {{ old('total_responden', 0) }},
                     magang: {{ old('magang', 0) }}, 
                     riset: {{ old('riset', 0) }}, 
                     pertukaran: {{ old('pertukaran', 0) }}, 
@@ -113,7 +130,7 @@
                     lomba: {{ old('lomba', 0) }}, 
                     wirausaha: {{ old('wirausaha', 0) }},
                     get totalKegiatan() { return this.magang + this.riset + this.pertukaran + this.kkn + this.lomba + this.wirausaha; },
-                    get persentase() { if (this.totalMahasiswa <= 0) return 0; return (this.totalKegiatan / this.totalMahasiswa) * 100; }
+                    get persentase() { if (this.totalResponden <= 0) return 0; return (this.totalKegiatan / this.totalResponden) * 100; }
                 }
             }
         </script>

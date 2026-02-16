@@ -125,7 +125,6 @@ class Iku2Controller extends Controller
     {
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
-            'fakultas' => 'required|string',
             'program_studi' => 'required|string',
             'total_lulusan' => 'required|integer|min:1',
             'total_responden' => 'required|integer|min:0|lte:total_lulusan',
@@ -139,6 +138,8 @@ class Iku2Controller extends Controller
         ], [
             'total_responden.lte' => 'Total responden tidak boleh melebihi total lulusan.',
         ]);
+
+        $validated['fakultas'] = auth()->user()->fakultas;
 
         // Validate sum of sub-fields doesn't exceed total responden
         $totalKategori = $validated['bekerja_bobot_10'] + $validated['bekerja_bobot_6'] + 

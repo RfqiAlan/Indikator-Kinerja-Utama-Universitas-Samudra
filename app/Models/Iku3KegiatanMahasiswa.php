@@ -16,6 +16,7 @@ class Iku3KegiatanMahasiswa extends Model
         'fakultas',
         'program_studi',
         'total_mahasiswa',
+        'total_responden',
         'magang',
         'riset',
         'pertukaran',
@@ -47,10 +48,33 @@ class Iku3KegiatanMahasiswa extends Model
         $this->total_berkegiatan = $this->magang + $this->riset + $this->pertukaran + 
                                    $this->kkn_tematik + $this->lomba + $this->wirausaha;
 
-        if ($this->total_mahasiswa > 0) {
-            $this->persentase_iku3 = ($this->total_berkegiatan / $this->total_mahasiswa) * 100;
+        // Hitung persentase IKU 3 (dibagi total responden)
+        if ($this->total_responden > 0) {
+            $this->persentase_iku3 = ($this->total_berkegiatan / $this->total_responden) * 100;
         } else {
             $this->persentase_iku3 = 0;
         }
+    }
+
+    /**
+     * Check if total_responden >= 75% of total_mahasiswa
+     */
+    public function isRespondenCukup(): bool
+    {
+        if ($this->total_mahasiswa <= 0) {
+            return true;
+        }
+        return $this->total_responden >= ($this->total_mahasiswa * 0.75);
+    }
+
+    /**
+     * Get persentase responden terhadap total mahasiswa
+     */
+    public function getRespondenPersentase(): float
+    {
+        if ($this->total_mahasiswa <= 0) {
+            return 0;
+        }
+        return ($this->total_responden / $this->total_mahasiswa) * 100;
     }
 }

@@ -29,14 +29,16 @@ class Iku3Controller extends Controller
         }
 
         $totalMahasiswa = $data->sum('total_mahasiswa');
+        $totalResponden = $data->sum('total_responden');
         $totalBerkegiatan = $data->sum('total_berkegiatan');
-        $overallPercentage = $totalMahasiswa > 0 ? ($totalBerkegiatan / $totalMahasiswa) * 100 : 0;
+        $overallPercentage = $totalResponden > 0 ? ($totalBerkegiatan / $totalResponden) * 100 : 0;
 
         return view('iku3.index', compact(
             'data', 
             'tahunAkademik', 
             'availableYears',
             'totalMahasiswa',
+            'totalResponden',
             'totalBerkegiatan',
             'overallPercentage'
         ));
@@ -54,6 +56,7 @@ class Iku3Controller extends Controller
             'tahun_akademik' => 'required|string',
             'program_studi' => 'nullable|string',
             'total_mahasiswa' => 'required|integer|min:1',
+            'total_responden' => 'required|integer|min:0|lte:total_mahasiswa',
             'magang' => 'required|integer|min:0',
             'riset' => 'required|integer|min:0',
             'pertukaran' => 'required|integer|min:0',
@@ -62,16 +65,18 @@ class Iku3Controller extends Controller
             'wirausaha' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+        ], [
+            'total_responden.lte' => 'Total responden tidak boleh melebihi total mahasiswa.',
         ]);
 
-        // Validate sum of kegiatan doesn't exceed total
+        // Validate sum of kegiatan doesn't exceed total responden
         $totalKegiatan = $validated['magang'] + $validated['riset'] + 
                          $validated['pertukaran'] + $validated['kkn_tematik'] + 
                          $validated['lomba'] + $validated['wirausaha'];
         
-        if ($totalKegiatan > $validated['total_mahasiswa']) {
+        if ($totalKegiatan > $validated['total_responden']) {
             return back()->withInput()->withErrors([
-                'total_mahasiswa' => 'Total kegiatan (' . $totalKegiatan . ') tidak boleh melebihi total mahasiswa (' . $validated['total_mahasiswa'] . ').'
+                'total_responden' => 'Total kegiatan (' . $totalKegiatan . ') tidak boleh melebihi total responden (' . $validated['total_responden'] . ').'
             ]);
         }
 
@@ -116,6 +121,7 @@ class Iku3Controller extends Controller
             'tahun_akademik' => 'required|string',
             'program_studi' => 'nullable|string',
             'total_mahasiswa' => 'required|integer|min:1',
+            'total_responden' => 'required|integer|min:0|lte:total_mahasiswa',
             'magang' => 'required|integer|min:0',
             'riset' => 'required|integer|min:0',
             'pertukaran' => 'required|integer|min:0',
@@ -123,7 +129,20 @@ class Iku3Controller extends Controller
             'lomba' => 'required|integer|min:0',
             'wirausaha' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
+        ], [
+            'total_responden.lte' => 'Total responden tidak boleh melebihi total mahasiswa.',
         ]);
+
+        // Validate sum of kegiatan doesn't exceed total responden
+        $totalKegiatan = $validated['magang'] + $validated['riset'] + 
+                         $validated['pertukaran'] + $validated['kkn_tematik'] + 
+                         $validated['lomba'] + $validated['wirausaha'];
+        
+        if ($totalKegiatan > $validated['total_responden']) {
+            return back()->withInput()->withErrors([
+                'total_responden' => 'Total kegiatan (' . $totalKegiatan . ') tidak boleh melebihi total responden (' . $validated['total_responden'] . ').'
+            ]);
+        }
 
         // Upload lampiran to Google Drive
     if ($request->hasFile('lampiran')) {

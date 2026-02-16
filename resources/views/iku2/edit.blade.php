@@ -13,27 +13,18 @@
                         <span class="bg-emerald-100 text-emerald-600 w-7 h-7 rounded-full flex items-center justify-center text-sm mr-2">1</span>
                         Informasi Akademik
                     </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">Tahun Akademik <span class="text-rose-500">*</span></label>
                             <input type="text" name="tahun_akademik" value="{{ old('tahun_akademik', $iku2->tahun_akademik) }}" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500" required>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Fakultas <span class="text-rose-500">*</span></label>
-                            <select name="fakultas" x-model="fakultas" @change="updateProdi()" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500" required>
-                                <option value="">-- Pilih Fakultas --</option>
-                                @foreach(config('unsam.fakultas') as $kode => $fak)
-                                    <option value="{{ $kode }}">{{ $fak['nama'] }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">Program Studi <span class="text-rose-500">*</span></label>
                             <select name="program_studi" x-model="prodi" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500" required>
-                                <option value="">-- Pilih Fakultas Dulu --</option>
-                                <template x-for="(nama, kode) in prodiList" :key="kode">
-                                    <option :value="kode" x-text="nama"></option>
-                                </template>
+                                <option value="">-- Pilih Program Studi --</option>
+                                @foreach(auth()->user()->prodi_list as $kode => $nama)
+                                    <option value="{{ $kode }}">{{ $nama }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -125,9 +116,7 @@
         <script>
             function formIku2() {
                 return {
-                    fakultas: '{{ old("fakultas", $iku2->fakultas) }}',
                     prodi: '{{ old("program_studi", $iku2->program_studi) }}',
-                    prodiList: {},
                     totalLulusan: {{ old('total_lulusan', $iku2->total_lulusan) }},
                     totalResponden: {{ old('total_responden', $iku2->total_responden ?? 0) }},
                     bekerja10: {{ old('bekerja_bobot_10', $iku2->bekerja_bobot_10) }},
@@ -136,18 +125,6 @@
                     studiLanjut: {{ old('studi_lanjut', $iku2->studi_lanjut) }},
                     founder: {{ old('wirausaha_founder', $iku2->wirausaha_founder) }},
                     freelancer: {{ old('wirausaha_freelancer', $iku2->wirausaha_freelancer) }},
-                    fakultasData: @json(config('unsam.fakultas')),
-
-                    init() {
-                        if (this.fakultas) { this.updateProdi(); }
-                    },
-                    updateProdi() {
-                        if (this.fakultas && this.fakultasData[this.fakultas]) {
-                            this.prodiList = this.fakultasData[this.fakultas].prodi;
-                        } else {
-                            this.prodiList = {};
-                        }
-                    },
                     get skorBekerja() { return (this.bekerja10 * 10 / 10) + (this.bekerja6 * 6 / 10) + (this.bekerja4 * 4 / 10); },
                     get skorWirausaha() { return (this.founder * 0.75) + (this.freelancer * 0.25); },
                     get persentase() {
