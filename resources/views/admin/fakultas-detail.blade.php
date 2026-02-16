@@ -6,7 +6,7 @@
     </div>
 
     <!-- Users in this faculty -->
-    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6" data-aos="fade-up">
         <h2 class="text-xl font-bold text-slate-800 mb-4">User Fakultas</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             @forelse($users as $user)
@@ -26,7 +26,7 @@
     </div>
 
     <!-- IKU 1 Data -->
-    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6" data-aos="fade-up">
         <h2 class="text-xl font-bold text-slate-800 mb-4">IKU 1 - Angka Efisiensi Edukasi</h2>
         @if($iku1Data->count() > 0)
         <div class="overflow-x-auto">
@@ -59,7 +59,7 @@
     </div>
 
     <!-- IKU 2 Data -->
-    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6" data-aos="fade-up">
         <h2 class="text-xl font-bold text-slate-800 mb-4">IKU 2 - Lulusan Bekerja/Studi/Wirausaha</h2>
         @if($iku2Data->count() > 0)
         <div class="overflow-x-auto">
@@ -92,7 +92,7 @@
     </div>
 
     <!-- IKU 3 Data -->
-    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6" data-aos="fade-up">
         <h2 class="text-xl font-bold text-slate-800 mb-4">IKU 3 - Kegiatan Mahasiswa</h2>
         @if($iku3Data->count() > 0)
         <div class="overflow-x-auto">
@@ -125,7 +125,7 @@
     </div>
 
     <!-- IKU 4 Data -->
-    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6" data-aos="fade-up">
         <h2 class="text-xl font-bold text-slate-800 mb-4">IKU 4 - Rekognisi Dosen</h2>
         @if($iku4Data->count() > 0)
         <div class="overflow-x-auto">
@@ -160,7 +160,7 @@
     </div>
 
     <!-- IKU 5 Data -->
-    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6" data-aos="fade-up">
         <h2 class="text-xl font-bold text-slate-800 mb-4">IKU 5 - Luaran Kerja Sama</h2>
         @if($iku5Data->count() > 0)
         <div class="overflow-x-auto">
@@ -195,7 +195,7 @@
     </div>
 
     <!-- IKU 6 Data -->
-    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6" data-aos="fade-up">
         <h2 class="text-xl font-bold text-slate-800 mb-4">IKU 6 - Publikasi Internasional</h2>
         @if($iku6Data->count() > 0)
         <div class="overflow-x-auto">
@@ -232,7 +232,7 @@
     </div>
 
     <!-- IKU 7 Data -->
-    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6" data-aos="fade-up">
         <h2 class="text-xl font-bold text-slate-800 mb-4">IKU 7 - Program SDGs</h2>
         @if($iku7Data->count() > 0)
         <div class="overflow-x-auto">
@@ -267,7 +267,7 @@
     </div>
 
     <!-- IKU 8 Data -->
-    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6" data-aos="fade-up">
         <h2 class="text-xl font-bold text-slate-800 mb-4">IKU 8 - SDM Penyusun Kebijakan</h2>
         @if($iku8Data->count() > 0)
         <div class="overflow-x-auto">
@@ -302,7 +302,7 @@
     </div>
 
     <!-- IKU 9 Data -->
-    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6" data-aos="fade-up">
         <h2 class="text-xl font-bold text-slate-800 mb-4">IKU 9 - Pendapatan Non-UKT</h2>
         @if($iku9Data->count() > 0)
         <div class="overflow-x-auto">
@@ -337,7 +337,7 @@
     </div>
 
     <!-- IKU 10 Data -->
-    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6" data-aos="fade-up">
         <h2 class="text-xl font-bold text-slate-800 mb-4">IKU 10 - Zona Integritas</h2>
         @if($iku10Data->count() > 0)
         <div class="overflow-x-auto">

@@ -5,7 +5,7 @@
     </div>
 
     <div class="max-w-2xl">
-        <form action="{{ route('admin.users.store') }}" method="POST" class="bg-white rounded-2xl shadow-sm p-6 space-y-6">
+        <form action="{{ route('admin.users.store') }}" method="POST" class="bg-white rounded-2xl shadow-sm p-6 space-y-6" data-aos="fade-up">
             @csrf
             <div>
                 <label class="block text-sm font-medium text-slate-700 mb-2">Nama Lengkap</label>

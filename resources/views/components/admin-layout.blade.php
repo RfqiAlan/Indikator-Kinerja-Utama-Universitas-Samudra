@@ -8,6 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Admin - IKU UNSAM</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body class="font-sans antialiased bg-slate-100" x-data="{ sidebarOpen: false }">
     <div class="min-h-screen lg:flex">
@@ -120,5 +121,7 @@
             {{ $slot }}
         </main>
     </div>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 50 });</script>
 </body>
 </html>

@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }} - IKU 2</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body class="font-sans antialiased bg-white text-slate-900">
     <x-user-layout activeIku="IKU 2">
@@ -31,7 +32,7 @@
             </div>
         </x-slot>
 
-        <div class="py-6 space-y-6">
+        <div class="py-6 space-y-6" data-aos="fade-up">
             <!-- Summary Card -->
             @php 
                 $targetIku2 = 50;
@@ -219,5 +220,7 @@
             </div>
         </div>
     </x-user-layout>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 50 });</script>
 </body>
 </html>

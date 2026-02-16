@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{{ config('app.name') }} - IKU 7</title>@vite(['resources/css/app.css', 'resources/js/app.js'])</head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{{ config('app.name') }} - IKU 7</title>@vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"></head>
 <body class="font-sans antialiased bg-white text-slate-900">
     <x-user-layout activeIku="IKU 7">
         <x-slot name="header">
@@ -15,7 +16,7 @@
                 </div>
             </div>
         </x-slot>
-        <div class="py-6 space-y-6">
+        <div class="py-6 space-y-6" data-aos="fade-up">
             @php $target = 50; $meetsTarget = $overallPercentage >= $target; $bgColor = $meetsTarget ? 'bg-emerald-50 dark:bg-emerald-900/30' : 'bg-rose-50 dark:bg-rose-900/30'; $textColor = $meetsTarget ? 'text-emerald-600' : 'text-rose-600'; $valueColor = $meetsTarget ? 'text-emerald-700' : 'text-rose-700'; @endphp
             <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-6">
                 <div class="flex flex-col md:flex-row items-center justify-between gap-6">
@@ -103,5 +104,7 @@
             </div>
         </div>
     </x-user-layout>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 50 });</script>
 </body>
 </html>

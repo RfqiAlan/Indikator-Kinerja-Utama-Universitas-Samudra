@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name', 'Laravel') }} - Dashboard IKU</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body class="font-sans antialiased bg-slate-50 text-slate-900">
     <div class="min-h-screen flex flex-col">
@@ -46,7 +47,7 @@
                 <div class="absolute left-0 bottom-0 -mb-20 -ml-20 w-96 h-96 rounded-full bg-emerald-100 blur-3xl opacity-50"></div>
             </div>
             <div class="relative max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8 text-center sm:text-left sm:flex sm:items-center sm:justify-between">
-                <div>
+                <div data-aos="fade-right">
                     <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight sm:text-5xl">
                         Indikator Kinerja Utama
                         <span class="block text-blue-600 mt-1">Universitas Samudra</span>
@@ -69,7 +70,7 @@
                         @endauth
                     </div>
                 </div>
-                <div class="mt-10 sm:mt-0 hidden sm:block">
+                <div class="mt-10 sm:mt-0 hidden sm:block" data-aos="fade-left" data-aos-delay="200">
                     <div class="bg-white p-4 rounded-2xl shadow-xl shadow-blue-100/50 transform rotate-3 hover:rotate-0 transition duration-500 border border-slate-100">
                         <div class="flex items-center space-x-4 mb-4">
                             <div class="h-12 w-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">
@@ -106,7 +107,7 @@
             @endphp
 
             <!-- Filters & Actions -->
-            <div class="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
+            <div class="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4" data-aos="fade-up">
                 <h2 class="text-2xl font-bold text-slate-800">Daftar Indikator</h2>
                 <div class="flex items-center gap-3">
                     <span class="text-sm text-slate-500">Tahun Akademik:</span>
@@ -136,7 +137,7 @@
                     $borderColor = $meetsTarget ? 'border-emerald-200' : 'border-slate-100 hover:border-rose-200';
                 @endphp
                 
-                <a href="{{ route($item['route']) }}" class="group relative bg-white rounded-2xl p-6 shadow-sm border {{ $borderColor }} hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
+                <a href="{{ route($item['route']) }}" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}" class="group relative bg-white rounded-2xl p-6 shadow-sm border {{ $borderColor }} hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
                     <div class="flex items-start justify-between mb-4">
                         <div class="p-3 rounded-xl bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -168,13 +169,13 @@
             </div>
 
             <!-- Empty State / Footer Info -->
-            <div class="mt-12 text-center">
+            <div class="mt-12 text-center" data-aos="fade-up">
                 <p class="text-slate-500 text-sm">Data diperbarui secara real-time setiap kali operator melakukan input pada sistem IKU.</p>
             </div>
         </main>
 
         <!-- Footer -->
-        <footer class="bg-white border-t border-slate-200 py-8 mt-auto">
+        <footer class="bg-white border-t border-slate-200 py-8 mt-auto" data-aos="fade-up">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="flex items-center gap-2">
                      <div class="bg-blue-600 text-white p-1 rounded">
@@ -188,5 +189,7 @@
             </div>
         </footer>
     </div>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 50 });</script>
 </body>
 </html>

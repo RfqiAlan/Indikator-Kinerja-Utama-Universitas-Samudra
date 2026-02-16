@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }} - Kelola IKU</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body class="font-sans antialiased bg-white text-slate-900">
     <x-user-layout :activeIku="$activeIku ?? null">
@@ -32,12 +33,12 @@
             ];
         @endphp
 
-        <div class="bg-white border border-blue-100 rounded-xl shadow-lg overflow-hidden">
+        <div class="bg-white border border-blue-100 rounded-xl shadow-lg overflow-hidden" data-aos="fade-up">
             <div class="p-6">
                 <h3 class="text-lg font-bold text-slate-900 mb-6">Daftar Semua Indikator</h3>
                 <div class="grid gap-4 sm:grid-cols-2">
                     @foreach($ikuInfos as $info)
-                        <div class="flex items-center justify-between gap-4 rounded-lg border border-blue-100 bg-blue-50/30 p-4">
+                        <div class="flex items-center justify-between gap-4 rounded-lg border border-blue-100 bg-blue-50/30 p-4" data-aos="fade-up" data-aos-delay="{{ $loop->index * 80 }}">
                             <div class="h-10 w-10 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-bold">
                                 {{ str_replace('IKU ', '', $info['code']) }}
                             </div>
@@ -59,5 +60,7 @@
             </div>
         </div>
     </x-user-layout>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 50 });</script>
 </body>
 </html>

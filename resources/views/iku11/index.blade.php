@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{{ config('app.name') }} - IKU 11</title>@vite(['resources/css/app.css', 'resources/js/app.js'])</head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{{ config('app.name') }} - IKU 11</title>@vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"></head>
 <body class="font-sans antialiased bg-white text-slate-900">
     <x-user-layout activeIku="IKU 11">
         <x-slot name="header">
@@ -15,8 +16,8 @@
                 </div>
             </div>
         </x-slot>
-        <div class="py-6 space-y-6">
-        <div class="py-6 space-y-6">
+        <div class="py-6 space-y-6" data-aos="fade-up">
+        <div class="py-6 space-y-6" data-aos="fade-up">
             <!-- Cards Grid -->
             @if($data)
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -77,5 +78,7 @@
             @endif
         </div>
     </x-user-layout>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 50 });</script>
 </body>
 </html>

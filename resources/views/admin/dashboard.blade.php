@@ -1,5 +1,5 @@
 <x-admin-layout activePage="dashboard">
-    <div class="mb-6 lg:mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div class="mb-6 lg:mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between" data-aos="fade-up">
         <div>
             <h1 class="text-2xl lg:text-3xl font-bold text-slate-800">Dashboard Admin</h1>
             <p class="text-slate-500 mt-1 text-sm lg:text-base">Pantau data IKU seluruh fakultas</p>
@@ -13,7 +13,7 @@
     </div>
 
     <!-- Stats Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mb-6 lg:mb-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mb-6 lg:mb-8" data-aos="fade-up" data-aos-delay="100">
         <div class="bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6">
             <div class="flex items-center gap-3 lg:gap-4">
                 <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-emerald-100 flex items-center justify-center">
@@ -56,7 +56,7 @@
     </div>
 
     <!-- Export Section -->
-    <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 mb-6 lg:mb-8 text-white">
+    <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 mb-6 lg:mb-8 text-white" data-aos="fade-up" data-aos-delay="200">
         <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
             <div>
                 <h2 class="text-lg lg:text-xl font-bold flex items-center gap-2">
@@ -124,7 +124,7 @@
     @endphp
 
     <!-- Charts Section -->
-    <div class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
+    <div class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8" data-aos="fade-up">
         <div class="bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6">
             <h2 class="text-base lg:text-lg font-bold text-slate-800 mb-4">Sebaran IKU per Fakultas</h2>
             <div class="h-64">
@@ -151,7 +151,7 @@
         </div>
     </div>
     <!-- Faculty Overview -->
-    <div class="bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 mb-6 lg:mb-8">
+    <div class="bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 mb-6 lg:mb-8" data-aos="fade-up">
         <h2 class="text-lg lg:text-xl font-bold text-slate-800 mb-4 lg:mb-6">Data per Fakultas ({{ $tahunAkademik }})</h2>
         @php
             $ikuMeta = [
