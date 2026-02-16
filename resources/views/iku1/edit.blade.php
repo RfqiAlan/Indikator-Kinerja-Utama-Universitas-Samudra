@@ -72,7 +72,7 @@
                                 Data Capaian
                             </h3>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 <div class="space-y-2">
                                     <label class="text-sm font-medium text-slate-700 dark:text-slate-300 flex justify-between">
                                         Lulus Tepat Waktu <span class="text-rose-500">*</span>
@@ -93,6 +93,22 @@
                                     <p class="text-xs text-slate-500">Total mahasiswa terdaftar pada periode tersebut.</p>
                                     @error('total_mahasiswa_aktif')<span class="text-rose-500 text-xs mt-1 block">{{ $message }}</span>@enderror
                                 </div>
+                                <div class="space-y-2">
+                                    <label class="text-sm font-medium text-slate-700 dark:text-slate-300 flex justify-between">
+                                        Jumlah Responden
+                                    </label>
+                                    <input type="number" name="jumlah_responden" id="responden" value="{{ old('jumlah_responden', $iku1->jumlah_responden ?? 0) }}" 
+                                        class="w-full text-lg font-semibold rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-shadow"
+                                        placeholder="0" min="0" oninput="calculatePreview()">
+                                    <p class="text-xs text-slate-500">Min. 75% dari jumlah lulusan.</p>
+                                    @error('jumlah_responden')<span class="text-rose-500 text-xs mt-1 block">{{ $message }}</span>@enderror
+                                </div>
+                            </div>
+
+                            <!-- Respondent Warning -->
+                            <div id="responden-warning" class="mt-4 hidden flex items-center gap-2 px-3 py-2 bg-rose-50 border border-rose-200 rounded-lg text-rose-700 text-xs font-medium">
+                                <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path></svg>
+                                <span id="responden-warning-text"></span>
                             </div>
 
                              <div class="mt-6 space-y-2">
@@ -224,12 +240,30 @@
                     labelStatus.textContent = 'Menunggu Data';
                     labelStatus.className += 'text-emerald-200';
                 }
+
+                updateRespondenWarning();
             }
 
             document.addEventListener('DOMContentLoaded', function() {
                 // Manually trigger to load initial values
                 updateAeeIdeal();
+                updateRespondenWarning();
             });
+
+            function updateRespondenWarning() {
+                const lulus = parseFloat(document.getElementById('lulus').value) || 0;
+                const responden = parseFloat(document.getElementById('responden').value) || 0;
+                const warning = document.getElementById('responden-warning');
+                const warningText = document.getElementById('responden-warning-text');
+                
+                if (lulus > 0 && responden < (lulus * 0.75)) {
+                    const needed = Math.ceil(lulus * 0.75);
+                    warningText.textContent = 'Jumlah responden kurang dari 75% jumlah lulusan (' + needed + ' responden dibutuhkan)';
+                    warning.classList.remove('hidden');
+                } else {
+                    warning.classList.add('hidden');
+                }
+            }
         </script>
     </x-user-layout>
 </body>

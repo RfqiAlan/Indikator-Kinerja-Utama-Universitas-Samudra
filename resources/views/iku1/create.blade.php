@@ -50,7 +50,7 @@
                         <span class="bg-cyan-100 text-cyan-600 w-7 h-7 rounded-full flex items-center justify-center text-sm mr-2">2</span>
                         Data Kelulusan
                     </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">Total Mahasiswa Aktif <span class="text-rose-500">*</span></label>
                             <input type="number" name="total_mahasiswa_aktif" x-model.number="totalMahasiswa" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500" required min="1">
@@ -59,7 +59,19 @@
                             <label class="block text-sm font-medium text-slate-700 mb-1">Jumlah Lulus Tepat Waktu <span class="text-rose-500">*</span></label>
                             <input type="number" name="jumlah_lulus_tepat_waktu" x-model.number="lulusTepat" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500" required min="0">
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Jumlah Responden</label>
+                            <input type="number" name="jumlah_responden" x-model.number="jumlahResponden" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500" min="0" value="{{ old('jumlah_responden', 0) }}">
+                            <p class="text-xs text-slate-400 mt-1">Min. 75% dari jumlah lulusan</p>
+                        </div>
                     </div>
+                    <!-- Respondent Warning -->
+                    <template x-if="lulusTepat > 0 && jumlahResponden < (lulusTepat * 0.75)">
+                        <div class="mt-3 flex items-center gap-2 px-3 py-2 bg-rose-50 border border-rose-200 rounded-lg text-rose-700 text-xs font-medium">
+                            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path></svg>
+                            <span>Jumlah responden kurang dari 75% jumlah lulusan (<span x-text="Math.ceil(lulusTepat * 0.75)"></span> responden dibutuhkan)</span>
+                        </div>
+                    </template>
                 </div>
 
                 <div class="bg-gradient-to-r from-emerald-50 to-cyan-50 rounded-xl p-6">
@@ -90,6 +102,7 @@
                     jenjang: '',
                     totalMahasiswa: 0,
                     lulusTepat: 0,
+                    jumlahResponden: 0,
                     get aeeIdeal() { return aeeIdealMap[this.jenjang] || 25; },
                     get aee() { if (this.totalMahasiswa <= 0) return 0; return (this.lulusTepat / this.totalMahasiswa) * 100; }
                 }

@@ -16,6 +16,7 @@ class Iku2LulusanBekerja extends Model
         'fakultas',
         'program_studi',
         'total_lulusan',
+        'total_responden',
         'bekerja_bobot_10',
         'bekerja_bobot_6',
         'bekerja_bobot_4',
@@ -69,12 +70,34 @@ class Iku2LulusanBekerja extends Model
         // Total A + B + C
         $totalABC = $this->skor_bekerja + $this->studi_lanjut + $this->skor_wirausaha;
 
-        // Hitung persentase IKU 2
-        if ($this->total_lulusan > 0) {
-            $this->persentase_iku2 = ($totalABC / $this->total_lulusan) * 100;
+        // Hitung persentase IKU 2 (dibagi total responden)
+        if ($this->total_responden > 0) {
+            $this->persentase_iku2 = ($totalABC / $this->total_responden) * 100;
         } else {
             $this->persentase_iku2 = 0;
         }
+    }
+
+    /**
+     * Check if total_responden >= 75% of total_lulusan
+     */
+    public function isRespondenCukup(): bool
+    {
+        if ($this->total_lulusan <= 0) {
+            return true;
+        }
+        return $this->total_responden >= ($this->total_lulusan * 0.75);
+    }
+
+    /**
+     * Get persentase responden terhadap lulusan
+     */
+    public function getRespondenPersentase(): float
+    {
+        if ($this->total_lulusan <= 0) {
+            return 0;
+        }
+        return ($this->total_responden / $this->total_lulusan) * 100;
     }
 
     public function getTotalBekerjaAttribute()
