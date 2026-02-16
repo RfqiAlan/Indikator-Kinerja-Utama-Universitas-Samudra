@@ -76,14 +76,14 @@ class Iku2Controller extends Controller
             'total_responden.lte' => 'Total responden tidak boleh melebihi total lulusan.',
         ]);
 
-        // Validate sum of sub-fields doesn't exceed total
+        // Validate sum of sub-fields doesn't exceed total responden
         $totalKategori = $validated['bekerja_bobot_10'] + $validated['bekerja_bobot_6'] + 
                          $validated['bekerja_bobot_4'] + $validated['studi_lanjut'] + 
                          $validated['wirausaha_founder'] + $validated['wirausaha_freelancer'];
         
-        if ($totalKategori > $validated['total_lulusan']) {
+        if ($totalKategori > $validated['total_responden']) {
             return back()->withInput()->withErrors([
-                'total_lulusan' => 'Total kategori (' . $totalKategori . ') tidak boleh melebihi total lulusan (' . $validated['total_lulusan'] . ').'
+                'total_responden' => 'Total kategori (Bekerja + Studi Lanjut + Wirausaha = ' . $totalKategori . ') tidak boleh melebihi total responden (' . $validated['total_responden'] . ').'
             ]);
         }
 
@@ -139,6 +139,17 @@ class Iku2Controller extends Controller
         ], [
             'total_responden.lte' => 'Total responden tidak boleh melebihi total lulusan.',
         ]);
+
+        // Validate sum of sub-fields doesn't exceed total responden
+        $totalKategori = $validated['bekerja_bobot_10'] + $validated['bekerja_bobot_6'] + 
+                         $validated['bekerja_bobot_4'] + $validated['studi_lanjut'] + 
+                         $validated['wirausaha_founder'] + $validated['wirausaha_freelancer'];
+        
+        if ($totalKategori > $validated['total_responden']) {
+            return back()->withInput()->withErrors([
+                'total_responden' => 'Total kategori (Bekerja + Studi Lanjut + Wirausaha = ' . $totalKategori . ') tidak boleh melebihi total responden (' . $validated['total_responden'] . ').'
+            ]);
+        }
 
         // Upload lampiran to Google Drive
     if ($request->hasFile('lampiran')) {
