@@ -15,11 +15,7 @@
                 <div class="flex justify-between h-16">
                     <div class="flex items-center">
                         <a href="{{ route('home') }}" class="flex items-center gap-2">
-                            <div class="bg-blue-600 text-white p-1.5 rounded-lg">
-                                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                                </svg>
-                            </div>
+                            <img src="{{ asset('build/assets/logo.png') }}" alt="Logo" class="h-11 w-11 rounded-lg object-contain" />
                             <span class="text-xl font-bold bg-gradient-to-r from-blue-700 to-emerald-600 bg-clip-text text-transparent">IKU Unsam</span>
                         </a>
                     </div>
@@ -178,9 +174,7 @@
         <footer class="bg-white border-t border-slate-200 py-8 mt-auto" data-aos="fade-up">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="flex items-center gap-2">
-                     <div class="bg-blue-600 text-white p-1 rounded">
-                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                    </div>
+                    <img src="{{ asset('build/assets/logo.png') }}" alt="Logo" class="h-6 w-6 rounded object-contain" />
                     <span class="font-semibold text-slate-700">IKU Universitas Samudra</span>
                 </div>
                 <p class="text-sm text-slate-500">

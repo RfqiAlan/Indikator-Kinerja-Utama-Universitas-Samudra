@@ -52,6 +52,29 @@ if (!function_exists('get_tahun_akademik')) {
     }
 }
 
+if (!function_exists('get_tahun_akademik_list')) {
+    /**
+     * Get list of tahun akademik options
+     * 2 years back + 4 years ahead from current year
+     *
+     * @return array
+     */
+    function get_tahun_akademik_list(): array
+    {
+        $currentYear = (int) date('Y');
+        $startYear = $currentYear - 2;
+        $endYear = $currentYear + 4;
+        $options = [];
+        
+        for ($y = $endYear; $y >= $startYear; $y--) {
+            $options[] = $y . '/' . ($y + 1) . ' Ganjil';
+            $options[] = ($y - 1) . '/' . $y . ' Genap';
+        }
+        
+        return array_unique($options);
+    }
+}
+
 if (!function_exists('get_semester_options')) {
     /**
      * Get available semester options for a given year range
