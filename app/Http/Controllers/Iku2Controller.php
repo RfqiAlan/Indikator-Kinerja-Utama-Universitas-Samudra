@@ -18,15 +18,16 @@ class Iku2Controller extends Controller
             ->orderBy('program_studi')
             ->get();
 
-        $availableYears = Iku2LulusanBekerja::where('fakultas', $fakultas)
+        $dbYears = Iku2LulusanBekerja::where('fakultas', $fakultas)
             ->select('tahun_akademik')
             ->distinct()
-            ->orderByDesc('tahun_akademik')
             ->pluck('tahun_akademik');
 
-        if ($availableYears->isEmpty()) {
-            $availableYears = collect([$tahunAkademik]);
-        }
+        $availableYears = collect(get_tahun_akademik_list())
+            ->merge($dbYears)
+            ->unique()
+            ->sortDesc()
+            ->values();
 
         // Calculate overall IKU 2
         $totalLulusan = $data->sum('total_lulusan');

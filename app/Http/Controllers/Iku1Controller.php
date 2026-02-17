@@ -55,16 +55,16 @@ class Iku1Controller extends Controller
         $aeePt = Iku1Aee::calculateAeePt($tahunAkademik, $fakultas);
         
         // Get available years
-        $availableYears = Iku1Aee::where('fakultas', $fakultas)
+        $dbYears = Iku1Aee::where('fakultas', $fakultas)
                                  ->select('tahun_akademik')
                                  ->distinct()
-                                 ->orderBy('tahun_akademik', 'desc')
                                  ->pluck('tahun_akademik');
         
-        // Add current year if not exists
-        if ($availableYears->isEmpty()) {
-            $availableYears = collect([$tahunAkademik]);
-        }
+        $availableYears = collect(get_tahun_akademik_list())
+            ->merge($dbYears)
+            ->unique()
+            ->sortDesc()
+            ->values();
 
         return view('iku1.index', compact('data', 'aeePt', 'tahunAkademik', 'availableYears'));
     }

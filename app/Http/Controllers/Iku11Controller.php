@@ -14,14 +14,15 @@ class Iku11Controller extends Controller
         
         $data = Iku11TataKelola::where('tahun_akademik', $tahunAkademik)->first();
 
-        $availableYears = Iku11TataKelola::select('tahun_akademik')
+        $dbYears = Iku11TataKelola::select('tahun_akademik')
             ->distinct()
-            ->orderByDesc('tahun_akademik')
             ->pluck('tahun_akademik');
 
-        if ($availableYears->isEmpty()) {
-            $availableYears = collect([$tahunAkademik]);
-        }
+        $availableYears = collect(get_tahun_akademik_list())
+            ->merge($dbYears)
+            ->unique()
+            ->sortDesc()
+            ->values();
 
         $opiniOptions = Iku11TataKelola::OPINI_OPTIONS;
         $predikatOptions = Iku11TataKelola::PREDIKAT_SAKIP;

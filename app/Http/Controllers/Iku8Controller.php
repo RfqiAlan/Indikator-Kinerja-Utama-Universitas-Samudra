@@ -16,15 +16,16 @@ class Iku8Controller extends Controller
         $data = Iku8SdmKebijakan::where('tahun_akademik', $tahunAkademik)
             ->where('fakultas', $fakultas)->get();
 
-        $availableYears = Iku8SdmKebijakan::where('fakultas', $fakultas)
+        $dbYears = Iku8SdmKebijakan::where('fakultas', $fakultas)
             ->select('tahun_akademik')
             ->distinct()
-            ->orderByDesc('tahun_akademik')
             ->pluck('tahun_akademik');
 
-        if ($availableYears->isEmpty()) {
-            $availableYears = collect([$tahunAkademik]);
-        }
+        $availableYears = collect(get_tahun_akademik_list())
+            ->merge($dbYears)
+            ->unique()
+            ->sortDesc()
+            ->values();
 
         $totalSdm = $data->sum('total_sdm');
         $totalTerlibat = $data->sum('total_terlibat');

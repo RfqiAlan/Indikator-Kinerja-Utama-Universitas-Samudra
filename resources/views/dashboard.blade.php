@@ -108,9 +108,9 @@
                 <div class="flex items-center gap-3">
                     <span class="text-sm text-slate-500">Tahun Akademik:</span>
                     <select class="form-select text-sm border-slate-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        <option>2024</option>
-                        <option>2023</option>
-                        <option>2022</option>
+                        @foreach(get_tahun_akademik_list() as $year)
+                            <option value="{{ $year }}" {{ get_tahun_akademik() === $year ? 'selected' : '' }}>{{ $year }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>

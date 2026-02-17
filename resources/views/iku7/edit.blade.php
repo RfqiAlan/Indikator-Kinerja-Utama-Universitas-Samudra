@@ -17,7 +17,7 @@
                 @csrf
                 @method('PUT')
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Tahun Akademik <span class="text-rose-500">*</span></label><input type="text" name="tahun_akademik" value="{{ old('tahun_akademik', $iku7->tahun_akademik) }}" class="w-full rounded-lg border-slate-300" required></div>
+                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Tahun Akademik <span class="text-rose-500">*</span></label><x-tahun-akademik-select :selected="$iku7->tahun_akademik" /></div>
                     <div><label class="block text-sm font-medium text-slate-700 mb-1">Total Program <span class="text-rose-500">*</span></label><input type="number" name="total_program" x-model.number="totalProgram" value="{{ old('total_program', $iku7->total_program) }}" class="w-full rounded-lg border-slate-300" required min="1"></div>
                 </div>
                 <div class="border-t pt-6"><h3 class="font-semibold text-slate-800 mb-4">SDGs Wajib (1, 4, 17) & Pilihan</h3>

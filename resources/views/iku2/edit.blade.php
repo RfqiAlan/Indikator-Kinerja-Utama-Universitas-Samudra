@@ -17,7 +17,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">Tahun Akademik <span class="text-rose-500">*</span></label>
-                            <input type="text" name="tahun_akademik" value="{{ old('tahun_akademik', $iku2->tahun_akademik) }}" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500" required>
+                            <x-tahun-akademik-select :selected="$iku2->tahun_akademik" />
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">Program Studi <span class="text-rose-500">*</span></label>

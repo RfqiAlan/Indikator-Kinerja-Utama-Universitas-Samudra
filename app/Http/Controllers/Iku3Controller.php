@@ -18,15 +18,16 @@ class Iku3Controller extends Controller
             ->orderBy('program_studi')
             ->get();
 
-        $availableYears = Iku3KegiatanMahasiswa::where('fakultas', $fakultas)
+        $dbYears = Iku3KegiatanMahasiswa::where('fakultas', $fakultas)
             ->select('tahun_akademik')
             ->distinct()
-            ->orderByDesc('tahun_akademik')
             ->pluck('tahun_akademik');
 
-        if ($availableYears->isEmpty()) {
-            $availableYears = collect([$tahunAkademik]);
-        }
+        $availableYears = collect(get_tahun_akademik_list())
+            ->merge($dbYears)
+            ->unique()
+            ->sortDesc()
+            ->values();
 
         $totalMahasiswa = $data->sum('total_mahasiswa');
         $totalResponden = $data->sum('total_responden');

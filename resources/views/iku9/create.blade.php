@@ -16,7 +16,7 @@
             <form action="{{ route('user.iku9.store') }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl shadow-sm p-6 space-y-6" data-aos="fade-up">
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Tahun Akademik <span class="text-rose-500">*</span></label><input type="text" name="tahun_akademik" value="{{ old('tahun_akademik', $tahunAkademik) }}" class="w-full rounded-lg border-slate-300" required></div>
+                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Tahun Akademik <span class="text-rose-500">*</span></label><x-tahun-akademik-select :selected="$tahunAkademik" /></div>
                     <div><label class="block text-sm font-medium text-slate-700 mb-1">Total Pendapatan (Rp) <span class="text-rose-500">*</span></label><input type="number" name="total_pendapatan" x-model.number="totalPendapatan" value="{{ old('total_pendapatan', 0) }}" class="w-full rounded-lg border-slate-300" required min="0"></div>
                 </div>
                 <div class="border-t pt-6"><h3 class="font-semibold text-slate-800 mb-4">Sumber Pendapatan Non-UKT</h3>

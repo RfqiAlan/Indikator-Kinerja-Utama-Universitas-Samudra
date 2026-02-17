@@ -16,15 +16,16 @@ class Iku4Controller extends Controller
         $data = Iku4RekognisiDosen::where('tahun_akademik', $tahunAkademik)
             ->where('fakultas', $fakultas)->get();
 
-        $availableYears = Iku4RekognisiDosen::where('fakultas', $fakultas)
+        $dbYears = Iku4RekognisiDosen::where('fakultas', $fakultas)
             ->select('tahun_akademik')
             ->distinct()
-            ->orderByDesc('tahun_akademik')
             ->pluck('tahun_akademik');
 
-        if ($availableYears->isEmpty()) {
-            $availableYears = collect([$tahunAkademik]);
-        }
+        $availableYears = collect(get_tahun_akademik_list())
+            ->merge($dbYears)
+            ->unique()
+            ->sortDesc()
+            ->values();
 
         $totalDosen = $data->sum('total_dosen');
         $totalRekognisi = $data->sum('total_rekognisi');

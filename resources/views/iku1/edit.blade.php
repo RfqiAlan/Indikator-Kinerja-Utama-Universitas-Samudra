@@ -33,9 +33,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="space-y-2">
                                     <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Tahun Akademik <span class="text-rose-500">*</span></label>
-                                    <input type="text" name="tahun_akademik" value="{{ old('tahun_akademik', $iku1->tahun_akademik) }}" 
-                                        class="w-full rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-shadow"
-                                        placeholder="Contoh: 2023/2024" required>
+                                    <x-tahun-akademik-select :selected="$iku1->tahun_akademik" class="w-full rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-shadow" />
                                     @error('tahun_akademik')<span class="text-rose-500 text-xs mt-1 block">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="space-y-2">

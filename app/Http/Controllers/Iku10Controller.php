@@ -18,15 +18,16 @@ class Iku10Controller extends Controller
             ->orderBy('nama_unit')
             ->get();
 
-        $availableYears = Iku10ZonaIntegritas::where('fakultas', $fakultas)
+        $dbYears = Iku10ZonaIntegritas::where('fakultas', $fakultas)
             ->select('tahun_akademik')
             ->distinct()
-            ->orderByDesc('tahun_akademik')
             ->pluck('tahun_akademik');
 
-        if ($availableYears->isEmpty()) {
-            $availableYears = collect([$tahunAkademik]);
-        }
+        $availableYears = collect(get_tahun_akademik_list())
+            ->merge($dbYears)
+            ->unique()
+            ->sortDesc()
+            ->values();
 
         // Count by status
         $totalUnit = $data->count();

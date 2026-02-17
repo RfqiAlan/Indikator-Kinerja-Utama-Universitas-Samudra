@@ -51,8 +51,8 @@ class AdminController extends Controller
         $totalUsers = User::count();
         $totalActivities = ActivityLog::count();
         
-        // Get available years from all IKU tables (realtime)
-        $availableYears = collect()
+        // Get available years from all IKU tables + standard range
+        $dbYears = collect()
             ->merge(Iku1Aee::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
             ->merge(Iku2LulusanBekerja::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
             ->merge(Iku3KegiatanMahasiswa::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
@@ -63,16 +63,13 @@ class AdminController extends Controller
             ->merge(Iku8SdmKebijakan::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
             ->merge(Iku9Pendapatan::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
             ->merge(Iku10ZonaIntegritas::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
-            ->merge(Iku11TataKelola::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
+            ->merge(Iku11TataKelola::select('tahun_akademik')->distinct()->pluck('tahun_akademik'));
+
+        $availableYears = collect(get_tahun_akademik_list())
+            ->merge($dbYears)
             ->unique()
-            ->sort()
-            ->reverse()
+            ->sortDesc()
             ->values();
-        
-        // Add current year if no data exists
-        if ($availableYears->isEmpty()) {
-            $availableYears = collect([$tahunAkademik]);
-        }
             
         return view('admin.dashboard', compact('fakultasStats', 'totalUsers', 'totalActivities', 'tahunAkademik', 'availableYears'));
     }

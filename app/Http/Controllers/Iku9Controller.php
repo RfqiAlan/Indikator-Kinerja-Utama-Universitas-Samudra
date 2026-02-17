@@ -16,15 +16,16 @@ class Iku9Controller extends Controller
         $data = Iku9Pendapatan::where('tahun_akademik', $tahunAkademik)
             ->where('fakultas', $fakultas)->get();
 
-        $availableYears = Iku9Pendapatan::where('fakultas', $fakultas)
+        $dbYears = Iku9Pendapatan::where('fakultas', $fakultas)
             ->select('tahun_akademik')
             ->distinct()
-            ->orderByDesc('tahun_akademik')
             ->pluck('tahun_akademik');
 
-        if ($availableYears->isEmpty()) {
-            $availableYears = collect([$tahunAkademik]);
-        }
+        $availableYears = collect(get_tahun_akademik_list())
+            ->merge($dbYears)
+            ->unique()
+            ->sortDesc()
+            ->values();
 
         $totalPendapatan = $data->sum('total_pendapatan');
         $totalNonUkt = $data->sum('total_non_ukt');

@@ -16,15 +16,16 @@ class Iku5Controller extends Controller
         $data = Iku5LuaranKerjasama::where('tahun_akademik', $tahunAkademik)
             ->where('fakultas', $fakultas)->get();
 
-        $availableYears = Iku5LuaranKerjasama::where('fakultas', $fakultas)
+        $dbYears = Iku5LuaranKerjasama::where('fakultas', $fakultas)
             ->select('tahun_akademik')
             ->distinct()
-            ->orderByDesc('tahun_akademik')
             ->pluck('tahun_akademik');
 
-        if ($availableYears->isEmpty()) {
-            $availableYears = collect([$tahunAkademik]);
-        }
+        $availableYears = collect(get_tahun_akademik_list())
+            ->merge($dbYears)
+            ->unique()
+            ->sortDesc()
+            ->values();
 
         $totalDosen = $data->sum('total_dosen');
         $totalLuaran = $data->sum('total_luaran');
