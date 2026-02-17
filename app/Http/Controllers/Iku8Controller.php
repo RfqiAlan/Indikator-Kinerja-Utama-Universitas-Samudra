@@ -44,6 +44,16 @@ class Iku8Controller extends Controller
     public function create()
     {
         $tahunAkademik = get_tahun_akademik();
+        $fakultas = auth()->user()->fakultas;
+        $existing = Iku8SdmKebijakan::where('tahun_akademik', $tahunAkademik)
+            ->where('fakultas', $fakultas)
+            ->first();
+
+        if ($existing) {
+            return redirect()->route('user.iku8.edit', $existing->id)
+                ->with('warning', 'Data IKU 8 untuk tahun ini sudah ada. Silakan edit data yang sudah ada.');
+        }
+
         return view('iku8.create', compact('tahunAkademik'));
     }
 
@@ -70,7 +80,18 @@ class Iku8Controller extends Controller
             ]);
         }
 
-        $validated['fakultas'] = auth()->user()->fakultas;
+        $fakultas = auth()->user()->fakultas;
+        $validated['fakultas'] = $fakultas;
+
+        // Check for duplicate
+        $existing = Iku8SdmKebijakan::where('tahun_akademik', $validated['tahun_akademik'])
+            ->where('fakultas', $fakultas)
+            ->first();
+
+        if ($existing) {
+            return redirect()->route('user.iku8.edit', $existing->id)
+                ->with('warning', 'Data IKU 8 untuk tahun ini sudah ada. Silakan edit data yang sudah ada.');
+        }
 
         // Upload lampiran to Google Drive
         if ($request->hasFile('lampiran')) {

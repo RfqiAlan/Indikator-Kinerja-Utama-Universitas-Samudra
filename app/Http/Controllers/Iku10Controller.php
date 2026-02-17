@@ -67,6 +67,17 @@ class Iku10Controller extends Controller
         $validated['terdaftar_kemenpan'] = $request->has('terdaftar_kemenpan');
         $validated['fakultas'] = auth()->user()->fakultas;
 
+        // Check for duplicate
+        $existing = Iku10ZonaIntegritas::where('tahun_akademik', $validated['tahun_akademik'])
+            ->where('fakultas', $validated['fakultas'])
+            ->where('nama_unit', $validated['nama_unit'])
+            ->first();
+
+        if ($existing) {
+            return redirect()->route('user.iku10.edit', $existing->id)
+                ->with('warning', 'Data IKU 10 untuk unit ini sudah ada. Silakan edit data yang sudah ada.');
+        }
+
         // Upload lampiran to Google Drive
         if ($request->hasFile('lampiran')) {
             $driveService = new GoogleDriveService();

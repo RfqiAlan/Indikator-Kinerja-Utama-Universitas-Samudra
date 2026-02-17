@@ -44,6 +44,16 @@ class Iku6Controller extends Controller
     public function create()
     {
         $tahunAkademik = get_tahun_akademik();
+        $fakultas = auth()->user()->fakultas;
+        $existing = Iku6Publikasi::where('tahun_akademik', $tahunAkademik)
+            ->where('fakultas', $fakultas)
+            ->first();
+
+        if ($existing) {
+            return redirect()->route('user.iku6.edit', $existing->id)
+                ->with('warning', 'Data IKU 6 untuk tahun ini sudah ada. Silakan edit data yang sudah ada.');
+        }
+
         return view('iku6.create', compact('tahunAkademik'));
     }
 
@@ -71,7 +81,18 @@ class Iku6Controller extends Controller
             ]);
         }
 
-        $validated['fakultas'] = auth()->user()->fakultas;
+        $fakultas = auth()->user()->fakultas;
+        $validated['fakultas'] = $fakultas;
+
+        // Check for duplicate
+        $existing = Iku6Publikasi::where('tahun_akademik', $validated['tahun_akademik'])
+            ->where('fakultas', $fakultas)
+            ->first();
+
+        if ($existing) {
+            return redirect()->route('user.iku6.edit', $existing->id)
+                ->with('warning', 'Data IKU 6 untuk tahun ini sudah ada. Silakan edit data yang sudah ada.');
+        }
 
         // Upload lampiran to Google Drive
         if ($request->hasFile('lampiran')) {
