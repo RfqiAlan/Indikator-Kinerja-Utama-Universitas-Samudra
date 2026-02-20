@@ -150,6 +150,120 @@
             </div>
         </div>
     </div>
+
+    <!-- Year-over-Year Comparison -->
+    @php
+        $comparisonData = collect($yearlyComparison)->sortBy('tahun')->values();
+        $compYears = $comparisonData->pluck('tahun');
+        $ikuKeys = ['iku1','iku2','iku3','iku4','iku5','iku6','iku7','iku8','iku9','iku10','iku11'];
+        $ikuNames = ['IKU 1 - Efisiensi Edukasi','IKU 2 - Lulusan Bekerja','IKU 3 - Kegiatan Mahasiswa','IKU 4 - Rekognisi Dosen','IKU 5 - Luaran Kerjasama','IKU 6 - Publikasi','IKU 7 - SDGs','IKU 8 - SDM Kebijakan','IKU 9 - Pendapatan','IKU 10 - Zona Integritas','IKU 11 - Tata Kelola'];
+    @endphp
+
+    <div class="bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 mb-6 lg:mb-8" data-aos="fade-up">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4 lg:mb-6">
+            <div>
+                <h2 class="text-lg lg:text-xl font-bold text-slate-800">Perbandingan Antar Tahun</h2>
+                <p class="text-sm text-slate-500 mt-0.5">Jumlah data IKU per tahun akademik (semua fakultas)</p>
+            </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="h-72 lg:h-80 mb-6 lg:mb-8">
+            <canvas id="yearComparisonChart"></canvas>
+        </div>
+
+        <!-- Comparison Table -->
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead>
+                    <tr class="bg-slate-50">
+                        <th class="px-4 py-3 text-left font-semibold text-slate-600 whitespace-nowrap sticky left-0 bg-slate-50 z-10">Indikator</th>
+                        @foreach($compYears as $year)
+                            <th class="px-4 py-3 text-center font-semibold whitespace-nowrap {{ $year === $tahunAkademik ? 'text-emerald-700 bg-emerald-50' : 'text-slate-600' }}">
+                                {{ $year }}
+                                @if($year === $tahunAkademik)
+                                    <span class="block text-xs font-normal text-emerald-500">aktif</span>
+                                @endif
+                            </th>
+                        @endforeach
+                        @if($compYears->count() >= 2)
+                            <th class="px-4 py-3 text-center font-semibold text-slate-600 whitespace-nowrap">Tren</th>
+                        @endif
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    @foreach($ikuKeys as $idx => $key)
+                        <tr class="hover:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-800 whitespace-nowrap sticky left-0 bg-white z-10">{{ $ikuNames[$idx] }}</td>
+                            @foreach($comparisonData as $yearData)
+                                <td class="px-4 py-3 text-center {{ $yearData['tahun'] === $tahunAkademik ? 'bg-emerald-50/50 font-semibold text-emerald-700' : '' }}">
+                                    @if($yearData[$key] > 0)
+                                        <span class="inline-flex items-center justify-center min-w-[2rem] px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 font-semibold text-xs">
+                                            {{ $yearData[$key] }}
+                                        </span>
+                                    @else
+                                        <span class="text-slate-300">—</span>
+                                    @endif
+                                </td>
+                            @endforeach
+                            @if($compYears->count() >= 2)
+                                @php
+                                    $lastVal = $comparisonData->last()[$key];
+                                    $prevVal = $comparisonData->slice(-2, 1)->first()[$key];
+                                    $diff = $lastVal - $prevVal;
+                                @endphp
+                                <td class="px-4 py-3 text-center whitespace-nowrap">
+                                    @if($diff > 0)
+                                        <span class="inline-flex items-center gap-1 text-xs font-semibold text-emerald-600">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
+                                            +{{ $diff }}
+                                        </span>
+                                    @elseif($diff < 0)
+                                        <span class="inline-flex items-center gap-1 text-xs font-semibold text-rose-600">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                                            {{ $diff }}
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center gap-1 text-xs font-semibold text-slate-400">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14"/></svg>
+                                            0
+                                        </span>
+                                    @endif
+                                </td>
+                            @endif
+                        </tr>
+                    @endforeach
+                    <!-- Total Row -->
+                    <tr class="bg-slate-50 font-bold">
+                        <td class="px-4 py-3 text-slate-800 whitespace-nowrap sticky left-0 bg-slate-50 z-10">Total Semua IKU</td>
+                        @foreach($comparisonData as $yearData)
+                            @php $yearTotal = collect($ikuKeys)->sum(fn($k) => $yearData[$k]); @endphp
+                            <td class="px-4 py-3 text-center {{ $yearData['tahun'] === $tahunAkademik ? 'bg-emerald-50 text-emerald-700' : 'text-slate-800' }}">
+                                {{ $yearTotal }}
+                            </td>
+                        @endforeach
+                        @if($compYears->count() >= 2)
+                            @php
+                                $lastTotal = collect($ikuKeys)->sum(fn($k) => $comparisonData->last()[$k]);
+                                $prevTotal = collect($ikuKeys)->sum(fn($k) => $comparisonData->slice(-2, 1)->first()[$k]);
+                                $totalDiff = $lastTotal - $prevTotal;
+                            @endphp
+                            <td class="px-4 py-3 text-center">
+                                @if($totalDiff > 0)
+                                    <span class="text-emerald-600">+{{ $totalDiff }}</span>
+                                @elseif($totalDiff < 0)
+                                    <span class="text-rose-600">{{ $totalDiff }}</span>
+                                @else
+                                    <span class="text-slate-400">0</span>
+                                @endif
+                            </td>
+                        @endif
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <!-- Faculty Overview -->
     <div class="bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 mb-6 lg:mb-8" data-aos="fade-up">
         <h2 class="text-lg lg:text-xl font-bold text-slate-800 mb-4 lg:mb-6">Data per Fakultas ({{ $tahunAkademik }})</h2>
@@ -364,6 +478,54 @@
                     plugins: { legend: { display: false } },
                     scales: {
                         y: { beginAtZero: true, ticks: { precision: 0 } },
+                    },
+                },
+            });
+        }
+
+        // Year-over-Year Comparison Chart
+        const yearCompCtx = document.getElementById('yearComparisonChart');
+        if (yearCompCtx) {
+            const yearCompData = @json($comparisonData);
+            const yearLabels = yearCompData.map(d => d.tahun);
+            const yearIkuKeys = ['iku1','iku2','iku3','iku4','iku5','iku6','iku7','iku8','iku9','iku10','iku11'];
+            const yearIkuNames = ['IKU 1','IKU 2','IKU 3','IKU 4','IKU 5','IKU 6','IKU 7','IKU 8','IKU 9','IKU 10','IKU 11'];
+
+            const yearDatasets = yearIkuKeys.map((key, i) => ({
+                label: yearIkuNames[i],
+                data: yearCompData.map(d => d[key]),
+                backgroundColor: ikuColors[i],
+                borderRadius: 4,
+            }));
+
+            new Chart(yearCompCtx, {
+                type: 'bar',
+                data: {
+                    labels: yearLabels,
+                    datasets: yearDatasets,
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { boxWidth: 12, padding: 12, font: { size: 11 } },
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        },
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: { precision: 0 },
+                            grid: { color: 'rgba(0,0,0,0.05)' },
+                        },
                     },
                 },
             });

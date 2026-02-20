@@ -70,8 +70,27 @@ class AdminController extends Controller
             ->unique()
             ->sortDesc()
             ->values();
+
+        // Build year-over-year comparison data
+        $yearlyComparison = [];
+        foreach ($availableYears as $year) {
+            $yearlyComparison[] = [
+                'tahun' => $year,
+                'iku1'  => Iku1Aee::where('tahun_akademik', $year)->count(),
+                'iku2'  => Iku2LulusanBekerja::where('tahun_akademik', $year)->count(),
+                'iku3'  => Iku3KegiatanMahasiswa::where('tahun_akademik', $year)->count(),
+                'iku4'  => Iku4RekognisiDosen::where('tahun_akademik', $year)->count(),
+                'iku5'  => Iku5LuaranKerjasama::where('tahun_akademik', $year)->count(),
+                'iku6'  => Iku6Publikasi::where('tahun_akademik', $year)->count(),
+                'iku7'  => Iku7Sdgs::where('tahun_akademik', $year)->count(),
+                'iku8'  => Iku8SdmKebijakan::where('tahun_akademik', $year)->count(),
+                'iku9'  => Iku9Pendapatan::where('tahun_akademik', $year)->count(),
+                'iku10' => Iku10ZonaIntegritas::where('tahun_akademik', $year)->count(),
+                'iku11' => Iku11TataKelola::where('tahun_akademik', $year)->count(),
+            ];
+        }
             
-        return view('admin.dashboard', compact('fakultasStats', 'totalUsers', 'totalActivities', 'tahunAkademik', 'availableYears'));
+        return view('admin.dashboard', compact('fakultasStats', 'totalUsers', 'totalActivities', 'tahunAkademik', 'availableYears', 'yearlyComparison'));
     }
 
     /**
