@@ -1,5 +1,9 @@
 <x-admin-layout activePage="dashboard">
-    <div class="mb-6 lg:mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between" data-aos="fade-up">
+    <style>
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+    <div class="mb-5 lg:mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between" data-aos="fade-up">
         <div>
             <h1 class="text-2xl lg:text-3xl font-bold text-slate-800">Dashboard Admin</h1>
             <p class="text-slate-500 mt-1 text-sm lg:text-base">Pantau data IKU seluruh fakultas</p>
@@ -13,10 +17,10 @@
     </div>
 
     <!-- Stats Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mb-6 lg:mb-8" data-aos="fade-up" data-aos-delay="100">
-        <div class="bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6">
+    <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 lg:grid lg:grid-cols-3 lg:gap-6 mb-6 lg:mb-8 hide-scrollbar pb-2 lg:pb-0" data-aos="fade-up" data-aos-delay="100">
+        <div class="min-w-[85vw] sm:min-w-[45vw] lg:min-w-0 bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 snap-center flex-shrink-0">
             <div class="flex items-center gap-3 lg:gap-4">
-                <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-emerald-100 flex items-center justify-center">
+                <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-emerald-100 flex items-center justify-center flex-shrink-0">
                     <svg class="w-6 h-6 lg:w-7 lg:h-7 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197"/>
                     </svg>
@@ -27,9 +31,9 @@
                 </div>
             </div>
         </div>
-        <div class="bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6">
+        <div class="min-w-[85vw] sm:min-w-[45vw] lg:min-w-0 bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 snap-center flex-shrink-0">
             <div class="flex items-center gap-3 lg:gap-4">
-                <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-cyan-100 flex items-center justify-center">
+                <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-cyan-100 flex items-center justify-center flex-shrink-0">
                     <svg class="w-6 h-6 lg:w-7 lg:h-7 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                     </svg>
@@ -40,9 +44,9 @@
                 </div>
             </div>
         </div>
-        <div class="bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 sm:col-span-2 lg:col-span-1">
+        <div class="min-w-[85vw] sm:min-w-[45vw] lg:min-w-0 bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 snap-center flex-shrink-0">
             <div class="flex items-center gap-3 lg:gap-4">
-                <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-amber-100 flex items-center justify-center">
+                <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-amber-100 flex items-center justify-center flex-shrink-0">
                     <svg class="w-6 h-6 lg:w-7 lg:h-7 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                     </svg>
@@ -54,8 +58,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Export Section -->
     <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 mb-6 lg:mb-8 text-white" data-aos="fade-up" data-aos-delay="200">
         <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
             <div>
@@ -67,23 +69,23 @@
                 </h2>
                 <p class="text-emerald-100 text-sm mt-1">Export data IKU dalam format Excel (XLSX)</p>
             </div>
-            <form action="{{ route('admin.export') }}" method="GET" class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full lg:w-auto">
-                <select name="fakultas" class="px-3 py-2 rounded-lg bg-white/20 border border-white/30 text-white text-sm focus:ring-2 focus:ring-white/50 focus:border-transparent backdrop-blur-sm">
+            <form action="{{ route('admin.export') }}" method="GET" class="grid grid-cols-2 sm:flex sm:flex-row items-stretch sm:items-center gap-2 w-full lg:w-auto mt-2 lg:mt-0">
+                <select name="fakultas" class="col-span-1 px-3 py-2 rounded-lg bg-white/20 border border-white/30 text-white text-sm focus:ring-2 focus:ring-white/50 focus:border-transparent backdrop-blur-sm">
                     <option value="" class="text-slate-800">Semua Fakultas</option>
                     @foreach(config('unsam.fakultas') as $kode => $data)
                         <option value="{{ $kode }}" class="text-slate-800">{{ $data['nama'] }}</option>
                     @endforeach
                 </select>
-                <select name="tahun" class="px-3 py-2 rounded-lg bg-white/20 border border-white/30 text-white text-sm focus:ring-2 focus:ring-white/50 focus:border-transparent backdrop-blur-sm">
+                <select name="tahun" class="col-span-1 px-3 py-2 rounded-lg bg-white/20 border border-white/30 text-white text-sm focus:ring-2 focus:ring-white/50 focus:border-transparent backdrop-blur-sm">
                     @foreach($availableYears as $year)
                         <option value="{{ $year }}" class="text-slate-800" {{ $tahunAkademik === $year ? 'selected' : '' }}>{{ $year }}</option>
                     @endforeach
                 </select>
-                <button type="submit" class="inline-flex items-center justify-center px-4 py-2 bg-white text-emerald-600 rounded-lg font-semibold text-sm hover:bg-emerald-50 transition-colors shadow-md">
+                <button type="submit" class="col-span-2 sm:col-span-auto inline-flex items-center justify-center px-4 py-2 bg-white text-emerald-600 rounded-lg font-semibold text-sm hover:bg-emerald-50 transition-colors shadow-md min-h-[40px]">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                     </svg>
-                    Download XLSX
+                    Download
                 </button>
             </form>
         </div>
@@ -124,28 +126,28 @@
     @endphp
 
     <!-- Charts Section -->
-    <div class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8" data-aos="fade-up">
-        <div class="bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6">
+    <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 xl:grid xl:grid-cols-2 2xl:grid-cols-4 lg:gap-6 mb-6 lg:mb-8 hide-scrollbar pb-2 lg:pb-0" data-aos="fade-up">
+        <div class="min-w-[85vw] sm:min-w-[45vw] lg:min-w-0 bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 snap-center flex-shrink-0">
             <h2 class="text-base lg:text-lg font-bold text-slate-800 mb-4">Sebaran IKU per Fakultas</h2>
-            <div class="h-64">
+            <div class="h-52 lg:h-64">
                 <canvas id="ikuStackedChart"></canvas>
             </div>
         </div>
-        <div class="bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6">
+        <div class="min-w-[85vw] sm:min-w-[45vw] lg:min-w-0 bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 snap-center flex-shrink-0">
             <h2 class="text-base lg:text-lg font-bold text-slate-800 mb-4">Jumlah User per Fakultas</h2>
-            <div class="h-64">
+            <div class="h-52 lg:h-64">
                 <canvas id="userFacultyChart"></canvas>
             </div>
         </div>
-        <div class="bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6">
+        <div class="min-w-[85vw] sm:min-w-[45vw] lg:min-w-0 bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 snap-center flex-shrink-0">
             <h2 class="text-base lg:text-lg font-bold text-slate-800 mb-4">Proporsi Total IKU 1-11</h2>
-            <div class="h-64">
+            <div class="h-52 lg:h-64">
                 <canvas id="ikuShareChart"></canvas>
             </div>
         </div>
-        <div class="bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6">
+        <div class="min-w-[85vw] sm:min-w-[45vw] lg:min-w-0 bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 snap-center flex-shrink-0">
             <h2 class="text-base lg:text-lg font-bold text-slate-800 mb-4">Total Data IKU per Fakultas</h2>
-            <div class="h-64">
+            <div class="h-52 lg:h-64">
                 <canvas id="ikuTotalFacultyChart"></canvas>
             </div>
         </div>
@@ -168,7 +170,7 @@
         </div>
 
         <!-- Chart -->
-        <div class="h-72 lg:h-80 mb-6 lg:mb-8">
+        <div class="h-52 lg:h-80 mb-6 lg:mb-8">
             <canvas id="yearComparisonChart"></canvas>
         </div>
 
@@ -286,26 +288,34 @@
         <!-- Mobile Cards -->
         <div class="lg:hidden space-y-4">
             @foreach($fakultasStats as $kode => $data)
-            <div class="border border-slate-200 rounded-xl p-4">
-                <div class="flex items-center justify-between mb-3">
-                    <div>
-                        <p class="font-semibold text-slate-800">{{ $data['nama'] }}</p>
-                        <p class="text-xs text-slate-500">{{ strtoupper($kode) }}</p>
+            <div class="border border-slate-200 rounded-xl p-4 bg-white shadow-sm">
+                <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-sm">
+                            {{ strtoupper(substr($kode, 0, 2)) }}
+                        </div>
+                        <div>
+                            <p class="font-bold text-slate-800 text-sm">{{ $data['nama'] }}</p>
+                            <p class="text-xs text-slate-500">{{ strtoupper($kode) }}</p>
+                        </div>
                     </div>
-                    <a href="{{ route('admin.fakultas', $kode) }}" class="text-sm text-emerald-600 font-medium">Detail →</a>
                 </div>
-                <div class="grid grid-cols-3 gap-2 text-center">
-                    <div class="bg-slate-50 rounded-lg p-2">
-                        <p class="text-xs text-slate-500">User</p>
-                        <p class="font-bold text-emerald-600">{{ $data['user_count'] }}</p>
+                <div class="flex items-center gap-3">
+                    <div class="flex-1 bg-slate-50 rounded-lg p-3 text-center border border-slate-100">
+                        <p class="text-[10px] uppercase tracking-wider font-semibold text-slate-500 mb-1">Total User</p>
+                        <p class="font-bold text-emerald-600 text-lg">{{ $data['user_count'] }}</p>
                     </div>
-                    @foreach($ikuMeta as $iku)
-                    <div class="bg-slate-50 rounded-lg p-2">
-                        <p class="text-xs text-slate-500">{{ $iku['label'] }}</p>
-                        <p class="font-bold {{ $data[$iku['key']] > 0 ? $iku['text_class'] : 'text-slate-400' }}">{{ $data[$iku['key']] }}</p>
+                    <div class="flex-1 bg-slate-50 rounded-lg p-3 text-center border border-slate-100">
+                        @php
+                            $totalIku = collect($ikuMeta)->sum(fn($iku) => $data[$iku['key']]);
+                        @endphp
+                        <p class="text-[10px] uppercase tracking-wider font-semibold text-slate-500 mb-1">Data IKU</p>
+                        <p class="font-bold text-teal-600 text-lg">{{ $totalIku }}</p>
                     </div>
-                    @endforeach
                 </div>
+                <a href="{{ route('admin.fakultas', $kode) }}" class="mt-3 w-full flex items-center justify-center px-4 py-2 bg-emerald-50 text-emerald-700 rounded-lg text-sm font-semibold hover:bg-emerald-100 transition-colors">
+                    Lihat Detail
+                </a>
             </div>
             @endforeach
         </div>
