@@ -1,59 +1,38 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistem Informasi Indikator Kinerja Utama (IKU) - Universitas Samudra
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistem Informasi Indikator Kinerja Utama (IKU) adalah sebuah aplikasi berbasis web yang dikembangkan khusus untuk mengelola, melacak, menganalisis, dan melaporkan capaian 11 Indikator Kinerja Utama di seluruh program studi maupun tingkat fakultas di lingkungan Universitas Samudra.
 
-## About Laravel
+Aplikasi ini bertujuan untuk mengefisienkan proses pelaporan borang dan evaluasi capaian universitas dengan memberikan rekapitulasi real-time melalui *dashboard* visual yang komprehensif, terstruktur, dan akuntabel.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Fitur Utama
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Manajemen 11 Indikator IKU Terpadu** <br>
+  Sistem mendukung input, edit, dan kalkulasi otomatis untuk seluruh IKU (IKU 1 - IKU 11) sesuai dengan standar pedoman Indikator Kinerja Utama Perguruan Tinggi.
+- **Multi-Role Authentication** <br>
+  Sistem dirancang dengan pembedaan hak akses yang tegas:
+  - **Admin**: Memiliki kontrol penuh atas sistem, manajemen pengguna (fakultas), pemantauan log aktivitas, serta akses ke agregasi data seluruh fakultas.
+  - **User (Fakultas)**: Memiliki akses pengelolaan data yang secara eksklusif dibatasi hanya untuk fakultas masing-masing.
+- **Dashboard Visual & Analitik** <br>
+  Menyajikan visualisasi data interaktif untuk mempermudah pemantauan capaian. Termasuk di dalamnya adalah grafik perbandingan capaian antar tahun akademik (*Year-over-Year Comparison*) dan rekapitulasi kontribusi per fakultas.
+- **Integrasi Penyimpanan Cloud (Google Drive)** <br>
+  Dokumen dan berkas bukti dukung (*E-Evidence*) yang diunggah secara mulus dialirkan dan disimpan langsung ke dalam *Google Drive* institusi. Hal ini memastikan keamanan data dan efisiensi penyimpanan server lokal.
+- **Export Pelaporan Eksekutif** <br>
+  Mendukung fungsi export (unduh) laporan rekapitulasi capaian IKU per tahun akademik ke dalam format spreadsheet (`.xlsx`) untuk mempermudah proses pelaporan fisik, rapat pimpinan, dan akreditasi.
+- **Validasi Integritas Data** <br>
+  Sistem dilengkapi dengan validasi input ketat (mencegah duplikasi data berdasarkan kombinasi Tahun Akademik & Fakultas) untuk menjamin akurasi dan integritas data pelaporan.
+- **Activity Log & Audit Trail** <br>
+  Setiap modifikasi data dan aktivitas pengguna dicatat oleh sistem secara otomatis. Hal ini krusial untuk menjaga akuntabilitas dan jejak operasi data (audit) di masa mendatang.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## �️ Stack Teknologi
 
-## Learning Laravel
+Sistem Informasi IKU ini dibangun menggunakan infrastruktur teknologi web modern untuk memastikan skalabilitas dan keandalan performa:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- **Framework Backend**: Laravel (PHP)
+- **Framework UI / Frontend**: Tailwind CSS & Laravel Blade
+- **Arsitektur Database**: MySQL / MariaDB
+- **Visualisasi Data**: Chart.js
+- **Integrasi Layanan External**: Google Drive API
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+*Dikembangkan untuk lingkungan internal institusi akademik **Universitas Samudra** sebagai instrumen tata kelola, pendataan, dan pelaporan IKU.*
