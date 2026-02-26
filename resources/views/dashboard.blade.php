@@ -49,7 +49,7 @@
                     </h1>
                     <p class="mt-4 text-lg text-slate-600 max-w-2xl">
                         Sistem Informasi Pengukuran Indikator Kinerja Utama Perguruan Tinggi Negeri. 
-                        Memantau capaian kinerja caturwulan secara real-time.
+                        Memantau capaian kinerja secara real-time.
                     </p>
                     <div class="mt-8 flex gap-4 justify-center sm:justify-start">
                         @auth
