@@ -16,7 +16,7 @@
                     <div class="flex items-center">
                         <a href="{{ route('home') }}" class="flex items-center gap-2">
                             <img src="{{ asset('build/assets/logo.png') }}" alt="Logo" class="h-11 w-11 rounded-lg object-contain" />
-                            <span class="text-xl font-bold bg-gradient-to-r from-blue-700 to-emerald-600 bg-clip-text text-transparent">IKU Unsam</span>
+                            <span class="text-xl font-bold bg-gradient-to-r from-blue-700 to-emerald-600 bg-clip-text text-transparent">IKU UNSAM</span>
                         </a>
                     </div>
                     <div class="flex items-center space-x-4">
