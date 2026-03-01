@@ -112,7 +112,7 @@
                     <textarea name="keterangan" rows="2" class="w-full rounded-lg border-slate-300">{{ old('keterangan') }}</textarea>
                 </div>
 
-                @include("components.lampiran-upload")
+                @include("components.lampiran-upload", ["ikuNumber" => 3])
                 <div class="flex justify-end gap-3 pt-4">
                     <a href="{{ route('user.iku3.index') }}" class="px-4 py-2 text-slate-600">Batal</a>
                     <button type="submit" class="px-6 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold shadow-md">Simpan Data</button>
