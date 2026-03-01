@@ -188,12 +188,12 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 @foreach($ikuInfos as $item)
                 @php
-                    // FIX: Use main_ikus to find the aggregated percentage with the genuine target.
-                    // This fixes the issue of grabbing sub-kriteria without a target.
-                    $rekap = $main_ikus->firstWhere('jenis_iku', $item['id']);
-                    $percentage = $rekap ? floatval($rekap->persentase_capaian) : 0; 
+                    // Read real-time aggregated data from the controller
+                    $ikuNum = $loop->iteration; // 1-indexed, maps to IKU number
+                    $computed = $ikuData[$ikuNum] ?? ['percentage' => 0, 'count' => 0];
+                    $percentage = floatval($computed['percentage']);
                     
-                    $target = $rekap ? floatval($rekap->target) : $item['target'];
+                    $target = $item['target'];
                     $meetsTarget = $percentage >= $target;
                     
                     // Colors
