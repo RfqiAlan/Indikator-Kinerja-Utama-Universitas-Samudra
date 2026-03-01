@@ -308,6 +308,33 @@
                 });
             }, 300);
         });
+        // Slow Scroll for "Lihat Capaian" button
+        document.querySelector('a[href="#indikator"]').addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector('#indikator');
+            // Check if user is already near the target or not to avoid jitter
+            const targetPosition = target.getBoundingClientRect().top + window.scrollY;
+            const startPosition = window.scrollY;
+            const distance = targetPosition - startPosition;
+            const duration = 1500; // 1.5 seconds for elegant, slow motion
+            let start = null;
+
+            function step(timestamp) {
+                if (!start) start = timestamp;
+                const progress = timestamp - start;
+                // easeInOutQuad easing function for smooth acceleration and deceleration
+                const ease = progress < duration / 2 
+                    ? 2 * Math.pow(progress / duration, 2) 
+                    : 1 - Math.pow(-2 * progress / duration + 2, 2) / 2;
+                
+                window.scrollTo(0, startPosition + distance * ease);
+                
+                if (progress < duration) {
+                    window.requestAnimationFrame(step);
+                }
+            }
+            window.requestAnimationFrame(step);
+        });
     </script>
 </body>
 </html>
