@@ -31,68 +31,60 @@ if (!function_exists('activity_log')) {
 
 if (!function_exists('get_tahun_akademik')) {
     /**
-     * Get current tahun akademik based on current date
-     * Ganjil: July-December (month 7-12)
-     * Genap: January-June (month 1-6)
+     * Get current tahun (plain year) based on current date
      *
-     * @return string e.g. "2025/2026 Ganjil" or "2025/2026 Genap"
+     * @return string e.g. "2026"
      */
     function get_tahun_akademik(): string
     {
-        $month = (int) date('n');
-        $year = (int) date('Y');
-        
-        if ($month >= 7) {
-            // Ganjil: July-December
-            return $year . '/' . ($year + 1) . ' Ganjil';
-        } else {
-            // Genap: January-June
-            return ($year - 1) . '/' . $year . ' Genap';
-        }
+        return (string) date('Y');
     }
 }
 
 if (!function_exists('get_tahun_akademik_list')) {
     /**
-     * Get list of tahun akademik options
-     * 2 years back + 4 years ahead from current year
+     * Get list of available tahun options.
+     * 
+     * CARA MENAMBAH TAHUN BARU:
+     * Tambahkan tahun baru ke array $allYears di bawah ini.
+     * Contoh: untuk menambah 2027, ubah menjadi ['2023', '2024', '2025', '2026', '2027']
+     *
+     * CARA MENYEMBUNYIKAN TAHUN:
+     * Tambahkan tahun yang ingin disembunyikan ke fungsi get_hidden_tahun_list() di bawah.
      *
      * @return array
      */
     function get_tahun_akademik_list(): array
     {
-        $currentYear = (int) date('Y');
-        $startYear = $currentYear - 2;
-        $endYear = $currentYear + 4;
-        $options = [];
+        // === DAFTAR SEMUA TAHUN YANG TERSEDIA ===
+        // Tambahkan tahun baru di sini (urutan dari terbaru ke terlama)
+        $allYears = ['2026', '2025', '2024', '2023'];
+
+        // Filter out hidden years
+        $hiddenYears = get_hidden_tahun_list();
         
-        for ($y = $endYear; $y >= $startYear; $y--) {
-            $options[] = $y . '/' . ($y + 1) . ' Ganjil';
-            $options[] = ($y - 1) . '/' . $y . ' Genap';
-        }
-        
-        return array_unique($options);
+        return array_values(array_filter($allYears, function ($year) use ($hiddenYears) {
+            return !in_array($year, $hiddenYears);
+        }));
     }
 }
 
-if (!function_exists('get_semester_options')) {
+if (!function_exists('get_hidden_tahun_list')) {
     /**
-     * Get available semester options for a given year range
+     * Get list of tahun yang disembunyikan dari dropdown user.
+     * 
+     * CARA MENYEMBUNYIKAN TAHUN:
+     * Tambahkan tahun ke array di bawah ini.
+     * Contoh: return ['2023'] → tahun 2023 tidak akan muncul di dropdown.
+     * Contoh: return ['2023', '2024'] → tahun 2023 dan 2024 disembunyikan.
+     * Untuk menampilkan kembali, hapus tahun dari array.
      *
-     * @param int $startYear
-     * @param int|null $endYear
      * @return array
      */
-    function get_semester_options(int $startYear = 2020, ?int $endYear = null): array
+    function get_hidden_tahun_list(): array
     {
-        $endYear = $endYear ?? (int) date('Y');
-        $options = [];
-        
-        for ($y = $endYear; $y >= $startYear; $y--) {
-            $options[] = $y . '/' . ($y + 1) . ' Ganjil';
-            $options[] = ($y - 1) . '/' . $y . ' Genap';
-        }
-        
-        return array_unique($options);
+        // === TAHUN YANG DISEMBUNYIKAN DARI USER ===
+        // Tambahkan tahun yang ingin disembunyikan di sini
+        return [];
     }
 }

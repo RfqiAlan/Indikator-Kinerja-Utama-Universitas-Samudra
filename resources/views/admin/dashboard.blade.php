@@ -165,7 +165,7 @@
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4 lg:mb-6">
             <div>
                 <h2 class="text-lg lg:text-xl font-bold text-slate-800">Perbandingan Antar Tahun</h2>
-                <p class="text-sm text-slate-500 mt-0.5">Jumlah data IKU per tahun akademik (semua fakultas)</p>
+                <p class="text-sm text-slate-500 mt-0.5">Jumlah data IKU per tahun (semua fakultas)</p>
             </div>
         </div>
 

@@ -17,7 +17,7 @@
                 @csrf
                 @method('PUT')
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Tahun Akademik <span class="text-rose-500">*</span></label><x-tahun-akademik-select :selected="$iku8->tahun_akademik" /></div>
+                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Tahun <span class="text-rose-500">*</span></label><x-tahun-akademik-select :selected="$iku8->tahun_akademik" /></div>
                     <div><label class="block text-sm font-medium text-slate-700 mb-1">Total SDM <span class="text-rose-500">*</span></label><input type="number" name="total_sdm" x-model.number="totalSdm" value="{{ old('total_sdm', $iku8->total_sdm) }}" class="w-full rounded-lg border-slate-300" required min="1"></div>
                 </div>
                 <div class="border-t pt-6"><h3 class="font-semibold text-slate-800 mb-4">Jenis Keterlibatan Kebijakan</h3>

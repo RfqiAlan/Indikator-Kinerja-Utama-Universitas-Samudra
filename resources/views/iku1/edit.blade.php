@@ -12,7 +12,7 @@
     <x-user-layout activeIku="IKU 1">
         <x-slot name="header">
             <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100">Edit Data Capaian AEE</h2>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Perbarui data kelulusan mahasiswa untuk tahun akademik {{ $iku1->tahun_akademik }}.</p>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Perbarui data kelulusan mahasiswa untuk tahun {{ $iku1->tahun_akademik }}.</p>
         </x-slot>
 
         <div class="py-6 max-w-5xl mx-auto">
@@ -32,7 +32,7 @@
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="space-y-2">
-                                    <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Tahun Akademik <span class="text-rose-500">*</span></label>
+                                    <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Tahun <span class="text-rose-500">*</span></label>
                                     <x-tahun-akademik-select :selected="$iku1->tahun_akademik" class="w-full rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-shadow" />
                                     @error('tahun_akademik')<span class="text-rose-500 text-xs mt-1 block">{{ $message }}</span>@enderror
                                 </div>

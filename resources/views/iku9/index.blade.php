@@ -38,7 +38,7 @@
                     <table class="w-full text-sm text-left">
                         <thead class="text-xs text-slate-500 uppercase bg-slate-50/80 dark:bg-slate-700/50 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700">
                             <tr>
-                                <th scope="col" class="px-6 py-4 font-medium">Tahun Akademik</th>
+                                <th scope="col" class="px-6 py-4 font-medium">Tahun</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Total Pendapatan</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Hibah</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Konsultasi</th>

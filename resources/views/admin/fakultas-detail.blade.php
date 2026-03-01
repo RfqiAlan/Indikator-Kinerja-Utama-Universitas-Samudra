@@ -2,7 +2,7 @@
     <div class="mb-8">
         <a href="{{ route('admin.dashboard') }}" class="text-emerald-600 hover:text-emerald-800 text-sm mb-2 inline-block">← Kembali ke Dashboard</a>
         <h1 class="text-3xl font-bold text-slate-800">{{ $fakultas['nama'] }}</h1>
-        <p class="text-slate-500 mt-1">Data IKU tahun akademik {{ $tahunAkademik }}</p>
+        <p class="text-slate-500 mt-1">Data IKU tahun {{ $tahunAkademik }}</p>
     </div>
 
     <!-- Users in this faculty -->

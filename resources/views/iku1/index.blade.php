@@ -60,7 +60,7 @@
                             Rata-rata Capaian AEE PT
                         </p>
                         <p class="text-sm text-slate-500 dark:text-slate-400">
-                            Evaluasi efisiensi edukasi berdasarkan kelulusan tepat waktu di seluruh jenjang pada TA {{ $tahunAkademik }}.
+                            Evaluasi efisiensi edukasi berdasarkan kelulusan tepat waktu di seluruh jenjang pada Tahun {{ $tahunAkademik }}.
                         </p>
 
                         <!-- Mini Targets -->
@@ -124,7 +124,7 @@
                         </svg>
                     </div>
                     <h4 class="text-lg font-medium text-slate-900 dark:text-white mb-1">Belum ada data</h4>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-sm mx-auto mb-6">Mulai dengan menambahkan data capaian untuk jenjang pendidikan di tahun akademik ini.</p>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-sm mx-auto mb-6">Mulai dengan menambahkan data capaian untuk jenjang pendidikan di tahun ini.</p>
                     <a href="{{ route('user.iku1.create') }}" class="text-emerald-600 hover:text-emerald-700 font-medium">
                         + Tambah Data Baru
                     </a>

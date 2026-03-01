@@ -12,7 +12,7 @@
                 @csrf
                 @method('PUT')
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Tahun Akademik</label><x-tahun-akademik-select :selected="$iku11->tahun_akademik" /></div>
+                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Tahun</label><x-tahun-akademik-select :selected="$iku11->tahun_akademik" /></div>
                     <div><label class="block text-sm font-medium text-slate-700 mb-1">Opini Audit</label><select name="opini_audit" class="w-full rounded-lg border-slate-300"><option value="">Pilih Opini</option>@foreach($opiniOptions as $kode => $label)<option value="{{ $kode }}" {{ old('opini_audit', $iku11->opini_audit) === $kode ? 'selected' : '' }}>{{ $label }}</option>@endforeach</select></div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
