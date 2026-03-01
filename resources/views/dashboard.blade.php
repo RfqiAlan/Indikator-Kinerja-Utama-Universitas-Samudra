@@ -58,7 +58,7 @@
         }
         
         .progress-glow-red {
-            box-shadow: 0 0 10px rgba(244, 63, 94, 0.6);
+            box-shadow: 0 0 10px rgba(225, 29, 72, 0.6);
         }
         
         .card-hover:hover {
