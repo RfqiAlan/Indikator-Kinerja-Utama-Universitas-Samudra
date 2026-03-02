@@ -88,3 +88,35 @@ if (!function_exists('get_hidden_tahun_list')) {
         return [];
     }
 }
+
+if (!function_exists('get_iku_drive_links')) {
+    /**
+     * Get link Google Drive folder template per IKU.
+     *
+     * @param int|null $ikuNumber
+     * @return string|array|null
+     */
+    function get_iku_drive_links(?int $ikuNumber = null)
+    {
+        $links = [
+            1  => 'https://drive.google.com/drive/folders/14zuOAChIRfL20IjHtVUgbicnQ7pElPEx',
+            2  => 'https://drive.google.com/drive/folders/1MCvBCxWC7yKJ_2LnJFiGXkRYWBOBJrTV',
+            3  => 'https://drive.google.com/drive/folders/11v36aeoH_VkWP18V59YpzA8Pp1-nA_Pq',
+            4  => 'https://drive.google.com/drive/folders/1g8YSkTZwU4ua_dAmbTlAA63qYfeF4Z-f',
+            5  => 'https://drive.google.com/drive/folders/1wYEm4vAGJsFXKKroQW8dCRwYfPf68kPt',
+            6  => 'https://drive.google.com/drive/folders/1vX2PYhCUkwRPKwaOuezAvIdPtbDUJ_oT',
+            7  => 'https://drive.google.com/drive/folders/1MQoDa_ew05oSs1u16pHDDFYBJUpYvQnV',
+            8  => 'https://drive.google.com/drive/folders/1rT0BQgIOruVmaBRKhhZIVWcRKbHFoYgl',
+            9  => 'https://drive.google.com/drive/folders/1T9QUajk3mWzDvUZgOBQIRy0KxN6wW1zA',
+            10 => 'https://drive.google.com/drive/folders/19kPlHO7JJInqWA3Sw17279HelK4voAYU',
+            11 => 'https://drive.google.com/drive/folders/144SlbpzSMfQcB1qpZxr_AUUn5iSPK_Fx',
+        ];
+
+        if ($ikuNumber !== null) {
+            return $links[$ikuNumber] ?? null;
+        }
+
+        return $links;
+    }
+}
+

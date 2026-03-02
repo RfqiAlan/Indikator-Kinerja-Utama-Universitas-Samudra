@@ -7,19 +7,27 @@
         Lampiran Bukti Pendukung
     </h3>
 
-    {{-- Download Template Button --}}
+    {{-- Link ke Google Drive Template --}}
     @if(isset($ikuNumber))
-        @php($templateFile = "templates/template_iku{$ikuNumber}.docx")
-        @if(file_exists(public_path($templateFile)))
-            <a href="{{ asset($templateFile) }}" download
-               class="mb-4 inline-flex items-center gap-2 px-4 py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg border border-blue-200 transition-colors group">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 group-hover:animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        @php($driveLink = get_iku_drive_links($ikuNumber))
+        @if($driveLink)
+            <a href="{{ $driveLink }}" target="_blank" rel="noopener noreferrer"
+               class="mb-4 inline-flex items-center gap-3 px-4 py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg border border-blue-200 transition-colors group">
+                <svg class="h-6 w-6 text-blue-500 flex-shrink-0" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg">
+                    <path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/>
+                    <path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-20.4 35.3c-.8 1.4-1.2 2.95-1.2 4.5h27.5z" fill="#00ac47"/>
+                    <path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.5l5.4 13.8z" fill="#ea4335"/>
+                    <path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/>
+                    <path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/>
+                    <path d="m73.4 26.5-10.1-17.5c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 23.5h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/>
                 </svg>
                 <div>
-                    <span class="font-semibold text-sm">Download Template IKU {{ $ikuNumber }}</span>
-                    <span class="block text-xs text-blue-500">Format .docx — isi dan upload kembali sebagai bukti pendukung</span>
+                    <span class="font-semibold text-sm">Buka Template IKU {{ $ikuNumber }} di Google Drive</span>
+                    <span class="block text-xs text-blue-500">Download template, isi, lalu upload kembali sebagai bukti pendukung</span>
                 </div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-400 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
             </a>
         @endif
     @endif
@@ -48,4 +56,3 @@
         @endif
     </div>
 </div>
-
