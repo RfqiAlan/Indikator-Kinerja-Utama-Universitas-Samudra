@@ -321,6 +321,7 @@ class AdminController extends Controller
             'fakultas_id' => 'required|exists:fakultas,id',
             'kode' => 'required|string|max:50|unique:prodi,kode|regex:/^[a-z_]+$/',
             'nama' => 'required|string|max:255',
+            'jenjang' => 'required|string|in:S1,S2,Profesi,D4',
         ], [
             'kode.regex' => 'Kode hanya boleh huruf kecil dan underscore.',
             'kode.unique' => 'Kode prodi sudah digunakan.',
@@ -338,6 +339,7 @@ class AdminController extends Controller
     {
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
+            'jenjang' => 'required|string|in:S1,S2,Profesi,D4',
         ]);
 
         $prodi->update($validated);

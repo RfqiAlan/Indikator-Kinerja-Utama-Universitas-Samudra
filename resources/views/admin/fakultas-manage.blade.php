@@ -139,7 +139,7 @@
             <form action="{{ route('admin.prodi.store') }}" method="POST" x-show="showAddProdi" x-collapse class="mb-4 p-4 bg-slate-50 rounded-xl">
                 @csrf
                 <input type="hidden" name="fakultas_id" value="{{ $fakultas->id }}">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">Kode Prodi</label>
                         <input type="text" name="kode" required placeholder="contoh: teknik_kimia" pattern="[a-z_]+"
@@ -149,6 +149,15 @@
                         <label class="block text-sm font-medium text-slate-700 mb-1">Nama Prodi</label>
                         <input type="text" name="nama" required placeholder="contoh: Teknik Kimia"
                                class="w-full rounded-lg border-slate-300 focus:ring-emerald-500 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Jenjang</label>
+                        <select name="jenjang" required class="w-full rounded-lg border-slate-300 focus:ring-emerald-500 text-sm">
+                            <option value="S1">S1</option>
+                            <option value="S2">S2</option>
+                            <option value="Profesi">Profesi</option>
+                            <option value="D4">D4</option>
+                        </select>
                     </div>
                 </div>
                 <div class="flex justify-end gap-2 mt-3">
@@ -167,6 +176,7 @@
                             <template x-if="editProdiId !== {{ $prodi->id }}">
                                 <div>
                                     <span class="text-sm font-medium text-slate-800">{{ $prodi->nama }}</span>
+                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold ml-2 {{ $prodi->jenjang === 'S1' ? 'bg-emerald-100 text-emerald-700' : ($prodi->jenjang === 'S2' ? 'bg-blue-100 text-blue-700' : ($prodi->jenjang === 'Profesi' ? 'bg-purple-100 text-purple-700' : 'bg-amber-100 text-amber-700')) }}">{{ $prodi->jenjang }}</span>
                                     <span class="text-xs text-slate-400 ml-2">{{ $prodi->kode }}</span>
                                 </div>
                             </template>
@@ -175,6 +185,11 @@
                                     @csrf @method('PUT')
                                     <input type="text" name="nama" value="{{ $prodi->nama }}" required
                                            class="rounded-lg border-slate-300 focus:ring-emerald-500 text-sm py-1">
+                                    <select name="jenjang" required class="rounded-lg border-slate-300 focus:ring-emerald-500 text-sm py-1">
+                                        @foreach(['S1', 'S2', 'Profesi', 'D4'] as $j)
+                                            <option value="{{ $j }}" {{ $prodi->jenjang === $j ? 'selected' : '' }}>{{ $j }}</option>
+                                        @endforeach
+                                    </select>
                                     <button type="submit" class="px-3 py-1 bg-emerald-600 text-white rounded-lg text-xs font-semibold hover:bg-emerald-700 transition">Simpan</button>
                                     <button type="button" @click="editProdiId = null" class="px-3 py-1 text-slate-500 text-xs">Batal</button>
                                 </form>
