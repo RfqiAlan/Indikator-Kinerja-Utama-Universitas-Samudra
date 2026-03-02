@@ -66,11 +66,23 @@ class User extends Authenticatable
     }
 
     /**
-     * Get fakultas data from config
+     * Get fakultas data from database
      */
     public function getFakultasDataAttribute(): ?array
     {
-        return config('unsam.fakultas.' . $this->fakultas);
+        $fak = \App\Models\Fakultas::with('prodi')->where('kode', $this->fakultas)->first();
+        if (!$fak) return null;
+
+        $prodiList = [];
+        foreach ($fak->prodi as $p) {
+            $prodiList[$p->kode] = $p->nama;
+        }
+
+        return [
+            'nama' => $fak->nama,
+            'jenjang' => $fak->jenjang,
+            'prodi' => $prodiList,
+        ];
     }
 
     /**

@@ -72,7 +72,7 @@
             <form action="{{ route('admin.export') }}" method="GET" class="grid grid-cols-2 sm:flex sm:flex-row items-stretch sm:items-center gap-2 w-full lg:w-auto mt-2 lg:mt-0">
                 <select name="fakultas" class="col-span-1 px-3 py-2 rounded-lg bg-white/20 border border-white/30 text-white text-sm focus:ring-2 focus:ring-white/50 focus:border-transparent backdrop-blur-sm">
                     <option value="" class="text-slate-800">Semua Fakultas</option>
-                    @foreach(config('unsam.fakultas') as $kode => $data)
+                    @foreach(\App\Models\Fakultas::getAllAsConfig() as $kode => $data)
                         <option value="{{ $kode }}" class="text-slate-800">{{ $data['nama'] }}</option>
                     @endforeach
                 </select>

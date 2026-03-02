@@ -71,13 +71,24 @@
 
                 <div class="pt-4 border-t border-slate-700 mt-4">
                     <p class="px-4 text-xs text-slate-500 uppercase tracking-wider mb-2">Fakultas</p>
-                    @foreach(config('unsam.fakultas') as $kode => $data)
+                    @foreach(\App\Models\Fakultas::getAllAsConfig() as $kode => $data)
                     <a href="{{ route('admin.fakultas', $kode) }}" @click="sidebarOpen = false"
                        class="flex items-center gap-3 px-4 py-2 rounded-lg transition text-sm {{ $activePage === 'fakultas-'.$kode ? 'bg-emerald-600 text-white' : 'text-slate-300 hover:bg-slate-700' }}">
                         <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
                         {{ strtoupper($kode) }}
                     </a>
                     @endforeach
+                </div>
+
+                <div class="pt-4 border-t border-slate-700 mt-4">
+                    <p class="px-4 text-xs text-slate-500 uppercase tracking-wider mb-2">Pengaturan</p>
+                    <a href="{{ route('admin.fakultas.manage') }}" @click="sidebarOpen = false"
+                       class="flex items-center gap-3 px-4 py-3 rounded-lg transition {{ $activePage === 'fakultas-manage' ? 'bg-emerald-600 text-white' : 'text-slate-300 hover:bg-slate-700' }}">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                        </svg>
+                        Kelola Fakultas & Prodi
+                    </a>
                 </div>
             </nav>
 

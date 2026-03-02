@@ -89,7 +89,8 @@ abstract class BaseIkuSheet implements FromCollection, WithTitle, WithHeadings, 
     protected function getFakultasName(?string $kode): string
     {
         if (!$kode) return 'Semua Fakultas';
-        return config("unsam.fakultas.{$kode}.nama", $kode);
+        $fak = \App\Models\Fakultas::findByKode($kode);
+        return $fak ? $fak->nama : $kode;
     }
 }
 

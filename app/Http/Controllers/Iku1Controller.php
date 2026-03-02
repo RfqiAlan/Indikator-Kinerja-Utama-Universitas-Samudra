@@ -30,7 +30,7 @@ class Iku1Controller extends Controller
             return null;
         }
 
-        foreach (config('unsam.fakultas', []) as $key => $fakultas) {
+        foreach (\App\Models\Fakultas::getAllAsConfig() as $key => $fakultas) {
             if (!empty($fakultas['prodi'][$programStudi])) {
                 return $key;
             }

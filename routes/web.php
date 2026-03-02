@@ -91,6 +91,15 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Faculty detail
     Route::get('/fakultas/{kode}', [AdminController::class, 'fakultasDetail'])->name('fakultas');
     
+    // Fakultas & Prodi Management
+    Route::get('/fakultas-manage', [AdminController::class, 'fakultasManage'])->name('fakultas.manage');
+    Route::post('/fakultas', [AdminController::class, 'storeFakultas'])->name('fakultas.store');
+    Route::put('/fakultas/{fakultas}', [AdminController::class, 'updateFakultas'])->name('fakultas.update');
+    Route::delete('/fakultas/{fakultas}', [AdminController::class, 'destroyFakultas'])->name('fakultas.destroy');
+    Route::post('/prodi', [AdminController::class, 'storeProdi'])->name('prodi.store');
+    Route::put('/prodi/{prodi}', [AdminController::class, 'updateProdi'])->name('prodi.update');
+    Route::delete('/prodi/{prodi}', [AdminController::class, 'destroyProdi'])->name('prodi.destroy');
+    
     // Export rekap
     Route::get('/export', [AdminController::class, 'exportRekap'])->name('export');
 });

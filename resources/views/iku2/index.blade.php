@@ -111,7 +111,8 @@
                         <tbody class="divide-y divide-slate-100 dark:divide-slate-700/50">
                             @foreach($data as $item)
                             @php
-                                $fakultasData = config('unsam.fakultas.' . $item->fakultas);
+                                $fakultasConfig = \App\Models\Fakultas::getAllAsConfig();
+                                $fakultasData = $fakultasConfig[$item->fakultas] ?? null;
                                 $fakultasNama = $fakultasData['nama'] ?? $item->fakultas ?? '-';
                                 $prodiNama = $fakultasData['prodi'][$item->program_studi] ?? $item->program_studi ?? '-';
                             @endphp

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ActivityLog;
+use App\Models\Fakultas;
+use App\Models\Prodi;
 use App\Models\User;
 use App\Models\Iku1Aee;
 use App\Models\Iku2LulusanBekerja;
@@ -25,7 +27,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $fakultasConfig = config('unsam.fakultas');
+        $fakultasConfig = Fakultas::getAllAsConfig();
         $tahunAkademik = get_tahun_akademik();
         
         // Get stats per fakultas
@@ -111,7 +113,7 @@ class AdminController extends Controller
     public function users()
     {
         $users = User::orderBy('fakultas')->orderBy('name')->paginate(20);
-        $fakultasConfig = config('unsam.fakultas');
+        $fakultasConfig = Fakultas::getAllAsConfig();
         
         return view('admin.users', compact('users', 'fakultasConfig'));
     }
@@ -121,7 +123,7 @@ class AdminController extends Controller
      */
     public function createUser()
     {
-        $fakultasConfig = config('unsam.fakultas');
+        $fakultasConfig = Fakultas::getAllAsConfig();
         return view('admin.users-create', compact('fakultasConfig'));
     }
 
@@ -149,7 +151,7 @@ class AdminController extends Controller
      */
     public function editUser(User $user)
     {
-        $fakultasConfig = config('unsam.fakultas');
+        $fakultasConfig = Fakultas::getAllAsConfig();
         return view('admin.users-edit', compact('user', 'fakultasConfig'));
     }
 
@@ -192,7 +194,7 @@ class AdminController extends Controller
      */
     public function fakultasDetail($kode)
     {
-        $fakultasConfig = config('unsam.fakultas');
+        $fakultasConfig = Fakultas::getAllAsConfig();
         if (!isset($fakultasConfig[$kode])) {
             abort(404, 'Fakultas tidak ditemukan');
         }
@@ -242,9 +244,8 @@ class AdminController extends Controller
         $fakultas = $request->get('fakultas');
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
         
-        $fakultasName = $fakultas 
-            ? config("unsam.fakultas.{$fakultas}.nama", $fakultas)
-            : 'Semua_Fakultas';
+        $fakultasModel = $fakultas ? Fakultas::findByKode($fakultas) : null;
+        $fakultasName = $fakultasModel ? $fakultasModel->nama : 'Semua_Fakultas';
         
         $filename = "Rekap_IKU_{$fakultasName}_{$tahunAkademik}.xlsx";
         $filename = str_replace(['/', ' '], ['_', '_'], $filename);
@@ -253,5 +254,103 @@ class AdminController extends Controller
             new \App\Exports\RekapIkuExport($fakultas, $tahunAkademik),
             $filename
         );
+    }
+
+    // ==========================================
+    // Fakultas & Prodi Management
+    // ==========================================
+
+    /**
+     * Display fakultas & prodi management page
+     */
+    public function fakultasManage()
+    {
+        $fakultasList = Fakultas::with('prodi')->orderBy('nama')->get();
+        return view('admin.fakultas-manage', compact('fakultasList'));
+    }
+
+    /**
+     * Store new fakultas
+     */
+    public function storeFakultas(Request $request)
+    {
+        $validated = $request->validate([
+            'kode' => 'required|string|max:20|unique:fakultas,kode|regex:/^[a-z_]+$/',
+            'nama' => 'required|string|max:255',
+            'jenjang' => 'required|string|max:10',
+        ], [
+            'kode.regex' => 'Kode hanya boleh huruf kecil dan underscore.',
+            'kode.unique' => 'Kode fakultas sudah digunakan.',
+        ]);
+
+        Fakultas::create($validated);
+
+        return redirect()->route('admin.fakultas.manage')->with('success', 'Fakultas berhasil ditambahkan!');
+    }
+
+    /**
+     * Update fakultas
+     */
+    public function updateFakultas(Request $request, Fakultas $fakultas)
+    {
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'jenjang' => 'required|string|max:10',
+        ]);
+
+        $fakultas->update($validated);
+
+        return redirect()->route('admin.fakultas.manage')->with('success', 'Fakultas berhasil diperbarui!');
+    }
+
+    /**
+     * Delete fakultas
+     */
+    public function destroyFakultas(Fakultas $fakultas)
+    {
+        $fakultas->delete(); // cascade deletes prodi too
+        return redirect()->route('admin.fakultas.manage')->with('success', 'Fakultas berhasil dihapus!');
+    }
+
+    /**
+     * Store new prodi
+     */
+    public function storeProdi(Request $request)
+    {
+        $validated = $request->validate([
+            'fakultas_id' => 'required|exists:fakultas,id',
+            'kode' => 'required|string|max:50|unique:prodi,kode|regex:/^[a-z_]+$/',
+            'nama' => 'required|string|max:255',
+        ], [
+            'kode.regex' => 'Kode hanya boleh huruf kecil dan underscore.',
+            'kode.unique' => 'Kode prodi sudah digunakan.',
+        ]);
+
+        Prodi::create($validated);
+
+        return redirect()->route('admin.fakultas.manage')->with('success', 'Program Studi berhasil ditambahkan!');
+    }
+
+    /**
+     * Update prodi
+     */
+    public function updateProdi(Request $request, Prodi $prodi)
+    {
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+        ]);
+
+        $prodi->update($validated);
+
+        return redirect()->route('admin.fakultas.manage')->with('success', 'Program Studi berhasil diperbarui!');
+    }
+
+    /**
+     * Delete prodi
+     */
+    public function destroyProdi(Prodi $prodi)
+    {
+        $prodi->delete();
+        return redirect()->route('admin.fakultas.manage')->with('success', 'Program Studi berhasil dihapus!');
     }
 }
