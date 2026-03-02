@@ -277,7 +277,6 @@ class AdminController extends Controller
         $validated = $request->validate([
             'kode' => 'required|string|max:20|unique:fakultas,kode|regex:/^[a-z_]+$/',
             'nama' => 'required|string|max:255',
-            'jenjang' => 'required|string|max:10',
         ], [
             'kode.regex' => 'Kode hanya boleh huruf kecil dan underscore.',
             'kode.unique' => 'Kode fakultas sudah digunakan.',
@@ -295,7 +294,6 @@ class AdminController extends Controller
     {
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
-            'jenjang' => 'required|string|max:10',
         ]);
 
         $fakultas->update($validated);

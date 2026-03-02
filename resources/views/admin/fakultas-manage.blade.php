@@ -19,7 +19,7 @@
         </div>
         <form action="{{ route('admin.fakultas.store') }}" method="POST" x-show="showForm" x-collapse class="space-y-4">
             @csrf
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-1">Kode <span class="text-rose-500">*</span></label>
                     <input type="text" name="kode" value="{{ old('kode') }}" required
@@ -32,16 +32,6 @@
                     <input type="text" name="nama" value="{{ old('nama') }}" required
                            placeholder="contoh: Fakultas Teknik"
                            class="w-full rounded-lg border-slate-300 focus:ring-emerald-500 text-sm">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Jenjang <span class="text-rose-500">*</span></label>
-                    <select name="jenjang" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500 text-sm">
-                        <option value="S1" {{ old('jenjang') === 'S1' ? 'selected' : '' }}>S1</option>
-                        <option value="S2" {{ old('jenjang') === 'S2' ? 'selected' : '' }}>S2</option>
-                        <option value="S3" {{ old('jenjang') === 'S3' ? 'selected' : '' }}>S3</option>
-                        <option value="D3" {{ old('jenjang') === 'D3' ? 'selected' : '' }}>D3</option>
-                        <option value="D4" {{ old('jenjang') === 'D4' ? 'selected' : '' }}>D4</option>
-                    </select>
                 </div>
             </div>
             <div class="flex justify-end">
@@ -78,8 +68,6 @@
                         <div class="flex items-center gap-3 text-sm text-slate-500">
                             <span>Kode: <strong>{{ $fakultas->kode }}</strong></span>
                             <span>•</span>
-                            <span>Jenjang: <strong>{{ $fakultas->jenjang }}</strong></span>
-                            <span>•</span>
                             <span>{{ $fakultas->prodi->count() }} Prodi</span>
                         </div>
                     </div>
@@ -103,20 +91,10 @@
             {{-- Edit Fakultas Form --}}
             <form action="{{ route('admin.fakultas.update', $fakultas) }}" method="POST" x-show="editFak" x-collapse class="mt-4 pt-4 border-t border-slate-100">
                 @csrf @method('PUT')
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Nama Fakultas</label>
-                        <input type="text" name="nama" value="{{ $fakultas->nama }}" required
-                               class="w-full rounded-lg border-slate-300 focus:ring-emerald-500 text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Jenjang</label>
-                        <select name="jenjang" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500 text-sm">
-                            @foreach(['S1', 'S2', 'S3', 'D3', 'D4'] as $j)
-                                <option value="{{ $j }}" {{ $fakultas->jenjang === $j ? 'selected' : '' }}>{{ $j }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Nama Fakultas</label>
+                    <input type="text" name="nama" value="{{ $fakultas->nama }}" required
+                           class="w-full rounded-lg border-slate-300 focus:ring-emerald-500 text-sm">
                 </div>
                 <div class="flex justify-end gap-2 mt-3">
                     <button type="button" @click="editFak = false" class="px-4 py-2 text-slate-600 text-sm">Batal</button>
