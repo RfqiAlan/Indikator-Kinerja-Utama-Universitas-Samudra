@@ -114,7 +114,8 @@
                                 $fakultasConfig = \App\Models\Fakultas::getAllAsConfig();
                                 $fakultasData = $fakultasConfig[$item->fakultas] ?? null;
                                 $fakultasNama = $fakultasData['nama'] ?? $item->fakultas ?? '-';
-                                $prodiNama = $fakultasData['prodi'][$item->program_studi] ?? $item->program_studi ?? '-';
+                                $prodiData = $fakultasData['prodi'][$item->program_studi] ?? null;
+                                $prodiNama = is_array($prodiData) ? $prodiData['nama'] : ($prodiData ?? $item->program_studi ?? '-');
                             @endphp
                             <tr class="group hover:bg-slate-50/50 dark:hover:bg-slate-700/30 transition-colors duration-150">
                                 <td class="px-6 py-4">
