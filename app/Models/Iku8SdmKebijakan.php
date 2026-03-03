@@ -27,6 +27,7 @@ class Iku8SdmKebijakan extends Model
 
     protected $casts = [
         'persentase_iku8' => 'decimal:2',
+        'lampiran_link' => 'array',
     ];
 
     protected static function boot()

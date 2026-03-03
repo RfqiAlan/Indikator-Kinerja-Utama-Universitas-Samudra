@@ -31,6 +31,7 @@ class Iku3KegiatanMahasiswa extends Model
 
     protected $casts = [
         'persentase_iku3' => 'decimal:2',
+        'lampiran_link' => 'array',
     ];
 
     protected static function boot()

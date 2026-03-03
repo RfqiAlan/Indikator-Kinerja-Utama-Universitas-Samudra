@@ -68,7 +68,8 @@ class Iku5Controller extends Controller
             'ttg' => 'required|integer|min:0',
             'karya_seni_kolaboratif' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
-            'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+            'lampiran' => 'nullable|array',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
         // Validate sum of luaran doesn't exceed total dosen
@@ -99,9 +100,15 @@ class Iku5Controller extends Controller
         if ($request->hasFile('lampiran')) {
             $driveService = new GoogleDriveService();
             $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
-            $link = $driveService->upload($request->file('lampiran'), 'IKU5', $fakultasNama);
-            if ($link) {
-                $validated['lampiran_link'] = $link;
+            $links = [];
+            foreach ($request->file('lampiran') as $file) {
+                $link = $driveService->upload($file, 'IKU5', $fakultasNama);
+                if ($link) {
+                    $links[] = $link;
+                }
+            }
+            if (!empty($links)) {
+                $validated['lampiran_link'] = $links;
             }
         }
 
@@ -127,19 +134,26 @@ class Iku5Controller extends Controller
             'ttg' => 'required|integer|min:0',
             'karya_seni_kolaboratif' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
+            'lampiran' => 'nullable|array',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
         // Upload lampiran to Google Drive (folder per fakultas)
-    if ($request->hasFile('lampiran')) {
-        $driveService = new GoogleDriveService();
-        $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
-        $link = $driveService->upload($request->file('lampiran'), 'IKU5', $fakultasNama);
-        if ($link) {
-            $validated['lampiran_link'] = $link;
+        if ($request->hasFile('lampiran')) {
+            $driveService = new GoogleDriveService();
+            $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
+            $existingLinks = $iku5->lampiran_link ?? [];
+            $newLinks = [];
+            foreach ($request->file('lampiran') as $file) {
+                $link = $driveService->upload($file, 'IKU5', $fakultasNama);
+                if ($link) {
+                    $newLinks[] = $link;
+                }
+            }
+            $validated['lampiran_link'] = array_merge($existingLinks, $newLinks);
         }
-    }
 
-    $iku5->update($validated);
+        $iku5->update($validated);
 
         return redirect()->route('user.iku5.index')
             ->with('success', 'Data IKU 5 berhasil diperbarui.');

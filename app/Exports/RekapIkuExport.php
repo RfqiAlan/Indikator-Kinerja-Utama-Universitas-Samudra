@@ -123,7 +123,7 @@ class Iku1Sheet extends BaseIkuSheet
                 $item->jumlah_lulus_tepat_waktu,
                 number_format($item->aee_realisasi, 2),
                 number_format($item->tingkat_pencapaian, 2),
-                $item->lampiran_link ?? '-',
+                is_array($item->lampiran_link) ? implode("\n", $item->lampiran_link) : ($item->lampiran_link ?? '-'),
             ];
         });
     }
@@ -158,7 +158,7 @@ class Iku2Sheet extends BaseIkuSheet
                 $item->studi_lanjut,
                 $item->total_wirausaha ?? 0,
                 number_format($item->persentase_iku2, 2),
-                $item->lampiran_link ?? '-',
+                is_array($item->lampiran_link) ? implode("\n", $item->lampiran_link) : ($item->lampiran_link ?? '-'),
             ];
         });
     }
@@ -193,7 +193,7 @@ class Iku3Sheet extends BaseIkuSheet
                 $item->jumlah_magang ?? 0,
                 $item->jumlah_penelitian ?? 0,
                 number_format($item->persentase_iku3 ?? 0, 2),
-                $item->lampiran_link ?? '-',
+                is_array($item->lampiran_link) ? implode("\n", $item->lampiran_link) : ($item->lampiran_link ?? '-'),
             ];
         });
     }
@@ -227,7 +227,7 @@ class Iku4Sheet extends BaseIkuSheet
                 $item->tingkat ?? '-',
                 $item->tahun_akademik,
                 $item->keterangan ?? '-',
-                $item->lampiran_link ?? '-',
+                is_array($item->lampiran_link) ? implode("\n", $item->lampiran_link) : ($item->lampiran_link ?? '-'),
             ];
         });
     }
@@ -261,7 +261,7 @@ class Iku5Sheet extends BaseIkuSheet
                 $item->mitra ?? '-',
                 $item->tahun_akademik,
                 $item->keterangan ?? '-',
-                $item->lampiran_link ?? '-',
+                is_array($item->lampiran_link) ? implode("\n", $item->lampiran_link) : ($item->lampiran_link ?? '-'),
             ];
         });
     }
@@ -295,7 +295,7 @@ class Iku6Sheet extends BaseIkuSheet
                 $item->jenis_publikasi ?? '-',
                 $item->indeksasi ?? '-',
                 $item->tahun_akademik,
-                $item->lampiran_link ?? '-',
+                is_array($item->lampiran_link) ? implode("\n", $item->lampiran_link) : ($item->lampiran_link ?? '-'),
             ];
         });
     }
@@ -329,7 +329,7 @@ class Iku7Sheet extends BaseIkuSheet
                 $item->jenis ?? '-',
                 $item->tahun_akademik,
                 $item->keterangan ?? '-',
-                $item->lampiran_link ?? '-',
+                is_array($item->lampiran_link) ? implode("\n", $item->lampiran_link) : ($item->lampiran_link ?? '-'),
             ];
         });
     }
@@ -363,7 +363,7 @@ class Iku8Sheet extends BaseIkuSheet
                 $item->lingkup ?? '-',
                 $item->tahun_akademik,
                 $item->keterangan ?? '-',
-                $item->lampiran_link ?? '-',
+                is_array($item->lampiran_link) ? implode("\n", $item->lampiran_link) : ($item->lampiran_link ?? '-'),
             ];
         });
     }
@@ -397,7 +397,7 @@ class Iku9Sheet extends BaseIkuSheet
                 $item->jenis ?? '-',
                 $item->tahun_akademik,
                 $item->keterangan ?? '-',
-                $item->lampiran_link ?? '-',
+                is_array($item->lampiran_link) ? implode("\n", $item->lampiran_link) : ($item->lampiran_link ?? '-'),
             ];
         });
     }
@@ -431,7 +431,7 @@ class Iku10Sheet extends BaseIkuSheet
                 $item->tanggal_penetapan ?? '-',
                 $item->tahun_akademik,
                 $item->keterangan ?? '-',
-                $item->lampiran_link ?? '-',
+                is_array($item->lampiran_link) ? implode("\n", $item->lampiran_link) : ($item->lampiran_link ?? '-'),
             ];
         });
     }
@@ -465,7 +465,7 @@ class Iku11Sheet extends BaseIkuSheet
                 $item->nilai ?? '-',
                 $item->tahun_akademik,
                 $item->keterangan ?? '-',
-                $item->lampiran_link ?? '-',
+                is_array($item->lampiran_link) ? implode("\n", $item->lampiran_link) : ($item->lampiran_link ?? '-'),
             ];
         });
     }

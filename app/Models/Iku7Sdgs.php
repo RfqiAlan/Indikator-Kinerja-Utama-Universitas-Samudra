@@ -32,6 +32,7 @@ class Iku7Sdgs extends Model
 
     protected $casts = [
         'persentase_iku7' => 'decimal:2',
+        'lampiran_link' => 'array',
     ];
 
     protected static function boot()

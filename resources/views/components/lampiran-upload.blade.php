@@ -1,4 +1,4 @@
-{{-- Lampiran Bukti Pendukung Section --}}
+{{-- Lampiran Bukti Pendukung Section (Multi-file upload) --}}
 <div class="border-t pt-6">
     <h3 class="font-semibold text-slate-800 mb-4 flex items-center">
         <span class="bg-amber-100 text-amber-600 w-7 h-7 rounded-full flex items-center justify-center text-sm mr-2">
@@ -40,18 +40,35 @@
                 <a href="{{ route('user.drive.connect') }}" class="font-semibold underline">Hubungkan Google Drive</a>
             </div>
         @endif
-        <label class="block text-sm font-medium text-slate-700 mb-2">Upload File (PDF, JPG, PNG, DOC - Max 10MB)</label>
-        <input type="file" name="lampiran" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+        <label class="block text-sm font-medium text-slate-700 mb-2">Upload File (PDF, JPG, PNG, DOC - Max 10MB per file)</label>
+        <input type="file" name="lampiran[]" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" multiple
             class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer border border-slate-300 rounded-lg focus:ring-emerald-500">
-        <p class="text-xs text-slate-400 mt-1">File akan diupload ke Google Drive sebagai bukti pendukung.</p>
-        @if(isset($existingLink) && $existingLink)
-            <div class="mt-3 flex items-center gap-2 bg-blue-50 rounded-lg p-3">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
-                <div>
-                    <p class="text-xs text-slate-500">File lampiran sudah ada:</p>
-                    <a href="{{ $existingLink }}" target="_blank" class="text-sm text-blue-600 hover:text-blue-800 underline font-medium">Lihat Lampiran Saat Ini →</a>
+        <p class="text-xs text-slate-400 mt-1">Bisa upload lebih dari 1 file sekaligus. File akan diupload ke Google Drive sebagai bukti pendukung.</p>
+
+        {{-- Display existing uploaded files --}}
+        @php
+            // Backward compatible: support both old $existingLink (string) and new $existingLinks (array)
+            $links = [];
+            if (isset($existingLinks) && is_array($existingLinks)) {
+                $links = $existingLinks;
+            } elseif (isset($existingLink) && $existingLink) {
+                $links = is_array($existingLink) ? $existingLink : [$existingLink];
+            }
+        @endphp
+
+        @if(count($links) > 0)
+            <div class="mt-3 bg-blue-50 rounded-lg p-3 space-y-2">
+                <div class="flex items-center gap-2 mb-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
+                    <p class="text-xs text-slate-500 font-medium">File lampiran yang sudah diupload ({{ count($links) }} file):</p>
                 </div>
-                <span class="text-xs text-slate-400 ml-auto">Upload file baru untuk mengganti</span>
+                @foreach($links as $index => $link)
+                    <div class="flex items-center gap-2 pl-7">
+                        <span class="text-xs text-slate-400 font-mono">{{ $index + 1 }}.</span>
+                        <a href="{{ $link }}" target="_blank" class="text-sm text-blue-600 hover:text-blue-800 underline font-medium truncate">Lampiran {{ $index + 1 }} →</a>
+                    </div>
+                @endforeach
+                <p class="text-xs text-slate-400 pl-7 mt-1">Upload file baru untuk menambah lampiran</p>
             </div>
         @endif
     </div>

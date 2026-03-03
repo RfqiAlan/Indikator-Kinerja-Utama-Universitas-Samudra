@@ -28,6 +28,7 @@ class Iku5LuaranKerjasama extends Model
 
     protected $casts = [
         'persentase_iku5' => 'decimal:2',
+        'lampiran_link' => 'array',
     ];
 
     protected static function boot()

@@ -72,7 +72,8 @@ class Iku2Controller extends Controller
             'wirausaha_founder' => 'required|integer|min:0',
             'wirausaha_freelancer' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
-            'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+            'lampiran' => 'nullable|array',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ], [
             'total_responden.lte' => 'Total responden tidak boleh melebihi total lulusan.',
         ]);
@@ -106,9 +107,15 @@ class Iku2Controller extends Controller
         if ($request->hasFile('lampiran')) {
             $driveService = new GoogleDriveService();
             $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
-            $link = $driveService->upload($request->file('lampiran'), 'IKU2', $fakultasNama);
-            if ($link) {
-                $validated['lampiran_link'] = $link;
+            $links = [];
+            foreach ($request->file('lampiran') as $file) {
+                $link = $driveService->upload($file, 'IKU2', $fakultasNama);
+                if ($link) {
+                    $links[] = $link;
+                }
+            }
+            if (!empty($links)) {
+                $validated['lampiran_link'] = $links;
             }
         }
 
@@ -137,6 +144,8 @@ class Iku2Controller extends Controller
             'wirausaha_founder' => 'required|integer|min:0',
             'wirausaha_freelancer' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
+            'lampiran' => 'nullable|array',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ], [
             'total_responden.lte' => 'Total responden tidak boleh melebihi total lulusan.',
         ]);
@@ -155,16 +164,21 @@ class Iku2Controller extends Controller
         }
 
         // Upload lampiran to Google Drive (folder per fakultas)
-    if ($request->hasFile('lampiran')) {
-        $driveService = new GoogleDriveService();
-        $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
-        $link = $driveService->upload($request->file('lampiran'), 'IKU2', $fakultasNama);
-        if ($link) {
-            $validated['lampiran_link'] = $link;
+        if ($request->hasFile('lampiran')) {
+            $driveService = new GoogleDriveService();
+            $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
+            $existingLinks = $iku2->lampiran_link ?? [];
+            $newLinks = [];
+            foreach ($request->file('lampiran') as $file) {
+                $link = $driveService->upload($file, 'IKU2', $fakultasNama);
+                if ($link) {
+                    $newLinks[] = $link;
+                }
+            }
+            $validated['lampiran_link'] = array_merge($existingLinks, $newLinks);
         }
-    }
 
-    $iku2->update($validated);
+        $iku2->update($validated);
 
         return redirect()->route('user.iku2.index')
             ->with('success', 'Data IKU 2 berhasil diperbarui.');

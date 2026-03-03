@@ -29,6 +29,7 @@ class Iku6Publikasi extends Model
     protected $casts = [
         'skor_publikasi' => 'decimal:2',
         'persentase_iku6' => 'decimal:2',
+        'lampiran_link' => 'array',
     ];
 
     // Bobot quartile

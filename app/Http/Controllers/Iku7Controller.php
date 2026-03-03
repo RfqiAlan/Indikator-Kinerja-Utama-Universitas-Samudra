@@ -72,7 +72,8 @@ class Iku7Controller extends Controller
             'kerjasama' => 'required|integer|min:0',
             'kebijakan' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
-            'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+            'lampiran' => 'nullable|array',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
         // Validate sum of bidang fields doesn't exceed total program
@@ -103,9 +104,15 @@ class Iku7Controller extends Controller
         if ($request->hasFile('lampiran')) {
             $driveService = new GoogleDriveService();
             $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
-            $link = $driveService->upload($request->file('lampiran'), 'IKU7', $fakultasNama);
-            if ($link) {
-                $validated['lampiran_link'] = $link;
+            $links = [];
+            foreach ($request->file('lampiran') as $file) {
+                $link = $driveService->upload($file, 'IKU7', $fakultasNama);
+                if ($link) {
+                    $links[] = $link;
+                }
+            }
+            if (!empty($links)) {
+                $validated['lampiran_link'] = $links;
             }
         }
 
@@ -135,17 +142,23 @@ class Iku7Controller extends Controller
             'kerjasama' => 'required|integer|min:0',
             'kebijakan' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
-            'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+            'lampiran' => 'nullable|array',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
         // Upload lampiran to Google Drive (folder per fakultas)
         if ($request->hasFile('lampiran')) {
             $driveService = new GoogleDriveService();
             $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
-            $link = $driveService->upload($request->file('lampiran'), 'IKU7', $fakultasNama);
-            if ($link) {
-                $validated['lampiran_link'] = $link;
+            $existingLinks = $iku7->lampiran_link ?? [];
+            $newLinks = [];
+            foreach ($request->file('lampiran') as $file) {
+                $link = $driveService->upload($file, 'IKU7', $fakultasNama);
+                if ($link) {
+                    $newLinks[] = $link;
+                }
             }
+            $validated['lampiran_link'] = array_merge($existingLinks, $newLinks);
         }
 
         $iku7->update($validated);

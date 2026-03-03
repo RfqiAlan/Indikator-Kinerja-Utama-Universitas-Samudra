@@ -34,6 +34,7 @@ class Iku2LulusanBekerja extends Model
         'skor_bekerja' => 'decimal:2',
         'skor_wirausaha' => 'decimal:2',
         'persentase_iku2' => 'decimal:2',
+        'lampiran_link' => 'array',
     ];
 
     // Bobot pekerjaan

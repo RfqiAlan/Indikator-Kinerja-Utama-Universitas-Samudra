@@ -37,6 +37,7 @@ class Iku9Pendapatan extends Model
         'lainnya' => 'decimal:2',
         'total_non_ukt' => 'decimal:2',
         'persentase_iku9' => 'decimal:2',
+        'lampiran_link' => 'array',
     ];
 
     protected static function boot()

@@ -24,6 +24,7 @@ class Iku11TataKelola extends Model
 
     protected $casts = [
         'nilai_sakip' => 'decimal:2',
+        'lampiran_link' => 'array',
     ];
 
     const OPINI_OPTIONS = [

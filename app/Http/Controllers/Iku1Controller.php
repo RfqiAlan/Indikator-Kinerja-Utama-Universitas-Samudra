@@ -93,7 +93,8 @@ class Iku1Controller extends Controller
             'jumlah_lulus_tepat_waktu' => 'required|integer|min:0|lte:total_mahasiswa_aktif',
             'jumlah_responden' => 'nullable|integer|min:0|lte:jumlah_lulus_tepat_waktu',
             'keterangan' => 'nullable|string',
-            'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+            'lampiran' => 'nullable|array',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ], [
             'jumlah_lulus_tepat_waktu.lte' => 'Jumlah lulus tepat waktu tidak boleh melebihi total mahasiswa aktif.',
             'jumlah_responden.lte' => 'Jumlah responden tidak boleh melebihi jumlah lulus tepat waktu.',
@@ -120,9 +121,15 @@ class Iku1Controller extends Controller
         if ($request->hasFile('lampiran')) {
             $driveService = new GoogleDriveService();
             $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
-            $link = $driveService->upload($request->file('lampiran'), 'IKU1', $fakultasNama);
-            if ($link) {
-                $validated['lampiran_link'] = $link;
+            $links = [];
+            foreach ($request->file('lampiran') as $file) {
+                $link = $driveService->upload($file, 'IKU1', $fakultasNama);
+                if ($link) {
+                    $links[] = $link;
+                }
+            }
+            if (!empty($links)) {
+                $validated['lampiran_link'] = $links;
             }
         }
 
@@ -157,7 +164,8 @@ class Iku1Controller extends Controller
             'total_mahasiswa_aktif' => 'required|integer|min:1',
             'jumlah_responden' => 'nullable|integer|min:0|lte:jumlah_lulus_tepat_waktu',
             'keterangan' => 'nullable|string',
-            'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+            'lampiran' => 'nullable|array',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ], [
             'jumlah_responden.lte' => 'Jumlah responden tidak boleh melebihi jumlah lulus tepat waktu.',
         ]);
@@ -172,10 +180,15 @@ class Iku1Controller extends Controller
         if ($request->hasFile('lampiran')) {
             $driveService = new GoogleDriveService();
             $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
-            $link = $driveService->upload($request->file('lampiran'), 'IKU1', $fakultasNama);
-            if ($link) {
-                $validated['lampiran_link'] = $link;
+            $existingLinks = $iku1->lampiran_link ?? [];
+            $newLinks = [];
+            foreach ($request->file('lampiran') as $file) {
+                $link = $driveService->upload($file, 'IKU1', $fakultasNama);
+                if ($link) {
+                    $newLinks[] = $link;
+                }
             }
+            $validated['lampiran_link'] = array_merge($existingLinks, $newLinks);
         }
 
         $iku1->update($validated);

@@ -26,6 +26,10 @@ class Iku1Aee extends Model
         'lampiran_link',
     ];
 
+    protected $casts = [
+        'lampiran_link' => 'array',
+    ];
+
     /**
      * AEE Ideal values per jenjang pendidikan
      */

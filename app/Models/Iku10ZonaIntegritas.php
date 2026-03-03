@@ -29,6 +29,7 @@ class Iku10ZonaIntegritas extends Model
         'tanggal_penetapan' => 'date',
         'dokumen_lengkap' => 'boolean',
         'terdaftar_kemenpan' => 'boolean',
+        'lampiran_link' => 'array',
     ];
 
     const STATUS_OPTIONS = [

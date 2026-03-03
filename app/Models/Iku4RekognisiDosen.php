@@ -28,6 +28,7 @@ class Iku4RekognisiDosen extends Model
 
     protected $casts = [
         'persentase_iku4' => 'decimal:2',
+        'lampiran_link' => 'array',
     ];
 
     protected static function boot()
