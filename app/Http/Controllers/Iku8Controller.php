@@ -93,10 +93,11 @@ class Iku8Controller extends Controller
                 ->with('warning', 'Data IKU 8 untuk tahun ini sudah ada. Silakan edit data yang sudah ada.');
         }
 
-        // Upload lampiran to Google Drive
+        // Upload lampiran to Google Drive (folder per fakultas)
         if ($request->hasFile('lampiran')) {
             $driveService = new GoogleDriveService();
-            $link = $driveService->upload($request->file('lampiran'), 'IKU8');
+            $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
+            $link = $driveService->upload($request->file('lampiran'), 'IKU8', $fakultasNama);
             if ($link) {
                 $validated['lampiran_link'] = $link;
             }
@@ -126,10 +127,11 @@ class Iku8Controller extends Controller
             'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
-        // Upload lampiran to Google Drive
+        // Upload lampiran to Google Drive (folder per fakultas)
         if ($request->hasFile('lampiran')) {
             $driveService = new GoogleDriveService();
-            $link = $driveService->upload($request->file('lampiran'), 'IKU8');
+            $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
+            $link = $driveService->upload($request->file('lampiran'), 'IKU8', $fakultasNama);
             if ($link) {
                 $validated['lampiran_link'] = $link;
             }

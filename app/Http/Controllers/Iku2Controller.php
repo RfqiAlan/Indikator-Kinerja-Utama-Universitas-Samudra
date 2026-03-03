@@ -102,10 +102,11 @@ class Iku2Controller extends Controller
                 ->with('warning', 'Data untuk prodi ini sudah ada. Silakan edit data yang sudah ada.');
         }
 
-        // Upload lampiran to Google Drive
+        // Upload lampiran to Google Drive (folder per fakultas)
         if ($request->hasFile('lampiran')) {
             $driveService = new GoogleDriveService();
-            $link = $driveService->upload($request->file('lampiran'), 'IKU2');
+            $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
+            $link = $driveService->upload($request->file('lampiran'), 'IKU2', $fakultasNama);
             if ($link) {
                 $validated['lampiran_link'] = $link;
             }
@@ -153,10 +154,11 @@ class Iku2Controller extends Controller
             ]);
         }
 
-        // Upload lampiran to Google Drive
+        // Upload lampiran to Google Drive (folder per fakultas)
     if ($request->hasFile('lampiran')) {
         $driveService = new GoogleDriveService();
-        $link = $driveService->upload($request->file('lampiran'), 'IKU2');
+        $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
+        $link = $driveService->upload($request->file('lampiran'), 'IKU2', $fakultasNama);
         if ($link) {
             $validated['lampiran_link'] = $link;
         }

@@ -116,10 +116,11 @@ class Iku1Controller extends Controller
         $validated['aee_ideal'] = Iku1Aee::getAeeIdeal($validated['jenjang']);
         $validated['fakultas'] = $fakultas;
 
-        // Upload lampiran to Google Drive
+        // Upload lampiran to Google Drive (folder per fakultas)
         if ($request->hasFile('lampiran')) {
             $driveService = new GoogleDriveService();
-            $link = $driveService->upload($request->file('lampiran'), 'IKU1');
+            $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
+            $link = $driveService->upload($request->file('lampiran'), 'IKU1', $fakultasNama);
             if ($link) {
                 $validated['lampiran_link'] = $link;
             }
@@ -167,10 +168,11 @@ class Iku1Controller extends Controller
         $resolvedFakultas = $this->resolveFakultas(auth()->user()->fakultas, $validated['program_studi'] ?? $iku1->program_studi);
         $validated['fakultas'] = $resolvedFakultas ?? $iku1->fakultas;
 
-        // Upload lampiran to Google Drive
+        // Upload lampiran to Google Drive (folder per fakultas)
         if ($request->hasFile('lampiran')) {
             $driveService = new GoogleDriveService();
-            $link = $driveService->upload($request->file('lampiran'), 'IKU1');
+            $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
+            $link = $driveService->upload($request->file('lampiran'), 'IKU1', $fakultasNama);
             if ($link) {
                 $validated['lampiran_link'] = $link;
             }

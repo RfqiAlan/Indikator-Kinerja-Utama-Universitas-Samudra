@@ -78,10 +78,11 @@ class Iku10Controller extends Controller
                 ->with('warning', 'Data IKU 10 untuk unit ini sudah ada. Silakan edit data yang sudah ada.');
         }
 
-        // Upload lampiran to Google Drive
+        // Upload lampiran to Google Drive (folder per fakultas)
         if ($request->hasFile('lampiran')) {
             $driveService = new GoogleDriveService();
-            $link = $driveService->upload($request->file('lampiran'), 'IKU10');
+            $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
+            $link = $driveService->upload($request->file('lampiran'), 'IKU10', $fakultasNama);
             if ($link) {
                 $validated['lampiran_link'] = $link;
             }
@@ -116,10 +117,11 @@ class Iku10Controller extends Controller
         $validated['dokumen_lengkap'] = $request->has('dokumen_lengkap');
         $validated['terdaftar_kemenpan'] = $request->has('terdaftar_kemenpan');
 
-        // Upload lampiran to Google Drive
+        // Upload lampiran to Google Drive (folder per fakultas)
         if ($request->hasFile('lampiran')) {
             $driveService = new GoogleDriveService();
-            $link = $driveService->upload($request->file('lampiran'), 'IKU10');
+            $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
+            $link = $driveService->upload($request->file('lampiran'), 'IKU10', $fakultasNama);
             if ($link) {
                 $validated['lampiran_link'] = $link;
             }

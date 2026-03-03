@@ -24,8 +24,12 @@ class GoogleDriveService
 
     /**
      * Upload file to Google Drive and return the shareable link.
+     *
+     * @param UploadedFile $file       File yang diupload
+     * @param string       $ikuFolder  Subfolder IKU, misal 'IKU1'
+     * @param string       $fakultasName  Nama fakultas untuk folder terpisah, misal 'Fakultas Ekonomi dan Bisnis'
      */
-    public function upload(UploadedFile $file, string $subfolder = ''): ?string
+    public function upload(UploadedFile $file, string $ikuFolder = '', string $fakultasName = ''): ?string
     {
         try {
             $driveService = $this->getDriveService();
@@ -33,8 +37,14 @@ class GoogleDriveService
                 return null;
             }
 
-            // Determine target folder
-            $parentId = $subfolder ? $this->getOrCreateSubfolder($subfolder) : $this->folderId;
+            // Determine target folder: Root → Fakultas → IKU
+            if ($fakultasName && $ikuFolder) {
+                $parentId = $this->getOrCreateNestedSubfolder($fakultasName, $ikuFolder);
+            } elseif ($ikuFolder) {
+                $parentId = $this->getOrCreateSubfolder($ikuFolder, $this->folderId);
+            } else {
+                $parentId = $this->folderId;
+            }
 
             $driveFile = new DriveFile([
                 'name' => time() . '_' . $file->getClientOriginalName(),
@@ -73,7 +83,8 @@ class GoogleDriveService
         } catch (\Exception $e) {
             Log::error('Google Drive upload failed: ' . $e->getMessage(), [
                 'folderId' => $this->folderId,
-                'subfolder' => $subfolder,
+                'ikuFolder' => $ikuFolder,
+                'fakultasName' => $fakultasName,
             ]);
             return null;
         }
@@ -103,18 +114,30 @@ class GoogleDriveService
     }
 
     /**
-     * Get or create a subfolder inside the main Drive folder.
+     * Get or create nested subfolder: Root → Fakultas → IKU
      */
-    protected function getOrCreateSubfolder(string $name): string
+    protected function getOrCreateNestedSubfolder(string $fakultasName, string $ikuFolder): string
+    {
+        // Step 1: Get or create Fakultas folder inside root
+        $fakultasFolderId = $this->getOrCreateSubfolder($fakultasName, $this->folderId);
+
+        // Step 2: Get or create IKU folder inside Fakultas folder
+        return $this->getOrCreateSubfolder($ikuFolder, $fakultasFolderId);
+    }
+
+    /**
+     * Get or create a subfolder inside a given parent folder.
+     */
+    protected function getOrCreateSubfolder(string $name, string $parentId): string
     {
         $driveService = $this->getDriveService();
         if (!$driveService) {
-            return $this->folderId;
+            return $parentId;
         }
 
         // Shared Drive: listFiles perlu supportsAllDrives + includeItemsFromAllDrives
         $safeName = addslashes($name);
-        $query = "name='{$safeName}' and '{$this->folderId}' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false";
+        $query = "name='{$safeName}' and '{$parentId}' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false";
 
         $results = $driveService->files->listFiles([
             'q' => $query,
@@ -132,7 +155,7 @@ class GoogleDriveService
         $folder = new DriveFile([
             'name' => $name,
             'mimeType' => 'application/vnd.google-apps.folder',
-            'parents' => [$this->folderId],
+            'parents' => [$parentId],
         ]);
 
         $created = $driveService->files->create($folder, [

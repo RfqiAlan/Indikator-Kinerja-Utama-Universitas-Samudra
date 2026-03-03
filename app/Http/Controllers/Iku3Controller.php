@@ -96,10 +96,11 @@ class Iku3Controller extends Controller
 
         $validated['fakultas'] = $fakultas;
 
-        // Upload lampiran to Google Drive
+        // Upload lampiran to Google Drive (folder per fakultas)
         if ($request->hasFile('lampiran')) {
             $driveService = new GoogleDriveService();
-            $link = $driveService->upload($request->file('lampiran'), 'IKU3');
+            $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
+            $link = $driveService->upload($request->file('lampiran'), 'IKU3', $fakultasNama);
             if ($link) {
                 $validated['lampiran_link'] = $link;
             }
@@ -145,10 +146,11 @@ class Iku3Controller extends Controller
             ]);
         }
 
-        // Upload lampiran to Google Drive
+        // Upload lampiran to Google Drive (folder per fakultas)
     if ($request->hasFile('lampiran')) {
         $driveService = new GoogleDriveService();
-        $link = $driveService->upload($request->file('lampiran'), 'IKU3');
+        $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
+        $link = $driveService->upload($request->file('lampiran'), 'IKU3', $fakultasNama);
         if ($link) {
             $validated['lampiran_link'] = $link;
         }
