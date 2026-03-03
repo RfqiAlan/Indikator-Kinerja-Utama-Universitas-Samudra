@@ -116,7 +116,7 @@
                             </div>
                         </div>
 
-                        @include("components.lampiran-upload", ["ikuNumber" => 1, "existingLinks" => $iku1->lampiran_link ?? []])
+                        @include("partials.lampiran-upload", ["ikuNumber" => 1, "existingLinks" => $iku1->lampiran_link ?? []])
 
                         <!-- Action Buttons -->
                         <div class="flex items-center justify-end gap-3 pt-4">
