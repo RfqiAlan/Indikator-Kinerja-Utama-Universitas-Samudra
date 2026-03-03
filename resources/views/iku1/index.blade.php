@@ -246,40 +246,51 @@
                 @endif
             </div>
             <!-- Helper Section (Collapsible) -->
-            <div x-data="{ open: false }" class="bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden" data-aos="fade-up" data-aos-delay="200">
-                <button @click="open = !open" class="w-full flex items-center justify-between px-6 py-4 bg-slate-50/50 dark:bg-slate-700/30 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-left">
-                    <span class="flex items-center text-sm font-medium text-slate-700 dark:text-slate-300">
-                        <svg class="w-5 h-5 mr-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        Panduan & Rumus Perhitungan
-                    </span>
-                    <svg class="w-5 h-5 text-slate-400 transform transition-transform duration-200" :class="{'rotate-180': open}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
+            <div x-data="{ open: false }" class="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 border border-emerald-100 dark:border-emerald-800/50 rounded-2xl shadow-sm overflow-hidden transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
+                <button @click="open = !open" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-white/50 dark:hover:bg-slate-800/50 transition-colors">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                            <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <span class="font-bold text-slate-800 dark:text-emerald-100">Panduan & Rumus Perhitungan IKU 1</span>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-white/50 dark:bg-slate-800/50 flex items-center justify-center">
+                        <svg :class="{'rotate-180': open}" class="w-5 h-5 text-emerald-600 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
                 </button>
-                <div x-show="open" x-collapse class="px-6 py-6 border-t border-slate-100 dark:border-slate-700">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="space-y-2">
-                            <h4 class="text-sm font-semibold text-slate-800 dark:text-white">1. AEE Realisasi</h4>
-                            <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg text-xs font-mono text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+                <div x-show="open" x-collapse class="px-6 pb-6 text-sm text-slate-600 dark:text-slate-300">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-2">
+                        <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-5 border border-emerald-100 dark:border-emerald-800 shadow-sm transition-transform hover:-translate-y-1 duration-300">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs">1</span>
+                                <h4 class="font-bold text-slate-800 dark:text-slate-100">AEE Realisasi</h4>
+                            </div>
+                            <div class="p-3 bg-white dark:bg-slate-900 rounded-lg text-xs font-mono text-emerald-700 dark:text-emerald-400 border border-emerald-50 dark:border-emerald-900/50 mb-3 text-center shadow-inner">
                                 (Lulus Tepat Waktu / Total Mahasiswa) × 100%
                             </div>
-                            <p class="text-xs text-slate-500">Persentase mahasiswa yang lulus tepat waktu dari total mahasiswa aktif.</p>
+                            <p class="text-xs text-slate-500 leading-relaxed">Persentase mahasiswa yang lulus tepat waktu dari total mahasiswa aktif pada angkatan tersebut.</p>
                         </div>
-                        <div class="space-y-2">
-                            <h4 class="text-sm font-semibold text-slate-800 dark:text-white">2. Tingkat Pencapaian</h4>
-                            <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg text-xs font-mono text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+                        <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-5 border border-blue-100 dark:border-blue-800 shadow-sm transition-transform hover:-translate-y-1 duration-300">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="flex items-center justify-center w-6 h-6 rounded-full bg-blue-100 text-blue-700 font-bold text-xs">2</span>
+                                <h4 class="font-bold text-slate-800 dark:text-slate-100">Tingkat Pencapaian</h4>
+                            </div>
+                            <div class="p-3 bg-white dark:bg-slate-900 rounded-lg text-xs font-mono text-blue-700 dark:text-blue-400 border border-blue-50 dark:border-blue-900/50 mb-3 text-center shadow-inner">
                                 (AEE Realisasi / AEE Ideal) × 100%
                             </div>
-                            <p class="text-xs text-slate-500">Seberapa dekat capaian realisasi dengan target ideal yang ditetapkan masing-masing jenjang.</p>
+                            <p class="text-xs text-slate-500 leading-relaxed">Seberapa dekat capaian realisasi dengan target ideal yang ditetapkan masing-masing jenjang (D3/D4/S1).</p>
                         </div>
-                        <div class="space-y-2">
-                            <h4 class="text-sm font-semibold text-slate-800 dark:text-white">3. AEE PT</h4>
-                            <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg text-xs font-mono text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+                        <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-5 border border-purple-100 dark:border-purple-800 shadow-sm transition-transform hover:-translate-y-1 duration-300">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="flex items-center justify-center w-6 h-6 rounded-full bg-purple-100 text-purple-700 font-bold text-xs">3</span>
+                                <h4 class="font-bold text-slate-800 dark:text-slate-100">AEE PT Akhir</h4>
+                            </div>
+                            <div class="p-3 bg-white dark:bg-slate-900 rounded-lg text-xs font-mono text-purple-700 dark:text-purple-400 border border-purple-50 dark:border-purple-900/50 mb-3 text-center shadow-inner">
                                 Σ Tingkat Pencapaian / Jumlah Data
                             </div>
-                            <p class="text-xs text-slate-500">Rata-rata tingkat pencapaian dari seluruh jenjang pendidikan yang dihitung.</p>
+                            <p class="text-xs text-slate-500 leading-relaxed">Rata-rata tingkat pencapaian keseluruhan program studi dari seluruh jenjang pendidikan yang dihitung.</p>
                         </div>
                     </div>
                 </div>

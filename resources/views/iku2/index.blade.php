@@ -204,20 +204,51 @@
             </div>
 
             <!-- Formula Help -->
-            <div x-data="{ open: false }" class="bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-200 dark:border-cyan-700/50 rounded-2xl">
-                <button @click="open = !open" class="w-full px-6 py-4 flex items-center justify-between text-left">
-                    <span class="font-semibold text-cyan-800 dark:text-cyan-200">Rumus & Kriteria Bobot</span>
-                    <svg :class="{'rotate-180': open}" class="w-5 h-5 text-cyan-600 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            <div x-data="{ open: false }" class="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 border border-emerald-100 dark:border-emerald-800/50 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
+                <button @click="open = !open" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-white/50 dark:hover:bg-slate-800/50 transition-colors">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <span class="font-bold text-slate-800 dark:text-emerald-100">Informasi Rumus & Kriteria Penilaian IKU 2</span>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-white/50 dark:bg-slate-800/50 flex items-center justify-center">
+                        <svg :class="{'rotate-180': open}" class="w-5 h-5 text-emerald-600 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
                 </button>
-                <div x-show="open" x-collapse class="px-6 pb-4 text-sm text-cyan-700 dark:text-cyan-300">
-                    <p class="font-mono bg-white dark:bg-slate-800 p-3 rounded-lg mb-3">IKU2 = (A + B + C) / Total Responden × 100%</p>
-                    <p class="mb-2"><strong>Bobot Pekerjaan:</strong></p>
-                    <ul class="list-disc list-inside mb-2">
-                        <li>&lt;6 bulan, gaji &gt;1.2 UMP = Bobot 10</li>
-                        <li>&lt;1 tahun, gaji &gt;1.2 UMP = Bobot 6</li>
-                        <li>&lt;1 tahun, gaji &lt;1.2 UMP = Bobot 4</li>
-                    </ul>
-                    <p><strong>Bobot Wirausaha:</strong> Founder = 0.75, Freelancer = 0.25</p>
+                <div x-show="open" x-collapse class="px-6 pb-6 text-sm text-slate-600 dark:text-slate-300">
+                    <div class="p-4 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl border border-white/50 dark:border-slate-700/50 mb-4 shadow-sm w-full md:w-auto">
+                        <p class="font-mono text-emerald-700 dark:text-emerald-300 font-semibold flex items-center gap-2 mb-3">
+                            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                            IKU 2 = (A + B + C) / Total Responden × 100%
+                        </p>
+                        <div class="text-xs text-slate-600 dark:text-slate-400 space-y-1.5 ml-1 border-l-2 border-emerald-200 dark:border-emerald-700 pl-3">
+                            <p><strong class="text-emerald-700 dark:text-emerald-400 font-mono">A</strong> = Lulusan yang mendapat pekerjaan (Bekerja)</p>
+                            <p><strong class="text-emerald-700 dark:text-emerald-400 font-mono">B</strong> = Lulusan yang melanjutkan pendidikan (Studi Lanjut)</p>
+                            <p><strong class="text-emerald-700 dark:text-emerald-400 font-mono">C</strong> = Lulusan yang menjadi wiraswasta (Wirausaha)</p>
+                        </div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-white/40 dark:bg-slate-800/40 rounded-xl p-4 border border-emerald-50 dark:border-emerald-900/30">
+                            <p class="font-bold text-slate-800 dark:text-slate-200 mb-3 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Bobot Pekerjaan
+                            </p>
+                            <ul class="space-y-2">
+                                <li class="flex items-center gap-2 bg-white/50 dark:bg-slate-800/50 p-2 rounded-lg"><span class="font-semibold text-emerald-600 w-16 text-center bg-emerald-100 rounded">1.2x</span> &lt;6 bulan, gaji &gt;1.2 UMP (Bobot 10)</li>
+                                <li class="flex items-center gap-2 bg-white/50 dark:bg-slate-800/50 p-2 rounded-lg"><span class="font-semibold text-amber-600 w-16 text-center bg-amber-100 rounded">0.8x</span> &lt;1 tahun, gaji &gt;1.2 UMP (Bobot 6)</li>
+                                <li class="flex items-center gap-2 bg-white/50 dark:bg-slate-800/50 p-2 rounded-lg"><span class="font-semibold text-rose-600 w-16 text-center bg-rose-100 rounded">0.5x</span> &lt;1 tahun, gaji &lt;1.2 UMP (Bobot 4)</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white/40 dark:bg-slate-800/40 rounded-xl p-4 border border-emerald-50 dark:border-emerald-900/30">
+                            <p class="font-bold text-slate-800 dark:text-slate-200 mb-3 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-teal-500"></span> Bobot Wirausaha
+                            </p>
+                            <ul class="space-y-2">
+                                <li class="flex items-center gap-2 bg-white/50 dark:bg-slate-800/50 p-2 rounded-lg"><span class="font-semibold text-teal-600 w-16 text-center bg-teal-100 rounded">1.2x</span> Posisi Founder (Bobot 1)</li>
+                                <li class="flex items-center gap-2 bg-white/50 dark:bg-slate-800/50 p-2 rounded-lg"><span class="font-semibold text-amber-600 w-16 text-center bg-amber-100 rounded">0.5x</span> Posisi Freelancer (Bobot 0.25)</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

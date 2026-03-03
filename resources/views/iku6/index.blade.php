@@ -110,9 +110,45 @@
                 </div>
                 @endif
             </div>
-            <div x-data="{ open: false }" class="bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-200 dark:border-cyan-700/50 rounded-2xl">
-                <button @click="open = !open" class="w-full px-6 py-4 flex items-center justify-between"><span class="font-semibold text-cyan-800 dark:text-cyan-200">Bobot Quartile</span><svg :class="{'rotate-180': open}" class="w-5 h-5 text-cyan-600 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
-                <div x-show="open" x-collapse class="px-6 pb-4 text-sm text-cyan-700"><p>Q1 = 1.00, Q2 = 0.75, Q3 = 0.50, Q4 = 0.25, Kolaborasi = +0.25</p></div>
+            <!-- Formula Help -->
+            <div x-data="{ open: false }" class="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 border border-emerald-100 dark:border-emerald-800/50 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
+                <button @click="open = !open" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-white/50 dark:hover:bg-slate-800/50 transition-colors">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <span class="font-bold text-slate-800 dark:text-emerald-100">Informasi Kriteria Bobot Quartile Publikasi (IKU 6)</span>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-white/50 dark:bg-slate-800/50 flex items-center justify-center">
+                        <svg :class="{'rotate-180': open}" class="w-5 h-5 text-emerald-600 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </button>
+                <div x-show="open" x-collapse class="px-6 pb-6 text-sm text-slate-600 dark:text-slate-300">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
+                        <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-4 border border-emerald-100 dark:border-emerald-800 text-center shadow-sm">
+                            <span class="block text-xl font-black text-emerald-600 mb-1">Q1</span>
+                            <span class="inline-block px-2 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded">Bobot 1.00</span>
+                        </div>
+                        <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-4 border border-emerald-100 dark:border-emerald-800 text-center shadow-sm">
+                            <span class="block text-xl font-black text-blue-600 mb-1">Q2</span>
+                            <span class="inline-block px-2 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded">Bobot 0.75</span>
+                        </div>
+                        <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-4 border border-emerald-100 dark:border-emerald-800 text-center shadow-sm">
+                            <span class="block text-xl font-black text-amber-600 mb-1">Q3</span>
+                            <span class="inline-block px-2 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded">Bobot 0.50</span>
+                        </div>
+                        <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-4 border border-emerald-100 dark:border-emerald-800 text-center shadow-sm">
+                            <span class="block text-xl font-black text-rose-600 mb-1">Q4</span>
+                            <span class="inline-block px-2 py-1 bg-rose-100 text-rose-700 text-xs font-bold rounded">Bobot 0.25</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-3 bg-emerald-100/50 dark:bg-emerald-900/30 rounded-lg flex items-start gap-3 border border-emerald-200 dark:border-emerald-800">
+                        <svg class="w-5 h-5 text-emerald-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        <p class="text-xs text-emerald-800 dark:text-emerald-200 leading-relaxed font-medium">
+                            <span class="font-bold">Bonus Kolaborasi Tambahan:</span> Jika publikasi melibatkan kolaborasi internasional, berhak mendapat <strong>tambahan bobot +0.25</strong> pada perolehan akhir skor.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </x-user-layout>
