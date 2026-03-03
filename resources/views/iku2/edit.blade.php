@@ -23,8 +23,8 @@
                             <label class="block text-sm font-medium text-slate-700 mb-1">Program Studi <span class="text-rose-500">*</span></label>
                             <select name="program_studi" x-model="prodi" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500" required>
                                 <option value="">-- Pilih Program Studi --</option>
-                                @foreach(auth()->user()->prodi_list as $kode => $nama)
-                                    <option value="{{ $kode }}">{{ $nama }}</option>
+                                @foreach(auth()->user()->prodi_list as $kode => $prodi)
+                                    <option value="{{ $kode }}">{{ $prodi['nama'] }}</option>
                                 @endforeach
                             </select>
                         </div>

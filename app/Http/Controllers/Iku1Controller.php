@@ -3,22 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Iku1Aee;
+use App\Models\Prodi;
 use App\Services\GoogleDriveService;
 use Illuminate\Http\Request;
 
 class Iku1Controller extends Controller
 {
-    /**
-     * Jenjang options with AEE Ideal values
-     */
-    private $jenjangOptions = [
-        'D3' => ['name' => 'Diploma III (D3)', 'aee_ideal' => 33, 'masa_studi' => '3 tahun'],
-        'D4' => ['name' => 'Diploma IV (D4)', 'aee_ideal' => 25, 'masa_studi' => '4 tahun'],
-        'S1' => ['name' => 'Sarjana (S1)', 'aee_ideal' => 25, 'masa_studi' => '4 tahun'],
-        'S2' => ['name' => 'Magister (S2)', 'aee_ideal' => 50, 'masa_studi' => '2 tahun'],
-        'S3' => ['name' => 'Doktor (S3)', 'aee_ideal' => 33, 'masa_studi' => '3-4 tahun'],
-        'Profesi' => ['name' => 'Program Profesi', 'aee_ideal' => 50, 'masa_studi' => 'Sesuai kurikulum'],
-    ];
 
     private function resolveFakultas(?string $userFakultas, ?string $programStudi): ?string
     {
@@ -74,10 +64,9 @@ class Iku1Controller extends Controller
      */
     public function create()
     {
-        $jenjangOptions = $this->jenjangOptions;
         $tahunAkademik = get_tahun_akademik();
         
-        return view('iku1.create', compact('jenjangOptions', 'tahunAkademik'));
+        return view('iku1.create', compact('tahunAkademik'));
     }
 
     /**
@@ -87,7 +76,6 @@ class Iku1Controller extends Controller
     {
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
-            'jenjang' => 'required|string',
             'program_studi' => 'required|string',
             'total_mahasiswa_aktif' => 'required|integer|min:1',
             'jumlah_lulus_tepat_waktu' => 'required|integer|min:0|lte:total_mahasiswa_aktif',
@@ -101,6 +89,10 @@ class Iku1Controller extends Controller
         ]);
 
         $fakultas = auth()->user()->fakultas;
+        
+        // Auto-lookup jenjang from Prodi
+        $prodi = Prodi::where('kode', $validated['program_studi'])->first();
+        $validated['jenjang'] = $prodi->jenjang ?? 'S1';
         
         // Check for duplicate - same prodi, tahun, fakultas
         $existing = Iku1Aee::where('tahun_akademik', $validated['tahun_akademik'])
@@ -146,9 +138,7 @@ class Iku1Controller extends Controller
      */
     public function edit(Iku1Aee $iku1)
     {
-        $jenjangOptions = $this->jenjangOptions;
-        
-        return view('iku1.edit', compact('iku1', 'jenjangOptions'));
+        return view('iku1.edit', compact('iku1'));
     }
 
     /**
@@ -158,7 +148,6 @@ class Iku1Controller extends Controller
     {
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
-            'jenjang' => 'required|string',
             'program_studi' => 'required|string',
             'jumlah_lulus_tepat_waktu' => 'required|integer|min:0',
             'total_mahasiswa_aktif' => 'required|integer|min:1',
@@ -169,6 +158,10 @@ class Iku1Controller extends Controller
         ], [
             'jumlah_responden.lte' => 'Jumlah responden tidak boleh melebihi jumlah lulus tepat waktu.',
         ]);
+
+        // Auto-lookup jenjang from Prodi
+        $prodi = Prodi::where('kode', $validated['program_studi'])->first();
+        $validated['jenjang'] = $prodi->jenjang ?? $iku1->jenjang ?? 'S1';
 
         // Set AEE Ideal based on jenjang
         $validated['aee_ideal'] = Iku1Aee::getAeeIdeal($validated['jenjang']);

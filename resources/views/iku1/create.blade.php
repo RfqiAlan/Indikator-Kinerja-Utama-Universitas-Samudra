@@ -20,30 +20,28 @@
                         <span class="bg-emerald-100 text-emerald-600 w-7 h-7 rounded-full flex items-center justify-center text-sm mr-2">1</span>
                         Informasi Akademik
                     </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">Tahun <span class="text-rose-500">*</span></label>
                             <x-tahun-akademik-select :selected="$tahunAkademik" />
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">Program Studi <span class="text-rose-500">*</span></label>
-                            <select name="program_studi" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500" required>
+                            <select name="program_studi" x-model="selectedProdi" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500" required>
                                 <option value="">-- Pilih Program Studi --</option>
-                                @foreach(auth()->user()->prodi_list as $kode => $nama)
-                                    <option value="{{ $kode }}">{{ $nama }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Jenjang <span class="text-rose-500">*</span></label>
-                            <select name="jenjang" x-model="jenjang" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500" required>
-                                <option value="">-- Pilih Jenjang --</option>
-                                @foreach($jenjangOptions as $kode => $opt)
-                                    <option value="{{ $kode }}">{{ $opt['name'] }} (AEE Ideal: {{ $opt['aee_ideal'] }}%)</option>
+                                @foreach(auth()->user()->prodi_list as $kode => $prodi)
+                                    <option value="{{ $kode }}">{{ $prodi['nama'] }} ({{ $prodi['jenjang'] }})</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
+                    <!-- Auto-derived Jenjang Display -->
+                    <template x-if="selectedProdi">
+                        <div class="mt-3 flex items-center gap-2 px-3 py-2 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-700 text-sm">
+                            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span>Jenjang: <strong x-text="currentJenjang"></strong> — AEE Ideal: <strong x-text="aeeIdeal + '%'"></strong></span>
+                        </div>
+                    </template>
                 </div>
 
                 <div class="border-b pb-6">
@@ -98,13 +96,15 @@
         </div>
         <script>
             function formIku1() {
-                const aeeIdealMap = @json(collect($jenjangOptions)->mapWithKeys(fn($opt, $key) => [$key => $opt['aee_ideal']]));
+                const prodiData = @json(auth()->user()->prodi_list);
+                const aeeIdealMap = {'D3': 33, 'D4': 25, 'S1': 25, 'S2': 50, 'S3': 33, 'Profesi': 50, 'Sp-1': 50};
                 return {
-                    jenjang: '',
+                    selectedProdi: '{{ old("program_studi", "") }}',
                     totalMahasiswa: 0,
                     lulusTepat: 0,
                     jumlahResponden: 0,
-                    get aeeIdeal() { return aeeIdealMap[this.jenjang] || 25; },
+                    get currentJenjang() { return prodiData[this.selectedProdi]?.jenjang || '-'; },
+                    get aeeIdeal() { return aeeIdealMap[this.currentJenjang] || 25; },
                     get aee() { if (this.totalMahasiswa <= 0) return 0; return (this.lulusTepat / this.totalMahasiswa) * 100; }
                 }
             }

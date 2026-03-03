@@ -75,7 +75,10 @@ class User extends Authenticatable
 
         $prodiList = [];
         foreach ($fak->prodi as $p) {
-            $prodiList[$p->kode] = $p->nama;
+            $prodiList[$p->kode] = [
+                'nama' => $p->nama,
+                'jenjang' => $p->jenjang ?? 'S1',
+            ];
         }
 
         return [

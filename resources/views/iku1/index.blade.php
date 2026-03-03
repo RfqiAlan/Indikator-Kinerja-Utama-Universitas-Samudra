@@ -110,9 +110,9 @@
             <!-- Main Data Table -->
             <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden" data-aos="fade-up" data-aos-delay="100">
                 <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/50">
-                    <h3 class="text-lg font-semibold text-slate-800 dark:text-white">Detail Capaian per Jenjang</h3>
+                    <h3 class="text-lg font-semibold text-slate-800 dark:text-white">Detail Capaian per Program Studi</h3>
                     <span class="px-3 py-1 text-xs font-medium rounded-full bg-white border border-slate-200 text-slate-600 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300 shadow-sm">
-                        Total: {{ $data->count() }} Jenjang
+                        Total: {{ $data->count() }} Prodi
                     </span>
                 </div>
 
@@ -134,7 +134,7 @@
                     <table class="w-full text-sm text-left">
                         <thead class="text-xs text-slate-500 uppercase bg-slate-50/80 dark:bg-slate-700/50 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700">
                             <tr>
-                                <th scope="col" class="px-6 py-4 font-medium">Jenjang & Prodi</th>
+                                <th scope="col" class="px-6 py-4 font-medium">Program Studi</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Mahasiswa</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Lulus Tepat Waktu</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Responden</th>
@@ -153,10 +153,10 @@
                                         </div>
                                         <div class="ml-4">
                                             <div class="text-sm font-semibold text-slate-900 dark:text-white">
-                                                {{ $item->jenjang }}
+                                                {{ $item->program_studi ?? 'Semua Prodi' }}
                                             </div>
                                             <div class="text-xs text-slate-500 dark:text-slate-400">
-                                                {{ $item->program_studi ?? 'Semua Prodi' }}
+                                                {{ $item->jenjang }} — AEE Ideal: {{ $item->aee_ideal }}%
                                             </div>
                                         </div>
                                     </div>

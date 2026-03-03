@@ -19,7 +19,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- Main Form Area -->
                 <div class="lg:col-span-2 space-y-6">
-                    <form action="{{ route('user.iku1.update', $iku1) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                    <form action="{{ route('user.iku1.update', $iku1) }}" method="POST" enctype="multipart/form-data" class="space-y-6" x-data="formIku1Edit()">
                         @csrf
                         @method('PUT')
                         
@@ -37,31 +37,27 @@
                                     @error('tahun_akademik')<span class="text-rose-500 text-xs mt-1 block">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="space-y-2">
-                                    <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Jenjang Pendidikan <span class="text-rose-500">*</span></label>
-                                    <div class="relative">
-                                        <select name="jenjang" id="jenjang" onchange="updateAeeIdeal()"
-                                            class="w-full rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 appearance-none transition-shadow" required>
-                                            <option value="">-- Pilih Jenjang --</option>
-                                            @foreach($jenjangOptions as $key => $option)
-                                                <option value="{{ $key }}" data-ideal="{{ $option['aee_ideal'] }}" {{ old('jenjang', $iku1->jenjang) == $key ? 'selected' : '' }}>
-                                                    {{ $option['name'] }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-500">
-                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                                        </div>
-                                    </div>
-                                    @error('jenjang')<span class="text-rose-500 text-xs mt-1 block">{{ $message }}</span>@enderror
+                                    <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Program Studi <span class="text-rose-500">*</span></label>
+                                    <select name="program_studi" x-model="selectedProdi"
+                                        class="w-full rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-shadow" required>
+                                        <option value="">-- Pilih Program Studi --</option>
+                                        @foreach(auth()->user()->prodi_list as $kode => $prodi)
+                                            <option value="{{ $kode }}" {{ old('program_studi', $iku1->program_studi) == $kode ? 'selected' : '' }}>
+                                                {{ $prodi['nama'] }} ({{ $prodi['jenjang'] }})
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('program_studi')<span class="text-rose-500 text-xs mt-1 block">{{ $message }}</span>@enderror
                                 </div>
                             </div>
                             
-                            <div class="mt-6 space-y-2">
-                                <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Program Studi <span class="text-slate-400 font-normal">(Opsional)</span></label>
-                                <input type="text" name="program_studi" value="{{ old('program_studi', $iku1->program_studi) }}" 
-                                    class="w-full rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-shadow"
-                                    placeholder="Contoh: Teknik Informatika">
-                            </div>
+                            <!-- Auto-derived Jenjang Display -->
+                            <template x-if="selectedProdi">
+                                <div class="mt-4 flex items-center gap-2 px-3 py-2 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-700 text-sm">
+                                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <span>Jenjang: <strong x-text="currentJenjang"></strong> — AEE Ideal: <strong x-text="aeeIdeal + '%'"></strong></span>
+                                </div>
+                            </template>
                         </div>
 
                         <!-- Section 2: Data Capaian -->
@@ -76,9 +72,9 @@
                                     <label class="text-sm font-medium text-slate-700 dark:text-slate-300 flex justify-between">
                                         Lulus Tepat Waktu <span class="text-rose-500">*</span>
                                     </label>
-                                    <input type="number" name="jumlah_lulus_tepat_waktu" id="lulus" value="{{ old('jumlah_lulus_tepat_waktu', $iku1->jumlah_lulus_tepat_waktu) }}" 
+                                    <input type="number" name="jumlah_lulus_tepat_waktu" x-model.number="lulusTepat" value="{{ old('jumlah_lulus_tepat_waktu', $iku1->jumlah_lulus_tepat_waktu) }}" 
                                         class="w-full text-lg font-semibold rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-shadow"
-                                        placeholder="0" min="0" oninput="calculatePreview()" required>
+                                        placeholder="0" min="0" required>
                                     <p class="text-xs text-slate-500">Jumlah mahasiswa yang lulus sesuai masa studi.</p>
                                     @error('jumlah_lulus_tepat_waktu')<span class="text-rose-500 text-xs mt-1 block">{{ $message }}</span>@enderror
                                 </div>
@@ -86,9 +82,9 @@
                                     <label class="text-sm font-medium text-slate-700 dark:text-slate-300 flex justify-between">
                                         Total Mahasiswa Aktif <span class="text-rose-500">*</span>
                                     </label>
-                                    <input type="number" name="total_mahasiswa_aktif" id="total" value="{{ old('total_mahasiswa_aktif', $iku1->total_mahasiswa_aktif) }}" 
+                                    <input type="number" name="total_mahasiswa_aktif" x-model.number="totalMahasiswa" value="{{ old('total_mahasiswa_aktif', $iku1->total_mahasiswa_aktif) }}" 
                                         class="w-full text-lg font-semibold rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-shadow"
-                                        placeholder="0" min="1" oninput="calculatePreview()" required>
+                                        placeholder="0" min="1" required>
                                     <p class="text-xs text-slate-500">Total mahasiswa terdaftar pada periode tersebut.</p>
                                     @error('total_mahasiswa_aktif')<span class="text-rose-500 text-xs mt-1 block">{{ $message }}</span>@enderror
                                 </div>
@@ -96,19 +92,21 @@
                                     <label class="text-sm font-medium text-slate-700 dark:text-slate-300 flex justify-between">
                                         Jumlah Responden
                                     </label>
-                                    <input type="number" name="jumlah_responden" id="responden" value="{{ old('jumlah_responden', $iku1->jumlah_responden ?? 0) }}" 
+                                    <input type="number" name="jumlah_responden" x-model.number="jumlahResponden" value="{{ old('jumlah_responden', $iku1->jumlah_responden ?? 0) }}" 
                                         class="w-full text-lg font-semibold rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-shadow"
-                                        placeholder="0" min="0" oninput="calculatePreview()">
+                                        placeholder="0" min="0">
                                     <p class="text-xs text-slate-500">Min. 75% dari jumlah lulusan.</p>
                                     @error('jumlah_responden')<span class="text-rose-500 text-xs mt-1 block">{{ $message }}</span>@enderror
                                 </div>
                             </div>
 
                             <!-- Respondent Warning -->
-                            <div id="responden-warning" class="mt-4 hidden flex items-center gap-2 px-3 py-2 bg-rose-50 border border-rose-200 rounded-lg text-rose-700 text-xs font-medium">
-                                <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path></svg>
-                                <span id="responden-warning-text"></span>
-                            </div>
+                            <template x-if="lulusTepat > 0 && jumlahResponden < (lulusTepat * 0.75)">
+                                <div class="mt-4 flex items-center gap-2 px-3 py-2 bg-rose-50 border border-rose-200 rounded-lg text-rose-700 text-xs font-medium">
+                                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path></svg>
+                                    <span>Jumlah responden kurang dari 75% jumlah lulusan (<span x-text="Math.ceil(lulusTepat * 0.75)"></span> responden dibutuhkan)</span>
+                                </div>
+                            </template>
 
                              <div class="mt-6 space-y-2">
                                 <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Catatan <span class="text-slate-400 font-normal">(Opsional)</span></label>
@@ -136,7 +134,7 @@
 
                 <!-- Preview Sidebar -->
                 <div class="lg:col-span-1">
-                    <div class="sticky top-6 space-y-6">
+                    <div class="sticky top-6 space-y-6" x-data="formIku1Edit()">
                         <!-- Result Card -->
                         <div class="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-3xl shadow-xl p-6 text-white relative overflow-hidden">
                             <div class="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 rounded-full bg-white opacity-20 blur-2xl"></div>
@@ -146,20 +144,20 @@
                             <div class="space-y-6 relative z-10">
                                 <div class="text-center">
                                     <p class="text-emerald-200 text-xs mb-1">AEE Realisasi</p>
-                                    <div class="text-4xl font-extrabold tracking-tight" id="preview-realisasi">0.00%</div>
+                                    <div class="text-4xl font-extrabold tracking-tight" x-text="aee.toFixed(2) + '%'">0.00%</div>
                                     <div class="w-full bg-white/20 h-1.5 rounded-full mt-2 overflow-hidden">
-                                        <div id="bar-realisasi" class="h-full bg-white rounded-full transition-all duration-500" style="width: 0%"></div>
+                                        <div class="h-full bg-white rounded-full transition-all duration-500" :style="'width: ' + Math.min(aee, 100) + '%'"></div>
                                     </div>
                                 </div>
 
                                 <div class="bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/10">
                                     <div class="flex justify-between items-end mb-2">
                                         <span class="text-emerald-100 text-sm">Tingkat Pencapaian</span>
-                                        <span class="text-2xl font-bold" id="preview-pencapaian">0%</span>
+                                        <span class="text-2xl font-bold" x-text="tingkatPencapaian.toFixed(2) + '%'">0%</span>
                                     </div>
                                     <div class="text-xs text-emerald-200 flex justify-between">
-                                        <span class="font-bold" id="label-status">Menunggu Data</span>
-                                        <span>Target: <span id="preview-ideal">--</span>%</span>
+                                        <span class="font-bold" x-text="tingkatPencapaian >= 100 ? 'Sangat Baik' : (tingkatPencapaian >= 75 ? 'Cukup' : (tingkatPencapaian > 0 ? 'Perlu Ditingkatkan' : 'Menunggu Data'))"></span>
+                                        <span>Target: <span x-text="aeeIdeal"></span>%</span>
                                     </div>
                                 </div>
                             </div>
@@ -172,7 +170,7 @@
                                 Informasi Target
                             </h4>
                             <p class="text-sm text-cyan-700 dark:text-cyan-300 leading-relaxed mb-3">
-                                Target AEE Ideal ditentukan berdasarkan jenjang pendidikan yang dipilih:
+                                AEE Ideal otomatis ditentukan berdasarkan jenjang program studi yang dipilih:
                             </p>
                             <ul class="text-xs space-y-1.5 text-cyan-800 dark:text-cyan-200">
                                 <li class="flex items-center"><span class="w-1.5 h-1.5 bg-cyan-500 rounded-full mr-2"></span> D3: 33%</li>
@@ -187,80 +185,18 @@
         </div>
 
         <script>
-            function updateAeeIdeal() {
-                const select = document.getElementById('jenjang');
-                const selected = select.options[select.selectedIndex];
-                const ideal = selected.dataset.ideal || 0;
-                document.getElementById('preview-ideal').textContent = ideal;
-                calculatePreview();
-            }
-
-            function calculatePreview() {
-                const lulus = parseFloat(document.getElementById('lulus').value) || 0;
-                const total = parseFloat(document.getElementById('total').value) || 0;
-                const select = document.getElementById('jenjang');
-                const selected = select.options[select.selectedIndex];
-                const ideal = parseFloat(selected.dataset.ideal) || 0;
-
-                let realisasi = 0;
-                let pencapaian = 0;
-
-                if (total > 0) {
-                    realisasi = (lulus / total) * 100;
-                }
-
-                if (ideal > 0) {
-                    pencapaian = (realisasi / ideal) * 100;
-                }
-
-                // Update text
-                document.getElementById('preview-realisasi').textContent = realisasi.toFixed(2) + '%';
-                document.getElementById('preview-pencapaian').textContent = pencapaian.toFixed(2) + '%';
-                
-                // Update visuals
-                const barRealisasi = document.getElementById('bar-realisasi');
-                barRealisasi.style.width = Math.min(realisasi, 100) + '%';
-
-                const labelStatus = document.getElementById('label-status');
-                
-                // Remove previous classes
-                labelStatus.className = 'font-bold ';
-                
-                if (pencapaian >= 100) {
-                    labelStatus.textContent = 'Sangat Baik';
-                    labelStatus.className += 'text-emerald-200';
-                } else if (pencapaian >= 75) {
-                    labelStatus.textContent = 'Cukup';
-                    labelStatus.className += 'text-cyan-200';
-                } else if (pencapaian > 0) {
-                    labelStatus.textContent = 'Perlu Ditingkatkan';
-                    labelStatus.className += 'text-rose-200';
-                } else {
-                    labelStatus.textContent = 'Menunggu Data';
-                    labelStatus.className += 'text-emerald-200';
-                }
-
-                updateRespondenWarning();
-            }
-
-            document.addEventListener('DOMContentLoaded', function() {
-                // Manually trigger to load initial values
-                updateAeeIdeal();
-                updateRespondenWarning();
-            });
-
-            function updateRespondenWarning() {
-                const lulus = parseFloat(document.getElementById('lulus').value) || 0;
-                const responden = parseFloat(document.getElementById('responden').value) || 0;
-                const warning = document.getElementById('responden-warning');
-                const warningText = document.getElementById('responden-warning-text');
-                
-                if (lulus > 0 && responden < (lulus * 0.75)) {
-                    const needed = Math.ceil(lulus * 0.75);
-                    warningText.textContent = 'Jumlah responden kurang dari 75% jumlah lulusan (' + needed + ' responden dibutuhkan)';
-                    warning.classList.remove('hidden');
-                } else {
-                    warning.classList.add('hidden');
+            function formIku1Edit() {
+                const prodiData = @json(auth()->user()->prodi_list);
+                const aeeIdealMap = {'D3': 33, 'D4': 25, 'S1': 25, 'S2': 50, 'S3': 33, 'Profesi': 50, 'Sp-1': 50};
+                return {
+                    selectedProdi: '{{ old("program_studi", $iku1->program_studi) }}',
+                    lulusTepat: {{ old('jumlah_lulus_tepat_waktu', $iku1->jumlah_lulus_tepat_waktu ?? 0) }},
+                    totalMahasiswa: {{ old('total_mahasiswa_aktif', $iku1->total_mahasiswa_aktif ?? 0) }},
+                    jumlahResponden: {{ old('jumlah_responden', $iku1->jumlah_responden ?? 0) }},
+                    get currentJenjang() { return prodiData[this.selectedProdi]?.jenjang || '{{ $iku1->jenjang ?? "S1" }}'; },
+                    get aeeIdeal() { return aeeIdealMap[this.currentJenjang] || 25; },
+                    get aee() { if (this.totalMahasiswa <= 0) return 0; return (this.lulusTepat / this.totalMahasiswa) * 100; },
+                    get tingkatPencapaian() { if (this.aeeIdeal <= 0) return 0; return (this.aee / this.aeeIdeal) * 100; }
                 }
             }
         </script>

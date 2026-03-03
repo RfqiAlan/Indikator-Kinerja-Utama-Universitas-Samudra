@@ -26,7 +26,10 @@ class Fakultas extends Model
         foreach (static::with('prodi')->orderBy('nama')->get() as $fak) {
             $prodiList = [];
             foreach ($fak->prodi as $p) {
-                $prodiList[$p->kode] = $p->nama;
+                $prodiList[$p->kode] = [
+                    'nama' => $p->nama,
+                    'jenjang' => $p->jenjang ?? 'S1',
+                ];
             }
             $result[$fak->kode] = [
                 'nama' => $fak->nama,
