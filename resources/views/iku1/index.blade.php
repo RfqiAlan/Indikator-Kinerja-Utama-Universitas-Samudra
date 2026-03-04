@@ -13,12 +13,12 @@
 <body class="font-sans antialiased bg-white text-slate-900">
     <x-user-layout activeIku="IKU 1">
         <x-slot name="header">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 w-full">
                 <div>
                     <h2 class="text-xl font-bold text-black tracking-tight">IKU 1: Angka Efisiensi Edukasi</h2>
                     <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Mengukur keberhasilan mahasiswa menyelesaikan studi tepat waktu.</p>
                 </div>
-                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full md:w-auto">
+                <div class="flex items-center gap-3">
                     <form method="GET" action="{{ route('user.iku1.index') }}" class="flex items-center">
                         <select name="tahun" onchange="this.form.submit()"
                             class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-lg shadow-sm">
