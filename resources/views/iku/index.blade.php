@@ -13,7 +13,7 @@
         <x-slot name="header">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Semua Data IKU</h2>
+                    <h2 class="text-xl font-bold text-black tracking-tight">Semua Data IKU</h2>
                 </div>
             </div>
         </x-slot>

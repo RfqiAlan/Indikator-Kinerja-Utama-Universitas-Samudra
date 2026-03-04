@@ -7,7 +7,7 @@
         <x-slot name="header">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">IKU 8: SDM Penyusun Kebijakan</h2>
+                    <h2 class="text-xl font-bold text-black tracking-tight">IKU 8: SDM Penyusun Kebijakan</h2>
                     <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Tim penyusun, narasumber, ahli hukum, kontributor regulasi.</p>
                 </div>
                 <div class="flex items-center gap-3">
