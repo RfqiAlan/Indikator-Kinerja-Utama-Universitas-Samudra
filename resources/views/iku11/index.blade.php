@@ -5,13 +5,13 @@
 <body class="font-sans antialiased bg-white text-slate-900">
     <x-user-layout activeIku="IKU 11">
         <x-slot name="header">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div class="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
                 <div>
                     <h2 class="text-xl font-bold text-black tracking-tight">IKU 11: Tata Kelola Keuangan</h2>
                     <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Opini WTP, Predikat SAKIP, Integritas Akademik.</p>
                 </div>
-                <div class="flex items-center gap-3">
-                    <form method="GET" action="{{ route('user.iku11.index') }}"><select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-lg shadow-sm">@foreach($availableYears as $year)<option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>@endforeach</select></form>
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
+                    <form method="GET" action="{{ route('user.iku11.index') }}"><select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-lg shadow-sm w-full sm:w-auto">@foreach($availableYears as $year)<option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>@endforeach</select></form>
                     <a href="{{ route('user.iku11.create') }}" class="px-4 py-2 bg-emerald-600 rounded-lg text-xs text-white">Tambah</a>
                 </div>
             </div>
@@ -20,7 +20,7 @@
         <div class="py-6 space-y-6" data-aos="fade-up">
             <!-- Cards Grid -->
             @if($data)
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 text-center border border-slate-100 dark:border-slate-700 shadow-sm relative overflow-hidden group hover:shadow-md transition-shadow">
                     <div class="absolute top-0 right-0 -mr-8 -mt-8 w-24 h-24 rounded-full bg-slate-50 dark:bg-slate-700/50 blur-xl opacity-50 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/30 transition-colors"></div>
                     <p class="text-sm font-medium text-slate-500 dark:text-slate-400 mb-3 uppercase tracking-wider">IKU 11.1 - Opini Audit</p>

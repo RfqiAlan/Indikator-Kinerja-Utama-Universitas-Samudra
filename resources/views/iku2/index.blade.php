@@ -11,14 +11,14 @@
 <body class="font-sans antialiased bg-white text-slate-900">
     <x-user-layout activeIku="IKU 2">
         <x-slot name="header">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div class="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
                 <div>
                     <h2 class="text-xl font-bold text-black tracking-tight">IKU 2: Lulusan Bekerja/Studi/Wirausaha</h2>
                     <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Persentase lulusan produktif dalam 12 bulan setelah kelulusan.</p>
                 </div>
-                <div class="flex items-center gap-3">
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
                     <form method="GET" action="{{ route('user.iku2.index') }}" class="flex items-center">
-                        <select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-lg shadow-sm">
+                        <select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-lg shadow-sm w-full sm:w-auto">
                             @foreach($availableYears as $year)
                                 <option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>
                             @endforeach
@@ -46,7 +46,7 @@
                 <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-cyan-50 dark:bg-cyan-900/20 blur-3xl opacity-60"></div>
                 
                 <div class="relative flex flex-col md:flex-row items-center justify-between gap-8">
-                    <div class="flex-1 grid grid-cols-1 sm:grid-cols-5 gap-4">
+                    <div class="flex-1 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                         <div class="text-center p-4 {{ $bgColor }} rounded-xl">
                             <p class="text-sm {{ $textColor }} font-medium">Persentase IKU 2</p>
                             <p class="text-3xl font-bold {{ $valueColor }}">{{ number_format($overallPercentage, 2) }}%</p>
@@ -95,7 +95,7 @@
                 
                 @if($data->count() > 0)
                 <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left">
+                    <table class="w-full text-sm text-left whitespace-nowrap xl:whitespace-normal">
                         <thead class="text-xs text-slate-500 uppercase bg-slate-50/80 dark:bg-slate-700/50 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700">
                             <tr>
                                 <th scope="col" class="px-6 py-4 font-medium">Fakultas & Prodi</th>
@@ -206,7 +206,7 @@
             <!-- Formula Help -->
             <div x-data="{ open: false }" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
                 <button @click="open = !open" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-white/50 dark:hover:bg-slate-800/50 transition-colors">
-                    <div class="flex items-center gap-3">
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
                         <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700/50 flex items-center justify-center text-slate-700 dark:text-slate-300">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </div>
@@ -218,7 +218,7 @@
                 </button>
                 <div x-show="open" x-collapse class="px-6 pb-6 text-sm text-slate-600 dark:text-slate-300">
                     <div class="p-4 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl border border-white/50 dark:border-slate-700/50 mb-4 shadow-sm w-full md:w-auto">
-                        <p class="font-mono text-slate-900 dark:text-white font-semibold flex items-center gap-2 mb-3">
+                        <p class="font-mono text-sm sm:text-base text-slate-900 break-all sm:break-normal flex-wrap dark:text-white font-semibold flex items-center gap-2 mb-3">
                             <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
                             IKU 2 = (A + B + C) / Total Responden × 100%
                         </p>
