@@ -42,7 +42,7 @@ $ikuItems = [
         
         <div class="hidden lg:flex shrink-0 h-16 items-center px-6 border-b border-slate-200/60 bg-white">
             <a href="{{ route('home') }}" class="flex items-center gap-3 group w-full">
-                <div class="w-8 h-8 rounded-xl flex items-center justify-center bg-emerald-600 text-white shadow-lg shadow-emerald-600/30 group-hover:scale-105 transition-all duration-300 group-hover:shadow-emerald-600/40">
+                <div class="w-8 h-8 rounded-xl flex items-center justify-center bg-white shadow-lg shadow-emerald-600/10 group-hover:scale-105 transition-all duration-300 group-hover:shadow-emerald-600/20">
                     <img src="{{ asset('build/assets/logo.png') }}" alt="Logo" class="h-4 w-4 object-contain rounded-sm" />
                 </div>
                 <span class="text-lg font-extrabold tracking-tight text-slate-800">IKU <span class="text-emerald-600">UNSAM</span></span>
