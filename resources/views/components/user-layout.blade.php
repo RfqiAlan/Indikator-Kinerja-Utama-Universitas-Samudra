@@ -16,16 +16,16 @@ $ikuItems = [
 ];
 @endphp
 
-<div class="h-screen flex bg-slate-50 text-slate-800 font-sans tracking-tight antialiased" x-data="{ sidebarOpen: false }">
-    <!-- Mobile Header -->
-    <div class="lg:hidden bg-white/80 backdrop-blur-xl border-b border-slate-200/60 p-4 shrink-0 flex items-center justify-between sticky top-0 z-50 shadow-sm">
+<div class="h-[100dvh] w-full overflow-hidden flex flex-col lg:flex-row bg-slate-50 text-slate-800 font-sans antialiased" x-data="{ sidebarOpen: false }">
+    
+    <div class="lg:hidden h-16 bg-white/90 backdrop-blur-xl border-b border-slate-200/50 px-4 shrink-0 flex items-center justify-between sticky top-0 z-50 shadow-sm">
         <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-             <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform duration-300">
+             <div class="w-8 h-8 rounded-xl bg-emerald-600 flex items-center justify-center shadow-md shadow-emerald-600/20 group-hover:scale-105 transition-transform duration-300">
                 <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                 </svg>
             </div>
-            <span class="text-xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-slate-800 to-slate-600">IKU Unsam</span>
+            <span class="text-xl font-extrabold text-slate-800">IKU Unsam</span>
         </a>
         <button @click="sidebarOpen = !sidebarOpen" class="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl transition-colors active:scale-95">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -34,29 +34,25 @@ $ikuItems = [
         </button>
     </div>
 
-    <!-- Sidebar Overlay -->
     <div x-show="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 lg:hidden" style="display: none;" 
          x-transition:enter="transition-opacity ease-linear duration-300"
          x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
          x-transition:leave="transition-opacity ease-linear duration-300"
          x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"></div>
 
-    <!-- Sidebar -->
     <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed lg:static inset-y-0 left-0 z-50 w-[280px] bg-white border-r border-slate-200/60 lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col shadow-2xl lg:shadow-none pointer-events-auto">
         
-        <!-- Desktop Sidebar Header -->
-        <div class="hidden lg:flex shrink-0 h-[72px] items-center px-6 border-b border-slate-100 bg-white">
+        <div class="hidden lg:flex shrink-0 h-16 items-center px-6 border-b border-slate-200/60 bg-white">
             <a href="{{ route('home') }}" class="flex items-center gap-3 group w-full">
-                <div class="w-9 h-9 rounded-xl flex items-center justify-center bg-gradient-to-br from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-all duration-300 group-hover:shadow-emerald-500/40">
-                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-8 h-8 rounded-xl flex items-center justify-center bg-emerald-600 text-white shadow-lg shadow-emerald-600/30 group-hover:scale-105 transition-all duration-300 group-hover:shadow-emerald-600/40">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                     </svg>
                 </div>
-                <span class="text-xl font-extrabold tracking-tight text-slate-800">IKU <span class="text-emerald-600">UNSAM</span></span>
+                <span class="text-lg font-extrabold tracking-tight text-slate-800">IKU <span class="text-emerald-600">UNSAM</span></span>
             </a>
         </div>
 
-        <!-- Mobile Sidebar Header -->
         <div class="lg:hidden flex shrink-0 h-16 items-center justify-between px-5 border-b border-slate-100 bg-slate-50">
             <span class="font-bold text-slate-800 tracking-wide text-sm uppercase">Navigasi Utama</span>
             <button @click="sidebarOpen = false" class="p-2 -mr-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-200/50 transition-colors">
@@ -66,14 +62,13 @@ $ikuItems = [
             </button>
         </div>
 
-        <!-- User Profile Card -->
         <div class="px-5 py-6 shrink-0 border-b border-slate-100">
             <div class="flex items-center gap-4 bg-slate-50 border border-slate-200/60 p-3 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300">
-                <div class="h-10 w-10 shrink-0 rounded-full bg-gradient-to-br from-emerald-100 to-teal-100 border border-emerald-200 flex items-center justify-center text-emerald-700 font-bold text-lg shadow-inner">
-                    {{ substr(Auth::user()->name, 0, 1) }}
+                <div class="h-10 w-10 shrink-0 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-700 font-bold text-lg shadow-inner">
+                    {{ substr(Auth::user()->name ?? 'A', 0, 1) }}
                 </div>
                 <div class="min-w-0 flex-1">
-                    <p class="text-sm font-bold text-slate-800 truncate">{{ Auth::user()->name }}</p>
+                    <p class="text-sm font-bold text-slate-800 truncate">{{ Auth::user()->name ?? 'Admin' }}</p>
                     <p class="text-xs font-medium text-slate-500 truncate mt-0.5 flex items-center gap-1">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                         {{ Auth::user()->fakultas_nama ?? 'Operator Data' }}
@@ -82,7 +77,6 @@ $ikuItems = [
             </div>
         </div>
 
-        <!-- Navigation -->
         <div class="flex-1 overflow-y-auto px-4 py-6 scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
             <div class="mb-6">
                 <p class="px-3 text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3">Indikator Kinerja</p>
@@ -93,12 +87,12 @@ $ikuItems = [
                             $href = $item['route'] ? route($item['route']) : route('user.iku.filter', ['iku' => $item['id']]);
                         @endphp
                         <a href="{{ $href }}" @click="sidebarOpen = false"
-                            class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300 group
+                            class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group
                                    {{ $isActive 
-                                      ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-md shadow-emerald-500/20 active-nav-glow' 
+                                      ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 ring-1 ring-emerald-500' 
                                       : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-700' }}">
                             
-                            <div class="flex shrink-0 items-center justify-center rounded-lg w-8 h-8 transition-all duration-300 {{ $isActive ? 'bg-white/20 text-white shadow-inner' : 'bg-slate-100 text-slate-400 group-hover:bg-emerald-100 group-hover:text-emerald-600' }}">
+                            <div class="flex shrink-0 items-center justify-center rounded-lg w-8 h-8 transition-all duration-200 {{ $isActive ? 'text-white' : 'bg-slate-100 text-slate-400 group-hover:bg-emerald-100 group-hover:text-emerald-600' }}">
                                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $item['icon'] }}"></path>
                                 </svg>
@@ -117,7 +111,7 @@ $ikuItems = [
 
             <div class="border-t border-slate-100 pt-5">
                 <a href="{{ route('user.iku.index') }}" @click="sidebarOpen = false"
-                   class="flex items-center gap-3 px-3 py-2.5 rounded-xl group transition-all duration-300 text-slate-600 hover:bg-slate-50 hover:text-emerald-700">
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-xl group transition-all duration-200 text-slate-600 hover:bg-slate-50 hover:text-emerald-700">
                     <div class="flex shrink-0 items-center justify-center rounded-lg w-8 h-8 bg-slate-100 text-slate-400 group-hover:bg-emerald-100 group-hover:text-emerald-600 transition-all duration-300">
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
@@ -128,7 +122,6 @@ $ikuItems = [
             </div>
         </div>
 
-        <!-- Logout -->
         <div class="p-4 shrink-0 border-t border-slate-100 bg-white">
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
@@ -142,33 +135,52 @@ $ikuItems = [
         </div>
     </aside>
 
-    <!-- Main Workspace -->
-    <div class="flex-1 flex flex-col min-w-0 bg-slate-50/50">
-        <!-- Desktop Topbar -->
-        <header class="hidden lg:flex shrink-0 h-[72px] items-center px-8 border-b border-slate-200/60 bg-white/80 backdrop-blur-xl z-30 sticky top-0 transition-all duration-300">
-            <div class="flex-1 min-w-0">
+    <div class="flex-1 flex flex-col min-w-0 bg-slate-50 lg:border-l lg:border-slate-200/50">
+        
+        <header class="hidden lg:flex shrink-0 h-16 items-center justify-between px-8 border-b border-slate-200/50 bg-white/90 backdrop-blur-md z-30 sticky top-0 transition-all duration-300">
+            
+            <div class="flex-1 min-w-0 pr-4">
                 {{ $header ?? '' }}
             </div>
             
-            <div class="flex items-center gap-4 ml-6 shrink-0">
-                <a href="{{ route('home') }}" class="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 text-slate-500 hover:bg-emerald-50 hover:text-emerald-600 transition-colors shadow-sm ring-1 ring-slate-200 hover:ring-emerald-200" title="Dashboard Publik" data-tooltip="Dashboard Publik">
-                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+            <div class="flex items-center gap-3 ml-6 shrink-0">
+                
+                <div class="hidden xl:flex items-center relative mr-2">
+                    <svg class="w-4 h-4 text-slate-400 absolute left-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
-                </a>
+                    <input type="text" placeholder="Cari data IKU..." class="pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-full text-sm focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all w-64 outline-none text-slate-700 placeholder-slate-400 shadow-sm" aria-label="Search">
+                </div>
+
+                <div class="relative group">
+                    <a href="{{ route('home') }}" class="flex items-center justify-center w-10 h-10 rounded-full bg-white text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 transition-all duration-200 border border-slate-200 shadow-sm hover:shadow-emerald-100 hover:border-emerald-200" aria-label="Dashboard Publik">
+                        <svg class="h-5 w-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        </svg>
+                    </a>
+                    <span class="absolute -bottom-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-xs font-medium bg-slate-800 text-white px-2.5 py-1 rounded-md whitespace-nowrap pointer-events-none shadow-lg z-50">
+                        Dashboard Publik
+                    </span>
+                </div>
+
+                <div class="h-8 w-px bg-slate-200 mx-1"></div>
+                
+                <button class="flex items-center gap-2 hover:bg-slate-50 p-1 rounded-full pr-3 transition-colors border border-transparent hover:border-slate-200">
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=10b981&color=fff" alt="User Avatar" class="w-8 h-8 rounded-full shadow-sm">
+                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+
             </div>
         </header>
 
-        <!-- Mobile Header Slot Content -->
         @if(isset($header))
-        <div class="lg:hidden p-5 border-b border-slate-200/60 bg-white/90 backdrop-blur-md shadow-sm sticky top-[73px] z-30">
+        <div class="lg:hidden p-5 border-b border-slate-200/50 bg-white/90 backdrop-blur-md shadow-sm sticky top-16 z-30">
             {{ $header }}
         </div>
         @endif
 
-        <!-- Main Content Area -->
-        <main class="flex-1 p-4 lg:p-8 overflow-y-auto">
-            <div class="max-w-7xl mx-auto pb-12">
+        <main class="flex-1 p-4 lg:p-8 overflow-y-auto overflow-x-hidden">
+            <div class="max-w-7xl w-full mx-auto pb-12">
                 <x-sweet-alert />
                 {{ $slot }}
             </div>
@@ -190,10 +202,5 @@ $ikuItems = [
     }
     .scrollbar-thin:hover::-webkit-scrollbar-thumb {
         background-color: #94a3b8;
-    }
-    
-    /* Active Nav Glow */
-    .active-nav-glow {
-        box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.25);
     }
 </style>

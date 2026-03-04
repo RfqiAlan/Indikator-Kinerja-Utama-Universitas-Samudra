@@ -11,8 +11,8 @@
         <x-slot name="header">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <h2 class="text-xl font-bold text-emerald-700 dark:text-emerald-700 tracking-tight">IKU 5: Rasio Luaran Kerja Sama</h2>
-                    <p class="text-sm font-medium text-emerald-600/70 dark:text-emerald-500/80 mt-1">Artikel kolaborasi, produk terapan, studi kasus, TTG, karya seni.</p>
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">IKU 5: Rasio Luaran Kerja Sama</h2>
+                    <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Artikel kolaborasi, produk terapan, studi kasus, TTG, karya seni.</p>
                 </div>
                 <div class="flex items-center gap-3">
                     <form method="GET" action="{{ route('user.iku5.index') }}"><select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-lg shadow-sm">@foreach($availableYears as $year)<option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>@endforeach</select></form>

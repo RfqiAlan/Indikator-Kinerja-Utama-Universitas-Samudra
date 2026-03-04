@@ -13,8 +13,8 @@
         <x-slot name="header">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <h2 class="text-xl font-bold text-emerald-700 dark:text-emerald-700 tracking-tight">IKU 2: Lulusan Bekerja/Studi/Wirausaha</h2>
-                    <p class="text-sm font-medium text-emerald-600/70 dark:text-emerald-500/80 mt-1">Persentase lulusan produktif dalam 12 bulan setelah kelulusan.</p>
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">IKU 2: Lulusan Bekerja/Studi/Wirausaha</h2>
+                    <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Persentase lulusan produktif dalam 12 bulan setelah kelulusan.</p>
                 </div>
                 <div class="flex items-center gap-3">
                     <form method="GET" action="{{ route('user.iku2.index') }}" class="flex items-center">
@@ -204,48 +204,48 @@
             </div>
 
             <!-- Formula Help -->
-            <div x-data="{ open: false }" class="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 border border-emerald-100 dark:border-emerald-800/50 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
+            <div x-data="{ open: false }" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
                 <button @click="open = !open" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-white/50 dark:hover:bg-slate-800/50 transition-colors">
                     <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                        <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700/50 flex items-center justify-center text-slate-700 dark:text-slate-300">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </div>
-                        <span class="font-bold text-slate-800 dark:text-emerald-100">Informasi Rumus & Kriteria Penilaian IKU 2</span>
+                        <span class="font-bold text-slate-900 dark:text-white">Informasi Rumus & Kriteria Penilaian IKU 2</span>
                     </div>
                     <div class="w-8 h-8 rounded-full bg-white/50 dark:bg-slate-800/50 flex items-center justify-center">
-                        <svg :class="{'rotate-180': open}" class="w-5 h-5 text-emerald-600 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        <svg :class="{\'rotate-180\': open}" class="w-5 h-5 text-slate-600 dark:text-slate-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </div>
                 </button>
                 <div x-show="open" x-collapse class="px-6 pb-6 text-sm text-slate-600 dark:text-slate-300">
                     <div class="p-4 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl border border-white/50 dark:border-slate-700/50 mb-4 shadow-sm w-full md:w-auto">
-                        <p class="font-mono text-emerald-700 dark:text-emerald-300 font-semibold flex items-center gap-2 mb-3">
+                        <p class="font-mono text-slate-900 dark:text-white font-semibold flex items-center gap-2 mb-3">
                             <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
                             IKU 2 = (A + B + C) / Total Responden × 100%
                         </p>
-                        <div class="text-xs text-slate-600 dark:text-slate-400 space-y-1.5 ml-1 border-l-2 border-emerald-200 dark:border-emerald-700 pl-3">
-                            <p><strong class="text-emerald-700 dark:text-emerald-400 font-mono">A</strong> = Lulusan yang mendapat pekerjaan (Bekerja)</p>
-                            <p><strong class="text-emerald-700 dark:text-emerald-400 font-mono">B</strong> = Lulusan yang melanjutkan pendidikan (Studi Lanjut)</p>
-                            <p><strong class="text-emerald-700 dark:text-emerald-400 font-mono">C</strong> = Lulusan yang menjadi wiraswasta (Wirausaha)</p>
+                        <div class="text-xs text-slate-600 dark:text-slate-400 space-y-1.5 ml-1 border-l-2 border-slate-300 dark:border-slate-600 pl-3">
+                            <p><strong class="text-slate-900 dark:text-white font-mono">A</strong> = Lulusan yang mendapat pekerjaan (Bekerja)</p>
+                            <p><strong class="text-slate-900 dark:text-white font-mono">B</strong> = Lulusan yang melanjutkan pendidikan (Studi Lanjut)</p>
+                            <p><strong class="text-slate-900 dark:text-white font-mono">C</strong> = Lulusan yang menjadi wiraswasta (Wirausaha)</p>
                         </div>
                     </div>
                     <div class="grid md:grid-cols-2 gap-6">
-                        <div class="bg-white/40 dark:bg-slate-800/40 rounded-xl p-4 border border-emerald-50 dark:border-emerald-900/30">
+                        <div class="bg-white/40 dark:bg-slate-800/40 rounded-xl p-4 border border-slate-300 dark:border-slate-600/30">
                             <p class="font-bold text-slate-800 dark:text-slate-200 mb-3 flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Bobot Pekerjaan
+                                <span class="w-2 h-2 rounded-full bg-slate-100 dark:bg-slate-800"></span> Bobot Pekerjaan
                             </p>
                             <ul class="space-y-2">
-                                <li class="flex items-center gap-2 bg-white/50 dark:bg-slate-800/50 p-2 rounded-lg"><span class="font-semibold text-emerald-600 w-16 text-center bg-emerald-100 rounded">1.2x</span> &lt;6 bulan, gaji &gt;1.2 UMP (Bobot 10)</li>
-                                <li class="flex items-center gap-2 bg-white/50 dark:bg-slate-800/50 p-2 rounded-lg"><span class="font-semibold text-amber-600 w-16 text-center bg-amber-100 rounded">0.8x</span> &lt;1 tahun, gaji &gt;1.2 UMP (Bobot 6)</li>
-                                <li class="flex items-center gap-2 bg-white/50 dark:bg-slate-800/50 p-2 rounded-lg"><span class="font-semibold text-rose-600 w-16 text-center bg-rose-100 rounded">0.5x</span> &lt;1 tahun, gaji &lt;1.2 UMP (Bobot 4)</li>
+                                <li class="flex items-center gap-2 bg-white/50 dark:bg-slate-800/50 p-2 rounded-lg"><span class="font-semibold text-slate-900 dark:text-white w-16 text-center bg-slate-100 dark:bg-slate-800 rounded">1.2x</span> &lt;6 bulan, gaji &gt;1.2 UMP (Bobot 10)</li>
+                                <li class="flex items-center gap-2 bg-white/50 dark:bg-slate-800/50 p-2 rounded-lg"><span class="font-semibold text-slate-900 dark:text-white w-16 text-center bg-slate-100 dark:bg-slate-800 rounded">0.8x</span> &lt;1 tahun, gaji &gt;1.2 UMP (Bobot 6)</li>
+                                <li class="flex items-center gap-2 bg-white/50 dark:bg-slate-800/50 p-2 rounded-lg"><span class="font-semibold text-slate-900 dark:text-white w-16 text-center bg-slate-100 dark:bg-slate-800 rounded">0.5x</span> &lt;1 tahun, gaji &lt;1.2 UMP (Bobot 4)</li>
                             </ul>
                         </div>
-                        <div class="bg-white/40 dark:bg-slate-800/40 rounded-xl p-4 border border-emerald-50 dark:border-emerald-900/30">
+                        <div class="bg-white/40 dark:bg-slate-800/40 rounded-xl p-4 border border-slate-300 dark:border-slate-600/30">
                             <p class="font-bold text-slate-800 dark:text-slate-200 mb-3 flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-teal-500"></span> Bobot Wirausaha
+                                <span class="w-2 h-2 rounded-full bg-slate-100 dark:bg-slate-800"></span> Bobot Wirausaha
                             </p>
                             <ul class="space-y-2">
-                                <li class="flex items-center gap-2 bg-white/50 dark:bg-slate-800/50 p-2 rounded-lg"><span class="font-semibold text-teal-600 w-16 text-center bg-teal-100 rounded">1.2x</span> Posisi Founder (Bobot 1)</li>
-                                <li class="flex items-center gap-2 bg-white/50 dark:bg-slate-800/50 p-2 rounded-lg"><span class="font-semibold text-amber-600 w-16 text-center bg-amber-100 rounded">0.5x</span> Posisi Freelancer (Bobot 0.25)</li>
+                                <li class="flex items-center gap-2 bg-white/50 dark:bg-slate-800/50 p-2 rounded-lg"><span class="font-semibold text-slate-900 dark:text-white w-16 text-center bg-slate-100 dark:bg-slate-800 rounded">1.2x</span> Posisi Founder (Bobot 1)</li>
+                                <li class="flex items-center gap-2 bg-white/50 dark:bg-slate-800/50 p-2 rounded-lg"><span class="font-semibold text-slate-900 dark:text-white w-16 text-center bg-slate-100 dark:bg-slate-800 rounded">0.5x</span> Posisi Freelancer (Bobot 0.25)</li>
                             </ul>
                         </div>
                     </div>

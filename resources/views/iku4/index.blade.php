@@ -13,8 +13,8 @@
         <x-slot name="header">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <h2 class="text-xl font-bold text-emerald-700 dark:text-emerald-700 tracking-tight">IKU 4: Dosen Rekognisi Internasional</h2>
-                    <p class="text-sm font-medium text-emerald-600/70 dark:text-emerald-500/80 mt-1">Publikasi, buku, paten, karya seni, dan inovasi internasional.</p>
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">IKU 4: Dosen Rekognisi Internasional</h2>
+                    <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Publikasi, buku, paten, karya seni, dan inovasi internasional.</p>
                 </div>
                 <div class="flex items-center gap-3">
                     <form method="GET" action="{{ route('user.iku4.index') }}" class="flex items-center">
