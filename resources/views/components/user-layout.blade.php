@@ -21,9 +21,7 @@ $ikuItems = [
     <div class="lg:hidden h-16 bg-white/90 backdrop-blur-xl border-b border-slate-200/50 px-4 shrink-0 flex items-center justify-between sticky top-0 z-50 shadow-sm">
         <a href="{{ route('home') }}" class="flex items-center gap-3 group">
              <div class="w-8 h-8 rounded-xl bg-emerald-600 flex items-center justify-center shadow-md shadow-emerald-600/20 group-hover:scale-105 transition-transform duration-300">
-                <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                </svg>
+                <img src="{{ asset('build/assets/logo.jpg') }}" alt="Logo" class="h-5 w-5 object-contain rounded-md" />
             </div>
             <span class="text-xl font-extrabold text-slate-800">IKU UNSAM</span>
         </a>
@@ -45,9 +43,7 @@ $ikuItems = [
         <div class="hidden lg:flex shrink-0 h-16 items-center px-6 border-b border-slate-200/60 bg-white">
             <a href="{{ route('home') }}" class="flex items-center gap-3 group w-full">
                 <div class="w-8 h-8 rounded-xl flex items-center justify-center bg-emerald-600 text-white shadow-lg shadow-emerald-600/30 group-hover:scale-105 transition-all duration-300 group-hover:shadow-emerald-600/40">
-                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                    </svg>
+                    <img src="{{ asset('build/assets/logo.jpg') }}" alt="Logo" class="h-4 w-4 object-contain rounded-sm" />
                 </div>
                 <span class="text-lg font-extrabold tracking-tight text-slate-800">IKU <span class="text-emerald-600">UNSAM</span></span>
             </a>
