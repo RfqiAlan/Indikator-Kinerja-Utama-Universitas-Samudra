@@ -11,7 +11,7 @@
 <body class="font-sans antialiased bg-white text-slate-900">
     <x-user-layout :activeIku="$activeIku ?? null">
         <x-slot name="header">
-            <div class="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                     <h2 class="text-xl font-bold text-black tracking-tight">Semua Data IKU</h2>
                 </div>

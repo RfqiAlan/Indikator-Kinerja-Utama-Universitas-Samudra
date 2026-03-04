@@ -13,12 +13,12 @@
 <body class="font-sans antialiased bg-white text-slate-900">
     <x-user-layout activeIku="IKU 1">
         <x-slot name="header">
-            <div class="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                     <h2 class="text-xl font-bold text-black tracking-tight">IKU 1: Angka Efisiensi Edukasi</h2>
                     <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Mengukur keberhasilan mahasiswa menyelesaikan studi tepat waktu.</p>
                 </div>
-                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full md:w-auto">
                     <form method="GET" action="{{ route('user.iku1.index') }}" class="flex items-center">
                         <select name="tahun" onchange="this.form.submit()"
                             class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-lg shadow-sm">
@@ -131,7 +131,7 @@
                 </div>
                 @else
                 <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left whitespace-nowrap xl:whitespace-normal">
+                    <table class="w-full text-sm text-left whitespace-nowrap md:whitespace-normal">
                         <thead class="text-xs text-slate-500 uppercase bg-slate-50/80 dark:bg-slate-700/50 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700">
                             <tr>
                                 <th scope="col" class="px-6 py-4 font-medium">Program Studi</th>
@@ -248,7 +248,7 @@
             <!-- Helper Section (Collapsible) -->
             <div x-data="{ open: false }" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm overflow-hidden transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
                 <button @click="open = !open" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-white/50 dark:hover:bg-slate-800/50 transition-colors">
-                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
+                    <div class="flex items-center gap-3">
                         <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700/50 flex items-center justify-center text-slate-700 dark:text-slate-300">
                             <svg class="w-5 h-5 text-slate-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>

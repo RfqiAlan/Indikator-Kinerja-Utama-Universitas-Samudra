@@ -5,12 +5,12 @@
 <body class="font-sans antialiased bg-white text-slate-900">
     <x-user-layout activeIku="IKU 9">
         <x-slot name="header">
-            <div class="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                     <h2 class="text-xl font-bold text-black tracking-tight">IKU 9: Pendapatan Non-UKT</h2>
                     <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Hibah riset, konsultasi, unit bisnis, royalti, inkubator.</p>
                 </div>
-                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full md:w-auto">
                     <form method="GET" action="{{ route('user.iku9.index') }}"><select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-lg shadow-sm w-full sm:w-auto">@foreach($availableYears as $year)<option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>@endforeach</select></form>
                     <a href="{{ route('user.iku9.create') }}" class="inline-flex items-center px-4 py-2 bg-emerald-600 rounded-lg text-xs text-white uppercase hover:bg-emerald-700 shadow-md"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>Tambah</a>
                 </div>
@@ -35,7 +35,7 @@
                 <div class="px-6 py-4 border-b"><h3 class="text-lg font-semibold text-slate-800 dark:text-white">Data Pendapatan</h3></div>
                 @if($data->count() > 0)
                 <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left whitespace-nowrap xl:whitespace-normal">
+                    <table class="w-full text-sm text-left whitespace-nowrap md:whitespace-normal">
                         <thead class="text-xs text-slate-500 uppercase bg-slate-50/80 dark:bg-slate-700/50 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700">
                             <tr>
                                 <th scope="col" class="px-6 py-4 font-medium">Tahun</th>

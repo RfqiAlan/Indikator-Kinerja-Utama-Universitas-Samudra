@@ -9,12 +9,12 @@
 <body class="font-sans antialiased bg-white text-slate-900">
     <x-user-layout activeIku="IKU 6">
         <x-slot name="header">
-            <div class="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                     <h2 class="text-xl font-bold text-black tracking-tight">IKU 6: Publikasi Scopus/WoS</h2>
                     <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Proporsi publikasi Q1-Q4 dengan bobot berbeda.</p>
                 </div>
-                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full md:w-auto">
                     <form method="GET" action="{{ route('user.iku6.index') }}"><select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-lg shadow-sm w-full sm:w-auto">@foreach($availableYears as $year)<option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>@endforeach</select></form>
                     <a href="{{ route('user.iku6.create') }}" class="inline-flex items-center px-4 py-2 bg-emerald-600 rounded-lg text-xs text-white uppercase hover:bg-emerald-700 shadow-md"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>Tambah</a>
                 </div>
@@ -39,7 +39,7 @@
                 <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-700"><h3 class="text-lg font-semibold text-slate-800 dark:text-white">Data Publikasi</h3></div>
                 @if($data->count() > 0)
                 <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left whitespace-nowrap xl:whitespace-normal">
+                    <table class="w-full text-sm text-left whitespace-nowrap md:whitespace-normal">
                         <thead class="text-xs text-slate-500 uppercase bg-slate-50/80 dark:bg-slate-700/50 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700">
                             <tr>
                                 <th scope="col" class="px-6 py-4 font-medium">Tahun</th>
@@ -113,7 +113,7 @@
             <!-- Formula Help -->
             <div x-data="{ open: false }" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
                 <button @click="open = !open" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-white/50 dark:hover:bg-slate-800/50 transition-colors">
-                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
+                    <div class="flex items-center gap-3">
                         <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700/50 flex items-center justify-center text-slate-700 dark:text-slate-300">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </div>
