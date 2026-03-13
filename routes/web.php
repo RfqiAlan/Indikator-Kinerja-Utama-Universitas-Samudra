@@ -8,8 +8,10 @@ use App\Http\Controllers\Iku1Controller;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
-// Public dashboard
-Route::get('/', [DashboardController::class, 'index'])->name('home');
+// Public landing page
+Route::get('/', function () {
+    return view('welcome');
+})->name('home');
 
 // Authenticated dashboard (with login)
 Route::get('/dashboard', [DashboardController::class, 'dashboard'])
