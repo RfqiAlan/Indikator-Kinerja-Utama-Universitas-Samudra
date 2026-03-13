@@ -138,6 +138,11 @@ class Iku1Controller extends Controller
      */
     public function edit(Iku1Aee $iku1)
     {
+        // Ownership check: ensure user can only edit their own faculty's data
+        if ($iku1->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         return view('iku1.edit', compact('iku1'));
     }
 
@@ -146,6 +151,11 @@ class Iku1Controller extends Controller
      */
     public function update(Request $request, Iku1Aee $iku1)
     {
+        // Ownership check
+        if ($iku1->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
             'program_studi' => 'required|string',
@@ -197,6 +207,11 @@ class Iku1Controller extends Controller
      */
     public function destroy(Iku1Aee $iku1)
     {
+        // Ownership check
+        if ($iku1->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         $tahun = $iku1->tahun_akademik;
         
         activity_log('delete', 'Iku1Aee', $iku1->id, "Menghapus data IKU 1 AEE {$iku1->jenjang}");

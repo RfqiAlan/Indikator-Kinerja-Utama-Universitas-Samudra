@@ -25,10 +25,10 @@ class AdminController extends Controller
     /**
      * Display admin dashboard with faculty overview
      */
-    public function index()
+    public function index(Request $request)
     {
         $fakultasConfig = Fakultas::getAllAsConfig();
-        $tahunAkademik = get_tahun_akademik();
+        $tahunAkademik = $request->get('tahun', get_tahun_akademik());
         
         // Get stats per fakultas
         $fakultasStats = [];
@@ -53,25 +53,7 @@ class AdminController extends Controller
         $totalUsers = User::count();
         $totalActivities = ActivityLog::count();
         
-        // Get available years from all IKU tables + standard range
-        $dbYears = collect()
-            ->merge(Iku1Aee::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
-            ->merge(Iku2LulusanBekerja::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
-            ->merge(Iku3KegiatanMahasiswa::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
-            ->merge(Iku4RekognisiDosen::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
-            ->merge(Iku5LuaranKerjasama::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
-            ->merge(Iku6Publikasi::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
-            ->merge(Iku7Sdgs::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
-            ->merge(Iku8SdmKebijakan::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
-            ->merge(Iku9Pendapatan::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
-            ->merge(Iku10ZonaIntegritas::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
-            ->merge(Iku11TataKelola::select('tahun_akademik')->distinct()->pluck('tahun_akademik'));
-
-        $availableYears = collect(get_tahun_akademik_list())
-            ->merge($dbYears)
-            ->unique()
-            ->sortDesc()
-            ->values();
+        $availableYears = $this->getAvailableYears();
 
         // Build year-over-year comparison data
         $yearlyComparison = [];
@@ -203,6 +185,7 @@ class AdminController extends Controller
         $fakultas['kode'] = $kode;
         
         $tahunAkademik = request()->get('tahun', get_tahun_akademik());
+        $availableYears = $this->getAvailableYears();
         
         $iku1Data = Iku1Aee::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
         $iku2Data = Iku2LulusanBekerja::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
@@ -232,7 +215,8 @@ class AdminController extends Controller
             'iku10Data',
             'iku11Data',
             'users',
-            'tahunAkademik'
+            'tahunAkademik',
+            'availableYears'
         ));
     }
 
@@ -352,5 +336,30 @@ class AdminController extends Controller
     {
         $prodi->delete();
         return redirect()->route('admin.fakultas.manage')->with('success', 'Program Studi berhasil dihapus!');
+    }
+
+    /**
+     * Get available years from DB and config
+     */
+    private function getAvailableYears()
+    {
+        $dbYears = collect()
+            ->merge(Iku1Aee::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
+            ->merge(Iku2LulusanBekerja::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
+            ->merge(Iku3KegiatanMahasiswa::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
+            ->merge(Iku4RekognisiDosen::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
+            ->merge(Iku5LuaranKerjasama::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
+            ->merge(Iku6Publikasi::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
+            ->merge(Iku7Sdgs::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
+            ->merge(Iku8SdmKebijakan::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
+            ->merge(Iku9Pendapatan::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
+            ->merge(Iku10ZonaIntegritas::select('tahun_akademik')->distinct()->pluck('tahun_akademik'))
+            ->merge(Iku11TataKelola::select('tahun_akademik')->distinct()->pluck('tahun_akademik'));
+
+        return collect(get_tahun_akademik_list())
+            ->merge($dbYears)
+            ->unique()
+            ->sortDesc()
+            ->values();
     }
 }

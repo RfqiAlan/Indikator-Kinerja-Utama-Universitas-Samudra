@@ -118,11 +118,19 @@ class Iku8Controller extends Controller
 
     public function edit(Iku8SdmKebijakan $iku8)
     {
+        if ($iku8->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         return view('iku8.edit', compact('iku8'));
     }
 
     public function update(Request $request, Iku8SdmKebijakan $iku8)
     {
+        if ($iku8->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
             'total_sdm' => 'required|integer|min:1',
@@ -157,6 +165,10 @@ class Iku8Controller extends Controller
 
     public function destroy(Iku8SdmKebijakan $iku8)
     {
+        if ($iku8->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         $iku8->delete();
 
         return redirect()->route('user.iku8.index')

@@ -121,11 +121,19 @@ class Iku3Controller extends Controller
 
     public function edit(Iku3KegiatanMahasiswa $iku3)
     {
+        if ($iku3->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         return view('iku3.edit', compact('iku3'));
     }
 
     public function update(Request $request, Iku3KegiatanMahasiswa $iku3)
     {
+        if ($iku3->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
             'program_studi' => 'nullable|string',
@@ -178,6 +186,10 @@ class Iku3Controller extends Controller
 
     public function destroy(Iku3KegiatanMahasiswa $iku3)
     {
+        if ($iku3->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         $iku3->delete();
 
         return redirect()->route('user.iku3.index')

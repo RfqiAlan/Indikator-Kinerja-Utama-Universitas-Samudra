@@ -1,8 +1,20 @@
 <x-admin-layout activePage="fakultas-{{ $fakultas['kode'] }}">
-    <div class="mb-8">
-        <a href="{{ route('admin.dashboard') }}" class="text-emerald-600 hover:text-emerald-800 text-sm mb-2 inline-block">← Kembali ke Dashboard</a>
-        <h1 class="text-3xl font-bold text-slate-800">{{ $fakultas['nama'] }}</h1>
-        <p class="text-slate-500 mt-1">Data IKU tahun {{ $tahunAkademik }}</p>
+    <div class="mb-5 lg:mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between" data-aos="fade-up">
+        <div>
+            <a href="{{ route('admin.dashboard', ['tahun' => $tahunAkademik]) }}" class="text-emerald-600 hover:text-emerald-800 text-sm mb-2 inline-block font-semibold transition-colors">← Kembali ke Dashboard</a>
+            <h1 class="text-2xl lg:text-3xl font-bold text-slate-800">{{ $fakultas['nama'] }}</h1>
+            <p class="text-slate-500 mt-1 text-sm lg:text-base">Data IKU Fakultas (Tahun: {{ $tahunAkademik }})</p>
+        </div>
+        <div class="flex items-center gap-3 self-start sm:self-auto w-full sm:w-auto">
+            <!-- Year Filter Form -->
+            <form action="{{ route('admin.fakultas', $fakultas['kode']) }}" method="GET" class="flex items-center gap-2 bg-white rounded-lg p-1 shadow-sm border border-slate-200">
+                <select name="tahun" onchange="this.form.submit()" class="bg-transparent border-none text-sm font-semibold text-slate-700 py-1.5 pl-3 pr-8 focus:ring-0 cursor-pointer rounded-md">
+                    @foreach($availableYears as $year)
+                        <option value="{{ $year }}" {{ $tahunAkademik === $year ? 'selected' : '' }}>Tahun {{ $year }}</option>
+                    @endforeach
+                </select>
+            </form>
+        </div>
     </div>
 
     <!-- Users in this faculty -->

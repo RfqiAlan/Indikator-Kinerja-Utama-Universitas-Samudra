@@ -103,12 +103,20 @@ class Iku10Controller extends Controller
 
     public function edit(Iku10ZonaIntegritas $iku10)
     {
+        if ($iku10->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         $statusOptions = Iku10ZonaIntegritas::STATUS_OPTIONS;
         return view('iku10.edit', compact('iku10', 'statusOptions'));
     }
 
     public function update(Request $request, Iku10ZonaIntegritas $iku10)
     {
+        if ($iku10->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
             'nama_unit' => 'required|string',
@@ -148,6 +156,10 @@ class Iku10Controller extends Controller
 
     public function destroy(Iku10ZonaIntegritas $iku10)
     {
+        if ($iku10->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         $iku10->delete();
 
         return redirect()->route('user.iku10.index')

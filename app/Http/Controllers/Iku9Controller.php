@@ -121,11 +121,19 @@ class Iku9Controller extends Controller
 
     public function edit(Iku9Pendapatan $iku9)
     {
+        if ($iku9->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         return view('iku9.edit', compact('iku9'));
     }
 
     public function update(Request $request, Iku9Pendapatan $iku9)
     {
+        if ($iku9->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
             'total_pendapatan' => 'required|numeric|min:0',
@@ -163,6 +171,10 @@ class Iku9Controller extends Controller
 
     public function destroy(Iku9Pendapatan $iku9)
     {
+        if ($iku9->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         $iku9->delete();
 
         return redirect()->route('user.iku9.index')

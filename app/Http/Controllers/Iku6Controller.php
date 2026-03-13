@@ -119,11 +119,19 @@ class Iku6Controller extends Controller
 
     public function edit(Iku6Publikasi $iku6)
     {
+        if ($iku6->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         return view('iku6.edit', compact('iku6'));
     }
 
     public function update(Request $request, Iku6Publikasi $iku6)
     {
+        if ($iku6->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
             'total_publikasi' => 'required|integer|min:1',
@@ -160,6 +168,10 @@ class Iku6Controller extends Controller
 
     public function destroy(Iku6Publikasi $iku6)
     {
+        if ($iku6->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         $iku6->delete();
 
         return redirect()->route('user.iku6.index')

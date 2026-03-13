@@ -120,11 +120,19 @@ class Iku5Controller extends Controller
 
     public function edit(Iku5LuaranKerjasama $iku5)
     {
+        if ($iku5->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         return view('iku5.edit', compact('iku5'));
     }
 
     public function update(Request $request, Iku5LuaranKerjasama $iku5)
     {
+        if ($iku5->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
             'total_dosen' => 'required|integer|min:1',
@@ -161,6 +169,10 @@ class Iku5Controller extends Controller
 
     public function destroy(Iku5LuaranKerjasama $iku5)
     {
+        if ($iku5->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         $iku5->delete();
 
         return redirect()->route('user.iku5.index')

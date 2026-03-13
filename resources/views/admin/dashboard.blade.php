@@ -3,17 +3,28 @@
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
-    <div class="mb-5 lg:mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between" data-aos="fade-up">
+    <div class="mb-5 lg:mb-8 flex flex-col gap-4 sm:flex-row sm:items-center justify-between" data-aos="fade-up">
         <div>
             <h1 class="text-2xl lg:text-3xl font-bold text-slate-800">Dashboard Admin</h1>
-            <p class="text-slate-500 mt-1 text-sm lg:text-base">Pantau data IKU seluruh fakultas</p>
+            <p class="text-slate-500 mt-1 text-sm lg:text-base">Pantau data IKU seluruh fakultas (Tahun: {{ $tahunAkademik }})</p>
         </div>
-        <form method="POST" action="{{ route('logout') }}" class="self-start sm:self-auto">
-            @csrf
-            <button type="submit" class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-rose-600 text-white text-sm font-semibold hover:bg-rose-700 transition">
-                Logout
-            </button>
-        </form>
+        <div class="flex items-center gap-3 self-start sm:self-auto w-full sm:w-auto">
+            <!-- Year Filter Form -->
+            <form action="{{ route('admin.dashboard') }}" method="GET" class="flex items-center gap-2 bg-white rounded-lg p-1 shadow-sm border border-slate-200">
+                <select name="tahun" onchange="this.form.submit()" class="bg-transparent border-none text-sm font-semibold text-slate-700 py-1.5 pl-3 pr-8 focus:ring-0 cursor-pointer rounded-md">
+                    @foreach($availableYears as $year)
+                        <option value="{{ $year }}" {{ $tahunAkademik === $year ? 'selected' : '' }}>Tahun {{ $year }}</option>
+                    @endforeach
+                </select>
+            </form>
+            
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-rose-50 text-rose-600 text-sm font-semibold hover:bg-rose-100 hover:text-rose-700 transition border border-rose-100 shadow-sm min-h-[38px]">
+                    Logout
+                </button>
+            </form>
+        </div>
     </div>
 
     <!-- Stats Cards -->
@@ -128,7 +139,7 @@
     <!-- Charts Section -->
     <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 xl:grid xl:grid-cols-2 2xl:grid-cols-4 lg:gap-6 mb-6 lg:mb-8 hide-scrollbar pb-2 lg:pb-0" data-aos="fade-up">
         <div class="min-w-[85vw] sm:min-w-[45vw] lg:min-w-0 bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 snap-center flex-shrink-0">
-            <h2 class="text-base lg:text-lg font-bold text-slate-800 mb-4">Sebaran IKU per Fakultas</h2>
+            <h2 class="text-base lg:text-lg font-bold text-slate-800 mb-4">Sebaran IKU per Fakultas ({{ $tahunAkademik }})</h2>
             <div class="h-52 lg:h-64">
                 <canvas id="ikuStackedChart"></canvas>
             </div>
@@ -140,13 +151,13 @@
             </div>
         </div>
         <div class="min-w-[85vw] sm:min-w-[45vw] lg:min-w-0 bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 snap-center flex-shrink-0">
-            <h2 class="text-base lg:text-lg font-bold text-slate-800 mb-4">Proporsi Total IKU 1-11</h2>
+            <h2 class="text-base lg:text-lg font-bold text-slate-800 mb-4">Proporsi Total IKU ({{ $tahunAkademik }})</h2>
             <div class="h-52 lg:h-64">
                 <canvas id="ikuShareChart"></canvas>
             </div>
         </div>
         <div class="min-w-[85vw] sm:min-w-[45vw] lg:min-w-0 bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 snap-center flex-shrink-0">
-            <h2 class="text-base lg:text-lg font-bold text-slate-800 mb-4">Total Data IKU per Fakultas</h2>
+            <h2 class="text-base lg:text-lg font-bold text-slate-800 mb-4">Total Data IKU per Fakultas ({{ $tahunAkademik }})</h2>
             <div class="h-52 lg:h-64">
                 <canvas id="ikuTotalFacultyChart"></canvas>
             </div>
@@ -313,7 +324,7 @@
                         <p class="font-bold text-teal-600 text-lg">{{ $totalIku }}</p>
                     </div>
                 </div>
-                <a href="{{ route('admin.fakultas', $kode) }}" class="mt-3 w-full flex items-center justify-center px-4 py-2 bg-emerald-50 text-emerald-700 rounded-lg text-sm font-semibold hover:bg-emerald-100 transition-colors">
+                <a href="{{ route('admin.fakultas', ['kode' => $kode, 'tahun' => $tahunAkademik]) }}" class="mt-3 w-full flex items-center justify-center px-4 py-2 bg-emerald-50 text-emerald-700 rounded-lg text-sm font-semibold hover:bg-emerald-100 transition-colors">
                     Lihat Detail
                 </a>
             </div>
@@ -353,7 +364,7 @@
                         </td>
                         @endforeach
                         <td class="px-4 py-4 text-center">
-                            <a href="{{ route('admin.fakultas', $kode) }}" class="text-sm text-emerald-600 hover:text-emerald-800 font-medium">
+                            <a href="{{ route('admin.fakultas', ['kode' => $kode, 'tahun' => $tahunAkademik]) }}" class="text-sm text-emerald-600 hover:text-emerald-800 font-medium">
                                 Detail →
                             </a>
                         </td>

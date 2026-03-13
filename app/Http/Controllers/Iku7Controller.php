@@ -124,11 +124,19 @@ class Iku7Controller extends Controller
 
     public function edit(Iku7Sdgs $iku7)
     {
+        if ($iku7->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         return view('iku7.edit', compact('iku7'));
     }
 
     public function update(Request $request, Iku7Sdgs $iku7)
     {
+        if ($iku7->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
             'total_program' => 'required|integer|min:1',
@@ -169,6 +177,10 @@ class Iku7Controller extends Controller
 
     public function destroy(Iku7Sdgs $iku7)
     {
+        if ($iku7->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         $iku7->delete();
 
         return redirect()->route('user.iku7.index')

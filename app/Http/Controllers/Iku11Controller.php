@@ -101,12 +101,20 @@ class Iku11Controller extends Controller
 
     public function edit(Iku11TataKelola $iku11)
     {
+        if ($iku11->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         $opiniOptions = Iku11TataKelola::OPINI_OPTIONS;
         return view('iku11.edit', compact('iku11', 'opiniOptions'));
     }
 
     public function update(Request $request, Iku11TataKelola $iku11)
     {
+        if ($iku11->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
             'opini_audit' => 'nullable|in:wtp,wdp,tdp,tw,tidak_memberikan',
@@ -140,6 +148,10 @@ class Iku11Controller extends Controller
 
     public function destroy(Iku11TataKelola $iku11)
     {
+        if ($iku11->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         $iku11->delete();
 
         return redirect()->route('user.iku11.index')

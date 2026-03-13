@@ -120,11 +120,19 @@ class Iku4Controller extends Controller
 
     public function edit(Iku4RekognisiDosen $iku4)
     {
+        if ($iku4->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         return view('iku4.edit', compact('iku4'));
     }
 
     public function update(Request $request, Iku4RekognisiDosen $iku4)
     {
+        if ($iku4->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
             'total_dosen' => 'required|integer|min:1',
@@ -161,6 +169,10 @@ class Iku4Controller extends Controller
 
     public function destroy(Iku4RekognisiDosen $iku4)
     {
+        if ($iku4->fakultas !== auth()->user()->fakultas) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         $iku4->delete();
 
         return redirect()->route('user.iku4.index')
