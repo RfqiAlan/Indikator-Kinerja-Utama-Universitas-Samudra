@@ -4,26 +4,53 @@
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
     <div class="mb-5 lg:mb-8 flex flex-col gap-4 sm:flex-row sm:items-center justify-between" data-aos="fade-up">
-        <div>
-            <h1 class="text-2xl lg:text-3xl font-bold text-slate-800">Dashboard Admin</h1>
-            <p class="text-slate-500 mt-1 text-sm lg:text-base">Pantau data IKU seluruh fakultas (Tahun: {{ $tahunAkademik }})</p>
-        </div>
-        <div class="flex items-center gap-3 self-start sm:self-auto w-full sm:w-auto">
-            <!-- Year Filter Form -->
-            <form action="{{ route('admin.dashboard') }}" method="GET" class="flex items-center gap-2 bg-white rounded-lg p-1 shadow-sm border border-slate-200">
-                <select name="tahun" onchange="this.form.submit()" class="bg-transparent border-none text-sm font-semibold text-slate-700 py-1.5 pl-3 pr-8 focus:ring-0 cursor-pointer rounded-md">
-                    @foreach($availableYears as $year)
-                        <option value="{{ $year }}" {{ $tahunAkademik === $year ? 'selected' : '' }}>Tahun {{ $year }}</option>
-                    @endforeach
-                </select>
-            </form>
-            
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-rose-50 text-rose-600 text-sm font-semibold hover:bg-rose-100 hover:text-rose-700 transition border border-rose-100 shadow-sm min-h-[38px]">
-                    Logout
-                </button>
-            </form>
+        <!-- Dashboard Header Banner -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 lg:p-8 w-full relative overflow-hidden">
+            <!-- Subtle accent line on top -->
+            <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+
+            <div class="relative z-10">
+                <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 lg:gap-6">
+                    <!-- Dashboard Info -->
+                    <div class="flex-1">
+                        <div class="flex items-center gap-4 mb-2">
+                            <div class="w-14 h-14 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 font-bold text-xl border border-emerald-100 shadow-sm">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h1 class="text-2xl lg:text-3xl font-extrabold text-slate-800 tracking-tight">Dashboard Admin</h1>
+                                <p class="text-slate-500 text-sm font-medium mt-1">Pantau & kelola data seluruh fakultas</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Year Selector & Actions -->
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                        <!-- Year Dropdown -->
+                        <div class="flex items-center gap-2 bg-slate-50 rounded-lg p-1.5 border border-slate-200">
+                            <form action="{{ route('admin.dashboard') }}" method="GET">
+                                <select name="tahun" onchange="this.form.submit()" class="bg-white border text-sm font-bold text-slate-800 border-slate-300 py-2 pl-4 pr-10 rounded-md cursor-pointer focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 shadow-sm hover:border-emerald-400 transition-colors" style="background-image: url(&quot;data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e&quot;); background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; appearance: none;">
+                                    @foreach($availableYears as $year)
+                                        <option value="{{ $year }}" {{ $tahunAkademik === $year ? 'selected' : '' }}>Tahun {{ $year }}</option>
+                                    @endforeach
+                                </select>
+                            </form>
+                        </div>
+                        
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-rose-50 text-rose-600 text-sm font-bold hover:bg-rose-100 hover:text-rose-700 transition border border-rose-100 shadow-sm">
+                                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                </svg>
+                                Logout
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

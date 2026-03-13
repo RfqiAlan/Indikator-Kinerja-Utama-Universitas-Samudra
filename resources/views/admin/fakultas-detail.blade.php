@@ -1,19 +1,63 @@
 <x-admin-layout activePage="fakultas-{{ $fakultas['kode'] }}">
-    <div class="mb-5 lg:mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between" data-aos="fade-up">
-        <div>
-            <a href="{{ route('admin.dashboard', ['tahun' => $tahunAkademik]) }}" class="text-emerald-600 hover:text-emerald-800 text-sm mb-2 inline-block font-semibold transition-colors">← Kembali ke Dashboard</a>
-            <h1 class="text-2xl lg:text-3xl font-bold text-slate-800">{{ $fakultas['nama'] }}</h1>
-            <p class="text-slate-500 mt-1 text-sm lg:text-base">Data IKU Fakultas (Tahun: {{ $tahunAkademik }})</p>
-        </div>
-        <div class="flex items-center gap-3 self-start sm:self-auto w-full sm:w-auto">
-            <!-- Year Filter Form -->
-            <form action="{{ route('admin.fakultas', $fakultas['kode']) }}" method="GET" class="flex items-center gap-2 bg-white rounded-lg p-1 shadow-sm border border-slate-200">
-                <select name="tahun" onchange="this.form.submit()" class="bg-transparent border-none text-sm font-semibold text-slate-700 py-1.5 pl-3 pr-8 focus:ring-0 cursor-pointer rounded-md">
-                    @foreach($availableYears as $year)
-                        <option value="{{ $year }}" {{ $tahunAkademik === $year ? 'selected' : '' }}>Tahun {{ $year }}</option>
-                    @endforeach
-                </select>
-            </form>
+    <!-- Faculty Header Banner -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 lg:p-8 mb-6 lg:mb-8 relative overflow-hidden" data-aos="fade-up">
+        <!-- Subtle accent line on top -->
+        <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+
+        <div class="relative z-10">
+            <!-- Breadcrumb -->
+            <a href="{{ route('admin.dashboard', ['tahun' => $tahunAkademik]) }}" class="inline-flex items-center gap-1.5 text-slate-500 hover:text-emerald-600 text-sm font-medium transition-colors mb-5 group">
+                <svg class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                Kembali ke Dashboard
+            </a>
+
+            <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 lg:gap-6">
+                <!-- Faculty Info -->
+                <div class="flex-1">
+                    <div class="flex items-center gap-4 mb-2">
+                        <div>
+                            <h1 class="text-2xl lg:text-3xl font-extrabold text-slate-800 tracking-tight">{{ $fakultas['nama'] }}</h1>
+                            <p class="text-slate-500 text-sm font-medium mt-1">Kode Fakultas: <span class="text-slate-700 font-bold">{{ strtoupper($fakultas['kode']) }}</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Year Selector & Stats -->
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                    <!-- Stats Badges -->
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2 bg-slate-50 rounded-lg px-3.5 py-2 border border-slate-200">
+                            <svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197"/>
+                            </svg>
+                            <span class="text-sm font-semibold text-slate-700">{{ $users->count() }} User</span>
+                        </div>
+                        @php
+                            $totalIkuData = $iku1Data->count() + $iku2Data->count() + $iku3Data->count() +
+                                $iku4Data->count() + $iku5Data->count() + $iku6Data->count() +
+                                $iku7Data->count() + $iku8Data->count() + $iku9Data->count() +
+                                $iku10Data->count() + $iku11Data->count();
+                        @endphp
+                        <div class="flex items-center gap-2 bg-slate-50 rounded-lg px-3.5 py-2 border border-slate-200">
+                            <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            <span class="text-sm font-semibold text-slate-700">{{ $totalIkuData }} Data IKU</span>
+                        </div>
+                    </div>
+
+                    <!-- Year Dropdown -->
+                    <form action="{{ route('admin.fakultas', $fakultas['kode']) }}" method="GET" class="border-l border-slate-200 pl-3 ml-1">
+                        <select name="tahun" onchange="this.form.submit()" class="bg-white border text-sm font-bold text-slate-800 border-slate-300 py-2.5 pl-4 pr-10 rounded-lg cursor-pointer focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 shadow-sm hover:border-emerald-400 transition-colors" style="background-image: url(&quot;data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e&quot;); background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; appearance: none;">
+                            @foreach($availableYears as $year)
+                                <option value="{{ $year }}" {{ $tahunAkademik === $year ? 'selected' : '' }}>Tahun {{ $year }}</option>
+                            @endforeach
+                        </select>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
