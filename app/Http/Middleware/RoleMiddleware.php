@@ -20,7 +20,14 @@ class RoleMiddleware
         }
 
         if ($request->user()->role !== $role) {
-            abort(403, 'Unauthorized action.');
+            // Redirect to appropriate dashboard instead of showing 403 error
+            if ($request->user()->role === 'admin') {
+                return redirect()->route('admin.dashboard')
+                    ->with('error', 'Anda tidak memiliki akses ke halaman tersebut.');
+            }
+
+            return redirect()->route('home')
+                ->with('error', 'Anda tidak memiliki akses ke halaman tersebut.');
         }
 
         return $next($request);

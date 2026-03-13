@@ -140,9 +140,11 @@
                         <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
                     </a>
                     @auth
+                        @if(auth()->user()->role === 'user')
                         <a href="{{ route('user.iku1.index') }}" class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-slate-700 transition-all duration-200 bg-white border border-slate-200 rounded-full hover:bg-slate-50 hover:border-slate-300 shadow-sm hover:shadow-md">
                             Input Data Kinerja
                         </a>
+                        @endif
                     @endauth
                 </div>
             </div>   
@@ -203,9 +205,21 @@
                         
                     // Limit percentage for bar width visually to max 100%
                     $barWidth = min(max($percentage, 0), 100);
+                    
+                    // Determine link based on user role
+                    $cardLink = '#';
+                    if (auth()->check()) {
+                        if (auth()->user()->role === 'admin') {
+                            $cardLink = route('admin.dashboard');
+                        } else {
+                            $cardLink = route($item['route']);
+                        }
+                    } else {
+                        $cardLink = route('login');
+                    }
                 @endphp
                 
-                <a href="{{ route($item['route']) }}" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 4) * 100 }}" class="card-hover glass-card rounded-2xl p-6 transition-all duration-300 flex flex-col h-full overflow-hidden relative group">
+                <a href="{{ $cardLink }}" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 4) * 100 }}" class="card-hover glass-card rounded-2xl p-6 transition-all duration-300 flex flex-col h-full overflow-hidden relative group">
                     <!-- Subtle background logo mark -->
                     <div class="absolute -right-6 -top-6 text-slate-50 opacity-50 transform rotate-12 pointer-events-none transition-transform group-hover:rotate-0 duration-500">
                         <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="{{ $item['icon'] }}"></path></svg>
