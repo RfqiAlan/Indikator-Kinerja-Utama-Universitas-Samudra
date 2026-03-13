@@ -11,8 +11,8 @@
                     <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Jumlah unit WBK/WBBM.</p>
                 </div>
                 <div class="flex items-center gap-3">
-                    <form method="GET" action="{{ route('user.iku10.index') }}"><select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-lg shadow-sm w-full sm:w-auto">@foreach($availableYears as $year)<option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>@endforeach</select></form>
-                    <a href="{{ route('user.iku10.create') }}" class="px-4 py-2 bg-emerald-600 rounded-lg text-xs text-white">Tambah</a>
+                    <form method="GET" action="{{ route('user.iku10.index') }}"><select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm w-full sm:w-auto">@foreach($availableYears as $year)<option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>@endforeach</select></form>
+                    <a href="{{ route('user.iku10.create') }}" class="px-4 py-2 bg-blue-600 rounded-lg text-xs text-white">Tambah</a>
                 </div>
             </div>
         </x-slot>
@@ -32,13 +32,13 @@
                     <p class="text-xs font-medium text-cyan-600 dark:text-cyan-400 uppercase tracking-wider mb-1">Lolos TPI</p>
                     <p class="text-3xl font-extrabold text-cyan-700 dark:text-cyan-500">{{ $countByStatus->get('lolos_tpi', 0) }}</p>
                 </div>
-                <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl p-4 text-center border border-emerald-100 dark:border-emerald-800">
-                    <p class="text-xs font-medium text-emerald-600 dark:text-emerald-400 uppercase tracking-wider mb-1">WBK</p>
-                    <p class="text-3xl font-extrabold text-emerald-700 dark:text-emerald-500">{{ $countByStatus->get('wbk', 0) }}</p>
+                <div class="bg-blue-50 dark:bg-blue-900/20 rounded-2xl p-4 text-center border border-blue-100 dark:border-blue-800">
+                    <p class="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-1">WBK</p>
+                    <p class="text-3xl font-extrabold text-blue-700 dark:text-blue-500">{{ $countByStatus->get('wbk', 0) }}</p>
                 </div>
-                <div class="bg-teal-50 dark:bg-teal-900/20 rounded-2xl p-4 text-center border border-teal-100 dark:border-teal-800">
-                    <p class="text-xs font-medium text-teal-600 dark:text-teal-400 uppercase tracking-wider mb-1">WBBM</p>
-                    <p class="text-3xl font-extrabold text-teal-700 dark:text-teal-500">{{ $countByStatus->get('wbbm', 0) }}</p>
+                <div class="bg-indigo-50 dark:bg-indigo-900/20 rounded-2xl p-4 text-center border border-indigo-100 dark:border-indigo-800">
+                    <p class="text-xs font-medium text-indigo-600 dark:text-indigo-400 uppercase tracking-wider mb-1">WBBM</p>
+                    <p class="text-3xl font-extrabold text-indigo-700 dark:text-indigo-500">{{ $countByStatus->get('wbbm', 0) }}</p>
                 </div>
             </div>
 
@@ -71,8 +71,8 @@
                                 <td class="px-6 py-4 text-center">
                                     @php
                                         $statusClass = match($item->status) {
-                                            'wbk' => 'bg-emerald-100 text-emerald-800 ring-emerald-200',
-                                            'wbbm' => 'bg-teal-100 text-teal-800 ring-teal-200',
+                                            'wbk' => 'bg-blue-100 text-blue-800 ring-blue-200',
+                                            'wbbm' => 'bg-indigo-100 text-indigo-800 ring-indigo-200',
                                             'lolos_tpi' => 'bg-cyan-100 text-cyan-800 ring-cyan-200',
                                             default => 'bg-amber-100 text-amber-800 ring-amber-200'
                                         };
@@ -104,7 +104,7 @@
                     </div>
                     <h3 class="text-lg font-medium text-slate-900 dark:text-white mb-2">Belum ada unit terdaftar</h3>
                     <p class="text-slate-500 max-w-sm mx-auto mb-6">Tambahkan unit kerja yang sedang atau telah mengajukan zona integritas.</p>
-                    <a href="{{ route('user.iku10.create') }}" class="inline-flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 shadow-sm transition-all">
+                    <a href="{{ route('user.iku10.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 shadow-sm transition-all">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         Tambah Unit
                     </a>

@@ -20,7 +20,7 @@ $ikuItems = [
     
     <div class="lg:hidden h-16 bg-white/90 backdrop-blur-xl border-b border-slate-200/50 px-4 shrink-0 flex items-center justify-between sticky top-0 z-50 shadow-sm">
         <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-             <div class="w-8 h-8 rounded-xl bg-white flex items-center justify-center shadow-md shadow-emerald-600/10 group-hover:scale-105 transition-transform duration-300 group-hover:shadow-emerald-600/20">
+             <div class="w-8 h-8 rounded-xl bg-white flex items-center justify-center shadow-md shadow-blue-600/10 group-hover:scale-105 transition-transform duration-300 group-hover:shadow-blue-600/20">
                 <img src="{{ asset('build/assets/logo.png') }}" alt="Logo" class="h-5 w-5 object-contain rounded-md" />
             </div>
             <span class="text-xl font-extrabold text-slate-800">IKU UNSAM</span>
@@ -42,10 +42,10 @@ $ikuItems = [
         
         <div class="hidden lg:flex shrink-0 h-16 items-center px-6 border-b border-slate-200/60 bg-white">
             <a href="{{ route('home') }}" class="flex items-center gap-3 group w-full">
-                <div class="w-8 h-8 rounded-xl flex items-center justify-center bg-white shadow-lg shadow-emerald-600/10 group-hover:scale-105 transition-all duration-300 group-hover:shadow-emerald-600/20">
+                <div class="w-8 h-8 rounded-xl flex items-center justify-center bg-white shadow-lg shadow-blue-600/10 group-hover:scale-105 transition-all duration-300 group-hover:shadow-blue-600/20">
                     <img src="{{ asset('build/assets/logo.png') }}" alt="Logo" class="h-4 w-4 object-contain rounded-sm" />
                 </div>
-                <span class="text-lg font-extrabold tracking-tight text-slate-800">IKU <span class="text-emerald-600">UNSAM</span></span>
+                <span class="text-lg font-extrabold tracking-tight text-slate-800">IKU <span class="text-blue-600">UNSAM</span></span>
             </a>
         </div>
 
@@ -60,13 +60,13 @@ $ikuItems = [
 
         <div class="px-5 py-6 shrink-0 border-b border-slate-100">
             <div class="flex items-center gap-4 bg-slate-50 border border-slate-200/60 p-3 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300">
-                <div class="h-10 w-10 shrink-0 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-700 font-bold text-lg shadow-inner">
+                <div class="h-10 w-10 shrink-0 rounded-full bg-blue-100 border border-blue-200 flex items-center justify-center text-blue-700 font-bold text-lg shadow-inner">
                     {{ substr(Auth::user()->name ?? 'A', 0, 1) }}
                 </div>
                 <div class="min-w-0 flex-1">
                     <p class="text-sm font-bold text-slate-800 truncate">{{ Auth::user()->name ?? 'Admin' }}</p>
                     <p class="text-xs font-medium text-slate-500 truncate mt-0.5 flex items-center gap-1">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
                         {{ Auth::user()->fakultas_nama ?? 'Operator Data' }}
                     </p>
                 </div>
@@ -85,10 +85,10 @@ $ikuItems = [
                         <a href="{{ $href }}" @click="sidebarOpen = false"
                             class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group
                                    {{ $isActive 
-                                      ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 ring-1 ring-emerald-500' 
-                                      : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-700' }}">
+                                      ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20 ring-1 ring-blue-500' 
+                                      : 'text-slate-600 hover:bg-slate-50 hover:text-blue-700' }}">
                             
-                            <div class="flex shrink-0 items-center justify-center rounded-lg w-8 h-8 transition-all duration-200 {{ $isActive ? 'text-white' : 'bg-slate-100 text-slate-400 group-hover:bg-emerald-100 group-hover:text-emerald-600' }}">
+                            <div class="flex shrink-0 items-center justify-center rounded-lg w-8 h-8 transition-all duration-200 {{ $isActive ? 'text-white' : 'bg-slate-100 text-slate-400 group-hover:bg-blue-100 group-hover:text-blue-600' }}">
                                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $item['icon'] }}"></path>
                                 </svg>
@@ -96,7 +96,7 @@ $ikuItems = [
                             
                             <div class="min-w-0 flex-1">
                                 <span class="block text-sm font-bold truncate">{{ $item['id'] }}</span>
-                                <span class="block text-[11px] font-medium leading-tight truncate mt-0.5 opacity-90 {{ $isActive ? 'text-emerald-50' : 'text-slate-400 group-hover:text-emerald-600/70' }}">
+                                <span class="block text-[11px] font-medium leading-tight truncate mt-0.5 opacity-90 {{ $isActive ? 'text-blue-50' : 'text-slate-400 group-hover:text-blue-600/70' }}">
                                     {{ $item['title'] }}
                                 </span>
                             </div>
@@ -107,8 +107,8 @@ $ikuItems = [
 
             <div class="border-t border-slate-100 pt-5">
                 <a href="{{ route('user.iku.index') }}" @click="sidebarOpen = false"
-                   class="flex items-center gap-3 px-3 py-2.5 rounded-xl group transition-all duration-200 text-slate-600 hover:bg-slate-50 hover:text-emerald-700">
-                    <div class="flex shrink-0 items-center justify-center rounded-lg w-8 h-8 bg-slate-100 text-slate-400 group-hover:bg-emerald-100 group-hover:text-emerald-600 transition-all duration-300">
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-xl group transition-all duration-200 text-slate-600 hover:bg-slate-50 hover:text-blue-700">
+                    <div class="flex shrink-0 items-center justify-center rounded-lg w-8 h-8 bg-slate-100 text-slate-400 group-hover:bg-blue-100 group-hover:text-blue-600 transition-all duration-300">
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
                         </svg>
@@ -145,11 +145,11 @@ $ikuItems = [
                     <svg class="w-4 h-4 text-slate-400 absolute left-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
-                    <input type="text" placeholder="Cari data IKU..." class="pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-full text-sm focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all w-64 outline-none text-slate-700 placeholder-slate-400 shadow-sm" aria-label="Search">
+                    <input type="text" placeholder="Cari data IKU..." class="pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-full text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all w-64 outline-none text-slate-700 placeholder-slate-400 shadow-sm" aria-label="Search">
                 </div>
 
                 <div class="relative group">
-                    <a href="{{ route('home') }}" class="flex items-center justify-center w-10 h-10 rounded-full bg-white text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 transition-all duration-200 border border-slate-200 shadow-sm hover:shadow-emerald-100 hover:border-emerald-200" aria-label="Dashboard Publik">
+                    <a href="{{ route('home') }}" class="flex items-center justify-center w-10 h-10 rounded-full bg-white text-slate-500 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 border border-slate-200 shadow-sm hover:shadow-blue-100 hover:border-blue-200" aria-label="Dashboard Publik">
                         <svg class="h-5 w-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                         </svg>

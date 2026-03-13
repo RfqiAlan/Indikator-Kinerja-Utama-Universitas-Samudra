@@ -22,8 +22,8 @@
                 <div class="border-t pt-6"><h3 class="font-semibold text-slate-800 mb-4">Status Zona Integritas</h3>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         @foreach($statusOptions as $kode => $label)
-                        <label class="flex items-center p-4 rounded-lg border cursor-pointer hover:bg-slate-50 {{ $kode == 'wbbm' ? 'border-teal-300 bg-teal-50' : ($kode == 'wbk' ? 'border-emerald-300 bg-emerald-50' : 'border-slate-200') }}">
-                            <input type="radio" name="status" value="{{ $kode }}" class="text-emerald-600 focus:ring-emerald-500" {{ old('status') == $kode ? 'checked' : '' }} required>
+                        <label class="flex items-center p-4 rounded-lg border cursor-pointer hover:bg-slate-50 {{ $kode == 'wbbm' ? 'border-indigo-300 bg-indigo-50' : ($kode == 'wbk' ? 'border-blue-300 bg-blue-50' : 'border-slate-200') }}">
+                            <input type="radio" name="status" value="{{ $kode }}" class="text-blue-600 focus:ring-blue-500" {{ old('status') == $kode ? 'checked' : '' }} required>
                             <span class="ml-2 font-medium text-slate-700">{{ $label }}</span>
                         </label>
                         @endforeach
@@ -34,12 +34,12 @@
                     <div><label class="block text-sm font-medium text-slate-700 mb-1">Tanggal Penetapan</label><input type="date" name="tanggal_penetapan" value="{{ old('tanggal_penetapan') }}" class="w-full rounded-lg border-slate-300"></div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div><label class="flex items-center"><input type="checkbox" name="dokumen_lengkap" value="1" class="rounded border-slate-300 text-emerald-600" {{ old('dokumen_lengkap') ? 'checked' : '' }}><span class="ml-2 text-sm text-slate-700">Kelengkapan Dokumen Terpenuhi</span></label></div>
-                    <div><label class="flex items-center"><input type="checkbox" name="terdaftar_kemenpan" value="1" class="rounded border-slate-300 text-emerald-600" {{ old('terdaftar_kemenpan') ? 'checked' : '' }}><span class="ml-2 text-sm text-slate-700">Terdaftar di Kemenpan RB</span></label></div>
+                    <div><label class="flex items-center"><input type="checkbox" name="dokumen_lengkap" value="1" class="rounded border-slate-300 text-blue-600" {{ old('dokumen_lengkap') ? 'checked' : '' }}><span class="ml-2 text-sm text-slate-700">Kelengkapan Dokumen Terpenuhi</span></label></div>
+                    <div><label class="flex items-center"><input type="checkbox" name="terdaftar_kemenpan" value="1" class="rounded border-slate-300 text-blue-600" {{ old('terdaftar_kemenpan') ? 'checked' : '' }}><span class="ml-2 text-sm text-slate-700">Terdaftar di Kemenpan RB</span></label></div>
                 </div>
                 <div><label class="block text-sm font-medium text-slate-700 mb-1">Keterangan</label><textarea name="keterangan" rows="2" class="w-full rounded-lg border-slate-300">{{ old('keterangan') }}</textarea></div>
                 @include("partials.lampiran-upload", ["ikuNumber" => 10])
-                <div class="flex justify-end gap-3"><a href="{{ route('user.iku10.index') }}" class="px-4 py-2 text-slate-600">Batal</a><button type="submit" class="px-6 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold">Simpan</button></div>
+                <div class="flex justify-end gap-3"><a href="{{ route('user.iku10.index') }}" class="px-4 py-2 text-slate-600">Batal</a><button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold">Simpan</button></div>
             </form>
         </div>
     </x-user-layout>

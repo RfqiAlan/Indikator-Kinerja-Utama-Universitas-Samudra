@@ -2,11 +2,11 @@
     <!-- Faculty Header Banner -->
     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 lg:p-8 mb-6 lg:mb-8 relative overflow-hidden" data-aos="fade-up">
         <!-- Subtle accent line on top -->
-        <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+        <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-500 to-indigo-500"></div>
 
         <div class="relative z-10">
             <!-- Breadcrumb -->
-            <a href="{{ route('admin.dashboard', ['tahun' => $tahunAkademik]) }}" class="inline-flex items-center gap-1.5 text-slate-500 hover:text-emerald-600 text-sm font-medium transition-colors mb-5 group">
+            <a href="{{ route('admin.dashboard', ['tahun' => $tahunAkademik]) }}" class="inline-flex items-center gap-1.5 text-slate-500 hover:text-blue-600 text-sm font-medium transition-colors mb-5 group">
                 <svg class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
@@ -29,7 +29,7 @@
                     <!-- Stats Badges -->
                     <div class="flex items-center gap-2">
                         <div class="flex items-center gap-2 bg-slate-50 rounded-lg px-3.5 py-2 border border-slate-200">
-                            <svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197"/>
                             </svg>
                             <span class="text-sm font-semibold text-slate-700">{{ $users->count() }} User</span>
@@ -41,7 +41,7 @@
                                 $iku10Data->count() + $iku11Data->count();
                         @endphp
                         <div class="flex items-center gap-2 bg-slate-50 rounded-lg px-3.5 py-2 border border-slate-200">
-                            <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                             </svg>
                             <span class="text-sm font-semibold text-slate-700">{{ $totalIkuData }} Data IKU</span>
@@ -50,7 +50,7 @@
 
                     <!-- Year Dropdown -->
                     <form action="{{ route('admin.fakultas', $fakultas['kode']) }}" method="GET" class="border-l border-slate-200 pl-3 ml-1">
-                        <select name="tahun" onchange="this.form.submit()" class="bg-white border text-sm font-bold text-slate-800 border-slate-300 py-2.5 pl-4 pr-10 rounded-lg cursor-pointer focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 shadow-sm hover:border-emerald-400 transition-colors" style="background-image: url(&quot;data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e&quot;); background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; appearance: none;">
+                        <select name="tahun" onchange="this.form.submit()" class="bg-white border text-sm font-bold text-slate-800 border-slate-300 py-2.5 pl-4 pr-10 rounded-lg cursor-pointer focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm hover:border-blue-400 transition-colors" style="background-image: url(&quot;data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e&quot;); background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; appearance: none;">
                             @foreach($availableYears as $year)
                                 <option value="{{ $year }}" {{ $tahunAkademik === $year ? 'selected' : '' }}>Tahun {{ $year }}</option>
                             @endforeach
@@ -67,7 +67,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             @forelse($users as $user)
             <div class="flex items-center gap-3 p-4 bg-slate-50 rounded-xl">
-                <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 font-semibold">
+                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-semibold">
                     {{ substr($user->name, 0, 1) }}
                 </div>
                 <div>
@@ -103,7 +103,7 @@
                         <td class="px-4 py-3 text-center">{{ $row->jenjang }}</td>
                         <td class="px-4 py-3 text-center">{{ $row->jumlah_lulus_tepat_waktu }}</td>
                         <td class="px-4 py-3 text-center">{{ $row->total_mahasiswa_aktif }}</td>
-                        <td class="px-4 py-3 text-center font-semibold text-emerald-600">{{ number_format($row->aee_realisasi, 2) }}%</td>
+                        <td class="px-4 py-3 text-center font-semibold text-blue-600">{{ number_format($row->aee_realisasi, 2) }}%</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -167,7 +167,7 @@
                         <td class="px-4 py-3 font-medium">{{ ucwords(str_replace('_', ' ', $row->program_studi)) }}</td>
                         <td class="px-4 py-3 text-center">{{ $row->total_mahasiswa }}</td>
                         <td class="px-4 py-3 text-center">{{ $row->total_berkegiatan }}</td>
-                        <td class="px-4 py-3 text-center font-semibold text-emerald-600">
+                        <td class="px-4 py-3 text-center font-semibold text-blue-600">
                             {{ $row->total_mahasiswa > 0 ? number_format(($row->total_berkegiatan / $row->total_mahasiswa) * 100, 2) : 0 }}%
                         </td>
                     </tr>
@@ -204,7 +204,7 @@
                         <td class="px-4 py-3 text-center">{{ number_format($row->buku_global) }}</td>
                         <td class="px-4 py-3 text-center">{{ number_format($row->hak_paten) }}</td>
                         <td class="px-4 py-3 text-center">{{ number_format($row->total_rekognisi) }}</td>
-                        <td class="px-4 py-3 text-center font-semibold text-emerald-600">{{ number_format($row->persentase_iku4, 2) }}%</td>
+                        <td class="px-4 py-3 text-center font-semibold text-blue-600">{{ number_format($row->persentase_iku4, 2) }}%</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -239,7 +239,7 @@
                         <td class="px-4 py-3 text-center">{{ number_format($row->produk_terapan) }}</td>
                         <td class="px-4 py-3 text-center">{{ number_format($row->ttg) }}</td>
                         <td class="px-4 py-3 text-center">{{ number_format($row->total_luaran) }}</td>
-                        <td class="px-4 py-3 text-center font-semibold text-emerald-600">{{ number_format($row->persentase_iku5, 2) }}%</td>
+                        <td class="px-4 py-3 text-center font-semibold text-blue-600">{{ number_format($row->persentase_iku5, 2) }}%</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -276,7 +276,7 @@
                         <td class="px-4 py-3 text-center">{{ number_format($row->publikasi_q3) }}</td>
                         <td class="px-4 py-3 text-center">{{ number_format($row->publikasi_q4) }}</td>
                         <td class="px-4 py-3 text-center">{{ number_format($row->skor_publikasi, 1) }}</td>
-                        <td class="px-4 py-3 text-center font-semibold text-emerald-600">{{ number_format($row->persentase_iku6, 2) }}%</td>
+                        <td class="px-4 py-3 text-center font-semibold text-blue-600">{{ number_format($row->persentase_iku6, 2) }}%</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -311,7 +311,7 @@
                         <td class="px-4 py-3 text-center">{{ number_format($row->sdg_4) }}</td>
                         <td class="px-4 py-3 text-center">{{ number_format($row->sdg_17) }}</td>
                         <td class="px-4 py-3 text-center">{{ number_format($row->total_program_sdgs) }}</td>
-                        <td class="px-4 py-3 text-center font-semibold text-emerald-600">{{ number_format($row->persentase_iku7, 2) }}%</td>
+                        <td class="px-4 py-3 text-center font-semibold text-blue-600">{{ number_format($row->persentase_iku7, 2) }}%</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -346,7 +346,7 @@
                         <td class="px-4 py-3 text-center">{{ number_format($row->narasumber) }}</td>
                         <td class="px-4 py-3 text-center">{{ number_format($row->ahli_hukum) }}</td>
                         <td class="px-4 py-3 text-center">{{ number_format($row->total_terlibat) }}</td>
-                        <td class="px-4 py-3 text-center font-semibold text-emerald-600">{{ number_format($row->persentase_iku8, 2) }}%</td>
+                        <td class="px-4 py-3 text-center font-semibold text-blue-600">{{ number_format($row->persentase_iku8, 2) }}%</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -381,7 +381,7 @@
                         <td class="px-4 py-3 text-center">Rp {{ number_format($row->konsultasi, 0, ',', '.') }}</td>
                         <td class="px-4 py-3 text-center">Rp {{ number_format($row->unit_bisnis, 0, ',', '.') }}</td>
                         <td class="px-4 py-3 text-center">Rp {{ number_format($row->total_non_ukt, 0, ',', '.') }}</td>
-                        <td class="px-4 py-3 text-center font-semibold text-emerald-600">{{ number_format($row->persentase_iku9, 2) }}%</td>
+                        <td class="px-4 py-3 text-center font-semibold text-blue-600">{{ number_format($row->persentase_iku9, 2) }}%</td>
                     </tr>
                     @endforeach
                 </tbody>

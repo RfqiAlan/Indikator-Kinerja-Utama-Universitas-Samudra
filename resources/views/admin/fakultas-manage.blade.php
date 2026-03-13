@@ -127,18 +127,18 @@
                     {{-- Header Prodi & Tambah --}}
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 border-b border-slate-100 bg-slate-50/80 gap-3">
                         <h4 class="font-bold text-slate-700 uppercase tracking-wider text-sm flex items-center gap-2">
-                            <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002 2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                            <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002 2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                             Daftar Program Studi
                         </h4>
                         <button @click="showAddProdi = !showAddProdi" 
-                                class="inline-flex items-center justify-center gap-2 px-3 py-1.5 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 rounded-md text-sm font-semibold transition border border-emerald-200">
+                                class="inline-flex items-center justify-center gap-2 px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-md text-sm font-semibold transition border border-blue-200">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                             Tambah Prodi
                         </button>
                     </div>
 
                     {{-- Form Tambah Prodi --}}
-                    <div x-show="showAddProdi" x-collapse class="border-b border-slate-100 bg-emerald-50/30 p-4">
+                    <div x-show="showAddProdi" x-collapse class="border-b border-slate-100 bg-blue-50/30 p-4">
                         <form action="{{ route('admin.prodi.store') }}" method="POST">
                             @csrf
                             <input type="hidden" name="fakultas_id" value="{{ $fakultas->id }}">
@@ -146,16 +146,16 @@
                                 <div class="sm:col-span-3">
                                     <label class="block text-xs font-semibold text-slate-600 mb-1">Kode</label>
                                     <input type="text" name="kode" required placeholder="Contoh: if" pattern="[a-z_]+"
-                                           class="w-full rounded-lg border-emerald-300 focus:ring-emerald-500 focus:border-emerald-500 text-sm py-2">
+                                           class="w-full rounded-lg border-blue-300 focus:ring-blue-500 focus:border-blue-500 text-sm py-2">
                                 </div>
                                 <div class="sm:col-span-4">
                                     <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Program Studi</label>
                                     <input type="text" name="nama" required placeholder="Contoh: Informatika"
-                                           class="w-full rounded-lg border-emerald-300 focus:ring-emerald-500 focus:border-emerald-500 text-sm py-2">
+                                           class="w-full rounded-lg border-blue-300 focus:ring-blue-500 focus:border-blue-500 text-sm py-2">
                                 </div>
                                 <div class="sm:col-span-2">
                                     <label class="block text-xs font-semibold text-slate-600 mb-1">Jenjang</label>
-                                    <select name="jenjang" required class="w-full rounded-lg border-emerald-300 focus:ring-emerald-500 focus:border-emerald-500 text-sm py-2">
+                                    <select name="jenjang" required class="w-full rounded-lg border-blue-300 focus:ring-blue-500 focus:border-blue-500 text-sm py-2">
                                         <option value="S1">S1</option>
                                         <option value="S2">S2</option>
                                         <option value="Profesi">Profesi</option>
@@ -163,7 +163,7 @@
                                     </select>
                                 </div>
                                 <div class="sm:col-span-3 pb-[1px]">
-                                    <button type="submit" class="w-full py-2 bg-emerald-600 text-white rounded-lg text-sm font-semibold hover:bg-emerald-700 transition shadow-sm">
+                                    <button type="submit" class="w-full py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700 transition shadow-sm">
                                         Simpan Prodi
                                     </button>
                                 </div>
@@ -183,7 +183,7 @@
                                         <span class="inline-flex items-center justify-center min-w-[3.5rem] px-2 py-1 rounded-md text-xs font-bold tracking-widest bg-slate-100 border border-slate-200 text-slate-600 uppercase">{{ $prodi->kode }}</span>
                                         <div class="flex items-center gap-2">
                                             <span class="font-medium text-slate-700 text-sm">{{ $prodi->nama }}</span>
-                                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase shadow-sm border {{ $prodi->jenjang === 'S1' ? 'bg-emerald-100 text-emerald-700 border-emerald-200' : ($prodi->jenjang === 'S2' ? 'bg-blue-100 text-blue-700 border-blue-200' : ($prodi->jenjang === 'Profesi' ? 'bg-purple-100 text-purple-700 border-purple-200' : 'bg-amber-100 text-amber-700 border-amber-200')) }}">{{ $prodi->jenjang }}</span>
+                                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase shadow-sm border {{ $prodi->jenjang === 'S1' ? 'bg-blue-100 text-blue-700 border-blue-200' : ($prodi->jenjang === 'S2' ? 'bg-blue-100 text-blue-700 border-blue-200' : ($prodi->jenjang === 'Profesi' ? 'bg-purple-100 text-purple-700 border-purple-200' : 'bg-amber-100 text-amber-700 border-amber-200')) }}">{{ $prodi->jenjang }}</span>
                                         </div>
                                     </div>
                                     

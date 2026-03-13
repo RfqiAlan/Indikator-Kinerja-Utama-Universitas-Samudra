@@ -7,14 +7,14 @@
         <!-- Dashboard Header Banner -->
         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 lg:p-8 w-full relative overflow-hidden">
             <!-- Subtle accent line on top -->
-            <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+            <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-500 to-indigo-500"></div>
 
             <div class="relative z-10">
                 <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 lg:gap-6">
                     <!-- Dashboard Info -->
                     <div class="flex-1">
                         <div class="flex items-center gap-4 mb-2">
-                            <div class="w-14 h-14 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 font-bold text-xl border border-emerald-100 shadow-sm">
+                            <div class="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 font-bold text-xl border border-blue-100 shadow-sm">
                                 <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
                                 </svg>
@@ -31,7 +31,7 @@
                         <!-- Year Dropdown -->
                         <div class="flex items-center gap-2 bg-slate-50 rounded-lg p-1.5 border border-slate-200">
                             <form action="{{ route('admin.dashboard') }}" method="GET">
-                                <select name="tahun" onchange="this.form.submit()" class="bg-white border text-sm font-bold text-slate-800 border-slate-300 py-2 pl-4 pr-10 rounded-md cursor-pointer focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 shadow-sm hover:border-emerald-400 transition-colors" style="background-image: url(&quot;data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e&quot;); background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; appearance: none;">
+                                <select name="tahun" onchange="this.form.submit()" class="bg-white border text-sm font-bold text-slate-800 border-slate-300 py-2 pl-4 pr-10 rounded-md cursor-pointer focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm hover:border-blue-400 transition-colors" style="background-image: url(&quot;data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e&quot;); background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; appearance: none;">
                                     @foreach($availableYears as $year)
                                         <option value="{{ $year }}" {{ $tahunAkademik === $year ? 'selected' : '' }}>Tahun {{ $year }}</option>
                                     @endforeach
@@ -58,8 +58,8 @@
     <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 lg:grid lg:grid-cols-3 lg:gap-6 mb-6 lg:mb-8 hide-scrollbar pb-2 lg:pb-0" data-aos="fade-up" data-aos-delay="100">
         <div class="min-w-[85vw] sm:min-w-[45vw] lg:min-w-0 bg-white rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 snap-center flex-shrink-0">
             <div class="flex items-center gap-3 lg:gap-4">
-                <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-emerald-100 flex items-center justify-center flex-shrink-0">
-                    <svg class="w-6 h-6 lg:w-7 lg:h-7 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-6 h-6 lg:w-7 lg:h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197"/>
                     </svg>
                 </div>
@@ -96,7 +96,7 @@
             </div>
         </div>
     </div>
-    <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 mb-6 lg:mb-8 text-white" data-aos="fade-up" data-aos-delay="200">
+    <div class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl lg:rounded-2xl shadow-sm p-4 lg:p-6 mb-6 lg:mb-8 text-white" data-aos="fade-up" data-aos-delay="200">
         <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
             <div>
                 <h2 class="text-lg lg:text-xl font-bold flex items-center gap-2">
@@ -105,7 +105,7 @@
                     </svg>
                     Download Rekap IKU
                 </h2>
-                <p class="text-emerald-100 text-sm mt-1">Export data IKU dalam format Excel (XLSX)</p>
+                <p class="text-blue-100 text-sm mt-1">Export data IKU dalam format Excel (XLSX)</p>
             </div>
             <form action="{{ route('admin.export') }}" method="GET" class="grid grid-cols-2 sm:flex sm:flex-row items-stretch sm:items-center gap-2 w-full lg:w-auto mt-2 lg:mt-0">
                 <select name="fakultas" class="col-span-1 px-3 py-2 rounded-lg bg-white/20 border border-white/30 text-white text-sm focus:ring-2 focus:ring-white/50 focus:border-transparent backdrop-blur-sm">
@@ -119,7 +119,7 @@
                         <option value="{{ $year }}" class="text-slate-800" {{ $tahunAkademik === $year ? 'selected' : '' }}>{{ $year }}</option>
                     @endforeach
                 </select>
-                <button type="submit" class="col-span-2 sm:col-span-auto inline-flex items-center justify-center px-4 py-2 bg-white text-emerald-600 rounded-lg font-semibold text-sm hover:bg-emerald-50 transition-colors shadow-md min-h-[40px]">
+                <button type="submit" class="col-span-2 sm:col-span-auto inline-flex items-center justify-center px-4 py-2 bg-white text-blue-600 rounded-lg font-semibold text-sm hover:bg-blue-50 transition-colors shadow-md min-h-[40px]">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                     </svg>
@@ -219,10 +219,10 @@
                     <tr class="bg-slate-50">
                         <th class="px-4 py-3 text-left font-semibold text-slate-600 whitespace-nowrap sticky left-0 bg-slate-50 z-10">Indikator</th>
                         @foreach($compYears as $year)
-                            <th class="px-4 py-3 text-center font-semibold whitespace-nowrap {{ $year === $tahunAkademik ? 'text-emerald-700 bg-emerald-50' : 'text-slate-600' }}">
+                            <th class="px-4 py-3 text-center font-semibold whitespace-nowrap {{ $year === $tahunAkademik ? 'text-blue-700 bg-blue-50' : 'text-slate-600' }}">
                                 {{ $year }}
                                 @if($year === $tahunAkademik)
-                                    <span class="block text-xs font-normal text-emerald-500">aktif</span>
+                                    <span class="block text-xs font-normal text-blue-500">aktif</span>
                                 @endif
                             </th>
                         @endforeach
@@ -236,7 +236,7 @@
                         <tr class="hover:bg-slate-50">
                             <td class="px-4 py-3 font-medium text-slate-800 whitespace-nowrap sticky left-0 bg-white z-10">{{ $ikuNames[$idx] }}</td>
                             @foreach($comparisonData as $yearData)
-                                <td class="px-4 py-3 text-center {{ $yearData['tahun'] === $tahunAkademik ? 'bg-emerald-50/50 font-semibold text-emerald-700' : '' }}">
+                                <td class="px-4 py-3 text-center {{ $yearData['tahun'] === $tahunAkademik ? 'bg-blue-50/50 font-semibold text-blue-700' : '' }}">
                                     @if($yearData[$key] > 0)
                                         <span class="inline-flex items-center justify-center min-w-[2rem] px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 font-semibold text-xs">
                                             {{ $yearData[$key] }}
@@ -254,7 +254,7 @@
                                 @endphp
                                 <td class="px-4 py-3 text-center whitespace-nowrap">
                                     @if($diff > 0)
-                                        <span class="inline-flex items-center gap-1 text-xs font-semibold text-emerald-600">
+                                        <span class="inline-flex items-center gap-1 text-xs font-semibold text-blue-600">
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
                                             +{{ $diff }}
                                         </span>
@@ -278,7 +278,7 @@
                         <td class="px-4 py-3 text-slate-800 whitespace-nowrap sticky left-0 bg-slate-50 z-10">Total Semua IKU</td>
                         @foreach($comparisonData as $yearData)
                             @php $yearTotal = collect($ikuKeys)->sum(fn($k) => $yearData[$k]); @endphp
-                            <td class="px-4 py-3 text-center {{ $yearData['tahun'] === $tahunAkademik ? 'bg-emerald-50 text-emerald-700' : 'text-slate-800' }}">
+                            <td class="px-4 py-3 text-center {{ $yearData['tahun'] === $tahunAkademik ? 'bg-blue-50 text-blue-700' : 'text-slate-800' }}">
                                 {{ $yearTotal }}
                             </td>
                         @endforeach
@@ -290,7 +290,7 @@
                             @endphp
                             <td class="px-4 py-3 text-center">
                                 @if($totalDiff > 0)
-                                    <span class="text-emerald-600">+{{ $totalDiff }}</span>
+                                    <span class="text-blue-600">+{{ $totalDiff }}</span>
                                 @elseif($totalDiff < 0)
                                     <span class="text-rose-600">{{ $totalDiff }}</span>
                                 @else
@@ -309,9 +309,9 @@
         <h2 class="text-lg lg:text-xl font-bold text-slate-800 mb-4 lg:mb-6">Data per Fakultas ({{ $tahunAkademik }})</h2>
         @php
             $ikuMeta = [
-                ['key' => 'iku1_count', 'label' => 'IKU1', 'text_class' => 'text-emerald-600', 'badge_class' => 'bg-emerald-100 text-emerald-600'],
+                ['key' => 'iku1_count', 'label' => 'IKU1', 'text_class' => 'text-blue-600', 'badge_class' => 'bg-blue-100 text-blue-600'],
                 ['key' => 'iku2_count', 'label' => 'IKU2', 'text_class' => 'text-cyan-600', 'badge_class' => 'bg-cyan-100 text-cyan-600'],
-                ['key' => 'iku3_count', 'label' => 'IKU3', 'text_class' => 'text-teal-600', 'badge_class' => 'bg-teal-100 text-teal-600'],
+                ['key' => 'iku3_count', 'label' => 'IKU3', 'text_class' => 'text-indigo-600', 'badge_class' => 'bg-indigo-100 text-indigo-600'],
                 ['key' => 'iku4_count', 'label' => 'IKU4', 'text_class' => 'text-blue-600', 'badge_class' => 'bg-blue-100 text-blue-600'],
                 ['key' => 'iku5_count', 'label' => 'IKU5', 'text_class' => 'text-indigo-600', 'badge_class' => 'bg-indigo-100 text-indigo-600'],
                 ['key' => 'iku6_count', 'label' => 'IKU6', 'text_class' => 'text-violet-600', 'badge_class' => 'bg-violet-100 text-violet-600'],
@@ -329,7 +329,7 @@
             <div class="border border-slate-200 rounded-xl p-4 bg-white shadow-sm">
                 <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-3">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-sm">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm">
                             {{ strtoupper(substr($kode, 0, 2)) }}
                         </div>
                         <div>
@@ -341,17 +341,17 @@
                 <div class="flex items-center gap-3">
                     <div class="flex-1 bg-slate-50 rounded-lg p-3 text-center border border-slate-100">
                         <p class="text-[10px] uppercase tracking-wider font-semibold text-slate-500 mb-1">Total User</p>
-                        <p class="font-bold text-emerald-600 text-lg">{{ $data['user_count'] }}</p>
+                        <p class="font-bold text-blue-600 text-lg">{{ $data['user_count'] }}</p>
                     </div>
                     <div class="flex-1 bg-slate-50 rounded-lg p-3 text-center border border-slate-100">
                         @php
                             $totalIku = collect($ikuMeta)->sum(fn($iku) => $data[$iku['key']]);
                         @endphp
                         <p class="text-[10px] uppercase tracking-wider font-semibold text-slate-500 mb-1">Data IKU</p>
-                        <p class="font-bold text-teal-600 text-lg">{{ $totalIku }}</p>
+                        <p class="font-bold text-indigo-600 text-lg">{{ $totalIku }}</p>
                     </div>
                 </div>
-                <a href="{{ route('admin.fakultas', ['kode' => $kode, 'tahun' => $tahunAkademik]) }}" class="mt-3 w-full flex items-center justify-center px-4 py-2 bg-emerald-50 text-emerald-700 rounded-lg text-sm font-semibold hover:bg-emerald-100 transition-colors">
+                <a href="{{ route('admin.fakultas', ['kode' => $kode, 'tahun' => $tahunAkademik]) }}" class="mt-3 w-full flex items-center justify-center px-4 py-2 bg-blue-50 text-blue-700 rounded-lg text-sm font-semibold hover:bg-blue-100 transition-colors">
                     Lihat Detail
                 </a>
             </div>
@@ -379,7 +379,7 @@
                             <p class="text-xs text-slate-500">{{ strtoupper($kode) }}</p>
                         </td>
                         <td class="px-4 py-4 text-center">
-                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 font-semibold">
+                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-blue-600 font-semibold">
                                 {{ $data['user_count'] }}
                             </span>
                         </td>
@@ -391,7 +391,7 @@
                         </td>
                         @endforeach
                         <td class="px-4 py-4 text-center">
-                            <a href="{{ route('admin.fakultas', ['kode' => $kode, 'tahun' => $tahunAkademik]) }}" class="text-sm text-emerald-600 hover:text-emerald-800 font-medium">
+                            <a href="{{ route('admin.fakultas', ['kode' => $kode, 'tahun' => $tahunAkademik]) }}" class="text-sm text-blue-600 hover:text-blue-800 font-medium">
                                 Detail →
                             </a>
                         </td>

@@ -21,24 +21,24 @@
                 </div>
                 <div class="border-t pt-6"><h3 class="font-semibold text-slate-800 mb-4">Sumber Pendapatan Non-UKT</h3>
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                        <div class="bg-emerald-50 p-3 rounded-lg"><label class="block text-sm font-medium text-emerald-700 mb-1">Hibah Riset (Rp)</label><input type="number" name="hibah_riset" x-model.number="hibah" value="{{ old('hibah_riset', 0) }}" class="w-full rounded-lg border-emerald-200" min="0"></div>
+                        <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">Hibah Riset (Rp)</label><input type="number" name="hibah_riset" x-model.number="hibah" value="{{ old('hibah_riset', 0) }}" class="w-full rounded-lg border-blue-200" min="0"></div>
                         <div class="bg-cyan-50 p-3 rounded-lg"><label class="block text-sm font-medium text-cyan-700 mb-1">Konsultasi (Rp)</label><input type="number" name="konsultasi" x-model.number="konsultasi" value="{{ old('konsultasi', 0) }}" class="w-full rounded-lg border-cyan-200" min="0"></div>
-                        <div class="bg-teal-50 p-3 rounded-lg"><label class="block text-sm font-medium text-teal-700 mb-1">Unit Bisnis (Rp)</label><input type="number" name="unit_bisnis" x-model.number="bisnis" value="{{ old('unit_bisnis', 0) }}" class="w-full rounded-lg border-teal-200" min="0"></div>
+                        <div class="bg-indigo-50 p-3 rounded-lg"><label class="block text-sm font-medium text-indigo-700 mb-1">Unit Bisnis (Rp)</label><input type="number" name="unit_bisnis" x-model.number="bisnis" value="{{ old('unit_bisnis', 0) }}" class="w-full rounded-lg border-indigo-200" min="0"></div>
                         <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">Royalti (Rp)</label><input type="number" name="royalti" x-model.number="royalti" value="{{ old('royalti', 0) }}" class="w-full rounded-lg border-blue-200" min="0"></div>
                         <div class="bg-indigo-50 p-3 rounded-lg"><label class="block text-sm font-medium text-indigo-700 mb-1">Inkubator (Rp)</label><input type="number" name="inkubator" x-model.number="inkubator" value="{{ old('inkubator', 0) }}" class="w-full rounded-lg border-indigo-200" min="0"></div>
                         <div class="bg-amber-50 p-3 rounded-lg"><label class="block text-sm font-medium text-amber-700 mb-1">Lainnya (Rp)</label><input type="number" name="lainnya" x-model.number="lainnya" value="{{ old('lainnya', 0) }}" class="w-full rounded-lg border-amber-200" min="0"></div>
                     </div>
                 </div>
-                <div class="bg-gradient-to-r from-emerald-50 to-cyan-50 rounded-xl p-6">
+                <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-6">
                     <div class="grid grid-cols-3 gap-4 text-center">
-                        <div><p class="text-xs text-slate-500">Total Non-UKT</p><p class="text-lg font-bold text-emerald-600">Rp <span x-text="totalNonUkt.toLocaleString('id')">0</span></p></div>
+                        <div><p class="text-xs text-slate-500">Total Non-UKT</p><p class="text-lg font-bold text-blue-600">Rp <span x-text="totalNonUkt.toLocaleString('id')">0</span></p></div>
                         <div><p class="text-xs text-slate-500">Total Pendapatan</p><p class="text-lg font-bold text-slate-600">Rp <span x-text="totalPendapatan.toLocaleString('id')">0</span></p></div>
-                        <div><p class="text-xs text-slate-500">Persentase IKU 9</p><p class="text-2xl font-bold" :class="persentase >= 20 ? 'text-emerald-600' : 'text-rose-600'" x-text="persentase.toFixed(2) + '%'">0%</p></div>
+                        <div><p class="text-xs text-slate-500">Persentase IKU 9</p><p class="text-2xl font-bold" :class="persentase >= 20 ? 'text-blue-600' : 'text-rose-600'" x-text="persentase.toFixed(2) + '%'">0%</p></div>
                     </div>
                 </div>
                 <div><label class="block text-sm font-medium text-slate-700 mb-1">Keterangan</label><textarea name="keterangan" rows="2" class="w-full rounded-lg border-slate-300">{{ old('keterangan') }}</textarea></div>
                 @include("partials.lampiran-upload", ["ikuNumber" => 9])
-                <div class="flex justify-end gap-3"><a href="{{ route('user.iku9.index') }}" class="px-4 py-2 text-slate-600">Batal</a><button type="submit" class="px-6 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold">Simpan</button></div>
+                <div class="flex justify-end gap-3"><a href="{{ route('user.iku9.index') }}" class="px-4 py-2 text-slate-600">Batal</a><button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold">Simpan</button></div>
             </form>
         </div>
         <script>

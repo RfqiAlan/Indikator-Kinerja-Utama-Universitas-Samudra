@@ -21,7 +21,7 @@
                 <div class="flex items-center gap-3">
                     <form method="GET" action="{{ route('user.iku1.index') }}" class="flex items-center">
                         <select name="tahun" onchange="this.form.submit()"
-                            class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-lg shadow-sm">
+                            class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm">
                             @foreach($availableYears as $year)
                             <option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>
                             @endforeach
@@ -29,7 +29,7 @@
                     </form>
                     
                     <a href="{{ route('user.iku1.create') }}"
-                        class="inline-flex items-center px-4 py-2 bg-emerald-600 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-emerald-700 focus:bg-emerald-700 active:bg-emerald-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition ease-in-out duration-150 shadow-md hover:shadow-lg">
+                        class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150 shadow-md hover:shadow-lg">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                         </svg>
@@ -43,13 +43,13 @@
             <!-- Summary Statistic Card -->
             <div class="relative overflow-hidden bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 sm:p-8" data-aos="fade-up">
                 <!-- Decorative Blobs -->
-                <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-emerald-50 dark:bg-emerald-900/20 blur-3xl opacity-60"></div>
+                <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-blue-50 dark:bg-blue-900/20 blur-3xl opacity-60"></div>
                 <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-cyan-50 dark:bg-cyan-900/20 blur-3xl opacity-60"></div>
 
                 <div class="relative flex flex-col md:flex-row items-center justify-between gap-8">
                     <div class="text-center md:text-left space-y-2 max-w-lg">
                         <div class="flex items-center justify-center md:justify-start gap-2 mb-2">
-                            <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 text-xs font-bold uppercase tracking-wide">
+                            <span class="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 text-xs font-bold uppercase tracking-wide">
                                 IKU 1 Performance
                             </span>
                         </div>
@@ -68,10 +68,10 @@
                             <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-cyan-50 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300 border border-cyan-100 dark:border-cyan-800">
                                 D3: 33%
                             </span>
-                            <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-teal-50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300 border border-teal-100 dark:border-teal-800">
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300 border border-indigo-100 dark:border-indigo-800">
                                 S1/D4: 25%
                             </span>
-                            <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300 border border-emerald-100 dark:border-emerald-800">
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 border border-blue-100 dark:border-blue-800">
                                 S2: 50%
                             </span>
                             <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-sky-50 text-sky-700 dark:bg-sky-900/30 dark:text-sky-300 border border-sky-100 dark:border-sky-800">
@@ -89,7 +89,7 @@
                                 fill="none" stroke="currentColor" stroke-width="3" />
                             <!-- Progress Circle -->
                             @php
-                            $strokeColor = $aeePt >= 100 ? 'text-emerald-500' : ($aeePt >= 75 ? 'text-cyan-500' : 'text-rose-500');
+                            $strokeColor = $aeePt >= 100 ? 'text-blue-500' : ($aeePt >= 75 ? 'text-cyan-500' : 'text-rose-500');
                             $percent = min($aeePt, 100);
                             @endphp
                             <path class="{{ $strokeColor }} drop-shadow-md transition-all duration-1000 ease-out"
@@ -125,7 +125,7 @@
                     </div>
                     <h4 class="text-lg font-medium text-slate-900 dark:text-white mb-1">Belum ada data</h4>
                     <p class="text-slate-500 dark:text-slate-400 max-w-sm mx-auto mb-6">Mulai dengan menambahkan data capaian untuk jenjang pendidikan di tahun ini.</p>
-                    <a href="{{ route('user.iku1.create') }}" class="text-emerald-600 hover:text-emerald-700 font-medium">
+                    <a href="{{ route('user.iku1.create') }}" class="text-blue-600 hover:text-blue-700 font-medium">
                         + Tambah Data Baru
                     </a>
                 </div>
@@ -148,7 +148,7 @@
                             <tr class="group hover:bg-slate-50/50 dark:hover:bg-slate-700/30 transition-colors duration-150">
                                 <td class="px-6 py-4">
                                     <div class="flex items-center">
-                                        <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-lg bg-emerald-100 text-emerald-600 dark:bg-emerald-900/50 dark:text-emerald-300 font-bold text-xs ring-4 ring-white dark:ring-slate-800">
+                                        <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900/50 dark:text-blue-300 font-bold text-xs ring-4 ring-white dark:ring-slate-800">
                                             {{ $item->jenjang }}
                                         </div>
                                         <div class="ml-4">
@@ -177,7 +177,7 @@
                                     @endphp
                                     @if($item->jumlah_lulus_tepat_waktu > 0)
                                         @if($respondenCukup)
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 mt-1">
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 mt-1">
                                                 <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
                                                 {{ number_format($respondenPersen, 1) }}% Cukup
                                             </span>
@@ -205,13 +205,13 @@
                                     <div class="w-full max-w-xs">
                                         <div class="flex justify-between mb-1">
                                             <span class="text-xs font-medium 
-                                                    {{ $item->tingkat_pencapaian >= 100 ? 'text-emerald-600' : ($item->tingkat_pencapaian >= 75 ? 'text-cyan-600' : 'text-rose-600') }}">
+                                                    {{ $item->tingkat_pencapaian >= 100 ? 'text-blue-600' : ($item->tingkat_pencapaian >= 75 ? 'text-cyan-600' : 'text-rose-600') }}">
                                                 {{ number_format($item->tingkat_pencapaian, 2) }}%
                                             </span>
                                         </div>
                                         <div class="w-full bg-slate-200 rounded-full h-2 dark:bg-slate-700 overflow-hidden">
                                             <div class="h-2 rounded-full transition-all duration-500 
-                                                    {{ $item->tingkat_pencapaian >= 100 ? 'bg-emerald-500' : ($item->tingkat_pencapaian >= 75 ? 'bg-cyan-400' : 'bg-rose-500') }}"
+                                                    {{ $item->tingkat_pencapaian >= 100 ? 'bg-blue-500' : ($item->tingkat_pencapaian >= 75 ? 'bg-cyan-400' : 'bg-rose-500') }}"
                                                 style="width: {{ min($item->tingkat_pencapaian, 100) }}%"></div>
                                         </div>
                                     </div>

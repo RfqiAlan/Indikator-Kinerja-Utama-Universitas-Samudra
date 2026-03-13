@@ -11,8 +11,8 @@
                     <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Opini WTP, Predikat SAKIP, Integritas Akademik.</p>
                 </div>
                 <div class="flex items-center gap-3">
-                    <form method="GET" action="{{ route('user.iku11.index') }}"><select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-lg shadow-sm w-full sm:w-auto">@foreach($availableYears as $year)<option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>@endforeach</select></form>
-                    <a href="{{ route('user.iku11.create') }}" class="px-4 py-2 bg-emerald-600 rounded-lg text-xs text-white">Tambah</a>
+                    <form method="GET" action="{{ route('user.iku11.index') }}"><select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm w-full sm:w-auto">@foreach($availableYears as $year)<option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>@endforeach</select></form>
+                    <a href="{{ route('user.iku11.create') }}" class="px-4 py-2 bg-blue-600 rounded-lg text-xs text-white">Tambah</a>
                 </div>
             </div>
         </x-slot>
@@ -24,7 +24,7 @@
                 <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 text-center border border-slate-100 dark:border-slate-700 shadow-sm relative overflow-hidden group hover:shadow-md transition-shadow">
                     <div class="absolute top-0 right-0 -mr-8 -mt-8 w-24 h-24 rounded-full bg-slate-50 dark:bg-slate-700/50 blur-xl opacity-50 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/30 transition-colors"></div>
                     <p class="text-sm font-medium text-slate-500 dark:text-slate-400 mb-3 uppercase tracking-wider">IKU 11.1 - Opini Audit</p>
-                    <span class="inline-flex items-center px-4 py-2 rounded-xl text-lg font-bold shadow-sm {{ $data->opini_audit == 'wtp' ? 'bg-emerald-100 text-emerald-700 ring-1 ring-emerald-200' : 'bg-amber-100 text-amber-700 ring-1 ring-amber-200' }}">
+                    <span class="inline-flex items-center px-4 py-2 rounded-xl text-lg font-bold shadow-sm {{ $data->opini_audit == 'wtp' ? 'bg-blue-100 text-blue-700 ring-1 ring-blue-200' : 'bg-amber-100 text-amber-700 ring-1 ring-amber-200' }}">
                         {{ $data->opini_label ?? '-' }}
                     </span>
                     <p class="text-xs text-slate-400 mt-3">Target: WTP</p>
@@ -40,9 +40,9 @@
                 </div>
 
                 <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 text-center border border-slate-100 dark:border-slate-700 shadow-sm relative overflow-hidden group hover:shadow-md transition-shadow">
-                     <div class="absolute top-0 right-0 -mr-8 -mt-8 w-24 h-24 rounded-full {{ $data->jumlah_pelanggaran == 0 ? 'bg-emerald-50' : 'bg-rose-50' }} blur-xl opacity-50"></div>
+                     <div class="absolute top-0 right-0 -mr-8 -mt-8 w-24 h-24 rounded-full {{ $data->jumlah_pelanggaran == 0 ? 'bg-blue-50' : 'bg-rose-50' }} blur-xl opacity-50"></div>
                     <p class="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1 uppercase tracking-wider">IKU 11.3 - Pelanggaran</p>
-                    <p class="text-4xl font-extrabold {{ $data->jumlah_pelanggaran == 0 ? 'text-emerald-600' : 'text-rose-600' }} my-2">{{ $data->jumlah_pelanggaran }}</p>
+                    <p class="text-4xl font-extrabold {{ $data->jumlah_pelanggaran == 0 ? 'text-blue-600' : 'text-rose-600' }} my-2">{{ $data->jumlah_pelanggaran }}</p>
                     <p class="text-xs text-slate-400">Kasus Akademik/Integritas</p>
                 </div>
             </div>
@@ -70,7 +70,7 @@
                 </div>
                 <h3 class="text-lg font-medium text-slate-900 dark:text-white mb-2">Data Belum Tersedia</h3>
                 <p class="text-slate-500 max-w-sm mx-auto mb-6">Belum ada data tata kelola keuangan dan operasional yang diinput untuk tahun {{ $tahunAkademik }}.</p>
-                <a href="{{ route('user.iku11.create') }}" class="inline-flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 shadow-sm transition-all">
+                <a href="{{ route('user.iku11.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 shadow-sm transition-all">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                     Input Data Sekarang
                 </a>

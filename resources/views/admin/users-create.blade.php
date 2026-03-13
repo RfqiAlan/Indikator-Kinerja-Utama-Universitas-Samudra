@@ -1,10 +1,10 @@
 <x-admin-layout activePage="users">
     <!-- Premium Header Banner -->
     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 lg:p-8 w-full relative overflow-hidden mb-6 lg:mb-8" data-aos="fade-up">
-        <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+        <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-500 to-indigo-500"></div>
         <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
             <div class="flex items-center gap-4 mb-2 md:mb-0">
-                <div class="w-14 h-14 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 font-bold text-xl border border-emerald-100 shadow-sm cursor-pointer hover:bg-emerald-100 transition" onclick="window.history.back()">
+                <div class="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 font-bold text-xl border border-blue-100 shadow-sm cursor-pointer hover:bg-blue-100 transition" onclick="window.history.back()">
                     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
@@ -25,22 +25,22 @@
             <div class="space-y-5 relative z-10">
                 <div>
                     <label class="block text-sm font-bold text-slate-700 mb-2">Nama Lengkap <span class="text-rose-500">*</span></label>
-                    <input type="text" name="name" value="{{ old('name') }}" class="w-full rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-emerald-500 focus:ring-emerald-500 transition-colors" required placeholder="Masukkan nama lengkap">
+                    <input type="text" name="name" value="{{ old('name') }}" class="w-full rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-blue-500 transition-colors" required placeholder="Masukkan nama lengkap">
                     @error('name')<p class="text-rose-500 text-sm mt-1 flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> {{ $message }}</p>@enderror
                 </div>
                 
                 <div>
                     <label class="block text-sm font-bold text-slate-700 mb-2">Alamat Email <span class="text-rose-500">*</span></label>
-                    <input type="email" name="email" value="{{ old('email') }}" class="w-full rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-emerald-500 focus:ring-emerald-500 transition-colors" required placeholder="nama@email.com">
+                    <input type="email" name="email" value="{{ old('email') }}" class="w-full rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-blue-500 transition-colors" required placeholder="nama@email.com">
                     @error('email')<p class="text-rose-500 text-sm mt-1 flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> {{ $message }}</p>@enderror
                 </div>
                 
                 <div x-data="{ showPassword: false }">
                     <label class="block text-sm font-bold text-slate-700 mb-2">Password <span class="text-rose-500">*</span></label>
                     <div class="relative">
-                        <input :type="showPassword ? 'text' : 'password'" name="password" class="w-full rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-emerald-500 focus:ring-emerald-500 transition-colors pr-12" required minlength="6" placeholder="Minimal 6 karakter">
+                        <input :type="showPassword ? 'text' : 'password'" name="password" class="w-full rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-blue-500 transition-colors pr-12" required minlength="6" placeholder="Minimal 6 karakter">
                         <button type="button"
-                                class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-emerald-600 transition-colors focus:outline-none"
+                                class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-blue-600 transition-colors focus:outline-none"
                                 @click="showPassword = !showPassword"
                                 :aria-label="showPassword ? 'Hide password' : 'Show password'"
                                 :aria-pressed="showPassword.toString()">
@@ -59,14 +59,14 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
                     <div>
                         <label class="block text-sm font-bold text-slate-700 mb-2">Role Akses <span class="text-rose-500">*</span></label>
-                        <select name="role" class="w-full rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-emerald-500 focus:ring-emerald-500 transition-colors" required>
+                        <select name="role" class="w-full rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-blue-500 transition-colors" required>
                             <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User (Operator Fakultas)</option>
                             <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin (Sistem Universial)</option>
                         </select>
                     </div>
                     <div>
                         <label class="block text-sm font-bold text-slate-700 mb-2">Penempatan Fakultas</label>
-                        <select name="fakultas" class="w-full rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-emerald-500 focus:ring-emerald-500 transition-colors">
+                        <select name="fakultas" class="w-full rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-blue-500 transition-colors">
                             <option value="">-- Pilih Fakultas (Semua untuk Admin) --</option>
                             @foreach($fakultasConfig as $kode => $data)
                                 <option value="{{ $kode }}" {{ old('fakultas') == $kode ? 'selected' : '' }}>{{ $data['nama'] }}</option>
@@ -77,7 +77,7 @@
             </div>
 
             <div class="flex items-center gap-3 pt-6 mt-6 border-t border-slate-100">
-                <button type="submit" class="flex-1 px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 font-bold transition-all duration-200 shadow-sm hover:shadow-emerald-200 ring-1 ring-emerald-500 hover:ring-2 flex items-center justify-center gap-2">
+                <button type="submit" class="flex-1 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 font-bold transition-all duration-200 shadow-sm hover:shadow-blue-200 ring-1 ring-blue-500 hover:ring-2 flex items-center justify-center gap-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                     Simpan User Baru
                 </button>

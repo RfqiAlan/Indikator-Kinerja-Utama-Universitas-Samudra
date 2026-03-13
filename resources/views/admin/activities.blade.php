@@ -1,14 +1,14 @@
 <x-admin-layout activePage="activities">
     <!-- Premium Header Banner -->
     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 lg:p-8 w-full relative overflow-hidden mb-6 lg:mb-8" data-aos="fade-up">
-        <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+        <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-500 to-indigo-500"></div>
         <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
             <div class="flex items-center gap-4 mb-2 md:mb-0">
-                <div class="w-14 h-14 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 font-bold text-xl border border-emerald-100 shadow-sm relative">
-                    <svg class="w-7 h-7 absolute z-10 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 font-bold text-xl border border-blue-100 shadow-sm relative">
+                    <svg class="w-7 h-7 absolute z-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                     </svg>
-                    <svg class="w-7 h-7 absolute z-0 text-emerald-200 ml-2 mt-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-7 h-7 absolute z-0 text-blue-200 ml-2 mt-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                     </svg>
                 </div>
@@ -35,7 +35,7 @@
         @forelse($activities as $activity)
         <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 relative overflow-hidden group">
             <div class="absolute top-0 left-0 w-1.5 h-full 
-                {{ $activity->action === 'create' ? 'bg-emerald-400' : '' }}
+                {{ $activity->action === 'create' ? 'bg-blue-400' : '' }}
                 {{ $activity->action === 'update' ? 'bg-amber-400' : '' }}
                 {{ $activity->action === 'delete' ? 'bg-rose-400' : '' }}
                 {{ $activity->action === 'login' ? 'bg-cyan-400' : '' }}">
@@ -44,7 +44,7 @@
             <div class="flex items-center justify-between mb-3 pl-2">
                 <div class="flex items-center gap-3">
                     <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold shadow-inner shrink-0
-                        {{ $activity->action === 'create' ? 'bg-emerald-100 text-emerald-600' : '' }}
+                        {{ $activity->action === 'create' ? 'bg-blue-100 text-blue-600' : '' }}
                         {{ $activity->action === 'update' ? 'bg-amber-100 text-amber-600' : '' }}
                         {{ $activity->action === 'delete' ? 'bg-rose-100 text-rose-600' : '' }}
                         {{ $activity->action === 'login' ? 'bg-cyan-100 text-cyan-600' : '' }}">
@@ -56,7 +56,7 @@
                     </div>
                 </div>
                 <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-widest border shrink-0
-                    {{ $activity->action === 'create' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : '' }}
+                    {{ $activity->action === 'create' ? 'bg-blue-50 text-blue-700 border-blue-100' : '' }}
                     {{ $activity->action === 'update' ? 'bg-amber-50 text-amber-700 border-amber-100' : '' }}
                     {{ $activity->action === 'delete' ? 'bg-rose-50 text-rose-700 border-rose-100' : '' }}
                     {{ $activity->action === 'login' ? 'bg-cyan-50 text-cyan-700 border-cyan-100' : '' }}">
@@ -96,7 +96,7 @@
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-4">
                                 <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm shadow-inner shrink-0
-                                    {{ $activity->action === 'create' ? 'bg-emerald-100 text-emerald-600' : '' }}
+                                    {{ $activity->action === 'create' ? 'bg-blue-100 text-blue-600' : '' }}
                                     {{ $activity->action === 'update' ? 'bg-amber-100 text-amber-600' : '' }}
                                     {{ $activity->action === 'delete' ? 'bg-rose-100 text-rose-600' : '' }}
                                     {{ $activity->action === 'login' ? 'bg-cyan-100 text-cyan-600' : '' }}">
@@ -107,7 +107,7 @@
                         </td>
                         <td class="px-6 py-4">
                             <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest border
-                                {{ $activity->action === 'create' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : '' }}
+                                {{ $activity->action === 'create' ? 'bg-blue-50 text-blue-700 border-blue-100' : '' }}
                                 {{ $activity->action === 'update' ? 'bg-amber-50 text-amber-700 border-amber-100' : '' }}
                                 {{ $activity->action === 'delete' ? 'bg-rose-50 text-rose-700 border-rose-100' : '' }}
                                 {{ $activity->action === 'login' ? 'bg-cyan-50 text-cyan-700 border-cyan-100' : '' }}">

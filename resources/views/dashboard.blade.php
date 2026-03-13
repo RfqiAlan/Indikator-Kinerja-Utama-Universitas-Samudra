@@ -93,7 +93,7 @@
                         <a href="{{ route('home') }}" class="flex items-center gap-3 group">
                             <div class="relative w-12 h-12 bg-white rounded-xl shadow-sm border border-slate-100 p-2 overflow-hidden group-hover:shadow-md transition-all">
                                 <img src="{{ asset('build/assets/logo.png') }}" alt="Logo UNSAM" class="w-full h-full object-contain relative z-10" />
-                                <div class="absolute inset-0 bg-gradient-to-tr from-blue-50 to-emerald-50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <div class="absolute inset-0 bg-gradient-to-tr from-blue-50 to-blue-50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             </div>
                             <div class="flex flex-col">
                                 <span class="text-xl font-bold outfit tracking-tight text-slate-900">IKU UNSAM</span>
@@ -200,7 +200,7 @@
                     
                     // Colors
                     $themeClasses = $meetsTarget 
-                        ? ['bg' => 'bg-emerald-50', 'text' => 'text-emerald-600', 'bar' => 'bg-emerald-500', 'glow' => 'progress-glow', 'badgeBg' => 'bg-emerald-100', 'badgeText' => 'text-emerald-700'] 
+                        ? ['bg' => 'bg-blue-50', 'text' => 'text-blue-600', 'bar' => 'bg-blue-500', 'glow' => 'progress-glow', 'badgeBg' => 'bg-blue-100', 'badgeText' => 'text-blue-700'] 
                         : ['bg' => 'bg-rose-50', 'text' => 'text-rose-600', 'bar' => 'bg-rose-500', 'glow' => 'progress-glow-red', 'badgeBg' => 'bg-rose-100', 'badgeText' => 'text-rose-700'];
                         
                     // Limit percentage for bar width visually to max 100%

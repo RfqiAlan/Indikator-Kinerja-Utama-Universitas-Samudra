@@ -26,20 +26,20 @@
                         <!-- Section 1: Academic Info -->
                         <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-6" data-aos="fade-up">
                             <h3 class="text-lg font-semibold text-slate-800 dark:text-white mb-4 border-b border-slate-100 dark:border-slate-700 pb-3 flex items-center">
-                                <span class="bg-emerald-100 text-emerald-600 dark:bg-emerald-900/50 dark:text-emerald-300 w-8 h-8 rounded-full flex items-center justify-center text-sm mr-3">1</span>
+                                <span class="bg-blue-100 text-blue-600 dark:bg-blue-900/50 dark:text-blue-300 w-8 h-8 rounded-full flex items-center justify-center text-sm mr-3">1</span>
                                 Informasi Akademik
                             </h3>
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="space-y-2">
                                     <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Tahun <span class="text-rose-500">*</span></label>
-                                    <x-tahun-akademik-select :selected="$iku1->tahun_akademik" class="w-full rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-shadow" />
+                                    <x-tahun-akademik-select :selected="$iku1->tahun_akademik" class="w-full rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow" />
                                     @error('tahun_akademik')<span class="text-rose-500 text-xs mt-1 block">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="space-y-2">
                                     <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Program Studi <span class="text-rose-500">*</span></label>
                                     <select name="program_studi" x-model="selectedProdi"
-                                        class="w-full rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-shadow" required>
+                                        class="w-full rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow" required>
                                         <option value="">-- Pilih Program Studi --</option>
                                         @foreach(auth()->user()->prodi_list as $kode => $prodi)
                                             <option value="{{ $kode }}" {{ old('program_studi', $iku1->program_studi) == $kode ? 'selected' : '' }}>
@@ -53,7 +53,7 @@
                             
                             <!-- Auto-derived Jenjang Display -->
                             <template x-if="selectedProdi">
-                                <div class="mt-4 flex items-center gap-2 px-3 py-2 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-700 text-sm">
+                                <div class="mt-4 flex items-center gap-2 px-3 py-2 bg-blue-50 border border-blue-200 rounded-lg text-blue-700 text-sm">
                                     <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                     <span>Jenjang: <strong x-text="currentJenjang"></strong> — AEE Ideal: <strong x-text="aeeIdeal + '%'"></strong></span>
                                 </div>
@@ -63,7 +63,7 @@
                         <!-- Section 2: Data Capaian -->
                         <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-6">
                             <h3 class="text-lg font-semibold text-slate-800 dark:text-white mb-4 border-b border-slate-100 dark:border-slate-700 pb-3 flex items-center">
-                                <span class="bg-emerald-100 text-emerald-600 dark:bg-emerald-900/50 dark:text-emerald-300 w-8 h-8 rounded-full flex items-center justify-center text-sm mr-3">2</span>
+                                <span class="bg-blue-100 text-blue-600 dark:bg-blue-900/50 dark:text-blue-300 w-8 h-8 rounded-full flex items-center justify-center text-sm mr-3">2</span>
                                 Data Capaian
                             </h3>
 
@@ -73,7 +73,7 @@
                                         Lulus Tepat Waktu <span class="text-rose-500">*</span>
                                     </label>
                                     <input type="number" name="jumlah_lulus_tepat_waktu" x-model.number="lulusTepat" value="{{ old('jumlah_lulus_tepat_waktu', $iku1->jumlah_lulus_tepat_waktu) }}" 
-                                        class="w-full text-lg font-semibold rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-shadow"
+                                        class="w-full text-lg font-semibold rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow"
                                         placeholder="0" min="0" required>
                                     <p class="text-xs text-slate-500">Jumlah mahasiswa yang lulus sesuai masa studi.</p>
                                     @error('jumlah_lulus_tepat_waktu')<span class="text-rose-500 text-xs mt-1 block">{{ $message }}</span>@enderror
@@ -83,7 +83,7 @@
                                         Total Mahasiswa Aktif <span class="text-rose-500">*</span>
                                     </label>
                                     <input type="number" name="total_mahasiswa_aktif" x-model.number="totalMahasiswa" value="{{ old('total_mahasiswa_aktif', $iku1->total_mahasiswa_aktif) }}" 
-                                        class="w-full text-lg font-semibold rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-shadow"
+                                        class="w-full text-lg font-semibold rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow"
                                         placeholder="0" min="1" required>
                                     <p class="text-xs text-slate-500">Total mahasiswa terdaftar pada periode tersebut.</p>
                                     @error('total_mahasiswa_aktif')<span class="text-rose-500 text-xs mt-1 block">{{ $message }}</span>@enderror
@@ -93,7 +93,7 @@
                                         Jumlah Responden
                                     </label>
                                     <input type="number" name="jumlah_responden" x-model.number="jumlahResponden" value="{{ old('jumlah_responden', $iku1->jumlah_responden ?? 0) }}" 
-                                        class="w-full text-lg font-semibold rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-shadow"
+                                        class="w-full text-lg font-semibold rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow"
                                         placeholder="0" min="0">
                                     <p class="text-xs text-slate-500">Min. 75% dari jumlah lulusan.</p>
                                     @error('jumlah_responden')<span class="text-rose-500 text-xs mt-1 block">{{ $message }}</span>@enderror
@@ -111,7 +111,7 @@
                              <div class="mt-6 space-y-2">
                                 <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Catatan <span class="text-slate-400 font-normal">(Opsional)</span></label>
                                 <textarea name="keterangan" rows="3" 
-                                    class="w-full rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-shadow"
+                                    class="w-full rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow"
                                     placeholder="Tambahkan keterangan jika diperlukan...">{{ old('keterangan', $iku1->keterangan) }}</textarea>
                             </div>
                         </div>
@@ -125,7 +125,7 @@
                                 Batal
                             </a>
                             <button type="submit" 
-                                class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-lg shadow-emerald-200 dark:shadow-none transition-all transform hover:-translate-y-0.5">
+                                class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-lg shadow-blue-200 dark:shadow-none transition-all transform hover:-translate-y-0.5">
                                 Update Data
                             </button>
                         </div>
@@ -136,14 +136,14 @@
                 <div class="lg:col-span-1">
                     <div class="sticky top-6 space-y-6" x-data="formIku1Edit()">
                         <!-- Result Card -->
-                        <div class="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-3xl shadow-xl p-6 text-white relative overflow-hidden">
+                        <div class="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-3xl shadow-xl p-6 text-white relative overflow-hidden">
                             <div class="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 rounded-full bg-white opacity-20 blur-2xl"></div>
                             
-                            <h4 class="text-emerald-100 font-medium text-sm mb-4 uppercase tracking-wider">Hasil Perhitungan</h4>
+                            <h4 class="text-blue-100 font-medium text-sm mb-4 uppercase tracking-wider">Hasil Perhitungan</h4>
                             
                             <div class="space-y-6 relative z-10">
                                 <div class="text-center">
-                                    <p class="text-emerald-200 text-xs mb-1">AEE Realisasi</p>
+                                    <p class="text-blue-200 text-xs mb-1">AEE Realisasi</p>
                                     <div class="text-4xl font-extrabold tracking-tight" x-text="aee.toFixed(2) + '%'">0.00%</div>
                                     <div class="w-full bg-white/20 h-1.5 rounded-full mt-2 overflow-hidden">
                                         <div class="h-full bg-white rounded-full transition-all duration-500" :style="'width: ' + Math.min(aee, 100) + '%'"></div>
@@ -152,10 +152,10 @@
 
                                 <div class="bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/10">
                                     <div class="flex justify-between items-end mb-2">
-                                        <span class="text-emerald-100 text-sm">Tingkat Pencapaian</span>
+                                        <span class="text-blue-100 text-sm">Tingkat Pencapaian</span>
                                         <span class="text-2xl font-bold" x-text="tingkatPencapaian.toFixed(2) + '%'">0%</span>
                                     </div>
-                                    <div class="text-xs text-emerald-200 flex justify-between">
+                                    <div class="text-xs text-blue-200 flex justify-between">
                                         <span class="font-bold" x-text="tingkatPencapaian >= 100 ? 'Sangat Baik' : (tingkatPencapaian >= 75 ? 'Cukup' : (tingkatPencapaian > 0 ? 'Perlu Ditingkatkan' : 'Menunggu Data'))"></span>
                                         <span>Target: <span x-text="aeeIdeal"></span>%</span>
                                     </div>

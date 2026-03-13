@@ -15,7 +15,7 @@
     <div class="min-h-screen lg:flex">
         <!-- Mobile Header -->
         <div class="lg:hidden bg-slate-800 text-white p-4 flex items-center justify-between sticky top-0 z-50">
-            <h1 class="text-lg font-bold text-emerald-400">IKU UNSAM</h1>
+            <h1 class="text-lg font-bold text-blue-400">IKU UNSAM</h1>
             <button @click="sidebarOpen = !sidebarOpen" class="p-2 hover:bg-slate-700 rounded-lg">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
@@ -32,7 +32,7 @@
         <!-- Sidebar -->
         <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="w-64 bg-gradient-to-b from-slate-800 to-slate-900 text-white flex-shrink-0 fixed inset-y-0 z-50 transition-transform duration-300 lg:translate-x-0 lg:h-screen lg:overflow-y-auto flex flex-col">
             <div class="p-6 border-b border-slate-700 hidden lg:block">
-                <h1 class="text-xl font-bold text-emerald-400">IKU UNSAM</h1>
+                <h1 class="text-xl font-bold text-blue-400">IKU UNSAM</h1>
                 <p class="text-xs text-slate-400 mt-1">Admin Panel</p>
             </div>
             
@@ -47,7 +47,7 @@
             
             <nav class="p-4 space-y-2">
                 <a href="{{ route('admin.dashboard') }}" @click="sidebarOpen = false"
-                   class="flex items-center gap-3 px-4 py-3 rounded-lg transition {{ $activePage === 'dashboard' ? 'bg-emerald-600 text-white' : 'text-slate-300 hover:bg-slate-700' }}">
+                   class="flex items-center gap-3 px-4 py-3 rounded-lg transition {{ $activePage === 'dashboard' ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-slate-700' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                     </svg>
@@ -55,7 +55,7 @@
                 </a>
 
                 <a href="{{ route('admin.users') }}" @click="sidebarOpen = false"
-                   class="flex items-center gap-3 px-4 py-3 rounded-lg transition {{ $activePage === 'users' ? 'bg-emerald-600 text-white' : 'text-slate-300 hover:bg-slate-700' }}">
+                   class="flex items-center gap-3 px-4 py-3 rounded-lg transition {{ $activePage === 'users' ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-slate-700' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
                     </svg>
@@ -63,7 +63,7 @@
                 </a>
 
                 <a href="{{ route('admin.activities') }}" @click="sidebarOpen = false"
-                   class="flex items-center gap-3 px-4 py-3 rounded-lg transition {{ $activePage === 'activities' ? 'bg-emerald-600 text-white' : 'text-slate-300 hover:bg-slate-700' }}">
+                   class="flex items-center gap-3 px-4 py-3 rounded-lg transition {{ $activePage === 'activities' ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-slate-700' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                     </svg>
@@ -74,8 +74,8 @@
                     <p class="px-4 text-xs text-slate-500 uppercase tracking-wider mb-2">Fakultas</p>
                     @foreach(\App\Models\Fakultas::getAllAsConfig() as $kode => $data)
                     <a href="{{ route('admin.fakultas', $kode) }}" @click="sidebarOpen = false"
-                       class="flex items-center gap-3 px-4 py-2 rounded-lg transition text-sm {{ $activePage === 'fakultas-'.$kode ? 'bg-emerald-600 text-white' : 'text-slate-300 hover:bg-slate-700' }}">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                       class="flex items-center gap-3 px-4 py-2 rounded-lg transition text-sm {{ $activePage === 'fakultas-'.$kode ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-slate-700' }}">
+                        <span class="w-2 h-2 rounded-full bg-blue-400"></span>
                         {{ strtoupper($kode) }}
                     </a>
                     @endforeach
@@ -84,7 +84,7 @@
                 <div class="pt-4 border-t border-slate-700 mt-4">
                     <p class="px-4 text-xs text-slate-500 uppercase tracking-wider mb-2">Pengaturan</p>
                     <a href="{{ route('admin.fakultas.manage') }}" @click="sidebarOpen = false"
-                       class="flex items-center gap-3 px-4 py-3 rounded-lg transition {{ $activePage === 'fakultas-manage' ? 'bg-emerald-600 text-white' : 'text-slate-300 hover:bg-slate-700' }}">
+                       class="flex items-center gap-3 px-4 py-3 rounded-lg transition {{ $activePage === 'fakultas-manage' ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-slate-700' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                         </svg>
@@ -95,7 +95,7 @@
 
             <div class="p-4 border-t border-slate-700 bg-slate-900 mt-auto">
                 <div class="flex items-center gap-3 mb-3">
-                    <div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center text-white font-semibold">
+                    <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold">
                         {{ substr(auth()->user()->name, 0, 1) }}
                     </div>
                     <div class="flex-1 min-w-0">
@@ -115,7 +115,7 @@
         <!-- Main Content -->
         <main class="flex-1 p-4 lg:p-8">
             @if(session('success'))
-            <div class="mb-4 p-4 bg-emerald-100 border border-emerald-200 text-emerald-700 rounded-lg text-sm">
+            <div class="mb-4 p-4 bg-blue-100 border border-blue-200 text-blue-700 rounded-lg text-sm">
                 {{ session('success') }}
             </div>
             @endif

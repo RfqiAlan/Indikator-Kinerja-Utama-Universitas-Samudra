@@ -24,7 +24,7 @@
                         <div class="bg-rose-50 p-3 rounded-lg"><label class="block text-sm font-medium text-rose-700 mb-1">SDG 1 (No Poverty)</label><input type="number" name="sdg_1" x-model.number="sdg1" value="{{ old('sdg_1', 0) }}" class="w-full rounded-lg border-rose-200" min="0"></div>
                         <div class="bg-amber-50 p-3 rounded-lg"><label class="block text-sm font-medium text-amber-700 mb-1">SDG 4 (Education)</label><input type="number" name="sdg_4" x-model.number="sdg4" value="{{ old('sdg_4', 0) }}" class="w-full rounded-lg border-amber-200" min="0"></div>
                         <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">SDG 17 (Partnership)</label><input type="number" name="sdg_17" x-model.number="sdg17" value="{{ old('sdg_17', 0) }}" class="w-full rounded-lg border-blue-200" min="0"></div>
-                        <div class="bg-emerald-50 p-3 rounded-lg"><label class="block text-sm font-medium text-emerald-700 mb-1">SDG Pilihan Lainnya</label><input type="number" name="sdg_pilihan" x-model.number="sdgPilihan" value="{{ old('sdg_pilihan', 0) }}" class="w-full rounded-lg border-emerald-200" min="0"></div>
+                        <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">SDG Pilihan Lainnya</label><input type="number" name="sdg_pilihan" x-model.number="sdgPilihan" value="{{ old('sdg_pilihan', 0) }}" class="w-full rounded-lg border-blue-200" min="0"></div>
                     </div>
                 </div>
                 <div class="border-t pt-6"><h3 class="font-semibold text-slate-800 mb-4">Bidang Kegiatan</h3>
@@ -36,16 +36,16 @@
                         <div class="bg-slate-50 p-3 rounded-lg"><label class="block text-sm text-slate-700 mb-1">Kebijakan</label><input type="number" name="kebijakan" x-model.number="kebijakan" value="{{ old('kebijakan', 0) }}" class="w-full rounded-lg border-slate-200" min="0"></div>
                     </div>
                 </div>
-                <div class="bg-gradient-to-r from-emerald-50 to-cyan-50 rounded-xl p-6">
+                <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-6">
                     <div class="grid grid-cols-3 gap-4 text-center">
-                        <div><p class="text-xs text-slate-500">Total Program SDGs</p><p class="text-2xl font-bold text-emerald-600" x-text="totalSdgs">0</p></div>
+                        <div><p class="text-xs text-slate-500">Total Program SDGs</p><p class="text-2xl font-bold text-blue-600" x-text="totalSdgs">0</p></div>
                         <div><p class="text-xs text-slate-500">Total Program</p><p class="text-2xl font-bold text-slate-600" x-text="totalProgram">0</p></div>
-                        <div><p class="text-xs text-slate-500">Persentase IKU 7</p><p class="text-2xl font-bold" :class="persentase >= 50 ? 'text-emerald-600' : 'text-rose-600'" x-text="persentase.toFixed(2) + '%'">0%</p></div>
+                        <div><p class="text-xs text-slate-500">Persentase IKU 7</p><p class="text-2xl font-bold" :class="persentase >= 50 ? 'text-blue-600' : 'text-rose-600'" x-text="persentase.toFixed(2) + '%'">0%</p></div>
                     </div>
                 </div>
                 <div><label class="block text-sm font-medium text-slate-700 mb-1">Keterangan</label><textarea name="keterangan" rows="2" class="w-full rounded-lg border-slate-300">{{ old('keterangan') }}</textarea></div>
                 @include("partials.lampiran-upload", ["ikuNumber" => 7])
-                <div class="flex justify-end gap-3"><a href="{{ route('user.iku7.index') }}" class="px-4 py-2 text-slate-600">Batal</a><button type="submit" class="px-6 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold">Simpan</button></div>
+                <div class="flex justify-end gap-3"><a href="{{ route('user.iku7.index') }}" class="px-4 py-2 text-slate-600">Batal</a><button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold">Simpan</button></div>
             </form>
         </div>
         <script>

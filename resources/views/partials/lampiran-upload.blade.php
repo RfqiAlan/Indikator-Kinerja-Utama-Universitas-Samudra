@@ -47,7 +47,7 @@
 
         <label class="block text-sm font-medium text-slate-700 mb-2">Upload File (PDF, JPG, PNG, DOC - Max 10MB per file)</label>
         <input type="file" name="lampiran[]" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" multiple
-            class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer border border-slate-300 rounded-lg focus:ring-emerald-500">
+            class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer border border-slate-300 rounded-lg focus:ring-blue-500">
         <p class="text-xs text-slate-400 mt-1">Bisa upload lebih dari 1 file sekaligus. File akan diupload ke Google Drive sebagai bukti pendukung.</p>
 
         {{-- Display existing uploaded files --}}

@@ -11,7 +11,7 @@
                 
                 <div class="border-b pb-6">
                     <h3 class="font-semibold text-slate-800 mb-4 flex items-center">
-                        <span class="bg-emerald-100 text-emerald-600 w-7 h-7 rounded-full flex items-center justify-center text-sm mr-2">1</span>
+                        <span class="bg-blue-100 text-blue-600 w-7 h-7 rounded-full flex items-center justify-center text-sm mr-2">1</span>
                         Informasi Akademik
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -21,7 +21,7 @@
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">Program Studi <span class="text-rose-500">*</span></label>
-                            <select name="program_studi" x-model="prodi" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500" required>
+                            <select name="program_studi" x-model="prodi" class="w-full rounded-lg border-slate-300 focus:ring-blue-500" required>
                                 <option value="">-- Pilih Program Studi --</option>
                                 @foreach(auth()->user()->prodi_list as $kode => $prodi)
                                     <option value="{{ $kode }}">{{ $prodi['nama'] }}</option>
@@ -32,11 +32,11 @@
                     <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">Total Lulusan <span class="text-rose-500">*</span></label>
-                            <input type="number" name="total_lulusan" x-model.number="totalLulusan" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500" required min="1">
+                            <input type="number" name="total_lulusan" x-model.number="totalLulusan" class="w-full rounded-lg border-slate-300 focus:ring-blue-500" required min="1">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">Total Responden <span class="text-rose-500">*</span></label>
-                            <input type="number" name="total_responden" x-model.number="totalResponden" class="w-full rounded-lg border-slate-300 focus:ring-emerald-500" required min="0">
+                            <input type="number" name="total_responden" x-model.number="totalResponden" class="w-full rounded-lg border-slate-300 focus:ring-blue-500" required min="0">
                             <p class="text-xs text-slate-400 mt-1">Min. 75% dari total lulusan. Tidak boleh melebihi total lulusan.</p>
                         </div>
                     </div>
@@ -55,24 +55,24 @@
                         Kategori Bekerja
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="bg-emerald-50 p-4 rounded-lg">
-                            <label class="block text-sm font-medium text-emerald-700 mb-1">&lt;6 bln, &gt;1.2 UMP (Bobot 10)</label>
-                            <input type="number" name="bekerja_bobot_10" x-model.number="bekerja10" class="w-full rounded-lg border-emerald-200" min="0">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <label class="block text-sm font-medium text-blue-700 mb-1">&lt;6 bln, &gt;1.2 UMP (Bobot 10)</label>
+                            <input type="number" name="bekerja_bobot_10" x-model.number="bekerja10" class="w-full rounded-lg border-blue-200" min="0">
                         </div>
                         <div class="bg-cyan-50 p-4 rounded-lg">
                             <label class="block text-sm font-medium text-cyan-700 mb-1">&lt;1 thn, &gt;1.2 UMP (Bobot 6)</label>
                             <input type="number" name="bekerja_bobot_6" x-model.number="bekerja6" class="w-full rounded-lg border-cyan-200" min="0">
                         </div>
-                        <div class="bg-teal-50 p-4 rounded-lg">
-                            <label class="block text-sm font-medium text-teal-700 mb-1">&lt;1 thn, &lt;1.2 UMP (Bobot 4)</label>
-                            <input type="number" name="bekerja_bobot_4" x-model.number="bekerja4" class="w-full rounded-lg border-teal-200" min="0">
+                        <div class="bg-indigo-50 p-4 rounded-lg">
+                            <label class="block text-sm font-medium text-indigo-700 mb-1">&lt;1 thn, &lt;1.2 UMP (Bobot 4)</label>
+                            <input type="number" name="bekerja_bobot_4" x-model.number="bekerja4" class="w-full rounded-lg border-indigo-200" min="0">
                         </div>
                     </div>
                 </div>
 
                 <div class="border-b pb-6">
                     <h3 class="font-semibold text-slate-800 mb-4 flex items-center">
-                        <span class="bg-teal-100 text-teal-600 w-7 h-7 rounded-full flex items-center justify-center text-sm mr-2">3</span>
+                        <span class="bg-indigo-100 text-indigo-600 w-7 h-7 rounded-full flex items-center justify-center text-sm mr-2">3</span>
                         Studi Lanjut & Wirausaha
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -91,13 +91,13 @@
                     </div>
                 </div>
 
-                <div class="bg-gradient-to-r from-emerald-50 to-cyan-50 rounded-xl p-6">
+                <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-6">
                     <h4 class="font-semibold text-slate-800 mb-4">Preview Perhitungan</h4>
                     <div class="grid grid-cols-4 gap-4 text-center">
-                        <div><p class="text-xs text-slate-500">Skor Bekerja</p><p class="text-xl font-bold text-emerald-600" x-text="skorBekerja.toFixed(2)">0</p></div>
+                        <div><p class="text-xs text-slate-500">Skor Bekerja</p><p class="text-xl font-bold text-blue-600" x-text="skorBekerja.toFixed(2)">0</p></div>
                         <div><p class="text-xs text-slate-500">Studi Lanjut</p><p class="text-xl font-bold text-cyan-600" x-text="studiLanjut">0</p></div>
                         <div><p class="text-xs text-slate-500">Skor Wirausaha</p><p class="text-xl font-bold text-amber-600" x-text="skorWirausaha.toFixed(2)">0</p></div>
-                        <div><p class="text-xs text-slate-500">Persentase IKU 2</p><p class="text-2xl font-bold" :class="persentase >= 50 ? 'text-emerald-600' : 'text-rose-600'" x-text="persentase.toFixed(2) + '%'">0%</p></div>
+                        <div><p class="text-xs text-slate-500">Persentase IKU 2</p><p class="text-2xl font-bold" :class="persentase >= 50 ? 'text-blue-600' : 'text-rose-600'" x-text="persentase.toFixed(2) + '%'">0%</p></div>
                     </div>
                 </div>
 
@@ -109,7 +109,7 @@
                 @include("partials.lampiran-upload", ["ikuNumber" => 2, "existingLinks" => $iku2->lampiran_link ?? []])
                 <div class="flex justify-end gap-3 pt-4">
                     <a href="{{ route('user.iku2.index') }}" class="px-4 py-2 text-slate-600">Batal</a>
-                    <button type="submit" class="px-6 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold shadow-md">Perbarui</button>
+                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold shadow-md">Perbarui</button>
                 </div>
             </form>
         </div>

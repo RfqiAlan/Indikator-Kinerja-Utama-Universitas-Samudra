@@ -15,13 +15,13 @@
                     <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Proporsi publikasi Q1-Q4 dengan bobot berbeda.</p>
                 </div>
                 <div class="flex items-center gap-3">
-                    <form method="GET" action="{{ route('user.iku6.index') }}"><select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-lg shadow-sm w-full sm:w-auto">@foreach($availableYears as $year)<option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>@endforeach</select></form>
-                    <a href="{{ route('user.iku6.create') }}" class="inline-flex items-center px-4 py-2 bg-emerald-600 rounded-lg text-xs text-white uppercase hover:bg-emerald-700 shadow-md"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>Tambah</a>
+                    <form method="GET" action="{{ route('user.iku6.index') }}"><select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm w-full sm:w-auto">@foreach($availableYears as $year)<option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>@endforeach</select></form>
+                    <a href="{{ route('user.iku6.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 rounded-lg text-xs text-white uppercase hover:bg-blue-700 shadow-md"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>Tambah</a>
                 </div>
             </div>
         </x-slot>
         <div class="py-6 space-y-6" data-aos="fade-up">
-            @php $target = 50; $meetsTarget = $overallPercentage >= $target; $bgColor = $meetsTarget ? 'bg-emerald-50 dark:bg-emerald-900/30' : 'bg-rose-50 dark:bg-rose-900/30'; $textColor = $meetsTarget ? 'text-emerald-600' : 'text-rose-600'; $valueColor = $meetsTarget ? 'text-emerald-700' : 'text-rose-700'; @endphp
+            @php $target = 50; $meetsTarget = $overallPercentage >= $target; $bgColor = $meetsTarget ? 'bg-blue-50 dark:bg-blue-900/30' : 'bg-rose-50 dark:bg-rose-900/30'; $textColor = $meetsTarget ? 'text-blue-600' : 'text-rose-600'; $valueColor = $meetsTarget ? 'text-blue-700' : 'text-rose-700'; @endphp
             <div class="relative overflow-hidden bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-6">
                 <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                     <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -30,8 +30,8 @@
                         <div class="text-center p-4 bg-cyan-50 dark:bg-cyan-900/30 rounded-xl"><p class="text-sm text-cyan-600">Skor Publikasi</p><p class="text-3xl font-bold text-cyan-700">{{ number_format($skorPublikasi, 1) }}</p></div>
                     </div>
                     <div class="relative w-28 h-28 flex items-center justify-center">
-                        <svg class="transform -rotate-90 w-full h-full" viewBox="0 0 36 36"><path class="text-slate-100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" /><path class="{{ $meetsTarget ? 'text-emerald-500' : 'text-rose-500' }}" stroke-dasharray="{{ min($overallPercentage, 100) }}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" /></svg>
-                        <div class="absolute flex flex-col items-center"><span class="text-xs font-bold text-slate-400">Score</span><span class="text-lg font-black {{ $meetsTarget ? 'text-emerald-500' : 'text-rose-500' }}">{{ number_format($overallPercentage, 1) }}%</span></div>
+                        <svg class="transform -rotate-90 w-full h-full" viewBox="0 0 36 36"><path class="text-slate-100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" /><path class="{{ $meetsTarget ? 'text-blue-500' : 'text-rose-500' }}" stroke-dasharray="{{ min($overallPercentage, 100) }}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" /></svg>
+                        <div class="absolute flex flex-col items-center"><span class="text-xs font-bold text-slate-400">Score</span><span class="text-lg font-black {{ $meetsTarget ? 'text-blue-500' : 'text-rose-500' }}">{{ number_format($overallPercentage, 1) }}%</span></div>
                     </div>
                 </div>
             </div>
@@ -74,7 +74,7 @@
                                     {{ number_format($item->publikasi_q4) }}
                                 </td>
                                 <td class="px-6 py-4 text-center">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $item->persentase_iku6 >= 50 ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300' }}">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $item->persentase_iku6 >= 50 ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300' }}">
                                         {{ number_format($item->persentase_iku6, 2) }}%
                                     </span>
                                 </td>
@@ -103,7 +103,7 @@
                     </div>
                     <h3 class="text-lg font-medium text-slate-900 dark:text-white mb-2">Belum ada data</h3>
                     <p class="text-slate-500 max-w-sm mx-auto mb-6">Mulai dengan menambahkan data publikasi internasional dosen.</p>
-                    <a href="{{ route('user.iku6.create') }}" class="inline-flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 shadow-sm transition-all">
+                    <a href="{{ route('user.iku6.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 shadow-sm transition-all">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         Tambah Data
                     </a>

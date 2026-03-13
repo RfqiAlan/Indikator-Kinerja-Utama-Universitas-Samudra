@@ -18,13 +18,13 @@
                 </div>
                 <div class="flex items-center gap-3">
                     <form method="GET" action="{{ route('user.iku2.index') }}" class="flex items-center">
-                        <select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-lg shadow-sm w-full sm:w-auto">
+                        <select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm w-full sm:w-auto">
                             @foreach($availableYears as $year)
                                 <option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>
                             @endforeach
                         </select>
                     </form>
-                    <a href="{{ route('user.iku2.create') }}" class="inline-flex items-center px-4 py-2 bg-emerald-600 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-emerald-700 focus:bg-emerald-700 active:bg-emerald-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition ease-in-out duration-150 shadow-md hover:shadow-lg">
+                    <a href="{{ route('user.iku2.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150 shadow-md hover:shadow-lg">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
                         Tambah Data
                     </a>
@@ -37,12 +37,12 @@
             @php 
                 $targetIku2 = 50;
                 $meetsTarget = $overallPercentage >= $targetIku2;
-                $bgColor = $meetsTarget ? 'bg-emerald-50 dark:bg-emerald-900/30' : 'bg-rose-50 dark:bg-rose-900/30';
-                $textColor = $meetsTarget ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400';
-                $valueColor = $meetsTarget ? 'text-emerald-700 dark:text-emerald-300' : 'text-rose-700 dark:text-rose-300';
+                $bgColor = $meetsTarget ? 'bg-blue-50 dark:bg-blue-900/30' : 'bg-rose-50 dark:bg-rose-900/30';
+                $textColor = $meetsTarget ? 'text-blue-600 dark:text-blue-400' : 'text-rose-600 dark:text-rose-400';
+                $valueColor = $meetsTarget ? 'text-blue-700 dark:text-blue-300' : 'text-rose-700 dark:text-rose-300';
             @endphp
             <div class="relative overflow-hidden bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 sm:p-8">
-                <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full {{ $meetsTarget ? 'bg-emerald-50' : 'bg-rose-50' }} dark:bg-opacity-20 blur-3xl opacity-60"></div>
+                <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full {{ $meetsTarget ? 'bg-blue-50' : 'bg-rose-50' }} dark:bg-opacity-20 blur-3xl opacity-60"></div>
                 <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-cyan-50 dark:bg-cyan-900/20 blur-3xl opacity-60"></div>
                 
                 <div class="relative flex flex-col md:flex-row items-center justify-between gap-8">
@@ -56,20 +56,20 @@
                             <p class="text-sm text-slate-600 dark:text-slate-400 font-medium">Total Lulusan</p>
                             <p class="text-3xl font-bold text-slate-700 dark:text-slate-300">{{ number_format($totalLulusan) }}</p>
                         </div>
-                        <div class="text-center p-4 {{ $totalResponden >= ($totalLulusan * 0.75) ? 'bg-emerald-50 dark:bg-emerald-900/30' : 'bg-rose-50 dark:bg-rose-900/30' }} rounded-xl">
-                            <p class="text-sm {{ $totalResponden >= ($totalLulusan * 0.75) ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400' }} font-medium">Total Responden</p>
-                            <p class="text-3xl font-bold {{ $totalResponden >= ($totalLulusan * 0.75) ? 'text-emerald-700 dark:text-emerald-300' : 'text-rose-700 dark:text-rose-300' }}">{{ number_format($totalResponden) }}</p>
+                        <div class="text-center p-4 {{ $totalResponden >= ($totalLulusan * 0.75) ? 'bg-blue-50 dark:bg-blue-900/30' : 'bg-rose-50 dark:bg-rose-900/30' }} rounded-xl">
+                            <p class="text-sm {{ $totalResponden >= ($totalLulusan * 0.75) ? 'text-blue-600 dark:text-blue-400' : 'text-rose-600 dark:text-rose-400' }} font-medium">Total Responden</p>
+                            <p class="text-3xl font-bold {{ $totalResponden >= ($totalLulusan * 0.75) ? 'text-blue-700 dark:text-blue-300' : 'text-rose-700 dark:text-rose-300' }}">{{ number_format($totalResponden) }}</p>
                             @if($totalLulusan > 0)
-                                <p class="text-xs {{ $totalResponden >= ($totalLulusan * 0.75) ? 'text-emerald-600' : 'text-rose-600' }}">{{ number_format(($totalResponden / $totalLulusan) * 100, 1) }}% dari lulusan</p>
+                                <p class="text-xs {{ $totalResponden >= ($totalLulusan * 0.75) ? 'text-blue-600' : 'text-rose-600' }}">{{ number_format(($totalResponden / $totalLulusan) * 100, 1) }}% dari lulusan</p>
                             @endif
                         </div>
                         <div class="text-center p-4 bg-cyan-50 dark:bg-cyan-900/30 rounded-xl">
                             <p class="text-sm text-cyan-600 dark:text-cyan-400 font-medium">Bekerja (Skor)</p>
                             <p class="text-3xl font-bold text-cyan-700 dark:text-cyan-300">{{ number_format($totalBekerja, 1) }}</p>
                         </div>
-                        <div class="text-center p-4 bg-teal-50 dark:bg-teal-900/30 rounded-xl">
-                            <p class="text-sm text-teal-600 dark:text-teal-400 font-medium">Studi Lanjut</p>
-                            <p class="text-3xl font-bold text-teal-700 dark:text-teal-300">{{ number_format($totalStudiLanjut) }}</p>
+                        <div class="text-center p-4 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl">
+                            <p class="text-sm text-indigo-600 dark:text-indigo-400 font-medium">Studi Lanjut</p>
+                            <p class="text-3xl font-bold text-indigo-700 dark:text-indigo-300">{{ number_format($totalStudiLanjut) }}</p>
                         </div>
                     </div>
                     
@@ -77,11 +77,11 @@
                     <div class="relative w-32 h-32 flex items-center justify-center">
                         <svg class="transform -rotate-90 w-full h-full" viewBox="0 0 36 36">
                             <path class="text-slate-100 dark:text-slate-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" />
-                            <path class="{{ $meetsTarget ? 'text-emerald-500' : 'text-rose-500' }}" stroke-dasharray="{{ min($overallPercentage, 100) }}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                            <path class="{{ $meetsTarget ? 'text-blue-500' : 'text-rose-500' }}" stroke-dasharray="{{ min($overallPercentage, 100) }}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
                         </svg>
                         <div class="absolute flex flex-col items-center">
                             <span class="text-xs font-bold text-slate-400 uppercase">Score</span>
-                            <span class="text-xl font-black {{ $meetsTarget ? 'text-emerald-500' : 'text-rose-500' }}">{{ number_format($overallPercentage, 1) }}%</span>
+                            <span class="text-xl font-black {{ $meetsTarget ? 'text-blue-500' : 'text-rose-500' }}">{{ number_format($overallPercentage, 1) }}%</span>
                         </div>
                     </div>
                 </div>
@@ -120,7 +120,7 @@
                             <tr class="group hover:bg-slate-50/50 dark:hover:bg-slate-700/30 transition-colors duration-150">
                                 <td class="px-6 py-4">
                                     <div class="flex items-center">
-                                        <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-lg bg-emerald-100 text-emerald-600 dark:bg-emerald-900/50 dark:text-emerald-300 font-bold text-xs ring-4 ring-white dark:ring-slate-800">
+                                        <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900/50 dark:text-blue-300 font-bold text-xs ring-4 ring-white dark:ring-slate-800">
                                             {{ substr($fakultasNama, 0, 2) }}
                                         </div>
                                         <div class="ml-4">
@@ -144,7 +144,7 @@
                                     @endphp
                                     @if($item->total_lulusan > 0)
                                         @if($respondenCukup)
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 mt-1">
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 mt-1">
                                                 <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
                                                 {{ number_format($respondenPersen, 1) }}% Cukup
                                             </span>
@@ -166,7 +166,7 @@
                                     <div class="text-sm text-slate-600 dark:text-slate-300">{{ number_format($item->total_wirausaha) }}</div>
                                 </td>
                                 <td class="px-6 py-4 text-center">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $item->persentase_iku2 >= 50 ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300' }}">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $item->persentase_iku2 >= 50 ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300' }}">
                                         {{ number_format($item->persentase_iku2, 2) }}%
                                     </span>
                                 </td>
@@ -194,7 +194,7 @@
                     <h3 class="mt-2 text-sm font-medium text-slate-900 dark:text-slate-100">Belum ada data</h3>
                     <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Mulai dengan menambahkan data tracer study.</p>
                     <div class="mt-6">
-                        <a href="{{ route('user.iku2.create') }}" class="inline-flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">
+                        <a href="{{ route('user.iku2.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
                             Tambah Data
                         </a>

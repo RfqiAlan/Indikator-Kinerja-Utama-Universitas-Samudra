@@ -22,23 +22,23 @@
                 </div>
                 <div class="border-t pt-6"><h3 class="font-semibold text-slate-800 mb-4">Jenis Luaran Kerja Sama</h3>
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                        <div class="bg-emerald-50 p-3 rounded-lg"><label class="block text-sm font-medium text-emerald-700 mb-1">Artikel Kolaborasi</label><input type="number" name="artikel_kolaborasi" x-model.number="artikel" value="{{ old('artikel_kolaborasi', $iku5->artikel_kolaborasi) }}" class="w-full rounded-lg border-emerald-200" min="0"></div>
+                        <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">Artikel Kolaborasi</label><input type="number" name="artikel_kolaborasi" x-model.number="artikel" value="{{ old('artikel_kolaborasi', $iku5->artikel_kolaborasi) }}" class="w-full rounded-lg border-blue-200" min="0"></div>
                         <div class="bg-cyan-50 p-3 rounded-lg"><label class="block text-sm font-medium text-cyan-700 mb-1">Produk Terapan</label><input type="number" name="produk_terapan" x-model.number="produk" value="{{ old('produk_terapan', $iku5->produk_terapan) }}" class="w-full rounded-lg border-cyan-200" min="0"></div>
-                        <div class="bg-teal-50 p-3 rounded-lg"><label class="block text-sm font-medium text-teal-700 mb-1">Studi Kasus</label><input type="number" name="studi_kasus" x-model.number="studi" value="{{ old('studi_kasus', $iku5->studi_kasus) }}" class="w-full rounded-lg border-teal-200" min="0"></div>
+                        <div class="bg-indigo-50 p-3 rounded-lg"><label class="block text-sm font-medium text-indigo-700 mb-1">Studi Kasus</label><input type="number" name="studi_kasus" x-model.number="studi" value="{{ old('studi_kasus', $iku5->studi_kasus) }}" class="w-full rounded-lg border-indigo-200" min="0"></div>
                         <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">TTG (Teknologi Tepat Guna)</label><input type="number" name="ttg" x-model.number="ttg" value="{{ old('ttg', $iku5->ttg) }}" class="w-full rounded-lg border-blue-200" min="0"></div>
                         <div class="bg-indigo-50 p-3 rounded-lg"><label class="block text-sm font-medium text-indigo-700 mb-1">Karya Seni Kolaboratif</label><input type="number" name="karya_seni_kolaboratif" x-model.number="seni" value="{{ old('karya_seni_kolaboratif', $iku5->karya_seni_kolaboratif) }}" class="w-full rounded-lg border-indigo-200" min="0"></div>
                     </div>
                 </div>
-                <div class="bg-gradient-to-r from-emerald-50 to-cyan-50 rounded-xl p-6">
+                <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-6">
                     <div class="grid grid-cols-3 gap-4 text-center">
-                        <div><p class="text-xs text-slate-500">Total Luaran</p><p class="text-2xl font-bold text-emerald-600" x-text="totalLuaran">0</p></div>
+                        <div><p class="text-xs text-slate-500">Total Luaran</p><p class="text-2xl font-bold text-blue-600" x-text="totalLuaran">0</p></div>
                         <div><p class="text-xs text-slate-500">Total Dosen</p><p class="text-2xl font-bold text-slate-600" x-text="totalDosen">0</p></div>
-                        <div><p class="text-xs text-slate-500">Persentase IKU 5</p><p class="text-2xl font-bold" :class="persentase >= 10 ? 'text-emerald-600' : 'text-rose-600'" x-text="persentase.toFixed(2) + '%'">0%</p></div>
+                        <div><p class="text-xs text-slate-500">Persentase IKU 5</p><p class="text-2xl font-bold" :class="persentase >= 10 ? 'text-blue-600' : 'text-rose-600'" x-text="persentase.toFixed(2) + '%'">0%</p></div>
                     </div>
                 </div>
                 <div><label class="block text-sm font-medium text-slate-700 mb-1">Keterangan</label><textarea name="keterangan" rows="2" class="w-full rounded-lg border-slate-300">{{ old('keterangan', $iku5->keterangan) }}</textarea></div>
                 @include("partials.lampiran-upload", ["ikuNumber" => 5, "existingLinks" => $iku5->lampiran_link ?? []])
-                <div class="flex justify-end gap-3"><a href="{{ route('user.iku5.index') }}" class="px-4 py-2 text-slate-600">Batal</a><button type="submit" class="px-6 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold">Update</button></div>
+                <div class="flex justify-end gap-3"><a href="{{ route('user.iku5.index') }}" class="px-4 py-2 text-slate-600">Batal</a><button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold">Update</button></div>
             </form>
         </div>
         <script>
