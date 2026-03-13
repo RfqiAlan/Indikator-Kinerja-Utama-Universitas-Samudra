@@ -152,15 +152,7 @@ $ikuItems = [
             </div>
             
             <div class="flex items-center gap-3 ml-6 shrink-0">
-                
-                <div class="hidden xl:flex items-center relative mr-2">
-                    <svg class="w-4 h-4 text-slate-400 absolute left-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                    <input type="text" placeholder="Cari data IKU..." class="pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-full text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all w-64 outline-none text-slate-700 placeholder-slate-400 shadow-sm" aria-label="Search">
-                </div>
-
-                <div class="relative group">
+                                <div class="relative group">
                     <a href="{{ route('home') }}" class="flex items-center justify-center w-10 h-10 rounded-full bg-white text-slate-500 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 border border-slate-200 shadow-sm hover:shadow-blue-100 hover:border-blue-200" aria-label="Dashboard Publik">
                         <svg class="h-5 w-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
