@@ -47,23 +47,79 @@ window.showWarning = (message) => {
     });
 };
 
-window.confirmDelete = (formId) => {
+// Intercept delete actions globally
+window.confirmDelete = (event, message = "Data yang dihapus tidak dapat dikembalikan!") => {
+    event.preventDefault();
+    const form = event.target.closest('form');
+
     Swal.fire({
         title: 'Hapus Data?',
-        text: 'Data yang dihapus tidak dapat dikembalikan!',
+        text: message,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#ef4444',
-        cancelButtonColor: '#6b7280',
+        cancelButtonColor: '#94a3b8',
         confirmButtonText: 'Ya, hapus!',
         cancelButtonText: 'Batal',
         customClass: {
-            popup: 'rounded-2xl',
-            title: 'text-lg font-semibold'
+            popup: 'rounded-2xl shadow-xl border border-slate-100',
+            title: 'text-xl font-bold text-slate-800',
+            htmlContainer: 'text-slate-500 font-medium',
+            confirmButton: 'font-semibold px-6 py-2.5 rounded-lg shadow-sm',
+            cancelButton: 'font-semibold px-6 py-2.5 rounded-lg border border-slate-200'
         }
     }).then((result) => {
         if (result.isConfirmed) {
-            document.getElementById(formId).submit();
+            form.submit();
+        }
+    });
+};
+
+// Global Submit Confirmation
+window.confirmSubmit = (event, message = "Apakah Anda yakin ingin menyimpan data ini?") => {
+    event.preventDefault();
+    const form = event.target.closest('form');
+
+    // Check form validity before showing SweetAlert
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+
+    Swal.fire({
+        title: 'Simpan Data?',
+        text: message,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#10b981',
+        cancelButtonColor: '#94a3b8',
+        confirmButtonText: 'Simpan',
+        cancelButtonText: 'Batal',
+        customClass: {
+            popup: 'rounded-2xl shadow-xl border border-slate-100',
+            title: 'text-xl font-bold text-slate-800',
+            htmlContainer: 'text-slate-500 font-medium',
+            confirmButton: 'font-semibold px-6 py-2.5 rounded-lg shadow-sm',
+            cancelButton: 'font-semibold px-6 py-2.5 rounded-lg border border-slate-200'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Show loading state
+            Swal.fire({
+                title: 'Memproses...',
+                text: 'Mohon tunggu sebentar',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+                customClass: {
+                    popup: 'rounded-2xl shadow-xl border border-slate-100',
+                    title: 'text-lg font-bold text-slate-800',
+                }
+            });
+            form.submit();
         }
     });
 };

@@ -24,7 +24,7 @@
                  x-transition:leave-end="opacity-0 translate-y-2 scale-95"
                  class="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-xl border border-slate-100 p-5 origin-top-right">
                 <h3 class="font-bold text-slate-800 mb-4 pb-2 border-b border-slate-100">Fakultas Baru</h3>
-                <form action="{{ route('admin.fakultas.store') }}" method="POST" class="space-y-4">
+                <form action="{{ route('admin.fakultas.store') }}" method="POST" class="space-y-4" onsubmit="confirmSubmit(event, 'Simpan Fakultas baru?')">
                     @csrf
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 mb-1 uppercase tracking-wide">Kode Fakultas <span class="text-rose-500">*</span></label>
@@ -88,7 +88,7 @@
                     </button>
                     
                     <form action="{{ route('admin.fakultas.destroy', $fakultas) }}" method="POST" class="inline"
-                          onsubmit="return confirm('Hapus fakultas {{ $fakultas->nama }}? Semua prodi juga akan terhapus!')">
+                          onsubmit="confirmDelete(event, 'Semua prodi di Fakultas {{ $fakultas->nama }} juga akan terhapus!')">
                         @csrf @method('DELETE')
                         <button type="submit" class="px-3 py-1.5 bg-rose-50 text-rose-600 rounded-lg text-sm font-medium hover:bg-rose-100 transition flex items-center gap-2 border border-rose-100">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
@@ -107,7 +107,7 @@
                 
                 {{-- Form Edit Fakultas --}}
                 <div x-show="editFakultas" class="mb-6 p-4 bg-white rounded-xl shadow-sm border border-blue-100">
-                    <form action="{{ route('admin.fakultas.update', $fakultas) }}" method="POST" class="flex flex-col sm:flex-row gap-3 items-end">
+                    <form action="{{ route('admin.fakultas.update', $fakultas) }}" method="POST" class="flex flex-col sm:flex-row gap-3 items-end" onsubmit="confirmSubmit(event, 'Simpan perubahan Fakultas ini?')">
                         @csrf @method('PUT')
                         <div class="flex-grow w-full">
                             <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Fakultas</label>
@@ -195,7 +195,7 @@
                                         </button>
                                         
                                         <form action="{{ route('admin.prodi.destroy', $prodi) }}" method="POST"
-                                              onsubmit="return confirm('Hapus program studi {{ $prodi->nama }}?')">
+                                              onsubmit="confirmDelete(event, 'Hapus program studi {{ $prodi->nama }}?')">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="flex items-center gap-1.5 px-2.5 py-1.5 text-sm bg-rose-50 border border-rose-100 text-rose-600 hover:bg-rose-100 rounded-md transition font-medium">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
@@ -207,7 +207,7 @@
                                 
                                 {{-- Edit Display --}}
                                 <div x-show="editProdiId === {{ $prodi->id }}" style="display: none;" class="w-full">
-                                    <form action="{{ route('admin.prodi.update', $prodi) }}" method="POST" class="flex flex-col sm:flex-row items-center gap-3 w-full p-2 bg-blue-50/50 rounded-lg border border-blue-100">
+                                    <form action="{{ route('admin.prodi.update', $prodi) }}" method="POST" class="flex flex-col sm:flex-row items-center gap-3 w-full p-2 bg-blue-50/50 rounded-lg border border-blue-100" onsubmit="confirmSubmit(event, 'Simpan perubahan Program Studi ini?')">
                                         @csrf @method('PUT')
                                         <div class="flex-grow w-full flex items-center gap-2">
                                             <input type="text" name="nama" value="{{ $prodi->nama }}" required

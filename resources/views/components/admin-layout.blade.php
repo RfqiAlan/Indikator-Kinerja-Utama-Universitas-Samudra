@@ -11,6 +11,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body class="font-sans antialiased bg-slate-100" x-data="{ sidebarOpen: false }">
+    <x-sweet-alert />
     <div class="min-h-screen lg:flex">
         <!-- Mobile Header -->
         <div class="lg:hidden bg-slate-800 text-white p-4 flex items-center justify-between sticky top-0 z-50">

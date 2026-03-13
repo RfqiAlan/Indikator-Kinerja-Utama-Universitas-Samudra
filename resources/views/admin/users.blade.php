@@ -30,7 +30,7 @@
                         </svg>
                     </a>
                     @if($user->id !== auth()->id())
-                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST" onsubmit="return confirm('Yakin hapus user ini?')">
+                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST" onsubmit="confirmDelete(event, 'Semua data yang berkaitan dengan user ini akan ikut terhapus!')">
                         @csrf @method('DELETE')
                         <button type="submit" class="p-2 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -105,7 +105,7 @@
                                 </svg>
                             </a>
                             @if($user->id !== auth()->id())
-                            <form action="{{ route('admin.users.destroy', $user) }}" method="POST" onsubmit="return confirm('Yakin hapus user ini?')">
+                            <form action="{{ route('admin.users.destroy', $user) }}" method="POST" onsubmit="confirmDelete(event, 'Semua data yang berkaitan dengan user ini akan ikut terhapus!')">
                                 @csrf @method('DELETE')
                                 <button type="submit" class="p-2 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

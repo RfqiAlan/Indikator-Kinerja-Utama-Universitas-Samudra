@@ -11,7 +11,7 @@
             </div>
         </x-slot>
         <div class="py-6 max-w-4xl mx-auto" x-data="formIku2()">
-            <form action="{{ route('user.iku2.store') }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl shadow-sm p-6 space-y-6" data-aos="fade-up">
+            <form action="{{ route('user.iku2.store') }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl shadow-sm p-6 space-y-6" data-aos="fade-up" onsubmit="confirmSubmit(event, 'Apakah Anda yakin ingin menyimpan data ini?')">
                 @csrf
                 <input type="hidden" name="fakultas" value="{{ auth()->user()->fakultas }}">
                 

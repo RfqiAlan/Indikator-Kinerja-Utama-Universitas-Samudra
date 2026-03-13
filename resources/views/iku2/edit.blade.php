@@ -6,7 +6,7 @@
     <x-user-layout activeIku="IKU 2">
         <x-slot name="header"><h2 class="text-2xl font-bold text-slate-800">Edit Data IKU 2</h2><p class="text-sm text-slate-500 mt-1">Lulusan Bekerja/Studi Lanjut/Wirausaha</p></x-slot>
         <div class="py-6 max-w-4xl mx-auto" x-data="formIku2()">
-            <form action="{{ route('user.iku2.update', $iku2) }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl shadow-sm p-6 space-y-6" data-aos="fade-up">
+            <form action="{{ route('user.iku2.update', $iku2) }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl shadow-sm p-6 space-y-6" data-aos="fade-up" onsubmit="confirmSubmit(event, 'Apakah Anda yakin ingin menyimpan data ini?')">
                 @csrf @method('PUT')
                 
                 <div class="border-b pb-6">

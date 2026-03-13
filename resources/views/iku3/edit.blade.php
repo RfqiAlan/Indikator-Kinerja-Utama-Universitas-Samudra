@@ -26,7 +26,7 @@
             </div>
             @endif
             
-            <form action="{{ route('user.iku3.update', $iku3->id) }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl shadow-sm p-6 space-y-6" data-aos="fade-up">
+            <form action="{{ route('user.iku3.update', $iku3->id) }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl shadow-sm p-6 space-y-6" data-aos="fade-up" onsubmit="confirmSubmit(event, 'Apakah Anda yakin ingin menyimpan data ini?')">
                 @csrf
                 @method('PUT')
                 
