@@ -116,6 +116,18 @@ $ikuItems = [
                     <span class="text-sm font-bold">Semua Data IKU</span>
                 </a>
             </div>
+
+            <div class="border-t border-slate-100 mt-2 pt-2">
+                <a href="{{ route('profile.edit') }}" @click="sidebarOpen = false"
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-xl group transition-all duration-200 text-slate-600 hover:bg-slate-50 hover:text-blue-700">
+                    <div class="flex shrink-0 items-center justify-center rounded-lg w-8 h-8 bg-slate-100 text-slate-400 group-hover:bg-blue-100 group-hover:text-blue-600 transition-all duration-300">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-sm font-bold">Ganti Password</span>
+                </a>
+            </div>
         </div>
 
         <div class="p-4 shrink-0 border-t border-slate-100 bg-white">
