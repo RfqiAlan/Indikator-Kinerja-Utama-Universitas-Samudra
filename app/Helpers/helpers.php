@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Auth;
 
 if (!function_exists('activity_log')) {
     /**
-     * Log user activity
+     * Log user activity (requires authenticated user)
      *
      * @param string $action
      * @param string $model
@@ -19,12 +19,44 @@ if (!function_exists('activity_log')) {
             return null;
         }
 
+        $request = request();
+
         return ActivityLog::create([
             'user_id' => Auth::id(),
             'action' => $action,
             'model' => $model,
             'model_id' => $modelId,
             'description' => $description,
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'email' => Auth::user()->email ?? null,
+        ]);
+    }
+}
+
+if (!function_exists('security_log')) {
+    /**
+     * Log security/auth event (does NOT require authenticated user)
+     * Use this for: failed login, password reset request, lockout, etc.
+     *
+     * @param string $action
+     * @param string|null $email
+     * @param string|null $description
+     * @return ActivityLog
+     */
+    function security_log(string $action, ?string $email = null, ?string $description = null): ActivityLog
+    {
+        $request = request();
+
+        return ActivityLog::create([
+            'user_id' => Auth::id(), // null if not authenticated
+            'action' => $action,
+            'model' => 'Auth',
+            'model_id' => null,
+            'description' => $description,
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'email' => $email,
         ]);
     }
 }

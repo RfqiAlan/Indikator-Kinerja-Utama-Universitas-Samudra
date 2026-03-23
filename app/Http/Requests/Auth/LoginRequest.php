@@ -44,6 +44,9 @@ class LoginRequest extends FormRequest
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
+            // Log failed login attempt
+            security_log('login_failed', $this->string('email'), 'Login gagal - password salah');
+
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
             ]);
@@ -66,6 +69,9 @@ class LoginRequest extends FormRequest
         event(new Lockout($this));
 
         $seconds = RateLimiter::availableIn($this->throttleKey());
+
+        // Log lockout event
+        security_log('lockout', $this->string('email'), "Rate limited - terlalu banyak percobaan login. Diblokir selama {$seconds} detik.");
 
         throw ValidationException::withMessages([
             'email' => trans('auth.throttle', [

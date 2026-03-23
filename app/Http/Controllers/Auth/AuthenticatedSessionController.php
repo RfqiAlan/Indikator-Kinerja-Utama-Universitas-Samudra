@@ -28,6 +28,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        // Log successful login
+        security_log('login', Auth::user()->email, 'Login berhasil');
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
@@ -36,6 +39,11 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        $email = Auth::user()->email;
+        
+        // Log logout before destroying session
+        security_log('logout', $email, 'User logout');
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

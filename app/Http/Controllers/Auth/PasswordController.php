@@ -24,6 +24,9 @@ class PasswordController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
+        // Log password change from profile
+        security_log('password_change', $request->user()->email, 'Password diubah melalui halaman profil');
+
         return back()->with('status', 'password-updated');
     }
 }

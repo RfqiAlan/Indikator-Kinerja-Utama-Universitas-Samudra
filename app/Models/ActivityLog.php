@@ -15,6 +15,9 @@ class ActivityLog extends Model
         'model',
         'model_id',
         'description',
+        'ip_address',
+        'user_agent',
+        'email',
     ];
 
     /**
@@ -23,5 +26,21 @@ class ActivityLog extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Scope: only security/auth related logs.
+     */
+    public function scopeSecurity($query)
+    {
+        return $query->whereIn('action', [
+            'login',
+            'login_failed',
+            'logout',
+            'password_reset_request',
+            'password_reset',
+            'password_change',
+            'lockout',
+        ]);
     }
 }
