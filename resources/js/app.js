@@ -48,9 +48,15 @@ window.showWarning = (message) => {
 };
 
 // Intercept delete actions globally
-window.confirmDelete = (event, message = "Data yang dihapus tidak dapat dikembalikan!") => {
-    event.preventDefault();
-    const form = event.target.closest('form');
+window.confirmDelete = (eventOrId, message = "Data yang dihapus tidak dapat dikembalikan!") => {
+    let form;
+    if (typeof eventOrId === 'string') {
+        form = document.getElementById(eventOrId);
+        if (!form) return;
+    } else {
+        eventOrId.preventDefault();
+        form = eventOrId.target.closest('form');
+    }
 
     Swal.fire({
         title: 'Hapus Data?',

@@ -27,15 +27,15 @@ class Iku5Controller extends Controller
             ->sortDesc()
             ->values();
 
-        $totalDosen = $data->sum('total_dosen');
+        $totalKerjasamaPt = $data->sum('total_kerjasama_pt');
         $totalLuaran = $data->sum('total_luaran');
-        $overallPercentage = $totalDosen > 0 ? ($totalLuaran / $totalDosen) * 100 : 0;
+        $overallPercentage = $totalKerjasamaPt > 0 ? ($totalLuaran / $totalKerjasamaPt) * 100 : 0;
 
         return view('iku5.index', compact(
             'data', 
             'tahunAkademik', 
             'availableYears',
-            'totalDosen',
+            'totalKerjasamaPt',
             'totalLuaran',
             'overallPercentage'
         ));
@@ -61,27 +61,14 @@ class Iku5Controller extends Controller
     {
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
-            'total_dosen' => 'required|integer|min:1',
-            'artikel_kolaborasi' => 'required|integer|min:0',
-            'produk_terapan' => 'required|integer|min:0',
-            'studi_kasus' => 'required|integer|min:0',
-            'ttg' => 'required|integer|min:0',
-            'karya_seni_kolaboratif' => 'required|integer|min:0',
+            'total_kerjasama_pt' => 'required|integer|min:1',
+            'karya_tulis_ilmiah' => 'required|integer|min:0',
+            'karya_terapan' => 'required|integer|min:0',
+            'karya_seni' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
-
-        // Validate sum of luaran doesn't exceed total dosen
-        $totalLuaran = $validated['artikel_kolaborasi'] + $validated['produk_terapan'] + 
-                       $validated['studi_kasus'] + $validated['ttg'] + 
-                       $validated['karya_seni_kolaboratif'];
-        
-        if ($totalLuaran > $validated['total_dosen']) {
-            return back()->withInput()->withErrors([
-                'total_dosen' => 'Total luaran (' . $totalLuaran . ') tidak boleh melebihi total dosen (' . $validated['total_dosen'] . ').'
-            ]);
-        }
 
         $fakultas = auth()->user()->fakultas;
         $validated['fakultas'] = $fakultas;
@@ -135,12 +122,10 @@ class Iku5Controller extends Controller
 
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
-            'total_dosen' => 'required|integer|min:1',
-            'artikel_kolaborasi' => 'required|integer|min:0',
-            'produk_terapan' => 'required|integer|min:0',
-            'studi_kasus' => 'required|integer|min:0',
-            'ttg' => 'required|integer|min:0',
-            'karya_seni_kolaboratif' => 'required|integer|min:0',
+            'total_kerjasama_pt' => 'required|integer|min:1',
+            'karya_tulis_ilmiah' => 'required|integer|min:0',
+            'karya_terapan' => 'required|integer|min:0',
+            'karya_seni' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',

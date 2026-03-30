@@ -61,9 +61,9 @@ class DashboardController extends Controller
     private function calculateIku2(string $tahunAkademik): array
     {
         $data = Iku2LulusanBekerja::where('tahun_akademik', $tahunAkademik)->get();
-        $totalResponden = $data->sum('total_responden');
+        $totalLulusan = $data->sum('total_lulusan');
         $totalNumerator = $data->sum('skor_bekerja') + $data->sum('studi_lanjut') + $data->sum('skor_wirausaha');
-        $percentage = $totalResponden > 0 ? ($totalNumerator / $totalResponden) * 100 : 0;
+        $percentage = $totalLulusan > 0 ? ($totalNumerator / $totalLulusan) * 100 : 0;
         return ['percentage' => round($percentage, 2), 'count' => $data->count()];
     }
 
@@ -74,9 +74,9 @@ class DashboardController extends Controller
     private function calculateIku3(string $tahunAkademik): array
     {
         $data = Iku3KegiatanMahasiswa::where('tahun_akademik', $tahunAkademik)->get();
-        $totalResponden = $data->sum('total_responden');
+        $totalMahasiswa = $data->sum('total_mahasiswa');
         $totalBerkegiatan = $data->sum('total_berkegiatan');
-        $percentage = $totalResponden > 0 ? ($totalBerkegiatan / $totalResponden) * 100 : 0;
+        $percentage = $totalMahasiswa > 0 ? ($totalBerkegiatan / $totalMahasiswa) * 100 : 0;
         return ['percentage' => round($percentage, 2), 'count' => $data->count()];
     }
 
@@ -95,14 +95,14 @@ class DashboardController extends Controller
 
     /**
      * IKU 5 — Penerapan Karya Dosen (Luaran Kerjasama)
-     * sum(total_luaran) / sum(total_dosen) × 100
+     * sum(total_luaran) / sum(total_kerjasama_pt) × 100
      */
     private function calculateIku5(string $tahunAkademik): array
     {
         $data = Iku5LuaranKerjasama::where('tahun_akademik', $tahunAkademik)->get();
-        $totalDosen = $data->sum('total_dosen');
+        $totalKerjasamaPt = $data->sum('total_kerjasama_pt');
         $totalLuaran = $data->sum('total_luaran');
-        $percentage = $totalDosen > 0 ? ($totalLuaran / $totalDosen) * 100 : 0;
+        $percentage = $totalKerjasamaPt > 0 ? ($totalLuaran / $totalKerjasamaPt) * 100 : 0;
         return ['percentage' => round($percentage, 2), 'count' => $data->count()];
     }
 

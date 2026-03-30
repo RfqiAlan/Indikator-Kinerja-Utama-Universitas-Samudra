@@ -14,12 +14,10 @@ class Iku5LuaranKerjasama extends Model
     protected $fillable = [
         'tahun_akademik',
         'fakultas',
-        'total_dosen',
-        'artikel_kolaborasi',
-        'produk_terapan',
-        'studi_kasus',
-        'ttg',
-        'karya_seni_kolaboratif',
+        'total_kerjasama_pt',
+        'karya_tulis_ilmiah',
+        'karya_terapan',
+        'karya_seni',
         'total_luaran',
         'persentase_iku5',
         'keterangan',
@@ -42,12 +40,10 @@ class Iku5LuaranKerjasama extends Model
 
     public function calculatePercentage()
     {
-        $this->total_luaran = $this->artikel_kolaborasi + $this->produk_terapan + 
-                              $this->studi_kasus + $this->ttg + 
-                              $this->karya_seni_kolaboratif;
+        $this->total_luaran = $this->karya_tulis_ilmiah + $this->karya_terapan + $this->karya_seni;
 
-        if ($this->total_dosen > 0) {
-            $this->persentase_iku5 = ($this->total_luaran / $this->total_dosen) * 100;
+        if ($this->total_kerjasama_pt > 0) {
+            $this->persentase_iku5 = ($this->total_luaran / $this->total_kerjasama_pt) * 100;
         } else {
             $this->persentase_iku5 = 0;
         }

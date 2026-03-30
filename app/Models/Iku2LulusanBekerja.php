@@ -16,7 +16,6 @@ class Iku2LulusanBekerja extends Model
         'fakultas',
         'program_studi',
         'total_lulusan',
-        'total_responden',
         'bekerja_bobot_10',
         'bekerja_bobot_6',
         'bekerja_bobot_4',
@@ -57,11 +56,10 @@ class Iku2LulusanBekerja extends Model
 
     public function calculateScores()
     {
-        // Hitung skor bekerja berbobot
         $this->skor_bekerja = 
-            ($this->bekerja_bobot_10 * self::BOBOT_KERJA_10 / 10) +
-            ($this->bekerja_bobot_6 * self::BOBOT_KERJA_6 / 10) +
-            ($this->bekerja_bobot_4 * self::BOBOT_KERJA_4 / 10);
+            ($this->bekerja_bobot_10 * self::BOBOT_KERJA_10) +
+            ($this->bekerja_bobot_6 * self::BOBOT_KERJA_6) +
+            ($this->bekerja_bobot_4 * self::BOBOT_KERJA_4);
 
         // Hitung skor wirausaha berbobot
         $this->skor_wirausaha = 
@@ -72,22 +70,16 @@ class Iku2LulusanBekerja extends Model
         $totalABC = $this->skor_bekerja + $this->studi_lanjut + $this->skor_wirausaha;
 
         // Hitung persentase IKU 2 (dibagi total responden)
-        if ($this->total_responden > 0) {
-            $this->persentase_iku2 = ($totalABC / $this->total_responden) * 100;
+        if ($this->total_lulusan > 0) {
+            $this->persentase_iku2 = ($totalABC / $this->total_lulusan) * 100;
         } else {
             $this->persentase_iku2 = 0;
         }
     }
 
-    /**
-     * Check if total_responden >= 75% of total_lulusan
-     */
     public function isRespondenCukup(): bool
     {
-        if ($this->total_lulusan <= 0) {
-            return true;
-        }
-        return $this->total_responden >= ($this->total_lulusan * 0.75);
+        return true;
     }
 
     /**
@@ -95,10 +87,7 @@ class Iku2LulusanBekerja extends Model
      */
     public function getRespondenPersentase(): float
     {
-        if ($this->total_lulusan <= 0) {
-            return 0;
-        }
-        return ($this->total_responden / $this->total_lulusan) * 100;
+        return 100.0;
     }
 
     public function getTotalBekerjaAttribute()

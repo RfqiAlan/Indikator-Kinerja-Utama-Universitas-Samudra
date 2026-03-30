@@ -46,7 +46,7 @@
                 <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-cyan-50 dark:bg-cyan-900/20 blur-3xl opacity-60"></div>
                 
                 <div class="relative flex flex-col md:flex-row items-center justify-between gap-8">
-                    <div class="flex-1 grid grid-cols-2 lg:grid-cols-5 gap-4">
+                    <div class="flex-1 grid grid-cols-2 lg:grid-cols-4 gap-4">
                         <div class="text-center p-4 {{ $bgColor }} rounded-xl">
                             <p class="text-sm {{ $textColor }} font-medium">Persentase IKU 2</p>
                             <p class="text-3xl font-bold {{ $valueColor }}">{{ number_format($overallPercentage, 2) }}%</p>
@@ -56,13 +56,7 @@
                             <p class="text-sm text-slate-600 dark:text-slate-400 font-medium">Total Lulusan</p>
                             <p class="text-3xl font-bold text-slate-700 dark:text-slate-300">{{ number_format($totalLulusan) }}</p>
                         </div>
-                        <div class="text-center p-4 {{ $totalResponden >= ($totalLulusan * 0.75) ? 'bg-blue-50 dark:bg-blue-900/30' : 'bg-rose-50 dark:bg-rose-900/30' }} rounded-xl">
-                            <p class="text-sm {{ $totalResponden >= ($totalLulusan * 0.75) ? 'text-blue-600 dark:text-blue-400' : 'text-rose-600 dark:text-rose-400' }} font-medium">Total Responden</p>
-                            <p class="text-3xl font-bold {{ $totalResponden >= ($totalLulusan * 0.75) ? 'text-blue-700 dark:text-blue-300' : 'text-rose-700 dark:text-rose-300' }}">{{ number_format($totalResponden) }}</p>
-                            @if($totalLulusan > 0)
-                                <p class="text-xs {{ $totalResponden >= ($totalLulusan * 0.75) ? 'text-blue-600' : 'text-rose-600' }}">{{ number_format(($totalResponden / $totalLulusan) * 100, 1) }}% dari lulusan</p>
-                            @endif
-                        </div>
+
                         <div class="text-center p-4 bg-cyan-50 dark:bg-cyan-900/30 rounded-xl">
                             <p class="text-sm text-cyan-600 dark:text-cyan-400 font-medium">Bekerja (Skor)</p>
                             <p class="text-3xl font-bold text-cyan-700 dark:text-cyan-300">{{ number_format($totalBekerja, 1) }}</p>
@@ -100,7 +94,7 @@
                             <tr>
                                 <th scope="col" class="px-6 py-4 font-medium">Fakultas & Prodi</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Total Lulusan</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center">Responden</th>
+
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Bekerja</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Studi Lanjut</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Wirausaha</th>
@@ -136,26 +130,7 @@
                                 <td class="px-6 py-4 text-center">
                                     <div class="text-sm text-slate-900 dark:text-white font-medium">{{ number_format($item->total_lulusan) }}</div>
                                 </td>
-                                <td class="px-6 py-4 text-center">
-                                    <div class="text-sm text-slate-900 dark:text-white font-medium">{{ number_format($item->total_responden ?? 0) }}</div>
-                                    @php
-                                        $respondenPersen = $item->getRespondenPersentase();
-                                        $respondenCukup = $item->isRespondenCukup();
-                                    @endphp
-                                    @if($item->total_lulusan > 0)
-                                        @if($respondenCukup)
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 mt-1">
-                                                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                                                {{ number_format($respondenPersen, 1) }}% Cukup
-                                            </span>
-                                        @else
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400 mt-1" title="Total responden kurang dari 75% total lulusan (minimal {{ ceil($item->total_lulusan * 0.75) }} responden)">
-                                                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                                                {{ number_format($respondenPersen, 1) }}% Kurang
-                                            </span>
-                                        @endif
-                                    @endif
-                                </td>
+
                                 <td class="px-6 py-4 text-center">
                                     <div class="text-sm text-slate-600 dark:text-slate-300">{{ number_format($item->total_bekerja) }}</div>
                                 </td>
@@ -220,7 +195,7 @@
                     <div class="p-4 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl border border-white/50 dark:border-slate-700/50 mb-4 shadow-sm w-full md:w-auto">
                         <p class="font-mono text-sm sm:text-base text-slate-900 break-all sm:break-normal flex-wrap dark:text-white font-semibold flex items-center gap-2 mb-3">
                             <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                            IKU 2 = (A + B + C) / Total Responden × 100%
+                            IKU 2 = (A + B + C) / Total Lulusan × 100%
                         </p>
                         <div class="text-xs text-slate-600 dark:text-slate-400 space-y-1.5 ml-1 border-l-2 border-slate-300 dark:border-slate-600 pl-3">
                             <p><strong class="text-slate-900 dark:text-white font-mono">A</strong> = Lulusan yang mendapat pekerjaan (Bekerja)</p>
@@ -234,9 +209,9 @@
                                 <span class="w-2 h-2 rounded-full bg-slate-100 dark:bg-slate-800"></span> Bobot Pekerjaan
                             </p>
                             <ul class="space-y-2">
-                                <li class="flex items-center gap-2 bg-white/50 dark:bg-slate-800/50 p-2 rounded-lg"><span class="font-semibold text-slate-900 dark:text-white w-16 text-center bg-slate-100 dark:bg-slate-800 rounded">1.2x</span> &lt;6 bulan, gaji &gt;1.2 UMP (Bobot 10)</li>
-                                <li class="flex items-center gap-2 bg-white/50 dark:bg-slate-800/50 p-2 rounded-lg"><span class="font-semibold text-slate-900 dark:text-white w-16 text-center bg-slate-100 dark:bg-slate-800 rounded">0.8x</span> &lt;1 tahun, gaji &gt;1.2 UMP (Bobot 6)</li>
-                                <li class="flex items-center gap-2 bg-white/50 dark:bg-slate-800/50 p-2 rounded-lg"><span class="font-semibold text-slate-900 dark:text-white w-16 text-center bg-slate-100 dark:bg-slate-800 rounded">0.5x</span> &lt;1 tahun, gaji &lt;1.2 UMP (Bobot 4)</li>
+                                <li class="flex items-center gap-2 bg-white/50 dark:bg-slate-800/50 p-2 rounded-lg"><span class="font-semibold text-slate-900 dark:text-white w-16 text-center bg-slate-100 dark:bg-slate-800 rounded">10x</span> &lt;6 bulan, gaji &gt;1.2 UMP (Bobot 10)</li>
+                                <li class="flex items-center gap-2 bg-white/50 dark:bg-slate-800/50 p-2 rounded-lg"><span class="font-semibold text-slate-900 dark:text-white w-16 text-center bg-slate-100 dark:bg-slate-800 rounded">6x</span> &lt;1 tahun, gaji &gt;1.2 UMP (Bobot 6)</li>
+                                <li class="flex items-center gap-2 bg-white/50 dark:bg-slate-800/50 p-2 rounded-lg"><span class="font-semibold text-slate-900 dark:text-white w-16 text-center bg-slate-100 dark:bg-slate-800 rounded">4x</span> &lt;1 tahun, gaji &lt;1.2 UMP (Bobot 4)</li>
                             </ul>
                         </div>
                         <div class="bg-white/40 dark:bg-slate-800/40 rounded-xl p-4 border border-slate-300 dark:border-slate-600/30">

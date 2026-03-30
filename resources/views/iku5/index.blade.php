@@ -11,8 +11,8 @@
         <x-slot name="header">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 w-full">
                 <div>
-                    <h2 class="text-xl font-bold text-black tracking-tight">IKU 5: Rasio Luaran Kerja Sama</h2>
-                    <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Artikel kolaborasi, produk terapan, studi kasus, TTG, karya seni.</p>
+                    <h2 class="text-xl font-bold text-black tracking-tight">IKU 5: Rasio Luaran Kerja Sama Perguruan Tinggi</h2>
+                    <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Karya Tulis Ilmiah, Karya Terapan, dan Karya Seni.</p>
                 </div>
                 <div class="flex items-center gap-3">
                     <form method="GET" action="{{ route('user.iku5.index') }}"><select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm w-full sm:w-auto">@foreach($availableYears as $year)<option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>@endforeach</select></form>
@@ -26,7 +26,7 @@
                 <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                     <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div class="text-center p-4 {{ $bgColor }} rounded-xl"><p class="text-sm {{ $textColor }}">Persentase IKU 5</p><p class="text-3xl font-bold {{ $valueColor }}">{{ number_format($overallPercentage, 2) }}%</p><p class="text-xs {{ $textColor }}">Target: {{ $target }}%</p></div>
-                        <div class="text-center p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl"><p class="text-sm text-slate-600">Total Dosen</p><p class="text-3xl font-bold text-slate-700">{{ number_format($totalDosen) }}</p></div>
+                        <div class="text-center p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl"><p class="text-sm text-slate-600">Total Kerja Sama PT</p><p class="text-3xl font-bold text-slate-700">{{ number_format($totalKerjasamaPt) }}</p></div>
                         <div class="text-center p-4 bg-cyan-50 dark:bg-cyan-900/30 rounded-xl"><p class="text-sm text-cyan-600">Total Luaran</p><p class="text-3xl font-bold text-cyan-700">{{ number_format($totalLuaran) }}</p></div>
                     </div>
                     <div class="relative w-28 h-28 flex items-center justify-center">
@@ -43,10 +43,10 @@
                         <thead class="text-xs text-slate-500 uppercase bg-slate-50/80 dark:bg-slate-700/50 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700">
                             <tr>
                                 <th scope="col" class="px-6 py-4 font-medium">Tahun</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center">Total Dosen</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center">Artikel</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center">Produk</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center">TTG/Karya</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Total Kerja Sama PT</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Karya Tulis Ilmiah</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Karya Terapan</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Karya Seni</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Capaian</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-right">Aksi</th>
                             </tr>
@@ -58,16 +58,16 @@
                                     {{ $item->tahun_akademik }}
                                 </td>
                                 <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
-                                    {{ number_format($item->total_dosen) }}
+                                    {{ number_format($item->total_kerjasama_pt) }}
                                 </td>
                                 <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
-                                    {{ number_format($item->artikel_kolaborasi) }}
+                                    {{ number_format($item->karya_tulis_ilmiah) }}
                                 </td>
                                 <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
-                                    {{ number_format($item->produk_terapan) }}
+                                    {{ number_format($item->karya_terapan) }}
                                 </td>
                                 <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
-                                    {{ number_format($item->ttg) }}
+                                    {{ number_format($item->karya_seni) }}
                                 </td>
                                 <td class="px-6 py-4 text-center">
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $item->persentase_iku5 >= 10 ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300' }}">
@@ -98,7 +98,7 @@
                         <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
                     </div>
                     <h3 class="text-lg font-medium text-slate-900 dark:text-white mb-2">Belum ada data</h3>
-                    <p class="text-slate-500 max-w-sm mx-auto mb-6">Mulai dengan menambahkan data luaran kerja sama dosen.</p>
+                    <p class="text-slate-500 max-w-sm mx-auto mb-6">Mulai dengan menambahkan data luaran kerja sama perguruan tinggi.</p>
                     <a href="{{ route('user.iku5.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 shadow-sm transition-all">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         Tambah Data

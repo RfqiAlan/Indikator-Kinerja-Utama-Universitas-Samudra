@@ -243,7 +243,7 @@ class Iku5Sheet extends BaseIkuSheet
 
     public function headings(): array
     {
-        return ['Fakultas', 'Nama Kerjasama', 'Jenis', 'Mitra', 'Tahun', 'Keterangan', 'Link Bukti Pendukung'];
+        return ['Fakultas', 'Tahun', 'Total Kerja Sama PT', 'Karya Tulis Ilmiah', 'Karya Terapan', 'Karya Seni', 'Persentase IKU5 (%)', 'Link Bukti Pendukung'];
     }
 
     public function collection(): Collection
@@ -256,11 +256,12 @@ class Iku5Sheet extends BaseIkuSheet
         return $query->get()->map(function ($item) {
             return [
                 $this->getFakultasName($item->fakultas),
-                $item->nama_kegiatan ?? '-',
-                $item->jenis ?? '-',
-                $item->mitra ?? '-',
                 $item->tahun_akademik,
-                $item->keterangan ?? '-',
+                $item->total_kerjasama_pt ?? 0,
+                $item->karya_tulis_ilmiah ?? 0,
+                $item->karya_terapan ?? 0,
+                $item->karya_seni ?? 0,
+                number_format($item->persentase_iku5 ?? 0, 2),
                 is_array($item->lampiran_link) ? implode("\n", $item->lampiran_link) : ($item->lampiran_link ?? '-'),
             ];
         });

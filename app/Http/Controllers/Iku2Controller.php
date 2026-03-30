@@ -31,12 +31,11 @@ class Iku2Controller extends Controller
 
         // Calculate overall IKU 2
         $totalLulusan = $data->sum('total_lulusan');
-        $totalResponden = $data->sum('total_responden');
         $totalBekerja = $data->sum('skor_bekerja');
         $totalStudiLanjut = $data->sum('studi_lanjut');
         $totalWirausaha = $data->sum('skor_wirausaha');
-        $overallPercentage = $totalResponden > 0 
-            ? (($totalBekerja + $totalStudiLanjut + $totalWirausaha) / $totalResponden) * 100 
+        $overallPercentage = $totalLulusan > 0 
+            ? (($totalBekerja + $totalStudiLanjut + $totalWirausaha) / $totalLulusan) * 100 
             : 0;
 
         return view('iku2.index', compact(
@@ -44,7 +43,6 @@ class Iku2Controller extends Controller
             'tahunAkademik', 
             'availableYears',
             'totalLulusan',
-            'totalResponden',
             'totalBekerja',
             'totalStudiLanjut',
             'totalWirausaha',
@@ -64,7 +62,6 @@ class Iku2Controller extends Controller
             'tahun_akademik' => 'required|string',
             'program_studi' => 'required|string',
             'total_lulusan' => 'required|integer|min:1',
-            'total_responden' => 'required|integer|min:0|lte:total_lulusan',
             'bekerja_bobot_10' => 'required|integer|min:0',
             'bekerja_bobot_6' => 'required|integer|min:0',
             'bekerja_bobot_4' => 'required|integer|min:0',
@@ -74,8 +71,6 @@ class Iku2Controller extends Controller
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
-        ], [
-            'total_responden.lte' => 'Total responden tidak boleh melebihi total lulusan.',
         ]);
 
         // Validate sum of sub-fields doesn't exceed total responden
@@ -83,9 +78,9 @@ class Iku2Controller extends Controller
                          $validated['bekerja_bobot_4'] + $validated['studi_lanjut'] + 
                          $validated['wirausaha_founder'] + $validated['wirausaha_freelancer'];
         
-        if ($totalKategori > $validated['total_responden']) {
+        if ($totalKategori > $validated['total_lulusan']) {
             return back()->withInput()->withErrors([
-                'total_responden' => 'Total kategori (Bekerja + Studi Lanjut + Wirausaha = ' . $totalKategori . ') tidak boleh melebihi total responden (' . $validated['total_responden'] . ').'
+                'total_lulusan' => 'Total kategori (Bekerja + Studi Lanjut + Wirausaha = ' . $totalKategori . ') tidak boleh melebihi total lulusan (' . $validated['total_lulusan'] . ').'
             ]);
         }
 
@@ -144,7 +139,6 @@ class Iku2Controller extends Controller
             'tahun_akademik' => 'required|string',
             'program_studi' => 'required|string',
             'total_lulusan' => 'required|integer|min:1',
-            'total_responden' => 'required|integer|min:0|lte:total_lulusan',
             'bekerja_bobot_10' => 'required|integer|min:0',
             'bekerja_bobot_6' => 'required|integer|min:0',
             'bekerja_bobot_4' => 'required|integer|min:0',
@@ -154,8 +148,6 @@ class Iku2Controller extends Controller
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
-        ], [
-            'total_responden.lte' => 'Total responden tidak boleh melebihi total lulusan.',
         ]);
 
         $validated['fakultas'] = auth()->user()->fakultas;
@@ -165,9 +157,9 @@ class Iku2Controller extends Controller
                          $validated['bekerja_bobot_4'] + $validated['studi_lanjut'] + 
                          $validated['wirausaha_founder'] + $validated['wirausaha_freelancer'];
         
-        if ($totalKategori > $validated['total_responden']) {
+        if ($totalKategori > $validated['total_lulusan']) {
             return back()->withInput()->withErrors([
-                'total_responden' => 'Total kategori (Bekerja + Studi Lanjut + Wirausaha = ' . $totalKategori . ') tidak boleh melebihi total responden (' . $validated['total_responden'] . ').'
+                'total_lulusan' => 'Total kategori (Bekerja + Studi Lanjut + Wirausaha = ' . $totalKategori . ') tidak boleh melebihi total lulusan (' . $validated['total_lulusan'] . ').'
             ]);
         }
 
