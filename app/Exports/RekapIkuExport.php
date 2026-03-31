@@ -448,7 +448,13 @@ class Iku11Sheet extends BaseIkuSheet
 
     public function headings(): array
     {
-        return ['Fakultas', 'Komponen', 'Status', 'Nilai', 'Tahun', 'Keterangan', 'Link Bukti Pendukung'];
+        return [
+            'Fakultas', 'Tahun',
+            'Opini Audit', 'Nilai SAKIP', 'Predikat SAKIP',
+            'Plagiarisme', 'Fabrikasi', 'Falsifikasi', 'Penyalahgunaan', 'Etika Publikasi', 'Total Pelanggaran',
+            'Kegiatan Direncanakan', 'Kegiatan Terlaksana', 'Persentase Pencegahan (%)',
+            'Keterangan', 'Link Bukti Pendukung',
+        ];
     }
 
     public function collection(): Collection
@@ -461,10 +467,19 @@ class Iku11Sheet extends BaseIkuSheet
         return $query->get()->map(function ($item) {
             return [
                 $this->getFakultasName($item->fakultas),
-                $item->komponen ?? '-',
-                $item->status ?? '-',
-                $item->nilai ?? '-',
                 $item->tahun_akademik,
+                $item->opini_label ?? '-',
+                $item->nilai_sakip ?? '-',
+                $item->predikat_label ?? '-',
+                $item->pelanggaran_plagiarisme ?? 0,
+                $item->pelanggaran_fabrikasi ?? 0,
+                $item->pelanggaran_falsifikasi ?? 0,
+                $item->pelanggaran_penyalahgunaan ?? 0,
+                $item->pelanggaran_etika_publikasi ?? 0,
+                $item->jumlah_pelanggaran ?? 0,
+                $item->kegiatan_direncanakan ?? 0,
+                $item->kegiatan_terlaksana ?? 0,
+                number_format($item->persentase_pencegahan ?? 0, 2),
                 $item->keterangan ?? '-',
                 is_array($item->lampiran_link) ? implode("\n", $item->lampiran_link) : ($item->lampiran_link ?? '-'),
             ];

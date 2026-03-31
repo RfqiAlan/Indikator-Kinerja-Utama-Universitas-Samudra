@@ -172,13 +172,14 @@ class DashboardController extends Controller
     }
 
     /**
-     * IKU 11 — Tata Kelola Institusi
-     * Average nilai_sakip across all faculty entries
+     * IKU 11 — Tata Kelola Perguruan Tinggi
+     * Uses persentase_pencegahan (kegiatan terlaksana / direncanakan × 100%)
+     * as the primary dashboard metric (IKU 11.4)
      */
     private function calculateIku11(string $tahunAkademik): array
     {
         $data = Iku11TataKelola::where('tahun_akademik', $tahunAkademik)->get();
-        $percentage = $data->isNotEmpty() ? $data->avg('nilai_sakip') : 0;
+        $percentage = $data->isNotEmpty() ? $data->avg('persentase_pencegahan') : 0;
         return ['percentage' => round($percentage ?? 0, 2), 'count' => $data->count()];
     }
 

@@ -14,35 +14,56 @@ class Iku11TataKelola extends Model
     protected $fillable = [
         'tahun_akademik',
         'fakultas',
+        // IKU 11.1 — Opini WTP
         'opini_audit',
+        // IKU 11.2 — Predikat SAKIP
         'nilai_sakip',
         'predikat_sakip',
+        // IKU 11.3 — Pelanggaran Integritas Akademik
         'jumlah_pelanggaran',
+        'pelanggaran_plagiarisme',
+        'pelanggaran_fabrikasi',
+        'pelanggaran_falsifikasi',
+        'pelanggaran_penyalahgunaan',
+        'pelanggaran_etika_publikasi',
+        // IKU 11.4 — Pencegahan & Penanganan
+        'kegiatan_direncanakan',
+        'kegiatan_terlaksana',
+        'persentase_pencegahan',
         'keterangan',
         'lampiran_link',
     ];
 
     protected $casts = [
         'nilai_sakip' => 'decimal:2',
+        'persentase_pencegahan' => 'decimal:2',
         'lampiran_link' => 'array',
     ];
 
+    // IKU 11.1 — Hanya WTP dan WDP yang diakui (Kemdiktisaintek 2026)
     const OPINI_OPTIONS = [
         'wtp' => 'WTP (Wajar Tanpa Pengecualian)',
         'wdp' => 'WDP (Wajar Dengan Pengecualian)',
-        'tdp' => 'TDP (Tidak Dapat Pendapat)',
-        'tw' => 'TW (Tidak Wajar)',
-        'tidak_memberikan' => 'Tidak Memberikan Pendapat',
     ];
 
+    // IKU 11.2 — Predikat SAKIP
     const PREDIKAT_SAKIP = [
         'aa' => ['label' => 'AA (Memuaskan)', 'min' => 90, 'max' => 100],
-        'a' => ['label' => 'A (Sangat Baik)', 'min' => 80, 'max' => 89.99],
+        'a'  => ['label' => 'A (Sangat Baik)', 'min' => 80, 'max' => 89.99],
         'bb' => ['label' => 'BB (Baik)', 'min' => 70, 'max' => 79.99],
-        'b' => ['label' => 'B (Cukup)', 'min' => 60, 'max' => 69.99],
+        'b'  => ['label' => 'B (Cukup)', 'min' => 60, 'max' => 69.99],
         'cc' => ['label' => 'CC (Kurang)', 'min' => 50, 'max' => 59.99],
-        'c' => ['label' => 'C (Buruk)', 'min' => 30, 'max' => 49.99],
-        'd' => ['label' => 'D (Sangat Buruk)', 'min' => 0, 'max' => 29.99],
+        'c'  => ['label' => 'C (Buruk)', 'min' => 30, 'max' => 49.99],
+        'd'  => ['label' => 'D (Sangat Buruk)', 'min' => 0, 'max' => 29.99],
+    ];
+
+    // IKU 11.3 — Sub-kategori pelanggaran integritas akademik
+    const JENIS_PELANGGARAN = [
+        'pelanggaran_plagiarisme'       => 'Plagiarisme',
+        'pelanggaran_fabrikasi'         => 'Fabrikasi',
+        'pelanggaran_falsifikasi'       => 'Falsifikasi Data',
+        'pelanggaran_penyalahgunaan'    => 'Penyalahgunaan Karya Ilmiah',
+        'pelanggaran_etika_publikasi'   => 'Pelanggaran Etika Publikasi',
     ];
 
     protected static function boot()
@@ -51,6 +72,8 @@ class Iku11TataKelola extends Model
 
         static::saving(function ($model) {
             $model->calculatePredikatSakip();
+            $model->calculateTotalPelanggaran();
+            $model->calculatePersentasePencegahan();
         });
     }
 
@@ -63,6 +86,24 @@ class Iku11TataKelola extends Model
                     break;
                 }
             }
+        }
+    }
+
+    public function calculateTotalPelanggaran()
+    {
+        $this->jumlah_pelanggaran = $this->pelanggaran_plagiarisme
+            + $this->pelanggaran_fabrikasi
+            + $this->pelanggaran_falsifikasi
+            + $this->pelanggaran_penyalahgunaan
+            + $this->pelanggaran_etika_publikasi;
+    }
+
+    public function calculatePersentasePencegahan()
+    {
+        if ($this->kegiatan_direncanakan > 0) {
+            $this->persentase_pencegahan = ($this->kegiatan_terlaksana / $this->kegiatan_direncanakan) * 100;
+        } else {
+            $this->persentase_pencegahan = 0;
         }
     }
 

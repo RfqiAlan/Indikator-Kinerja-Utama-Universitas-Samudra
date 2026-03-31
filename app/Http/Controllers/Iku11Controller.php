@@ -12,9 +12,12 @@ class Iku11Controller extends Controller
     {
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
         
-        $data = Iku11TataKelola::where('tahun_akademik', $tahunAkademik)->first();
+        $data = Iku11TataKelola::where('tahun_akademik', $tahunAkademik)
+            ->where('fakultas', auth()->user()->fakultas)
+            ->first();
 
-        $dbYears = Iku11TataKelola::select('tahun_akademik')
+        $dbYears = Iku11TataKelola::where('fakultas', auth()->user()->fakultas)
+            ->select('tahun_akademik')
             ->distinct()
             ->pluck('tahun_akademik');
 
@@ -56,14 +59,31 @@ class Iku11Controller extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'tahun_akademik' => 'required|string',
-            'opini_audit' => 'nullable|in:wtp,wdp,tdp,tw,tidak_memberikan',
-            'nilai_sakip' => 'nullable|numeric|min:0|max:100',
-            'jumlah_pelanggaran' => 'required|integer|min:0',
-            'keterangan' => 'nullable|string',
-            'lampiran' => 'nullable|array',
-            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+            'tahun_akademik'              => 'required|string',
+            // IKU 11.1
+            'opini_audit'                 => 'nullable|in:wtp,wdp',
+            // IKU 11.2
+            'nilai_sakip'                 => 'nullable|numeric|min:0|max:100',
+            // IKU 11.3
+            'pelanggaran_plagiarisme'     => 'required|integer|min:0',
+            'pelanggaran_fabrikasi'       => 'required|integer|min:0',
+            'pelanggaran_falsifikasi'     => 'required|integer|min:0',
+            'pelanggaran_penyalahgunaan'  => 'required|integer|min:0',
+            'pelanggaran_etika_publikasi' => 'required|integer|min:0',
+            // IKU 11.4
+            'kegiatan_direncanakan'       => 'required|integer|min:0',
+            'kegiatan_terlaksana'         => 'required|integer|min:0',
+            'keterangan'                  => 'nullable|string',
+            'lampiran'                    => 'nullable|array',
+            'lampiran.*'                  => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
+
+        // Validasi: kegiatan terlaksana tidak boleh melebihi yang direncanakan
+        if ($validated['kegiatan_terlaksana'] > $validated['kegiatan_direncanakan'] && $validated['kegiatan_direncanakan'] > 0) {
+            return back()->withInput()->withErrors([
+                'kegiatan_terlaksana' => 'Kegiatan terlaksana (' . $validated['kegiatan_terlaksana'] . ') tidak boleh melebihi kegiatan direncanakan (' . $validated['kegiatan_direncanakan'] . ').'
+            ]);
+        }
 
         $fakultas = auth()->user()->fakultas;
         $existing = Iku11TataKelola::where('tahun_akademik', $validated['tahun_akademik'])
@@ -77,7 +97,7 @@ class Iku11Controller extends Controller
 
         $validated['fakultas'] = $fakultas;
 
-        // Upload lampiran to Google Drive (folder per fakultas)
+        // Upload lampiran
         if ($request->hasFile('lampiran')) {
             $driveService = new GoogleDriveService();
             $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
@@ -116,16 +136,28 @@ class Iku11Controller extends Controller
         }
 
         $validated = $request->validate([
-            'tahun_akademik' => 'required|string',
-            'opini_audit' => 'nullable|in:wtp,wdp,tdp,tw,tidak_memberikan',
-            'nilai_sakip' => 'nullable|numeric|min:0|max:100',
-            'jumlah_pelanggaran' => 'required|integer|min:0',
-            'keterangan' => 'nullable|string',
-            'lampiran' => 'nullable|array',
-            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+            'tahun_akademik'              => 'required|string',
+            'opini_audit'                 => 'nullable|in:wtp,wdp',
+            'nilai_sakip'                 => 'nullable|numeric|min:0|max:100',
+            'pelanggaran_plagiarisme'     => 'required|integer|min:0',
+            'pelanggaran_fabrikasi'       => 'required|integer|min:0',
+            'pelanggaran_falsifikasi'     => 'required|integer|min:0',
+            'pelanggaran_penyalahgunaan'  => 'required|integer|min:0',
+            'pelanggaran_etika_publikasi' => 'required|integer|min:0',
+            'kegiatan_direncanakan'       => 'required|integer|min:0',
+            'kegiatan_terlaksana'         => 'required|integer|min:0',
+            'keterangan'                  => 'nullable|string',
+            'lampiran'                    => 'nullable|array',
+            'lampiran.*'                  => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
-        // Upload lampiran to Google Drive (folder per fakultas)
+        if ($validated['kegiatan_terlaksana'] > $validated['kegiatan_direncanakan'] && $validated['kegiatan_direncanakan'] > 0) {
+            return back()->withInput()->withErrors([
+                'kegiatan_terlaksana' => 'Kegiatan terlaksana tidak boleh melebihi kegiatan direncanakan.'
+            ]);
+        }
+
+        // Upload lampiran
         if ($request->hasFile('lampiran')) {
             $driveService = new GoogleDriveService();
             $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
