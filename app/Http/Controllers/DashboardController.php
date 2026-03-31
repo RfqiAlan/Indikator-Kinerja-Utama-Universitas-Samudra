@@ -146,16 +146,14 @@ class DashboardController extends Controller
     }
 
     /**
-     * IKU 9 — Pendapatan Non-UKT
-     * sum(total_non_ukt) / sum(total_pendapatan) × 100
+     * IKU 9 — Keuangan & Pendapatan PT
+     * avg(persen_non_ukt) — Sub-indikator 9.1 sebagai metrik utama
      */
     private function calculateIku9(string $tahunAkademik): array
     {
         $data = Iku9Pendapatan::where('tahun_akademik', $tahunAkademik)->get();
-        $totalPendapatan = $data->sum('total_pendapatan');
-        $totalNonUkt = $data->sum('total_non_ukt');
-        $percentage = $totalPendapatan > 0 ? ($totalNonUkt / $totalPendapatan) * 100 : 0;
-        return ['percentage' => round($percentage, 2), 'count' => $data->count()];
+        $percentage = $data->isNotEmpty() ? $data->avg('persen_non_ukt') : 0;
+        return ['percentage' => round($percentage ?? 0, 2), 'count' => $data->count()];
     }
 
     /**

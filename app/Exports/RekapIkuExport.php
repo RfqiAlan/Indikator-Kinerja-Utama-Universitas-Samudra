@@ -369,18 +369,24 @@ class Iku8Sheet extends BaseIkuSheet
         });
     }
 }
-
 // IKU 9 Sheet
 class Iku9Sheet extends BaseIkuSheet
 {
     public function title(): string
     {
-        return 'IKU 9 - Pendapatan';
+        return 'IKU 9 - Keuangan PT';
     }
 
     public function headings(): array
     {
-        return ['Fakultas', 'Sumber Pendapatan', 'Nominal (Rp)', 'Jenis', 'Tahun', 'Keterangan', 'Link Bukti Pendukung'];
+        return [
+            'Fakultas', 'Tahun',
+            'Total Pendapatan', 'Total Aset',
+            '9.1 Non-UKT (%)', '9.2 Pendapatan/Aset (%)',
+            '9.3 DIPA/APBN (%)', '9.4 Industri (%)', '9.5 Dana Abadi/Aset (%)',
+            '9.6 Alokasi DM (%)', '9.7 Target Riset', '9.8 Target Dosen', '9.9 Target Lab',
+            'Keterangan', 'Link Bukti Pendukung',
+        ];
     }
 
     public function collection(): Collection
@@ -393,16 +399,25 @@ class Iku9Sheet extends BaseIkuSheet
         return $query->get()->map(function ($item) {
             return [
                 $this->getFakultasName($item->fakultas),
-                $item->sumber ?? '-',
-                number_format($item->nominal ?? 0, 0, ',', '.'),
-                $item->jenis ?? '-',
                 $item->tahun_akademik,
+                number_format($item->total_pendapatan ?? 0, 0, ',', '.'),
+                number_format($item->total_aset ?? 0, 0, ',', '.'),
+                number_format($item->persen_non_ukt ?? 0, 2),
+                number_format($item->persen_pendapatan_aset ?? 0, 2),
+                number_format($item->persen_dipa_apbn ?? 0, 2),
+                number_format($item->persen_industri ?? 0, 2),
+                number_format($item->persen_dana_abadi ?? 0, 2),
+                number_format($item->persen_alokasi_dana_masyarakat ?? 0, 2),
+                number_format($item->target_alokasi_riset ?? 0, 0, ',', '.'),
+                number_format($item->target_alokasi_dosen ?? 0, 0, ',', '.'),
+                number_format($item->target_alokasi_lab ?? 0, 0, ',', '.'),
                 $item->keterangan ?? '-',
                 is_array($item->lampiran_link) ? implode("\n", $item->lampiran_link) : ($item->lampiran_link ?? '-'),
             ];
         });
     }
 }
+
 
 // IKU 10 Sheet
 class Iku10Sheet extends BaseIkuSheet

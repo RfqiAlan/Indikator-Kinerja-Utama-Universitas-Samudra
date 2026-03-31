@@ -14,31 +14,15 @@ class Iku9Controller extends Controller
         $fakultas = auth()->user()->fakultas;
         
         $data = Iku9Pendapatan::where('tahun_akademik', $tahunAkademik)
-            ->where('fakultas', $fakultas)->get();
+            ->where('fakultas', $fakultas)->first();
 
         $dbYears = Iku9Pendapatan::where('fakultas', $fakultas)
-            ->select('tahun_akademik')
-            ->distinct()
-            ->pluck('tahun_akademik');
+            ->select('tahun_akademik')->distinct()->pluck('tahun_akademik');
 
         $availableYears = collect(get_tahun_akademik_list())
-            ->merge($dbYears)
-            ->unique()
-            ->sortDesc()
-            ->values();
+            ->merge($dbYears)->unique()->sortDesc()->values();
 
-        $totalPendapatan = $data->sum('total_pendapatan');
-        $totalNonUkt = $data->sum('total_non_ukt');
-        $overallPercentage = $totalPendapatan > 0 ? ($totalNonUkt / $totalPendapatan) * 100 : 0;
-
-        return view('iku9.index', compact(
-            'data', 
-            'tahunAkademik', 
-            'availableYears',
-            'totalPendapatan',
-            'totalNonUkt',
-            'overallPercentage'
-        ));
+        return view('iku9.index', compact('data', 'tahunAkademik', 'availableYears'));
     }
 
     public function create()
@@ -46,71 +30,68 @@ class Iku9Controller extends Controller
         $tahunAkademik = get_tahun_akademik();
         $fakultas = auth()->user()->fakultas;
         $existing = Iku9Pendapatan::where('tahun_akademik', $tahunAkademik)
-            ->where('fakultas', $fakultas)
-            ->first();
+            ->where('fakultas', $fakultas)->first();
 
         if ($existing) {
             return redirect()->route('user.iku9.edit', $existing->id)
-                ->with('warning', 'Data IKU 9 untuk tahun ini sudah ada. Silakan edit data yang sudah ada.');
+                ->with('warning', 'Data IKU 9 untuk tahun ini sudah ada.');
         }
 
         return view('iku9.create', compact('tahunAkademik'));
     }
 
+    private function validationRules()
+    {
+        return [
+            'tahun_akademik'              => 'required|string',
+            'total_pendapatan'            => 'required|numeric|min:0',
+            // IKU 9.1
+            'pendapatan_riset_inovasi'    => 'required|numeric|min:0',
+            'pendapatan_kerjasama_layanan' => 'required|numeric|min:0',
+            'pendapatan_usaha_bisnis'     => 'required|numeric|min:0',
+            // IKU 9.2
+            'total_aset'                  => 'required|numeric|min:0',
+            // IKU 9.3
+            'pendapatan_dipa_apbn'        => 'required|numeric|min:0',
+            // IKU 9.4
+            'pendapatan_industri'         => 'required|numeric|min:0',
+            // IKU 9.5
+            'dana_abadi'                  => 'required|numeric|min:0',
+            // IKU 9.6
+            'dana_masyarakat'             => 'required|numeric|min:0',
+            'alokasi_riset'               => 'required|numeric|min:0',
+            'alokasi_kompetensi_dosen'    => 'required|numeric|min:0',
+            'alokasi_laboratorium'        => 'required|numeric|min:0',
+            'keterangan'                  => 'nullable|string',
+            'lampiran'                    => 'nullable|array',
+            'lampiran.*'                  => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+        ];
+    }
+
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'tahun_akademik' => 'required|string',
-            'total_pendapatan' => 'required|numeric|min:0',
-            'hibah_riset' => 'required|numeric|min:0',
-            'konsultasi' => 'required|numeric|min:0',
-            'unit_bisnis' => 'required|numeric|min:0',
-            'royalti' => 'required|numeric|min:0',
-            'inkubator' => 'required|numeric|min:0',
-            'lainnya' => 'required|numeric|min:0',
-            'keterangan' => 'nullable|string',
-            'lampiran' => 'nullable|array',
-            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
-        ]);
-
-        // Validate sum of pendapatan fields doesn't exceed total pendapatan
-        $totalNonUkt = $validated['hibah_riset'] + $validated['konsultasi'] + 
-                       $validated['unit_bisnis'] + $validated['royalti'] + 
-                       $validated['inkubator'] + $validated['lainnya'];
-        
-        if ($totalNonUkt > $validated['total_pendapatan']) {
-            return back()->withInput()->withErrors([
-                'total_pendapatan' => 'Total pendapatan non-UKT (' . number_format($totalNonUkt, 0, ',', '.') . ') tidak boleh melebihi total pendapatan (' . number_format($validated['total_pendapatan'], 0, ',', '.') . ').'
-            ]);
-        }
+        $validated = $request->validate($this->validationRules());
 
         $fakultas = auth()->user()->fakultas;
-        $validated['fakultas'] = $fakultas;
-
-        // Check for duplicate
         $existing = Iku9Pendapatan::where('tahun_akademik', $validated['tahun_akademik'])
-            ->where('fakultas', $fakultas)
-            ->first();
+            ->where('fakultas', $fakultas)->first();
 
         if ($existing) {
             return redirect()->route('user.iku9.edit', $existing->id)
-                ->with('warning', 'Data IKU 9 untuk tahun ini sudah ada. Silakan edit data yang sudah ada.');
+                ->with('warning', 'Data IKU 9 untuk tahun ini sudah ada.');
         }
 
-        // Upload lampiran to Google Drive (folder per fakultas)
+        $validated['fakultas'] = $fakultas;
+
         if ($request->hasFile('lampiran')) {
             $driveService = new GoogleDriveService();
             $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
             $links = [];
             foreach ($request->file('lampiran') as $file) {
                 $link = $driveService->upload($file, 'IKU9', $fakultasNama);
-                if ($link) {
-                    $links[] = $link;
-                }
+                if ($link) $links[] = $link;
             }
-            if (!empty($links)) {
-                $validated['lampiran_link'] = $links;
-            }
+            if (!empty($links)) $validated['lampiran_link'] = $links;
         }
 
         Iku9Pendapatan::create($validated);
@@ -121,34 +102,16 @@ class Iku9Controller extends Controller
 
     public function edit(Iku9Pendapatan $iku9)
     {
-        if ($iku9->fakultas !== auth()->user()->fakultas) {
-            abort(403, 'Anda tidak memiliki akses ke data ini.');
-        }
-
+        if ($iku9->fakultas !== auth()->user()->fakultas) abort(403);
         return view('iku9.edit', compact('iku9'));
     }
 
     public function update(Request $request, Iku9Pendapatan $iku9)
     {
-        if ($iku9->fakultas !== auth()->user()->fakultas) {
-            abort(403, 'Anda tidak memiliki akses ke data ini.');
-        }
+        if ($iku9->fakultas !== auth()->user()->fakultas) abort(403);
 
-        $validated = $request->validate([
-            'tahun_akademik' => 'required|string',
-            'total_pendapatan' => 'required|numeric|min:0',
-            'hibah_riset' => 'required|numeric|min:0',
-            'konsultasi' => 'required|numeric|min:0',
-            'unit_bisnis' => 'required|numeric|min:0',
-            'royalti' => 'required|numeric|min:0',
-            'inkubator' => 'required|numeric|min:0',
-            'lainnya' => 'required|numeric|min:0',
-            'keterangan' => 'nullable|string',
-            'lampiran' => 'nullable|array',
-            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
-        ]);
+        $validated = $request->validate($this->validationRules());
 
-        // Upload lampiran to Google Drive (folder per fakultas)
         if ($request->hasFile('lampiran')) {
             $driveService = new GoogleDriveService();
             $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
@@ -156,9 +119,7 @@ class Iku9Controller extends Controller
             $newLinks = [];
             foreach ($request->file('lampiran') as $file) {
                 $link = $driveService->upload($file, 'IKU9', $fakultasNama);
-                if ($link) {
-                    $newLinks[] = $link;
-                }
+                if ($link) $newLinks[] = $link;
             }
             $validated['lampiran_link'] = array_merge($existingLinks, $newLinks);
         }
@@ -171,12 +132,8 @@ class Iku9Controller extends Controller
 
     public function destroy(Iku9Pendapatan $iku9)
     {
-        if ($iku9->fakultas !== auth()->user()->fakultas) {
-            abort(403, 'Anda tidak memiliki akses ke data ini.');
-        }
-
+        if ($iku9->fakultas !== auth()->user()->fakultas) abort(403);
         $iku9->delete();
-
         return redirect()->route('user.iku9.index')
             ->with('success', 'Data IKU 9 berhasil dihapus.');
     }
