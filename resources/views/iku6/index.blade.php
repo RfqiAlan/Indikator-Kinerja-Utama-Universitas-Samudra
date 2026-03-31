@@ -48,6 +48,7 @@
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Q2</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Q3</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Q4</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Prosiding</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Capaian</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-right">Aksi</th>
                             </tr>
@@ -72,6 +73,9 @@
                                 </td>
                                 <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
                                     {{ number_format($item->publikasi_q4) }}
+                                </td>
+                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
+                                    {{ number_format($item->prosiding_internasional) }}
                                 </td>
                                 <td class="px-6 py-4 text-center">
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $item->persentase_iku6 >= 50 ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300' }}">
@@ -124,7 +128,7 @@
                     </div>
                 </button>
                 <div x-show="open" x-collapse class="px-6 pb-6 text-sm text-slate-600 dark:text-slate-300">
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mt-2">
                         <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-4 border border-slate-300 dark:border-slate-600 text-center shadow-sm">
                             <span class="block text-xl font-black text-slate-900 dark:text-white mb-1">Q1</span>
                             <span class="inline-block px-2 py-1 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-xs font-bold rounded">Bobot 1.00</span>
@@ -139,6 +143,10 @@
                         </div>
                         <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-4 border border-slate-300 dark:border-slate-600 text-center shadow-sm">
                             <span class="block text-xl font-black text-slate-900 dark:text-white mb-1">Q4</span>
+                            <span class="inline-block px-2 py-1 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-xs font-bold rounded">Bobot 0.25</span>
+                        </div>
+                        <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-4 border border-slate-300 dark:border-slate-600 text-center shadow-sm col-span-2 md:col-span-1">
+                            <span class="block text-xl font-black text-slate-900 dark:text-white mb-1">Prosiding</span>
                             <span class="inline-block px-2 py-1 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-xs font-bold rounded">Bobot 0.25</span>
                         </div>
                     </div>

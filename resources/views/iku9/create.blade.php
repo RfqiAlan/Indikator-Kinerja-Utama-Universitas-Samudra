@@ -25,7 +25,7 @@
 
                 {{-- IKU 9.1 --}}
                 <div class="border-t pt-6">
-                    <h3 class="font-semibold text-slate-800 mb-1">9.1 — Pendapatan Non Pendidikan/UKT</h3>
+                    <h3 class="font-semibold text-slate-800 mb-1">1. Pendapatan Non Pendidikan/UKT</h3>
                     <p class="text-xs text-slate-400 mb-4">Formula: (Realisasi Pendapatan Non Mahasiswa / Total Pendapatan PT) × 100%</p>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">Pendapatan Riset & Inovasi (Rp)</label><input type="number" name="pendapatan_riset_inovasi" x-model.number="risetInovasi" value="{{ old('pendapatan_riset_inovasi', 0) }}" class="w-full rounded-lg border-blue-200" min="0"></div>
@@ -40,7 +40,7 @@
 
                 {{-- IKU 9.2 --}}
                 <div class="border-t pt-6">
-                    <h3 class="font-semibold text-slate-800 mb-1">9.2 — Pendapatan terhadap Total Aset</h3>
+                    <h3 class="font-semibold text-slate-800 mb-1">2. Pendapatan terhadap Total Aset</h3>
                     <p class="text-xs text-slate-400 mb-3">Formula: (Total Pendapatan / Total Aset) × 100%</p>
                     <div class="bg-slate-50 rounded-lg p-3 flex justify-between items-center">
                         <span class="text-sm text-slate-600">Persentase Pendapatan/Aset:</span>
@@ -52,13 +52,13 @@
                 <div class="border-t pt-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <h3 class="font-semibold text-slate-800 mb-1">9.3 — DIPA/APBN</h3>
+                            <h3 class="font-semibold text-slate-800 mb-1">3. DIPA/APBN</h3>
                             <p class="text-xs text-slate-400 mb-3">Formula: (DIPA/APBN / Total Pendapatan) × 100%</p>
                             <div class="bg-emerald-50 p-3 rounded-lg"><label class="block text-sm font-medium text-emerald-700 mb-1">Pendapatan DIPA/APBN (Rp)</label><input type="number" name="pendapatan_dipa_apbn" x-model.number="dipaApbn" value="{{ old('pendapatan_dipa_apbn', 0) }}" class="w-full rounded-lg border-emerald-200" min="0"></div>
                             <div class="mt-2 text-right"><span class="text-sm font-bold text-emerald-700" x-text="persenDipa.toFixed(2) + '%'">0%</span></div>
                         </div>
                         <div>
-                            <h3 class="font-semibold text-slate-800 mb-1">9.4 — Pendapatan Industri</h3>
+                            <h3 class="font-semibold text-slate-800 mb-1">4. Pendapatan Industri</h3>
                             <p class="text-xs text-slate-400 mb-3">Formula: (Pendapatan Industri / Total Pendapatan) × 100%</p>
                             <div class="bg-amber-50 p-3 rounded-lg"><label class="block text-sm font-medium text-amber-700 mb-1">Pendapatan dari Industri (Rp)</label><input type="number" name="pendapatan_industri" x-model.number="industri" value="{{ old('pendapatan_industri', 0) }}" class="w-full rounded-lg border-amber-200" min="0"></div>
                             <div class="mt-2 text-right"><span class="text-sm font-bold text-amber-700" x-text="persenIndustri.toFixed(2) + '%'">0%</span></div>
@@ -68,7 +68,7 @@
 
                 {{-- IKU 9.5 --}}
                 <div class="border-t pt-6">
-                    <h3 class="font-semibold text-slate-800 mb-1">9.5 — Dana Abadi terhadap Total Aset</h3>
+                    <h3 class="font-semibold text-slate-800 mb-1">5. Dana Abadi terhadap Total Aset</h3>
                     <p class="text-xs text-slate-400 mb-3">Formula: (Dana Abadi / Total Aset) × 100%</p>
                     <div class="bg-violet-50 p-3 rounded-lg"><label class="block text-sm font-medium text-violet-700 mb-1">Total Dana Abadi (Rp)</label><input type="number" name="dana_abadi" x-model.number="danaAbadi" value="{{ old('dana_abadi', 0) }}" class="w-full rounded-lg border-violet-200" min="0"></div>
                     <div class="mt-2 text-right"><span class="text-sm font-bold text-violet-700" x-text="persenDanaAbadi.toFixed(2) + '%'">0%</span></div>
@@ -76,7 +76,7 @@
 
                 {{-- IKU 9.6, 9.7, 9.8, 9.9 --}}
                 <div class="border-t pt-6">
-                    <h3 class="font-semibold text-slate-800 mb-1">9.6–9.9 — Alokasi Dana Masyarakat</h3>
+                    <h3 class="font-semibold text-slate-800 mb-1">6. Alokasi Dana Masyarakat</h3>
                     <p class="text-xs text-slate-400 mb-4">Dana Masyarakat dialokasikan untuk Riset, Kompetensi Dosen, Laboratorium. Target masing-masing: 5% dari Dana Masyarakat.</p>
                     <div class="mb-4 bg-teal-50 p-3 rounded-lg"><label class="block text-sm font-medium text-teal-700 mb-1">Total Pendapatan Dana Masyarakat (Rp)</label><input type="number" name="dana_masyarakat" x-model.number="danaMasyarakat" value="{{ old('dana_masyarakat', 0) }}" class="w-full rounded-lg border-teal-200" min="0"></div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">

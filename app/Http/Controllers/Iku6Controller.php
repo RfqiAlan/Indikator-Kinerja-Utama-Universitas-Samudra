@@ -66,6 +66,7 @@ class Iku6Controller extends Controller
             'publikasi_q2' => 'required|integer|min:0',
             'publikasi_q3' => 'required|integer|min:0',
             'publikasi_q4' => 'required|integer|min:0',
+            'prosiding_internasional' => 'required|integer|min:0',
             'publikasi_kolaborasi' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
@@ -74,7 +75,8 @@ class Iku6Controller extends Controller
 
         // Validate sum of quartiles doesn't exceed total publikasi
         $totalQuartile = $validated['publikasi_q1'] + $validated['publikasi_q2'] + 
-                         $validated['publikasi_q3'] + $validated['publikasi_q4'];
+                         $validated['publikasi_q3'] + $validated['publikasi_q4'] +
+                         $validated['prosiding_internasional'];
         
         if ($totalQuartile > $validated['total_publikasi']) {
             return back()->withInput()->withErrors([
@@ -139,11 +141,23 @@ class Iku6Controller extends Controller
             'publikasi_q2' => 'required|integer|min:0',
             'publikasi_q3' => 'required|integer|min:0',
             'publikasi_q4' => 'required|integer|min:0',
+            'prosiding_internasional' => 'required|integer|min:0',
             'publikasi_kolaborasi' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
+
+        // Validate sum of quartiles doesn't exceed total publikasi
+        $totalQuartile = $validated['publikasi_q1'] + $validated['publikasi_q2'] + 
+                         $validated['publikasi_q3'] + $validated['publikasi_q4'] +
+                         $validated['prosiding_internasional'];
+        
+        if ($totalQuartile > $validated['total_publikasi']) {
+            return back()->withInput()->withErrors([
+                'total_publikasi' => 'Total publikasi quartile dan prosiding (' . $totalQuartile . ') tidak boleh melebihi total publikasi (' . $validated['total_publikasi'] . ').'
+            ]);
+        }
 
         // Upload lampiran to Google Drive (folder per fakultas)
         if ($request->hasFile('lampiran')) {

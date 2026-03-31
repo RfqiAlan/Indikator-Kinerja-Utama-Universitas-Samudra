@@ -278,7 +278,7 @@ class Iku6Sheet extends BaseIkuSheet
 
     public function headings(): array
     {
-        return ['Fakultas', 'Judul', 'Penulis', 'Jenis Publikasi', 'Indeksasi', 'Tahun', 'Link Bukti Pendukung'];
+        return ['Fakultas', 'Tahun', 'Total Publikasi', 'Q1', 'Q2', 'Q3', 'Q4', 'Prosiding (Scopus/WoS)', 'Kolaborasi', 'Skor Publikasi', 'Capaian (%)', 'Keterangan', 'Link Bukti Pendukung'];
     }
 
     public function collection(): Collection
@@ -291,11 +291,17 @@ class Iku6Sheet extends BaseIkuSheet
         return $query->get()->map(function ($item) {
             return [
                 $this->getFakultasName($item->fakultas),
-                $item->judul ?? '-',
-                $item->penulis ?? '-',
-                $item->jenis_publikasi ?? '-',
-                $item->indeksasi ?? '-',
                 $item->tahun_akademik,
+                $item->total_publikasi,
+                $item->publikasi_q1,
+                $item->publikasi_q2,
+                $item->publikasi_q3,
+                $item->publikasi_q4,
+                $item->prosiding_internasional,
+                $item->publikasi_kolaborasi,
+                number_format($item->skor_publikasi ?? 0, 2),
+                number_format($item->persentase_iku6 ?? 0, 2) . '%',
+                $item->keterangan ?? '-',
                 is_array($item->lampiran_link) ? implode("\n", $item->lampiran_link) : ($item->lampiran_link ?? '-'),
             ];
         });

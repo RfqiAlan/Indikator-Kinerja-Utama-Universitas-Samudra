@@ -19,6 +19,7 @@ class Iku6Publikasi extends Model
         'publikasi_q2',
         'publikasi_q3',
         'publikasi_q4',
+        'prosiding_internasional',
         'publikasi_kolaborasi',
         'skor_publikasi',
         'persentase_iku6',
@@ -37,6 +38,7 @@ class Iku6Publikasi extends Model
     const BOBOT_Q2 = 0.75;
     const BOBOT_Q3 = 0.50;
     const BOBOT_Q4 = 0.25;
+    const BOBOT_PROSIDING = 0.25;
     const BONUS_KOLABORASI = 0.25;
 
     protected static function boot()
@@ -56,6 +58,7 @@ class Iku6Publikasi extends Model
             ($this->publikasi_q2 * self::BOBOT_Q2) +
             ($this->publikasi_q3 * self::BOBOT_Q3) +
             ($this->publikasi_q4 * self::BOBOT_Q4) +
+            ($this->prosiding_internasional * self::BOBOT_PROSIDING) +
             ($this->publikasi_kolaborasi * self::BONUS_KOLABORASI);
 
         if ($this->total_publikasi > 0) {
