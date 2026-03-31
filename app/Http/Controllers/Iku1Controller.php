@@ -79,13 +79,11 @@ class Iku1Controller extends Controller
             'program_studi' => 'required|string',
             'total_mahasiswa_aktif' => 'required|integer|min:1',
             'jumlah_lulus_tepat_waktu' => 'required|integer|min:0|lte:total_mahasiswa_aktif',
-            'jumlah_responden' => 'nullable|integer|min:0|lte:jumlah_lulus_tepat_waktu',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ], [
             'jumlah_lulus_tepat_waktu.lte' => 'Jumlah lulus tepat waktu tidak boleh melebihi total mahasiswa aktif.',
-            'jumlah_responden.lte' => 'Jumlah responden tidak boleh melebihi jumlah lulus tepat waktu.',
         ]);
 
         $fakultas = auth()->user()->fakultas;
@@ -161,12 +159,9 @@ class Iku1Controller extends Controller
             'program_studi' => 'required|string',
             'jumlah_lulus_tepat_waktu' => 'required|integer|min:0',
             'total_mahasiswa_aktif' => 'required|integer|min:1',
-            'jumlah_responden' => 'nullable|integer|min:0|lte:jumlah_lulus_tepat_waktu',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
-        ], [
-            'jumlah_responden.lte' => 'Jumlah responden tidak boleh melebihi jumlah lulus tepat waktu.',
         ]);
 
         // Auto-lookup jenjang from Prodi

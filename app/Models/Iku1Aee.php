@@ -17,7 +17,6 @@ class Iku1Aee extends Model
         'jenjang',
         'program_studi',
         'jumlah_lulus_tepat_waktu',
-        'jumlah_responden',
         'total_mahasiswa_aktif',
         'aee_ideal',
         'aee_realisasi',
@@ -74,27 +73,6 @@ class Iku1Aee extends Model
         return self::$aeeIdealValues[$jenjang] ?? 25;
     }
 
-    /**
-     * Check if jumlah responden >= 75% of jumlah lulus tepat waktu
-     */
-    public function isRespondenCukup(): bool
-    {
-        if ($this->jumlah_lulus_tepat_waktu <= 0) {
-            return true; // No graduates, no requirement
-        }
-        return $this->jumlah_responden >= ($this->jumlah_lulus_tepat_waktu * 0.75);
-    }
-
-    /**
-     * Get persentase responden terhadap lulusan
-     */
-    public function getRespondenPersentase(): float
-    {
-        if ($this->jumlah_lulus_tepat_waktu <= 0) {
-            return 0;
-        }
-        return ($this->jumlah_responden / $this->jumlah_lulus_tepat_waktu) * 100;
-    }
 
     /**
      * Auto-calculate before saving

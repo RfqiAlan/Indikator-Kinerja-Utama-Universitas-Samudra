@@ -88,25 +88,6 @@
                                     <p class="text-xs text-slate-500">Total mahasiswa terdaftar pada periode tersebut.</p>
                                     @error('total_mahasiswa_aktif')<span class="text-rose-500 text-xs mt-1 block">{{ $message }}</span>@enderror
                                 </div>
-                                <div class="space-y-2">
-                                    <label class="text-sm font-medium text-slate-700 dark:text-slate-300 flex justify-between">
-                                        Jumlah Responden
-                                    </label>
-                                    <input type="number" name="jumlah_responden" x-model.number="jumlahResponden" value="{{ old('jumlah_responden', $iku1->jumlah_responden ?? 0) }}" 
-                                        class="w-full text-lg font-semibold rounded-xl border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow"
-                                        placeholder="0" min="0">
-                                    <p class="text-xs text-slate-500">Min. 75% dari jumlah lulusan.</p>
-                                    @error('jumlah_responden')<span class="text-rose-500 text-xs mt-1 block">{{ $message }}</span>@enderror
-                                </div>
-                            </div>
-
-                            <!-- Respondent Warning -->
-                            <template x-if="lulusTepat > 0 && jumlahResponden < (lulusTepat * 0.75)">
-                                <div class="mt-4 flex items-center gap-2 px-3 py-2 bg-rose-50 border border-rose-200 rounded-lg text-rose-700 text-xs font-medium">
-                                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path></svg>
-                                    <span>Jumlah responden kurang dari 75% jumlah lulusan (<span x-text="Math.ceil(lulusTepat * 0.75)"></span> responden dibutuhkan)</span>
-                                </div>
-                            </template>
 
                              <div class="mt-6 space-y-2">
                                 <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Catatan <span class="text-slate-400 font-normal">(Opsional)</span></label>
@@ -192,7 +173,6 @@
                     selectedProdi: '{{ old("program_studi", $iku1->program_studi) }}',
                     lulusTepat: {{ old('jumlah_lulus_tepat_waktu', $iku1->jumlah_lulus_tepat_waktu ?? 0) }},
                     totalMahasiswa: {{ old('total_mahasiswa_aktif', $iku1->total_mahasiswa_aktif ?? 0) }},
-                    jumlahResponden: {{ old('jumlah_responden', $iku1->jumlah_responden ?? 0) }},
                     get currentJenjang() { return prodiData[this.selectedProdi]?.jenjang || '{{ $iku1->jenjang ?? "S1" }}'; },
                     get aeeIdeal() { return aeeIdealMap[this.currentJenjang] || 25; },
                     get aee() { if (this.totalMahasiswa <= 0) return 0; return (this.lulusTepat / this.totalMahasiswa) * 100; },
