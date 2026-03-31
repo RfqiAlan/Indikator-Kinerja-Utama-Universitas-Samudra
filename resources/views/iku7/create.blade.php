@@ -20,11 +20,13 @@
                     <div><label class="block text-sm font-medium text-slate-700 mb-1">Total Program <span class="text-rose-500">*</span></label><input type="number" name="total_program" x-model.number="totalProgram" value="{{ old('total_program', 0) }}" class="w-full rounded-lg border-slate-300" required min="1"></div>
                 </div>
                 <div class="border-t pt-6"><h3 class="font-semibold text-slate-800 mb-4">SDGs Wajib (1, 4, 17) & Pilihan</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
                         <div class="bg-rose-50 p-3 rounded-lg"><label class="block text-sm font-medium text-rose-700 mb-1">SDG 1 (No Poverty)</label><input type="number" name="sdg_1" x-model.number="sdg1" value="{{ old('sdg_1', 0) }}" class="w-full rounded-lg border-rose-200" min="0"></div>
                         <div class="bg-amber-50 p-3 rounded-lg"><label class="block text-sm font-medium text-amber-700 mb-1">SDG 4 (Education)</label><input type="number" name="sdg_4" x-model.number="sdg4" value="{{ old('sdg_4', 0) }}" class="w-full rounded-lg border-amber-200" min="0"></div>
+                        <div class="bg-red-50 p-3 rounded-lg"><label class="block text-sm font-medium text-red-700 mb-1">SDG 5 (Gender Eq)</label><input type="number" name="sdg_5" x-model.number="sdg5" value="{{ old('sdg_5', 0) }}" class="w-full rounded-lg border-red-200" min="0"></div>
+                        <div class="bg-emerald-50 p-3 rounded-lg"><label class="block text-sm font-medium text-emerald-700 mb-1">SDG 13 (Climate)</label><input type="number" name="sdg_13" x-model.number="sdg13" value="{{ old('sdg_13', 0) }}" class="w-full rounded-lg border-emerald-200" min="0"></div>
                         <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">SDG 17 (Partnership)</label><input type="number" name="sdg_17" x-model.number="sdg17" value="{{ old('sdg_17', 0) }}" class="w-full rounded-lg border-blue-200" min="0"></div>
-                        <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">SDG Pilihan Lainnya</label><input type="number" name="sdg_pilihan" x-model.number="sdgPilihan" value="{{ old('sdg_pilihan', 0) }}" class="w-full rounded-lg border-blue-200" min="0"></div>
+                        <div class="bg-indigo-50 p-3 rounded-lg"><label class="block text-sm font-medium text-indigo-700 mb-1">SDG Pilihan Lainnya</label><input type="number" name="sdg_pilihan" x-model.number="sdgPilihan" value="{{ old('sdg_pilihan', 0) }}" class="w-full rounded-lg border-indigo-200" min="0"></div>
                     </div>
                 </div>
                 <div class="border-t pt-6"><h3 class="font-semibold text-slate-800 mb-4">Bidang Kegiatan</h3>
@@ -54,6 +56,8 @@
                     totalProgram: {{ old('total_program', 0) }}, 
                     sdg1: {{ old('sdg_1', 0) }}, 
                     sdg4: {{ old('sdg_4', 0) }}, 
+                    sdg5: {{ old('sdg_5', 0) }},
+                    sdg13: {{ old('sdg_13', 0) }},
                     sdg17: {{ old('sdg_17', 0) }}, 
                     sdgPilihan: {{ old('sdg_pilihan', 0) }}, 
                     pendidikan: {{ old('pendidikan', 0) }}, 

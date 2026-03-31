@@ -42,6 +42,8 @@
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Total Program</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">SDG 1</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">SDG 4</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">SDG 5</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">SDG 13</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">SDG 17</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Capaian</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-right">Aksi</th>
@@ -61,6 +63,12 @@
                                 </td>
                                 <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
                                     {{ number_format($item->sdg_4) }}
+                                </td>
+                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
+                                    {{ number_format($item->sdg_5) }}
+                                </td>
+                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
+                                    {{ number_format($item->sdg_13) }}
                                 </td>
                                 <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
                                     {{ number_format($item->sdg_17) }}

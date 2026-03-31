@@ -17,6 +17,8 @@ class Iku7Sdgs extends Model
         'total_program',
         'sdg_1',
         'sdg_4',
+        'sdg_5',
+        'sdg_13',
         'sdg_17',
         'sdg_pilihan',
         'pendidikan',

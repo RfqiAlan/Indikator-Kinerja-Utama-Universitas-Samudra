@@ -24,7 +24,7 @@
 
                 {{-- IKU 11.1 — Opini WTP --}}
                 <div class="border-t pt-6">
-                    <h3 class="font-semibold text-slate-800 mb-1">IKU 11.1 — Opini WTP atas Laporan Keuangan</h3>
+                    <h3 class="font-semibold text-slate-800 mb-1">1. Opini WTP atas Laporan Keuangan</h3>
                     <p class="text-xs text-slate-400 mb-4">Opini yang diakui: WTP dan WDP</p>
                     <select name="opini_audit" class="w-full md:w-1/2 rounded-lg border-slate-300">
                         <option value="">Pilih Opini</option>
@@ -36,14 +36,14 @@
 
                 {{-- IKU 11.2 — Predikat SAKIP --}}
                 <div class="border-t pt-6">
-                    <h3 class="font-semibold text-slate-800 mb-1">IKU 11.2 — Predikat SAKIP</h3>
+                    <h3 class="font-semibold text-slate-800 mb-1">2. Predikat SAKIP</h3>
                     <p class="text-xs text-slate-400 mb-4">Masukkan nilai SAKIP (0-100), predikat akan dihitung otomatis</p>
                     <input type="number" name="nilai_sakip" step="0.01" min="0" max="100" value="{{ old('nilai_sakip') }}" class="w-full md:w-1/2 rounded-lg border-slate-300" placeholder="Contoh: 82.50">
                 </div>
 
                 {{-- IKU 11.3 — Pelanggaran Integritas Akademik --}}
                 <div class="border-t pt-6">
-                    <h3 class="font-semibold text-slate-800 mb-1">IKU 11.3 — Laporan Pelanggaran Integritas Akademik</h3>
+                    <h3 class="font-semibold text-slate-800 mb-1">3. Laporan Pelanggaran Integritas Akademik</h3>
                     <p class="text-xs text-slate-400 mb-4">Masukkan jumlah laporan pelanggaran per kategori</p>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div class="bg-rose-50 p-3 rounded-lg">
@@ -75,7 +75,7 @@
 
                 {{-- IKU 11.4 — Pencegahan & Penanganan --}}
                 <div class="border-t pt-6">
-                    <h3 class="font-semibold text-slate-800 mb-1">IKU 11.4 — Pencegahan & Penanganan</h3>
+                    <h3 class="font-semibold text-slate-800 mb-1">4. Pencegahan & Penanganan</h3>
                     <p class="text-xs text-slate-400 mb-4">Anti Kekerasan, Anti Narkoba, Anti Korupsi — Formula: (terlaksana / direncanakan) × 100%</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="bg-blue-50 p-3 rounded-lg">

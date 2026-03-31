@@ -318,7 +318,7 @@ class Iku7Sheet extends BaseIkuSheet
 
     public function headings(): array
     {
-        return ['Fakultas', 'Nama Kegiatan', 'SDGs Terkait', 'Jenis', 'Tahun', 'Keterangan', 'Link Bukti Pendukung'];
+        return ['Fakultas', 'Tahun', 'Total Program', 'SDG 1', 'SDG 4', 'SDG 5', 'SDG 13', 'SDG 17', 'SDG Lainnya', 'Pendidikan', 'Penelitian', 'PKM', 'Kerjasama', 'Kebijakan', 'Total Program SDGs', 'Capaian (%)', 'Keterangan', 'Link Bukti Pendukung'];
     }
 
     public function collection(): Collection
@@ -331,10 +331,21 @@ class Iku7Sheet extends BaseIkuSheet
         return $query->get()->map(function ($item) {
             return [
                 $this->getFakultasName($item->fakultas),
-                $item->nama_kegiatan ?? '-',
-                $item->sdgs_terkait ?? '-',
-                $item->jenis ?? '-',
                 $item->tahun_akademik,
+                $item->total_program,
+                $item->sdg_1,
+                $item->sdg_4,
+                $item->sdg_5,
+                $item->sdg_13,
+                $item->sdg_17,
+                $item->sdg_pilihan,
+                $item->pendidikan,
+                $item->penelitian,
+                $item->pkm,
+                $item->kerjasama,
+                $item->kebijakan,
+                $item->total_program_sdgs,
+                number_format($item->persentase_iku7 ?? 0, 2) . '%',
                 $item->keterangan ?? '-',
                 is_array($item->lampiran_link) ? implode("\n", $item->lampiran_link) : ($item->lampiran_link ?? '-'),
             ];
