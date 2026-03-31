@@ -318,7 +318,7 @@ class Iku7Sheet extends BaseIkuSheet
 
     public function headings(): array
     {
-        return ['Fakultas', 'Tahun', 'Total Program', 'SDG 1', 'SDG 4', 'SDG 5', 'SDG 13', 'SDG 17', 'SDG Lainnya', 'Pendidikan', 'Penelitian', 'PKM', 'Kerjasama', 'Kebijakan', 'Total Program SDGs', 'Capaian (%)', 'Keterangan', 'Link Bukti Pendukung'];
+        return ['Fakultas', 'Tahun', 'Total Program', 'SDG 1', 'SDG 4', 'SDG 5', 'SDG 13', 'SDG 17', 'Pendidikan', 'Penelitian', 'PKM', 'Kerjasama', 'Kebijakan', 'Total Program SDGs', 'Capaian (%)', 'Keterangan', 'Link Bukti Pendukung'];
     }
 
     public function collection(): Collection
@@ -338,7 +338,6 @@ class Iku7Sheet extends BaseIkuSheet
                 $item->sdg_5,
                 $item->sdg_13,
                 $item->sdg_17,
-                $item->sdg_pilihan,
                 $item->pendidikan,
                 $item->penelitian,
                 $item->pkm,

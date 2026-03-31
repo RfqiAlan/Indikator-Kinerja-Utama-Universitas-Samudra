@@ -20,7 +20,6 @@ class Iku7Sdgs extends Model
         'sdg_5',
         'sdg_13',
         'sdg_17',
-        'sdg_pilihan',
         'pendidikan',
         'penelitian',
         'pkm',
