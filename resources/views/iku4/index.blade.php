@@ -36,30 +36,27 @@
             <div class="relative overflow-hidden bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 sm:p-8">
                 <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-blue-50 dark:bg-blue-900/20 blur-3xl opacity-60"></div>
                 <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-cyan-50 dark:bg-cyan-900/20 blur-3xl opacity-60"></div>
-                <div class="relative flex flex-col md:flex-row items-center justify-between gap-8">
-                    <div class="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div class="text-center p-4 bg-blue-50 dark:bg-blue-900/30 rounded-xl">
-                            <p class="text-sm text-blue-600 dark:text-blue-400 font-medium">Persentase IKU 4</p>
-                            <p class="text-3xl font-bold text-blue-700 dark:text-blue-300">{{ number_format($overallPercentage, 2) }}%</p>
+                <div class="relative flex flex-col items-center gap-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full">
+                        <div class="flex flex-col items-center p-5 bg-white shadow-sm border border-slate-100 rounded-2xl relative overflow-hidden">
+                            <div class="absolute top-0 left-0 w-1 h-full bg-cyan-500"></div>
+                            <p class="text-sm text-slate-500 font-medium mb-1">Capaian Sub-Indikator 1</p>
+                            <p class="text-2xl font-bold text-slate-800">{{ number_format($overallRekognisiPercentage, 2) }}%</p>
+                            <p class="text-xs text-slate-400 mt-1">Dosen Rekognisi</p>
                         </div>
-                        <div class="text-center p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
-                            <p class="text-sm text-slate-600 dark:text-slate-400 font-medium">Total Dosen</p>
-                            <p class="text-3xl font-bold text-slate-700 dark:text-slate-300">{{ number_format($totalDosen) }}</p>
+                        <div class="flex flex-col items-center p-5 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 shadow-md rounded-2xl transform scale-105 z-10 relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-16 h-16 bg-white/40 rounded-full blur-xl -mr-4 -mt-4"></div>
+                            <p class="text-sm font-semibold text-blue-600 mb-2 uppercase tracking-wide">Capaian IKU 4 (Agregat)</p>
+                            <p class="text-4xl font-black text-blue-700 drop-shadow-sm">{{ number_format($overallPercentage, 2) }}%</p>
+                            <div class="mt-3 px-3 py-1 bg-white/60 rounded-full text-xs font-semibold text-blue-800">
+                                Rata-rata Sub-indikator
+                            </div>
                         </div>
-                        <div class="text-center p-4 bg-cyan-50 dark:bg-cyan-900/30 rounded-xl">
-                            <p class="text-sm text-cyan-600 dark:text-cyan-400 font-medium">Total Rekognisi</p>
-                            <p class="text-3xl font-bold text-cyan-700 dark:text-cyan-300">{{ number_format($totalRekognisi) }}</p>
-                        </div>
-                    </div>
-                    <div class="relative w-32 h-32 flex items-center justify-center">
-                        <svg class="transform -rotate-90 w-full h-full" viewBox="0 0 36 36">
-                            <path class="text-slate-100 dark:text-slate-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" />
-                            @php $percent = min($overallPercentage, 100); $strokeColor = $overallPercentage >= 10 ? 'text-blue-500' : 'text-rose-500'; @endphp
-                            <path class="{{ $strokeColor }}" stroke-dasharray="{{ $percent }}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
-                        </svg>
-                        <div class="absolute flex flex-col items-center">
-                            <span class="text-xs font-bold text-slate-400 uppercase">Score</span>
-                            <span class="text-xl font-black {{ $strokeColor }}">{{ number_format($overallPercentage, 1) }}%</span>
+                        <div class="flex flex-col items-center p-5 bg-white shadow-sm border border-slate-100 rounded-2xl relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-1 h-full bg-indigo-500"></div>
+                            <p class="text-sm text-slate-500 font-medium mb-1">Capaian Sub-Indikator 2</p>
+                            <p class="text-2xl font-bold text-slate-800">{{ number_format($overallS3Percentage, 2) }}%</p>
+                            <p class="text-xs text-slate-400 mt-1">Dosen Bergelar S3</p>
                         </div>
                     </div>
                 </div>
@@ -74,13 +71,19 @@
                     <table class="w-full text-sm text-left whitespace-nowrap md:whitespace-normal">
                         <thead class="text-xs text-slate-500 uppercase bg-slate-50/80 dark:bg-slate-700/50 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700">
                             <tr>
-                                <th scope="col" class="px-6 py-4 font-medium">Tahun</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center">Total Dosen</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center">Publikasi</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center">Buku</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center">Paten</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center">Capaian</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-right">Aksi</th>
+                                <th scope="col" class="px-6 py-4 font-medium" rowspan="2">Tahun</th>
+                                <th scope="col" class="px-6 py-2 border-b font-medium text-center bg-blue-50/50 border-r" colspan="3">Sub-indikator 1 (Rekognisi)</th>
+                                <th scope="col" class="px-6 py-2 border-b font-medium text-center bg-indigo-50/50 border-r" colspan="3">Sub-indikator 2 (Pend. S3)</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center" rowspan="2">Ratarata Capaian</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-right" rowspan="2">Aksi</th>
+                            </tr>
+                            <tr>
+                                <th scope="col" class="px-3 py-2 font-medium text-center text-[10px] bg-blue-50/20">Dosen PT</th>
+                                <th scope="col" class="px-3 py-2 font-medium text-center text-[10px] bg-blue-50/20">Rekognisi</th>
+                                <th scope="col" class="px-3 py-2 font-medium text-center text-[10px] bg-blue-50/20 border-r">% Rek.</th>
+                                <th scope="col" class="px-3 py-2 font-medium text-center text-[10px] bg-indigo-50/20">Dosen Tetap</th>
+                                <th scope="col" class="px-3 py-2 font-medium text-center text-[10px] bg-indigo-50/20">Lulusan S3</th>
+                                <th scope="col" class="px-3 py-2 font-medium text-center text-[10px] bg-indigo-50/20 border-r">% S3</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 dark:divide-slate-700/50">
@@ -89,20 +92,29 @@
                                 <td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">
                                     {{ $item->tahun_akademik }}
                                 </td>
-                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
-                                    {{ number_format($item->total_dosen) }}
+                                <!-- Sub 1 -->
+                                <td class="px-3 py-4 text-center text-slate-600 dark:text-slate-300">
+                                    {{ number_format($item->total_dosen_pt) }}
                                 </td>
-                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
-                                    {{ number_format($item->publikasi_internasional) }}
+                                <td class="px-3 py-4 text-center text-slate-600 dark:text-slate-300">
+                                    {{ number_format($item->total_dosen_rekognisi) }}
                                 </td>
-                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
-                                    {{ number_format($item->buku_global) }}
+                                <td class="px-3 py-4 text-center font-semibold text-blue-600 border-r">
+                                    {{ number_format($item->persentase_rekognisi, 2) }}%
                                 </td>
-                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
-                                    {{ number_format($item->hak_paten) }}
+                                <!-- Sub 2 -->
+                                <td class="px-3 py-4 text-center text-slate-600 dark:text-slate-300">
+                                    {{ number_format($item->total_dosen_tetap_pt) }}
                                 </td>
+                                <td class="px-3 py-4 text-center text-slate-600 dark:text-slate-300">
+                                    {{ number_format($item->total_dosen_s3) }}
+                                </td>
+                                <td class="px-3 py-4 text-center font-semibold text-indigo-600 border-r">
+                                    {{ number_format($item->persentase_s3, 2) }}%
+                                </td>
+                                <!-- Rata Rata -->
                                 <td class="px-6 py-4 text-center">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $item->persentase_iku4 >= 10 ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300' }}">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 border border-emerald-200">
                                         {{ number_format($item->persentase_iku4, 2) }}%
                                     </span>
                                 </td>
@@ -130,7 +142,7 @@
                         <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
                     </div>
                     <h3 class="text-lg font-medium text-slate-900 dark:text-white mb-2">Belum ada data</h3>
-                    <p class="text-slate-500 max-w-sm mx-auto mb-6">Mulai dengan menambahkan data rekognisi internasional dosen.</p>
+                    <p class="text-slate-500 max-w-sm mx-auto mb-6">Mulai dengan menambahkan data rekognisi internasional dosen dan kualifikasi pendidikan S3.</p>
                     <a href="{{ route('user.iku4.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 shadow-sm transition-all">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         Tambah Data

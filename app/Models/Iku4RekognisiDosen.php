@@ -14,19 +14,23 @@ class Iku4RekognisiDosen extends Model
     protected $fillable = [
         'tahun_akademik',
         'fakultas',
-        'total_dosen',
-        'publikasi_internasional',
-        'buku_global',
-        'hak_paten',
-        'karya_seni_internasional',
-        'produk_inovasi',
-        'total_rekognisi',
+        'total_dosen_pt',
+        'karya_tulis_ilmiah',
+        'karya_terapan',
+        'karya_seni',
+        'total_dosen_rekognisi',
+        'persentase_rekognisi',
+        'total_dosen_s3',
+        'total_dosen_tetap_pt',
+        'persentase_s3',
         'persentase_iku4',
         'keterangan',
         'lampiran_link',
     ];
 
     protected $casts = [
+        'persentase_rekognisi' => 'decimal:2',
+        'persentase_s3' => 'decimal:2',
         'persentase_iku4' => 'decimal:2',
         'lampiran_link' => 'array',
     ];
@@ -42,14 +46,21 @@ class Iku4RekognisiDosen extends Model
 
     public function calculatePercentage()
     {
-        $this->total_rekognisi = $this->publikasi_internasional + $this->buku_global + 
-                                  $this->hak_paten + $this->karya_seni_internasional + 
-                                  $this->produk_inovasi;
-
-        if ($this->total_dosen > 0) {
-            $this->persentase_iku4 = ($this->total_rekognisi / $this->total_dosen) * 100;
+        // 1. Rekognisi
+        if ($this->total_dosen_pt > 0) {
+            $this->persentase_rekognisi = ($this->total_dosen_rekognisi / $this->total_dosen_pt) * 100;
         } else {
-            $this->persentase_iku4 = 0;
+            $this->persentase_rekognisi = 0;
         }
+
+        // 2. S3
+        if ($this->total_dosen_tetap_pt > 0) {
+            $this->persentase_s3 = ($this->total_dosen_s3 / $this->total_dosen_tetap_pt) * 100;
+        } else {
+            $this->persentase_s3 = 0;
+        }
+
+        // Agregat (Rata-rata)
+        $this->persentase_iku4 = ($this->persentase_rekognisi + $this->persentase_s3) / 2;
     }
 }

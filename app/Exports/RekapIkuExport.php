@@ -204,12 +204,27 @@ class Iku4Sheet extends BaseIkuSheet
 {
     public function title(): string
     {
-        return 'IKU 4 - Rekognisi Dosen';
+        return 'IKU 4 - Rekognisi & Pendidikan Dosen';
     }
 
     public function headings(): array
     {
-        return ['Fakultas', 'Nama Dosen', 'Jenis Rekognisi', 'Tingkat', 'Tahun', 'Keterangan', 'Link Bukti Pendukung'];
+        return [
+            'Fakultas',
+            'Tahun Akademik',
+            'Total Dosen PT',
+            'Dosen dgn Rekognisi',
+            'Karya Tulis Ilmiah',
+            'Karya Terapan',
+            'Karya Seni',
+            '% Rekognisi',
+            'Total Dosen Tetap PT',
+            'Dosen Lulusan S3',
+            '% S3',
+            'Nilai IKU 4 (Rata-rata)',
+            'Keterangan',
+            'Link Bukti Pendukung'
+        ];
     }
 
     public function collection(): Collection
@@ -222,10 +237,17 @@ class Iku4Sheet extends BaseIkuSheet
         return $query->get()->map(function ($item) {
             return [
                 $this->getFakultasName($item->fakultas),
-                $item->nama_dosen ?? '-',
-                $item->jenis_rekognisi ?? '-',
-                $item->tingkat ?? '-',
                 $item->tahun_akademik,
+                $item->total_dosen_pt,
+                $item->total_dosen_rekognisi,
+                $item->karya_tulis_ilmiah,
+                $item->karya_terapan,
+                $item->karya_seni,
+                $item->persentase_rekognisi . '%',
+                $item->total_dosen_tetap_pt,
+                $item->total_dosen_s3,
+                $item->persentase_s3 . '%',
+                $item->persentase_iku4 . '%',
                 $item->keterangan ?? '-',
                 is_array($item->lampiran_link) ? implode("\n", $item->lampiran_link) : ($item->lampiran_link ?? '-'),
             ];

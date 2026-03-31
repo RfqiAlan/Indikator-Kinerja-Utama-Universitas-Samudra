@@ -27,16 +27,22 @@ class Iku4Controller extends Controller
             ->sortDesc()
             ->values();
 
-        $totalDosen = $data->sum('total_dosen');
-        $totalRekognisi = $data->sum('total_rekognisi');
-        $overallPercentage = $totalDosen > 0 ? ($totalRekognisi / $totalDosen) * 100 : 0;
+        $totalDosenPt = $data->sum('total_dosen_pt');
+        $totalDosenRekognisi = $data->sum('total_dosen_rekognisi');
+        $overallRekognisiPercentage = $totalDosenPt > 0 ? ($totalDosenRekognisi / $totalDosenPt) * 100 : 0;
+
+        $totalDosenS3 = $data->sum('total_dosen_s3');
+        $totalDosenTetapPt = $data->sum('total_dosen_tetap_pt');
+        $overallS3Percentage = $totalDosenTetapPt > 0 ? ($totalDosenS3 / $totalDosenTetapPt) * 100 : 0;
+
+        $overallPercentage = ($overallRekognisiPercentage + $overallS3Percentage) / 2;
 
         return view('iku4.index', compact(
             'data', 
             'tahunAkademik', 
             'availableYears',
-            'totalDosen',
-            'totalRekognisi',
+            'overallRekognisiPercentage',
+            'overallS3Percentage',
             'overallPercentage'
         ));
     }
@@ -61,25 +67,29 @@ class Iku4Controller extends Controller
     {
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
-            'total_dosen' => 'required|integer|min:1',
-            'publikasi_internasional' => 'required|integer|min:0',
-            'buku_global' => 'required|integer|min:0',
-            'hak_paten' => 'required|integer|min:0',
-            'karya_seni_internasional' => 'required|integer|min:0',
-            'produk_inovasi' => 'required|integer|min:0',
+            'total_dosen_pt' => 'required|integer|min:1',
+            'total_dosen_rekognisi' => 'required|integer|min:0',
+            'karya_tulis_ilmiah' => 'required|integer|min:0',
+            'karya_terapan' => 'required|integer|min:0',
+            'karya_seni' => 'required|integer|min:0',
+            'total_dosen_tetap_pt' => 'required|integer|min:1',
+            'total_dosen_s3' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
-        // Validate sum of rekognisi doesn't exceed total dosen
-        $totalRekognisi = $validated['publikasi_internasional'] + $validated['buku_global'] + 
-                          $validated['hak_paten'] + $validated['karya_seni_internasional'] + 
-                          $validated['produk_inovasi'];
-        
-        if ($totalRekognisi > $validated['total_dosen']) {
+        // Validate total_dosen_rekognisi doesn't exceed total_dosen_pt
+        if ($validated['total_dosen_rekognisi'] > $validated['total_dosen_pt']) {
             return back()->withInput()->withErrors([
-                'total_dosen' => 'Total rekognisi (' . $totalRekognisi . ') tidak boleh melebihi total dosen (' . $validated['total_dosen'] . ').'
+                'total_dosen_rekognisi' => 'Total dosen rekognisi (' . $validated['total_dosen_rekognisi'] . ') tidak boleh melebihi total dosen PT (' . $validated['total_dosen_pt'] . ').'
+            ]);
+        }
+
+        // Validate total_dosen_s3 doesn't exceed total_dosen_tetap_pt
+        if ($validated['total_dosen_s3'] > $validated['total_dosen_tetap_pt']) {
+            return back()->withInput()->withErrors([
+                'total_dosen_s3' => 'Total dosen S3 (' . $validated['total_dosen_s3'] . ') tidak boleh melebihi total dosen tetap PT (' . $validated['total_dosen_tetap_pt'] . ').'
             ]);
         }
 
@@ -135,16 +145,31 @@ class Iku4Controller extends Controller
 
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
-            'total_dosen' => 'required|integer|min:1',
-            'publikasi_internasional' => 'required|integer|min:0',
-            'buku_global' => 'required|integer|min:0',
-            'hak_paten' => 'required|integer|min:0',
-            'karya_seni_internasional' => 'required|integer|min:0',
-            'produk_inovasi' => 'required|integer|min:0',
+            'total_dosen_pt' => 'required|integer|min:1',
+            'total_dosen_rekognisi' => 'required|integer|min:0',
+            'karya_tulis_ilmiah' => 'required|integer|min:0',
+            'karya_terapan' => 'required|integer|min:0',
+            'karya_seni' => 'required|integer|min:0',
+            'total_dosen_tetap_pt' => 'required|integer|min:1',
+            'total_dosen_s3' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
+
+        // Validate total_dosen_rekognisi doesn't exceed total_dosen_pt
+        if ($validated['total_dosen_rekognisi'] > $validated['total_dosen_pt']) {
+            return back()->withInput()->withErrors([
+                'total_dosen_rekognisi' => 'Total dosen rekognisi (' . $validated['total_dosen_rekognisi'] . ') tidak boleh melebihi total dosen PT (' . $validated['total_dosen_pt'] . ').'
+            ]);
+        }
+
+        // Validate total_dosen_s3 doesn't exceed total_dosen_tetap_pt
+        if ($validated['total_dosen_s3'] > $validated['total_dosen_tetap_pt']) {
+            return back()->withInput()->withErrors([
+                'total_dosen_s3' => 'Total dosen S3 (' . $validated['total_dosen_s3'] . ') tidak boleh melebihi total dosen tetap PT (' . $validated['total_dosen_tetap_pt'] . ').'
+            ]);
+        }
 
         // Upload lampiran to Google Drive (folder per fakultas)
         if ($request->hasFile('lampiran')) {

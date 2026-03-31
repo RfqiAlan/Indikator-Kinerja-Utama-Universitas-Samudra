@@ -82,15 +82,13 @@ class DashboardController extends Controller
 
     /**
      * IKU 4 — Kualifikasi Dosen (Rekognisi)
-     * sum(total_rekognisi) / sum(total_dosen) × 100
+     * Menggunakan rata-rata dari capaian IKU4 (agregat sub 1 & 2)
      */
     private function calculateIku4(string $tahunAkademik): array
     {
         $data = Iku4RekognisiDosen::where('tahun_akademik', $tahunAkademik)->get();
-        $totalDosen = $data->sum('total_dosen');
-        $totalRekognisi = $data->sum('total_rekognisi');
-        $percentage = $totalDosen > 0 ? ($totalRekognisi / $totalDosen) * 100 : 0;
-        return ['percentage' => round($percentage, 2), 'count' => $data->count()];
+        $percentage = $data->isNotEmpty() ? $data->avg('persentase_iku4') : 0;
+        return ['percentage' => round($percentage ?? 0, 2), 'count' => $data->count()];
     }
 
     /**
