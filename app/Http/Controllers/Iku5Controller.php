@@ -27,8 +27,10 @@ class Iku5Controller extends Controller
             ->sortDesc()
             ->values();
 
-        $totalKerjasamaPt = $data->sum('total_kerjasama_pt');
-        $totalLuaran = $data->sum('total_luaran');
+        // Calculate overall using DB-level aggregation
+        $q = Iku5LuaranKerjasama::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
+        $totalKerjasamaPt = $q->sum('total_kerjasama_pt');
+        $totalLuaran      = $q->sum('total_luaran');
         $overallPercentage = $totalKerjasamaPt > 0 ? ($totalLuaran / $totalKerjasamaPt) * 100 : 0;
 
         return view('iku5.index', compact(

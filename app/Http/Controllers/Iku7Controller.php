@@ -27,8 +27,10 @@ class Iku7Controller extends Controller
             ->sortDesc()
             ->values();
 
-        $totalProgram = $data->sum('total_program');
-        $totalProgramSdgs = $data->sum('total_program_sdgs');
+        // Calculate overall using DB-level aggregation
+        $q = Iku7Sdgs::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
+        $totalProgram    = $q->sum('total_program');
+        $totalProgramSdgs = $q->sum('total_program_sdgs');
         $overallPercentage = $totalProgram > 0 ? ($totalProgramSdgs / $totalProgram) * 100 : 0;
 
         return view('iku7.index', compact(

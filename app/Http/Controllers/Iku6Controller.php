@@ -27,8 +27,10 @@ class Iku6Controller extends Controller
             ->sortDesc()
             ->values();
 
-        $totalPublikasi = $data->sum('total_publikasi');
-        $skorPublikasi = $data->sum('skor_publikasi');
+        // Calculate overall using DB-level aggregation
+        $q = Iku6Publikasi::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
+        $totalPublikasi = $q->sum('total_publikasi');
+        $skorPublikasi  = $q->sum('skor_publikasi');
         $overallPercentage = $totalPublikasi > 0 ? ($skorPublikasi / $totalPublikasi) * 100 : 0;
 
         return view('iku6.index', compact(

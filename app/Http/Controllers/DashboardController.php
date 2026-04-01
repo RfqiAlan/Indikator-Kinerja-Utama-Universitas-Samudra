@@ -49,9 +49,10 @@ class DashboardController extends Controller
      */
     private function calculateIku1(string $tahunAkademik): array
     {
-        $data = Iku1Aee::where('tahun_akademik', $tahunAkademik)->get();
-        $percentage = $data->isNotEmpty() ? $data->avg('tingkat_pencapaian') : 0;
-        return ['percentage' => round($percentage, 2), 'count' => $data->count()];
+        $q = Iku1Aee::where('tahun_akademik', $tahunAkademik);
+        $count = $q->count();
+        $percentage = $count > 0 ? $q->avg('tingkat_pencapaian') : 0;
+        return ['percentage' => round($percentage ?? 0, 2), 'count' => $count];
     }
 
     /**
@@ -60,11 +61,12 @@ class DashboardController extends Controller
      */
     private function calculateIku2(string $tahunAkademik): array
     {
-        $data = Iku2LulusanBekerja::where('tahun_akademik', $tahunAkademik)->get();
-        $totalLulusan = $data->sum('total_lulusan');
-        $totalNumerator = $data->sum('skor_bekerja') + $data->sum('studi_lanjut') + $data->sum('skor_wirausaha');
+        $q = Iku2LulusanBekerja::where('tahun_akademik', $tahunAkademik);
+        $count      = $q->count();
+        $totalLulusan   = $q->sum('total_lulusan');
+        $totalNumerator = $q->sum('skor_bekerja') + $q->sum('studi_lanjut') + $q->sum('skor_wirausaha');
         $percentage = $totalLulusan > 0 ? ($totalNumerator / $totalLulusan) * 100 : 0;
-        return ['percentage' => round($percentage, 2), 'count' => $data->count()];
+        return ['percentage' => round($percentage, 2), 'count' => $count];
     }
 
     /**
@@ -73,11 +75,12 @@ class DashboardController extends Controller
      */
     private function calculateIku3(string $tahunAkademik): array
     {
-        $data = Iku3KegiatanMahasiswa::where('tahun_akademik', $tahunAkademik)->get();
-        $totalMahasiswa = $data->sum('total_mahasiswa');
-        $totalBerkegiatan = $data->sum('total_berkegiatan');
+        $q = Iku3KegiatanMahasiswa::where('tahun_akademik', $tahunAkademik);
+        $count = $q->count();
+        $totalMahasiswa   = $q->sum('total_mahasiswa');
+        $totalBerkegiatan = $q->sum('total_berkegiatan');
         $percentage = $totalMahasiswa > 0 ? ($totalBerkegiatan / $totalMahasiswa) * 100 : 0;
-        return ['percentage' => round($percentage, 2), 'count' => $data->count()];
+        return ['percentage' => round($percentage, 2), 'count' => $count];
     }
 
     /**
@@ -86,9 +89,10 @@ class DashboardController extends Controller
      */
     private function calculateIku4(string $tahunAkademik): array
     {
-        $data = Iku4RekognisiDosen::where('tahun_akademik', $tahunAkademik)->get();
-        $percentage = $data->isNotEmpty() ? $data->avg('persentase_iku4') : 0;
-        return ['percentage' => round($percentage ?? 0, 2), 'count' => $data->count()];
+        $q = Iku4RekognisiDosen::where('tahun_akademik', $tahunAkademik);
+        $count = $q->count();
+        $percentage = $count > 0 ? $q->avg('persentase_iku4') : 0;
+        return ['percentage' => round($percentage ?? 0, 2), 'count' => $count];
     }
 
     /**
@@ -97,11 +101,12 @@ class DashboardController extends Controller
      */
     private function calculateIku5(string $tahunAkademik): array
     {
-        $data = Iku5LuaranKerjasama::where('tahun_akademik', $tahunAkademik)->get();
-        $totalKerjasamaPt = $data->sum('total_kerjasama_pt');
-        $totalLuaran = $data->sum('total_luaran');
+        $q = Iku5LuaranKerjasama::where('tahun_akademik', $tahunAkademik);
+        $count = $q->count();
+        $totalKerjasamaPt = $q->sum('total_kerjasama_pt');
+        $totalLuaran      = $q->sum('total_luaran');
         $percentage = $totalKerjasamaPt > 0 ? ($totalLuaran / $totalKerjasamaPt) * 100 : 0;
-        return ['percentage' => round($percentage, 2), 'count' => $data->count()];
+        return ['percentage' => round($percentage, 2), 'count' => $count];
     }
 
     /**
@@ -110,11 +115,12 @@ class DashboardController extends Controller
      */
     private function calculateIku6(string $tahunAkademik): array
     {
-        $data = Iku6Publikasi::where('tahun_akademik', $tahunAkademik)->get();
-        $totalPublikasi = $data->sum('total_publikasi');
-        $skorPublikasi = $data->sum('skor_publikasi');
+        $q = Iku6Publikasi::where('tahun_akademik', $tahunAkademik);
+        $count = $q->count();
+        $totalPublikasi = $q->sum('total_publikasi');
+        $skorPublikasi  = $q->sum('skor_publikasi');
         $percentage = $totalPublikasi > 0 ? ($skorPublikasi / $totalPublikasi) * 100 : 0;
-        return ['percentage' => round($percentage, 2), 'count' => $data->count()];
+        return ['percentage' => round($percentage, 2), 'count' => $count];
     }
 
     /**
@@ -123,11 +129,12 @@ class DashboardController extends Controller
      */
     private function calculateIku7(string $tahunAkademik): array
     {
-        $data = Iku7Sdgs::where('tahun_akademik', $tahunAkademik)->get();
-        $totalProgram = $data->sum('total_program');
-        $totalSdgs = $data->sum('total_program_sdgs');
+        $q = Iku7Sdgs::where('tahun_akademik', $tahunAkademik);
+        $count = $q->count();
+        $totalProgram = $q->sum('total_program');
+        $totalSdgs    = $q->sum('total_program_sdgs');
         $percentage = $totalProgram > 0 ? ($totalSdgs / $totalProgram) * 100 : 0;
-        return ['percentage' => round($percentage, 2), 'count' => $data->count()];
+        return ['percentage' => round($percentage, 2), 'count' => $count];
     }
 
     /**
@@ -136,11 +143,12 @@ class DashboardController extends Controller
      */
     private function calculateIku8(string $tahunAkademik): array
     {
-        $data = Iku8SdmKebijakan::where('tahun_akademik', $tahunAkademik)->get();
-        $totalSdm = $data->sum('total_sdm');
-        $totalTerlibat = $data->sum('total_terlibat');
+        $q = Iku8SdmKebijakan::where('tahun_akademik', $tahunAkademik);
+        $count = $q->count();
+        $totalSdm      = $q->sum('total_sdm');
+        $totalTerlibat = $q->sum('total_terlibat');
         $percentage = $totalSdm > 0 ? ($totalTerlibat / $totalSdm) * 100 : 0;
-        return ['percentage' => round($percentage, 2), 'count' => $data->count()];
+        return ['percentage' => round($percentage, 2), 'count' => $count];
     }
 
     /**
@@ -149,9 +157,10 @@ class DashboardController extends Controller
      */
     private function calculateIku9(string $tahunAkademik): array
     {
-        $data = Iku9Pendapatan::where('tahun_akademik', $tahunAkademik)->get();
-        $percentage = $data->isNotEmpty() ? $data->avg('persen_non_ukt') : 0;
-        return ['percentage' => round($percentage ?? 0, 2), 'count' => $data->count()];
+        $q = Iku9Pendapatan::where('tahun_akademik', $tahunAkademik);
+        $count = $q->count();
+        $percentage = $count > 0 ? $q->avg('persen_non_ukt') : 0;
+        return ['percentage' => round($percentage ?? 0, 2), 'count' => $count];
     }
 
     /**
@@ -160,9 +169,9 @@ class DashboardController extends Controller
      */
     private function calculateIku10(string $tahunAkademik): array
     {
-        $data = Iku10ZonaIntegritas::where('tahun_akademik', $tahunAkademik)->get();
-        $totalUnits = $data->count();
-        $achievedUnits = $data->whereIn('status', ['wbk', 'wbbm'])->count();
+        $q = Iku10ZonaIntegritas::where('tahun_akademik', $tahunAkademik);
+        $totalUnits    = $q->count();
+        $achievedUnits = (clone $q)->whereIn('status', ['wbk', 'wbbm'])->count();
         $percentage = $totalUnits > 0 ? ($achievedUnits / $totalUnits) * 100 : 0;
         return ['percentage' => round($percentage, 2), 'count' => $totalUnits];
     }
@@ -174,9 +183,10 @@ class DashboardController extends Controller
      */
     private function calculateIku11(string $tahunAkademik): array
     {
-        $data = Iku11TataKelola::where('tahun_akademik', $tahunAkademik)->get();
-        $percentage = $data->isNotEmpty() ? $data->avg('persentase_pencegahan') : 0;
-        return ['percentage' => round($percentage ?? 0, 2), 'count' => $data->count()];
+        $q = Iku11TataKelola::where('tahun_akademik', $tahunAkademik);
+        $count = $q->count();
+        $percentage = $count > 0 ? $q->avg('persentase_pencegahan') : 0;
+        return ['percentage' => round($percentage ?? 0, 2), 'count' => $count];
     }
 
     /**

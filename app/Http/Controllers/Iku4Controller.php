@@ -27,12 +27,14 @@ class Iku4Controller extends Controller
             ->sortDesc()
             ->values();
 
-        $totalDosenPt = $data->sum('total_dosen_pt');
-        $totalDosenRekognisi = $data->sum('total_dosen_rekognisi');
+        // Calculate overall using DB-level aggregation
+        $q = Iku4RekognisiDosen::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
+        $totalDosenPt      = $q->sum('total_dosen_pt');
+        $totalDosenRekognisi = $q->sum('total_dosen_rekognisi');
         $overallRekognisiPercentage = $totalDosenPt > 0 ? ($totalDosenRekognisi / $totalDosenPt) * 100 : 0;
 
-        $totalDosenS3 = $data->sum('total_dosen_s3');
-        $totalDosenTetapPt = $data->sum('total_dosen_tetap_pt');
+        $totalDosenS3       = $q->sum('total_dosen_s3');
+        $totalDosenTetapPt  = $q->sum('total_dosen_tetap_pt');
         $overallS3Percentage = $totalDosenTetapPt > 0 ? ($totalDosenS3 / $totalDosenTetapPt) * 100 : 0;
 
         $overallPercentage = ($overallRekognisiPercentage + $overallS3Percentage) / 2;

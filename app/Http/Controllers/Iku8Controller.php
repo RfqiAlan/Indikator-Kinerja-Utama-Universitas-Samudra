@@ -27,8 +27,10 @@ class Iku8Controller extends Controller
             ->sortDesc()
             ->values();
 
-        $totalSdm = $data->sum('total_sdm');
-        $totalTerlibat = $data->sum('total_terlibat');
+        // Calculate overall using DB-level aggregation
+        $q = Iku8SdmKebijakan::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
+        $totalSdm      = $q->sum('total_sdm');
+        $totalTerlibat = $q->sum('total_terlibat');
         $overallPercentage = $totalSdm > 0 ? ($totalTerlibat / $totalSdm) * 100 : 0;
 
         return view('iku8.index', compact(

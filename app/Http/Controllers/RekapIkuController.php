@@ -44,109 +44,107 @@ class RekapIkuController extends Controller
         $tahunAkademik = request()->get('tahun', get_tahun_akademik());
         $fakultas = auth()->user()->fakultas;
 
-        $iku1Data = Iku1Aee::where('tahun_akademik', $tahunAkademik)
-            ->where('fakultas', $fakultas)
-            ->get();
-        $iku2Data = Iku2LulusanBekerja::where('tahun_akademik', $tahunAkademik)
-            ->where('fakultas', $fakultas)
-            ->get();
-        $iku3Data = Iku3KegiatanMahasiswa::where('tahun_akademik', $tahunAkademik)
-            ->where('fakultas', $fakultas)
-            ->get();
-        $iku4Data = Iku4RekognisiDosen::where('tahun_akademik', $tahunAkademik)
-            ->where('fakultas', $fakultas)
-            ->get();
-        $iku5Data = Iku5LuaranKerjasama::where('tahun_akademik', $tahunAkademik)
-            ->where('fakultas', $fakultas)
-            ->get();
-        $iku6Data = Iku6Publikasi::where('tahun_akademik', $tahunAkademik)
-            ->where('fakultas', $fakultas)
-            ->get();
-        $iku7Data = Iku7Sdgs::where('tahun_akademik', $tahunAkademik)
-            ->where('fakultas', $fakultas)
-            ->get();
-        $iku8Data = Iku8SdmKebijakan::where('tahun_akademik', $tahunAkademik)
-            ->where('fakultas', $fakultas)
-            ->get();
-        $iku9Data = Iku9Pendapatan::where('tahun_akademik', $tahunAkademik)
-            ->where('fakultas', $fakultas)
-            ->get();
-        $iku10Data = Iku10ZonaIntegritas::where('tahun_akademik', $tahunAkademik)
-            ->where('fakultas', $fakultas)
-            ->get();
+        $iku1Data  = Iku1Aee::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
+        $iku2Data  = Iku2LulusanBekerja::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
+        $iku3Data  = Iku3KegiatanMahasiswa::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
+        $iku4Data  = Iku4RekognisiDosen::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
+        $iku5Data  = Iku5LuaranKerjasama::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
+        $iku6Data  = Iku6Publikasi::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
+        $iku7Data  = Iku7Sdgs::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
+        $iku8Data  = Iku8SdmKebijakan::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
+        $iku9Data  = Iku9Pendapatan::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
+        $iku10Data = Iku10ZonaIntegritas::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
         $iku11Data = Iku11TataKelola::where('tahun_akademik', $tahunAkademik)->first();
 
-        $iku2TotalLulusan = $iku2Data->sum('total_lulusan');
-        $iku2TotalBekerja = $iku2Data->sum('skor_bekerja');
-        $iku2TotalStudiLanjut = $iku2Data->sum('studi_lanjut');
-        $iku2TotalWirausaha = $iku2Data->sum('skor_wirausaha');
+        // ----- IKU 2 aggregation (DB-level) -----
+        $iku2q = Iku2LulusanBekerja::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
+        $iku2TotalLulusan    = $iku2q->sum('total_lulusan');
+        $iku2TotalBekerja    = $iku2q->sum('skor_bekerja');
+        $iku2TotalStudiLanjut = $iku2q->sum('studi_lanjut');
+        $iku2TotalWirausaha  = $iku2q->sum('skor_wirausaha');
         $iku2Percentage = $iku2Data->isEmpty()
             ? null
             : ($iku2TotalLulusan > 0
                 ? (($iku2TotalBekerja + $iku2TotalStudiLanjut + $iku2TotalWirausaha) / $iku2TotalLulusan) * 100
                 : 0);
 
-        $iku3TotalMahasiswa = $iku3Data->sum('total_mahasiswa');
-        $iku3TotalBerkegiatan = $iku3Data->sum('total_berkegiatan');
+        // ----- IKU 3 aggregation (DB-level) -----
+        $iku3q = Iku3KegiatanMahasiswa::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
+        $iku3TotalMahasiswa   = $iku3q->sum('total_mahasiswa');
+        $iku3TotalBerkegiatan = $iku3q->sum('total_berkegiatan');
         $iku3Percentage = $iku3Data->isEmpty()
             ? null
             : ($iku3TotalMahasiswa > 0 ? ($iku3TotalBerkegiatan / $iku3TotalMahasiswa) * 100 : 0);
 
-        $iku4TotalDosen = $iku4Data->sum('total_dosen');
-        $iku4TotalRekognisi = $iku4Data->sum('total_rekognisi');
+        // ----- IKU 4 aggregation (DB-level) -----
+        $iku4q = Iku4RekognisiDosen::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
+        $iku4TotalDosen    = $iku4q->sum('total_dosen');
+        $iku4TotalRekognisi = $iku4q->sum('total_rekognisi');
         $iku4Percentage = $iku4Data->isEmpty()
             ? null
             : ($iku4TotalDosen > 0 ? ($iku4TotalRekognisi / $iku4TotalDosen) * 100 : 0);
 
-        $iku5TotalDosen = $iku5Data->sum('total_dosen');
-        $iku5TotalLuaran = $iku5Data->sum('total_luaran');
+        // ----- IKU 5 aggregation (DB-level) -----
+        $iku5q = Iku5LuaranKerjasama::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
+        $iku5TotalDosen  = $iku5q->sum('total_dosen');
+        $iku5TotalLuaran = $iku5q->sum('total_luaran');
         $iku5Percentage = $iku5Data->isEmpty()
             ? null
             : ($iku5TotalDosen > 0 ? ($iku5TotalLuaran / $iku5TotalDosen) * 100 : 0);
 
-        $iku6TotalPublikasi = $iku6Data->sum('total_publikasi');
-        $iku6SkorPublikasi = $iku6Data->sum('skor_publikasi');
+        // ----- IKU 6 aggregation (DB-level) -----
+        $iku6q = Iku6Publikasi::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
+        $iku6TotalPublikasi = $iku6q->sum('total_publikasi');
+        $iku6SkorPublikasi  = $iku6q->sum('skor_publikasi');
         $iku6Percentage = $iku6Data->isEmpty()
             ? null
             : ($iku6TotalPublikasi > 0 ? ($iku6SkorPublikasi / $iku6TotalPublikasi) * 100 : 0);
 
-        $iku7TotalProgram = $iku7Data->sum('total_program');
-        $iku7TotalProgramSdgs = $iku7Data->sum('total_program_sdgs');
+        // ----- IKU 7 aggregation (DB-level) -----
+        $iku7q = Iku7Sdgs::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
+        $iku7TotalProgram    = $iku7q->sum('total_program');
+        $iku7TotalProgramSdgs = $iku7q->sum('total_program_sdgs');
         $iku7Percentage = $iku7Data->isEmpty()
             ? null
             : ($iku7TotalProgram > 0 ? ($iku7TotalProgramSdgs / $iku7TotalProgram) * 100 : 0);
 
-        $iku8TotalSdm = $iku8Data->sum('total_sdm');
-        $iku8TotalTerlibat = $iku8Data->sum('total_terlibat');
+        // ----- IKU 8 aggregation (DB-level) -----
+        $iku8q = Iku8SdmKebijakan::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
+        $iku8TotalSdm      = $iku8q->sum('total_sdm');
+        $iku8TotalTerlibat = $iku8q->sum('total_terlibat');
         $iku8Percentage = $iku8Data->isEmpty()
             ? null
             : ($iku8TotalSdm > 0 ? ($iku8TotalTerlibat / $iku8TotalSdm) * 100 : 0);
 
-        $iku9TotalPendapatan = $iku9Data->sum('total_pendapatan');
-        $iku9TotalNonUkt = $iku9Data->sum('total_non_ukt');
+        // ----- IKU 9 aggregation (DB-level) -----
+        $iku9q = Iku9Pendapatan::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
+        $iku9TotalPendapatan = $iku9q->sum('total_pendapatan');
+        $iku9TotalNonUkt     = $iku9q->sum('total_non_ukt');
         $iku9Percentage = $iku9Data->isEmpty()
             ? null
             : ($iku9TotalPendapatan > 0 ? ($iku9TotalNonUkt / $iku9TotalPendapatan) * 100 : 0);
 
-        $iku10TotalUnit = $iku10Data->count();
-        $iku10WbkCount = $iku10Data->where('status', 'wbk')->count();
-        $iku10WbbmCount = $iku10Data->where('status', 'wbbm')->count();
+        // ----- IKU 10 aggregation (DB-level) -----
+        $iku10q = Iku10ZonaIntegritas::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
+        $iku10TotalUnit  = $iku10Data->count();
+        $iku10WbkCount   = (clone $iku10q)->where('status', 'wbk')->count();
+        $iku10WbbmCount  = (clone $iku10q)->where('status', 'wbbm')->count();
         $iku10Percentage = $iku10Data->isEmpty()
             ? null
             : ($iku10TotalUnit > 0 ? (($iku10WbkCount + $iku10WbbmCount) / $iku10TotalUnit) * 100 : 0);
 
         $ikuStats = [
-            'IKU 1' => $iku1Data->isEmpty()
+            'IKU 1'  => $iku1Data->isEmpty()
                 ? null
-                : ($iku1Data->sum('tingkat_pencapaian') / $iku1Data->count()),
-            'IKU 2' => $iku2Percentage,
-            'IKU 3' => $iku3Percentage,
-            'IKU 4' => $iku4Percentage,
-            'IKU 5' => $iku5Percentage,
-            'IKU 6' => $iku6Percentage,
-            'IKU 7' => $iku7Percentage,
-            'IKU 8' => $iku8Percentage,
-            'IKU 9' => $iku9Percentage,
+                : Iku1Aee::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->avg('tingkat_pencapaian'),
+            'IKU 2'  => $iku2Percentage,
+            'IKU 3'  => $iku3Percentage,
+            'IKU 4'  => $iku4Percentage,
+            'IKU 5'  => $iku5Percentage,
+            'IKU 6'  => $iku6Percentage,
+            'IKU 7'  => $iku7Percentage,
+            'IKU 8'  => $iku8Percentage,
+            'IKU 9'  => $iku9Percentage,
             'IKU 10' => $iku10Percentage,
             'IKU 11' => $iku11Data && $iku11Data->nilai_sakip !== null
                 ? (float) $iku11Data->nilai_sakip

@@ -29,51 +29,84 @@ class AdminController extends Controller
     {
         $fakultasConfig = Fakultas::getAllAsConfig();
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
-        
-        // Get stats per fakultas
+
+        // --- N+1 Fix: load all per-faculty counts in a single query each ---
+        $counts = [];
+        $tables = [
+            'iku1'  => Iku1Aee::class,
+            'iku2'  => Iku2LulusanBekerja::class,
+            'iku3'  => Iku3KegiatanMahasiswa::class,
+            'iku4'  => Iku4RekognisiDosen::class,
+            'iku5'  => Iku5LuaranKerjasama::class,
+            'iku6'  => Iku6Publikasi::class,
+            'iku7'  => Iku7Sdgs::class,
+            'iku8'  => Iku8SdmKebijakan::class,
+            'iku9'  => Iku9Pendapatan::class,
+            'iku10' => Iku10ZonaIntegritas::class,
+            'iku11' => Iku11TataKelola::class,
+        ];
+        foreach ($tables as $key => $model) {
+            $counts[$key] = $model::where('tahun_akademik', $tahunAkademik)
+                ->selectRaw('fakultas, COUNT(*) as total')
+                ->groupBy('fakultas')
+                ->pluck('total', 'fakultas');
+        }
+        $userCounts = User::selectRaw('fakultas, COUNT(*) as total')
+            ->groupBy('fakultas')
+            ->pluck('total', 'fakultas');
+
+        // Build per-faculty stats from the pre-loaded maps (no extra queries)
         $fakultasStats = [];
         foreach ($fakultasConfig as $kode => $data) {
             $fakultasStats[$kode] = [
-                'nama' => $data['nama'],
-                'iku1_count' => Iku1Aee::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->count(),
-                'iku2_count' => Iku2LulusanBekerja::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->count(),
-                'iku3_count' => Iku3KegiatanMahasiswa::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->count(),
-                'iku4_count' => Iku4RekognisiDosen::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->count(),
-                'iku5_count' => Iku5LuaranKerjasama::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->count(),
-                'iku6_count' => Iku6Publikasi::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->count(),
-                'iku7_count' => Iku7Sdgs::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->count(),
-                'iku8_count' => Iku8SdmKebijakan::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->count(),
-                'iku9_count' => Iku9Pendapatan::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->count(),
-                'iku10_count' => Iku10ZonaIntegritas::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->count(),
-                'iku11_count' => Iku11TataKelola::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->count(),
-                'user_count' => User::where('fakultas', $kode)->count(),
+                'nama'        => $data['nama'],
+                'iku1_count'  => $counts['iku1'][$kode]  ?? 0,
+                'iku2_count'  => $counts['iku2'][$kode]  ?? 0,
+                'iku3_count'  => $counts['iku3'][$kode]  ?? 0,
+                'iku4_count'  => $counts['iku4'][$kode]  ?? 0,
+                'iku5_count'  => $counts['iku5'][$kode]  ?? 0,
+                'iku6_count'  => $counts['iku6'][$kode]  ?? 0,
+                'iku7_count'  => $counts['iku7'][$kode]  ?? 0,
+                'iku8_count'  => $counts['iku8'][$kode]  ?? 0,
+                'iku9_count'  => $counts['iku9'][$kode]  ?? 0,
+                'iku10_count' => $counts['iku10'][$kode] ?? 0,
+                'iku11_count' => $counts['iku11'][$kode] ?? 0,
+                'user_count'  => $userCounts[$kode]      ?? 0,
             ];
         }
 
-        $totalUsers = User::count();
+        $totalUsers      = User::count();
         $totalActivities = ActivityLog::count();
-        
+
         $availableYears = $this->getAvailableYears();
 
-        // Build year-over-year comparison data
+        // --- N+1 Fix: load yearly counts per IKU in a single query each ---
+        $yearlyCounts = [];
+        foreach ($tables as $key => $model) {
+            $yearlyCounts[$key] = $model::selectRaw('tahun_akademik, COUNT(*) as total')
+                ->groupBy('tahun_akademik')
+                ->pluck('total', 'tahun_akademik');
+        }
+
+        // Build year-over-year comparison from pre-loaded maps (no extra queries)
         $yearlyComparison = [];
         foreach ($availableYears as $year) {
             $yearlyComparison[] = [
                 'tahun' => $year,
-                'iku1'  => Iku1Aee::where('tahun_akademik', $year)->count(),
-                'iku2'  => Iku2LulusanBekerja::where('tahun_akademik', $year)->count(),
-                'iku3'  => Iku3KegiatanMahasiswa::where('tahun_akademik', $year)->count(),
-                'iku4'  => Iku4RekognisiDosen::where('tahun_akademik', $year)->count(),
-                'iku5'  => Iku5LuaranKerjasama::where('tahun_akademik', $year)->count(),
-                'iku6'  => Iku6Publikasi::where('tahun_akademik', $year)->count(),
-                'iku7'  => Iku7Sdgs::where('tahun_akademik', $year)->count(),
-                'iku8'  => Iku8SdmKebijakan::where('tahun_akademik', $year)->count(),
-                'iku9'  => Iku9Pendapatan::where('tahun_akademik', $year)->count(),
-                'iku10' => Iku10ZonaIntegritas::where('tahun_akademik', $year)->count(),
-                'iku11' => Iku11TataKelola::where('tahun_akademik', $year)->count(),
+                'iku1'  => $yearlyCounts['iku1'][$year]  ?? 0,
+                'iku2'  => $yearlyCounts['iku2'][$year]  ?? 0,
+                'iku3'  => $yearlyCounts['iku3'][$year]  ?? 0,
+                'iku4'  => $yearlyCounts['iku4'][$year]  ?? 0,
+                'iku5'  => $yearlyCounts['iku5'][$year]  ?? 0,
+                'iku6'  => $yearlyCounts['iku6'][$year]  ?? 0,
+                'iku7'  => $yearlyCounts['iku7'][$year]  ?? 0,
+                'iku8'  => $yearlyCounts['iku8'][$year]  ?? 0,
+                'iku9'  => $yearlyCounts['iku9'][$year]  ?? 0,
+                'iku10' => $yearlyCounts['iku10'][$year] ?? 0,
+                'iku11' => $yearlyCounts['iku11'][$year] ?? 0,
             ];
         }
-            
+
         return view('admin.dashboard', compact('fakultasStats', 'totalUsers', 'totalActivities', 'tahunAkademik', 'availableYears', 'yearlyComparison'));
     }
 

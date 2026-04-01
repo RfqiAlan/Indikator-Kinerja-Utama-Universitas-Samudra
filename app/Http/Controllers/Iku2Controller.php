@@ -12,7 +12,7 @@ class Iku2Controller extends Controller
     {
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
         $fakultas = auth()->user()->fakultas;
-        
+
         $data = Iku2LulusanBekerja::where('tahun_akademik', $tahunAkademik)
             ->where('fakultas', $fakultas)
             ->orderBy('program_studi')
@@ -29,18 +29,19 @@ class Iku2Controller extends Controller
             ->sortDesc()
             ->values();
 
-        // Calculate overall IKU 2
-        $totalLulusan = $data->sum('total_lulusan');
-        $totalBekerja = $data->sum('skor_bekerja');
-        $totalStudiLanjut = $data->sum('studi_lanjut');
-        $totalWirausaha = $data->sum('skor_wirausaha');
-        $overallPercentage = $totalLulusan > 0 
-            ? (($totalBekerja + $totalStudiLanjut + $totalWirausaha) / $totalLulusan) * 100 
+        // Calculate overall IKU 2 using DB-level aggregation
+        $q = Iku2LulusanBekerja::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
+        $totalLulusan    = $q->sum('total_lulusan');
+        $totalBekerja    = $q->sum('skor_bekerja');
+        $totalStudiLanjut = $q->sum('studi_lanjut');
+        $totalWirausaha  = $q->sum('skor_wirausaha');
+        $overallPercentage = $totalLulusan > 0
+            ? (($totalBekerja + $totalStudiLanjut + $totalWirausaha) / $totalLulusan) * 100
             : 0;
 
         return view('iku2.index', compact(
-            'data', 
-            'tahunAkademik', 
+            'data',
+            'tahunAkademik',
             'availableYears',
             'totalLulusan',
             'totalBekerja',

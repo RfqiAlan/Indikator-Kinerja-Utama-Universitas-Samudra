@@ -29,8 +29,10 @@ class Iku3Controller extends Controller
             ->sortDesc()
             ->values();
 
-        $totalMahasiswa = $data->sum('total_mahasiswa');
-        $totalBerkegiatan = $data->sum('total_berkegiatan');
+        // Calculate overall using DB-level aggregation
+        $q = Iku3KegiatanMahasiswa::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
+        $totalMahasiswa   = $q->sum('total_mahasiswa');
+        $totalBerkegiatan = $q->sum('total_berkegiatan');
         $overallPercentage = $totalMahasiswa > 0 ? ($totalBerkegiatan / $totalMahasiswa) * 100 : 0;
 
         return view('iku3.index', compact(
