@@ -7,8 +7,7 @@
 
         <title>{{ config('app.name', 'IKU UNSAM') }}</title>
 
-        <!-- Favicon -->
-        <link rel="icon" href="{{ asset('build/assets/logo.png') }}" type="image/png">
+
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
