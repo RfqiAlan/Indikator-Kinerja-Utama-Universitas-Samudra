@@ -24,7 +24,7 @@
                             @endforeach
                         </select>
                     </form>
-                    <a href="{{ route('user.iku4.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 rounded-lg font-semibold text-xs text-white uppercase hover:bg-blue-700 shadow-md">
+                    <a href="{{ route('user.iku4.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150 shadow-md hover:shadow-lg">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
                         Tambah Data
                     </a>
@@ -36,27 +36,56 @@
             <div class="relative overflow-hidden bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 sm:p-8">
                 <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-blue-50 dark:bg-blue-900/20 blur-3xl opacity-60"></div>
                 <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-cyan-50 dark:bg-cyan-900/20 blur-3xl opacity-60"></div>
-                <div class="relative flex flex-col items-center gap-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full">
-                        <div class="flex flex-col items-center p-5 bg-white shadow-sm border border-slate-100 rounded-2xl relative overflow-hidden">
-                            <div class="absolute top-0 left-0 w-1 h-full bg-cyan-500"></div>
-                            <p class="text-sm text-slate-500 font-medium mb-1">Capaian Sub-Indikator 1</p>
-                            <p class="text-2xl font-bold text-slate-800">{{ number_format($overallRekognisiPercentage, 2) }}%</p>
-                            <p class="text-xs text-slate-400 mt-1">Dosen Rekognisi</p>
+                <div class="relative flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="flex-1 text-center md:text-left space-y-2 max-w-lg">
+                        <div class="flex items-center justify-center md:justify-start gap-2 mb-2">
+                            <span class="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 text-xs font-bold uppercase tracking-wide">
+                                IKU 4 Performance
+                            </span>
                         </div>
-                        <div class="flex flex-col items-center p-5 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 shadow-md rounded-2xl transform scale-105 z-10 relative overflow-hidden">
-                            <div class="absolute top-0 right-0 w-16 h-16 bg-white/40 rounded-full blur-xl -mr-4 -mt-4"></div>
-                            <p class="text-sm font-semibold text-blue-600 mb-2 uppercase tracking-wide">Capaian IKU 4 (Agregat)</p>
-                            <p class="text-4xl font-black text-blue-700 drop-shadow-sm">{{ number_format($overallPercentage, 2) }}%</p>
-                            <div class="mt-3 px-3 py-1 bg-white/60 rounded-full text-xs font-semibold text-blue-800">
-                                Rata-rata Sub-indikator
-                            </div>
+                        <h3 class="text-4xl font-extrabold text-slate-800 dark:text-white tracking-tight">
+                            {{ number_format($overallPercentage, 2) }}<span class="text-2xl text-slate-400 dark:text-slate-500">%</span>
+                        </h3>
+                        <p class="text-lg font-medium text-slate-600 dark:text-slate-300">
+                            Rata-rata Capaian IKU 4 (Agregat)
+                        </p>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">
+                            Evaluasi persentase dosen berkualifikasi doktor (S3) dan memiliki sertifikasi/rekognisi profesional.
+                        </p>
+
+                        <!-- Mini Targets -->
+                        <div class="flex flex-wrap justify-center md:justify-start gap-3 mt-4">
+                            <span class="inline-flex flex-col items-start px-3 py-2 rounded-lg bg-cyan-50 text-cyan-800 dark:bg-cyan-900/30 dark:text-cyan-300 border border-cyan-100 dark:border-cyan-800 shadow-sm">
+                                <span class="text-[10px] uppercase font-bold text-cyan-600 dark:text-cyan-400">Sub-Indikator 1 (Rekognisi)</span>
+                                <span class="text-lg font-semibold">{{ number_format($overallRekognisiPercentage, 2) }}%</span>
+                            </span>
+                            <span class="inline-flex flex-col items-start px-3 py-2 rounded-lg bg-indigo-50 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-300 border border-indigo-100 dark:border-indigo-800 shadow-sm">
+                                <span class="text-[10px] uppercase font-bold text-indigo-600 dark:text-indigo-400">Sub-Indikator 2 (S3)</span>
+                                <span class="text-lg font-semibold">{{ number_format($overallS3Percentage, 2) }}%</span>
+                            </span>
                         </div>
-                        <div class="flex flex-col items-center p-5 bg-white shadow-sm border border-slate-100 rounded-2xl relative overflow-hidden">
-                            <div class="absolute top-0 right-0 w-1 h-full bg-indigo-500"></div>
-                            <p class="text-sm text-slate-500 font-medium mb-1">Capaian Sub-Indikator 2</p>
-                            <p class="text-2xl font-bold text-slate-800">{{ number_format($overallS3Percentage, 2) }}%</p>
-                            <p class="text-xs text-slate-400 mt-1">Dosen Bergelar S3</p>
+                    </div>
+
+                    <!-- Circular Progress Visual -->
+                    <div class="relative w-40 h-40 flex items-center justify-center">
+                        <svg class="transform -rotate-90 w-full h-full" viewBox="0 0 36 36">
+                            <!-- Background Circle -->
+                            <path class="text-slate-100 dark:text-slate-700"
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none" stroke="currentColor" stroke-width="3" />
+                            <!-- Progress Circle -->
+                            @php
+                            $strokeColor = $overallPercentage >= 50 ? 'text-blue-500' : 'text-rose-500';
+                            $percent = min($overallPercentage, 100);
+                            @endphp
+                            <path class="{{ $strokeColor }} drop-shadow-md transition-all duration-1000 ease-out"
+                                stroke-dasharray="{{ $percent }}, 100"
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                        </svg>
+                        <div class="absolute flex flex-col items-center">
+                            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Score</span>
+                            <span class="text-2xl font-black {{ $strokeColor }}">{{ number_format($overallPercentage, 1) }}%</span>
                         </div>
                     </div>
                 </div>
@@ -72,18 +101,18 @@
                         <thead class="text-xs text-slate-500 uppercase bg-slate-50/80 dark:bg-slate-700/50 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700">
                             <tr>
                                 <th scope="col" class="px-6 py-4 font-medium" rowspan="2">Tahun</th>
-                                <th scope="col" class="px-6 py-2 border-b font-medium text-center bg-blue-50/50 border-r" colspan="3">Sub-indikator 1 (Rekognisi)</th>
-                                <th scope="col" class="px-6 py-2 border-b font-medium text-center bg-indigo-50/50 border-r" colspan="3">Sub-indikator 2 (Pend. S3)</th>
+                                <th scope="col" class="px-6 py-2 border-b font-medium text-center" colspan="3">Sub-indikator 1 (Rekognisi)</th>
+                                <th scope="col" class="px-6 py-2 border-b font-medium text-center" colspan="3">Sub-indikator 2 (Pend. S3)</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center" rowspan="2">Ratarata Capaian</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-right" rowspan="2">Aksi</th>
                             </tr>
                             <tr>
-                                <th scope="col" class="px-3 py-2 font-medium text-center text-[10px] bg-blue-50/20">Dosen PT</th>
-                                <th scope="col" class="px-3 py-2 font-medium text-center text-[10px] bg-blue-50/20">Rekognisi</th>
-                                <th scope="col" class="px-3 py-2 font-medium text-center text-[10px] bg-blue-50/20 border-r">% Rek.</th>
-                                <th scope="col" class="px-3 py-2 font-medium text-center text-[10px] bg-indigo-50/20">Dosen Tetap</th>
-                                <th scope="col" class="px-3 py-2 font-medium text-center text-[10px] bg-indigo-50/20">Lulusan S3</th>
-                                <th scope="col" class="px-3 py-2 font-medium text-center text-[10px] bg-indigo-50/20 border-r">% S3</th>
+                                <th scope="col" class="px-3 py-2 font-medium text-center text-[10px]">Dosen PT</th>
+                                <th scope="col" class="px-3 py-2 font-medium text-center text-[10px]">Rekognisi</th>
+                                <th scope="col" class="px-3 py-2 font-medium text-center text-[10px]">% Rek.</th>
+                                <th scope="col" class="px-3 py-2 font-medium text-center text-[10px]">Dosen Tetap</th>
+                                <th scope="col" class="px-3 py-2 font-medium text-center text-[10px]">Lulusan S3</th>
+                                <th scope="col" class="px-3 py-2 font-medium text-center text-[10px]">% S3</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 dark:divide-slate-700/50">
@@ -99,7 +128,7 @@
                                 <td class="px-3 py-4 text-center text-slate-600 dark:text-slate-300">
                                     {{ number_format($item->total_dosen_rekognisi) }}
                                 </td>
-                                <td class="px-3 py-4 text-center font-semibold text-blue-600 border-r">
+                                <td class="px-3 py-4 text-center font-semibold text-blue-600">
                                     {{ number_format($item->persentase_rekognisi, 2) }}%
                                 </td>
                                 <!-- Sub 2 -->
@@ -109,7 +138,7 @@
                                 <td class="px-3 py-4 text-center text-slate-600 dark:text-slate-300">
                                     {{ number_format($item->total_dosen_s3) }}
                                 </td>
-                                <td class="px-3 py-4 text-center font-semibold text-indigo-600 border-r">
+                                <td class="px-3 py-4 text-center font-semibold text-indigo-600">
                                     {{ number_format($item->persentase_s3, 2) }}%
                                 </td>
                                 <!-- Rata Rata -->
@@ -143,12 +172,63 @@
                     </div>
                     <h3 class="text-lg font-medium text-slate-900 dark:text-white mb-2">Belum ada data</h3>
                     <p class="text-slate-500 max-w-sm mx-auto mb-6">Mulai dengan menambahkan data rekognisi internasional dosen dan kualifikasi pendidikan S3.</p>
-                    <a href="{{ route('user.iku4.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 shadow-sm transition-all">
+                    <a href="{{ route('user.iku4.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150 shadow-md">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         Tambah Data
                     </a>
                 </div>
                 @endif
+            </div>
+
+            <!-- Helper Section (Collapsible) -->
+            <div x-data="{ open: false }" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm overflow-hidden transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
+                <button @click="open = !open" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-white/50 dark:hover:bg-slate-800/50 transition-colors">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700/50 flex items-center justify-center text-slate-700 dark:text-slate-300">
+                            <svg class="w-5 h-5 text-slate-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <span class="font-bold text-slate-900 dark:text-white">Panduan & Rumus Perhitungan IKU 4</span>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-white/50 dark:bg-slate-800/50 flex items-center justify-center">
+                        <svg :class="{'rotate-180': open}" class="w-5 h-5 text-slate-600 dark:text-slate-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </button>
+                <div x-show="open" x-collapse class="px-6 pb-6 text-sm text-slate-600 dark:text-slate-300">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-2">
+                        <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-5 border border-slate-300 dark:border-slate-600 shadow-sm transition-transform hover:-translate-y-1 duration-300">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-bold text-xs">1</span>
+                                <h4 class="font-bold text-slate-800 dark:text-slate-100">Sub-Indikator 1 (Rekognisi)</h4>
+                            </div>
+                            <div class="p-3 bg-white dark:bg-slate-900 rounded-lg text-xs font-mono text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600/50 mb-3 text-center shadow-inner">
+                                (Dosen dgn Rekognisi / Total Dosen PT) × 100%
+                            </div>
+                            <p class="text-xs text-slate-500 leading-relaxed">Persentase dosen yang memiliki sertifikat kompetensi/profesi yang diakui oleh industri atau dunia kerja.</p>
+                        </div>
+                        <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-5 border border-slate-300 dark:border-slate-600 shadow-sm transition-transform hover:-translate-y-1 duration-300">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-bold text-xs">2</span>
+                                <h4 class="font-bold text-slate-800 dark:text-slate-100">Sub-Indikator 2 (S3)</h4>
+                            </div>
+                            <div class="p-3 bg-white dark:bg-slate-900 rounded-lg text-xs font-mono text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600/50 mb-3 text-center shadow-inner">
+                                (Dosen S3 / Total Dosen Tetap PT) × 100%
+                            </div>
+                            <p class="text-xs text-slate-500 leading-relaxed">Persentase dosen tetap perguruan tinggi yang kualifikasi pendidikannya mencapai jenjang S3.</p>
+                        </div>
+                        <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-5 border border-slate-300 dark:border-slate-600 shadow-sm transition-transform hover:-translate-y-1 duration-300">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-bold text-xs">3</span>
+                                <h4 class="font-bold text-slate-800 dark:text-slate-100">Capaian Akhir IKU 4</h4>
+                            </div>
+                            <div class="p-3 bg-white dark:bg-slate-900 rounded-lg text-xs font-mono text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600/50 mb-3 text-center shadow-inner">
+                                (Sub-indikator 1 + Sub-indikator 2) / 2
+                            </div>
+                            <p class="text-xs text-slate-500 leading-relaxed">Rata-rata dari persentase rekognisi profesi dosen dan kompetensi akademik strata-3.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </x-user-layout>

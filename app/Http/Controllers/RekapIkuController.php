@@ -78,15 +78,15 @@ class RekapIkuController extends Controller
 
         // ----- IKU 4 aggregation (DB-level) -----
         $iku4q = Iku4RekognisiDosen::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
-        $iku4TotalDosen    = $iku4q->sum('total_dosen');
-        $iku4TotalRekognisi = $iku4q->sum('total_rekognisi');
+        $iku4TotalDosen    = $iku4q->sum('total_dosen_pt');
+        $iku4TotalRekognisi = $iku4q->sum('total_dosen_rekognisi');
         $iku4Percentage = $iku4Data->isEmpty()
             ? null
             : ($iku4TotalDosen > 0 ? ($iku4TotalRekognisi / $iku4TotalDosen) * 100 : 0);
 
         // ----- IKU 5 aggregation (DB-level) -----
         $iku5q = Iku5LuaranKerjasama::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
-        $iku5TotalDosen  = $iku5q->sum('total_dosen');
+        $iku5TotalDosen  = $iku5q->sum('total_kerjasama_pt');
         $iku5TotalLuaran = $iku5q->sum('total_luaran');
         $iku5Percentage = $iku5Data->isEmpty()
             ? null
@@ -119,7 +119,7 @@ class RekapIkuController extends Controller
         // ----- IKU 9 aggregation (DB-level) -----
         $iku9q = Iku9Pendapatan::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
         $iku9TotalPendapatan = $iku9q->sum('total_pendapatan');
-        $iku9TotalNonUkt     = $iku9q->sum('total_non_ukt');
+        $iku9TotalNonUkt     = $iku9q->sum('pendapatan_non_mahasiswa');
         $iku9Percentage = $iku9Data->isEmpty()
             ? null
             : ($iku9TotalPendapatan > 0 ? ($iku9TotalNonUkt / $iku9TotalPendapatan) * 100 : 0);
