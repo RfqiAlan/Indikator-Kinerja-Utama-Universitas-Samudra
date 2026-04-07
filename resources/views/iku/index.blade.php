@@ -181,7 +181,7 @@
             </div>
 
             {{-- ===== IKU CARD GRID ===== --}}
-            <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4">
                 @foreach($ikuInfos as $info)
                     @php
                         $routeName  = 'user.iku' . $info['num'] . '.index';
@@ -202,7 +202,7 @@
 
                     <a href="{{ Route::has($routeName) ? route($routeName) : '#' }}"
                        class="iku-card accent-{{ $info['num'] }} group flex flex-col bg-white rounded-2xl border border-slate-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                       data-aos="fade-up" data-aos-delay="{{ ($loop->index % 4) * 70 }}">
+                       data-aos="fade-up">
 
                         {{-- Top accent line --}}
                         <div class="top-line"></div>
@@ -275,6 +275,6 @@
         </div>
     </x-user-layout>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>AOS.init({ duration: 700, easing: 'ease-out-cubic', once: true, offset: 40 });</script>
+    <script>AOS.init({ duration: 600, easing: 'ease-out-cubic', once: true, offset: 20 });</script>
 </body>
 </html>
