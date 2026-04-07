@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'IKU UNSAM') }} - IKU 6</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ config('app.name', 'IKU UNSAM') }} - IKU 6: Publikasi Scopus/WoS</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
@@ -12,29 +14,57 @@
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 w-full">
                 <div>
                     <h2 class="text-xl font-bold text-black tracking-tight">IKU 6: Publikasi Scopus/WoS</h2>
-                    <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Proporsi publikasi Q1-Q4 dengan bobot berbeda.</p>
+                    <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Proporsi publikasi Q1-Q4 dengan bobot berbeda terhadap total publikasi.</p>
                 </div>
                 <div class="flex items-center gap-3">
                     <form method="GET" action="{{ route('user.iku6.index') }}"><select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm w-full sm:w-auto">@foreach($availableYears as $year)<option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>@endforeach</select></form>
-                    <a href="{{ route('user.iku6.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 rounded-lg text-xs text-white uppercase hover:bg-blue-700 shadow-md"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>Tambah</a>
+                    <a href="{{ route('user.iku6.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150 shadow-md hover:shadow-lg"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>Tambah Data</a>
                 </div>
             </div>
         </x-slot>
         <div class="py-6 space-y-6" data-aos="fade-up">
-            @php $target = 50; $meetsTarget = $overallPercentage >= $target; $bgColor = $meetsTarget ? 'bg-blue-50 dark:bg-blue-900/30' : 'bg-rose-50 dark:bg-rose-900/30'; $textColor = $meetsTarget ? 'text-blue-600' : 'text-rose-600'; $valueColor = $meetsTarget ? 'text-blue-700' : 'text-rose-700'; @endphp
-            <div class="relative overflow-hidden bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-6">
-                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                    <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="text-center p-4 {{ $bgColor }} rounded-xl"><p class="text-sm {{ $textColor }}">Persentase IKU 6</p><p class="text-3xl font-bold {{ $valueColor }}">{{ number_format($overallPercentage, 2) }}%</p><p class="text-xs {{ $textColor }}">Target: {{ $target }}%</p></div>
-                        <div class="text-center p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl"><p class="text-sm text-slate-600">Total Publikasi</p><p class="text-3xl font-bold text-slate-700">{{ number_format($totalPublikasi) }}</p></div>
-                        <div class="text-center p-4 bg-cyan-50 dark:bg-cyan-900/30 rounded-xl"><p class="text-sm text-cyan-600">Skor Publikasi</p><p class="text-3xl font-bold text-cyan-700">{{ number_format($skorPublikasi, 1) }}</p></div>
+            @php $target = 50; $meetsTarget = $overallPercentage >= $target; @endphp
+
+            {{-- Summary Card --}}
+            <div class="relative overflow-hidden bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 sm:p-8">
+                <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-red-50 dark:bg-red-900/20 blur-3xl opacity-60"></div>
+                <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-rose-50 dark:bg-rose-900/20 blur-3xl opacity-60"></div>
+                <div class="relative flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="flex-1 text-center md:text-left space-y-2 max-w-lg">
+                        <div class="flex items-center justify-center md:justify-start gap-2 mb-2">
+                            <span class="px-2.5 py-0.5 rounded-full bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 text-xs font-bold uppercase tracking-wide">IKU 6 Performance</span>
+                        </div>
+                        <h3 class="text-4xl font-extrabold text-slate-800 dark:text-white tracking-tight">
+                            {{ number_format($overallPercentage, 2) }}<span class="text-2xl text-slate-400 dark:text-slate-500">%</span>
+                        </h3>
+                        <p class="text-lg font-medium text-slate-600 dark:text-slate-300">Rata-rata Skor Publikasi (Agregat)</p>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">Skor bobot publikasi terindeks Scopus/WoS dibanding total publikasi keseluruhan.</p>
+                        <div class="flex flex-wrap justify-center md:justify-start gap-3 mt-4">
+                            <span class="inline-flex flex-col items-start px-3 py-2 rounded-lg bg-slate-50 text-slate-800 dark:bg-slate-900/30 dark:text-slate-300 border border-slate-200 shadow-sm">
+                                <span class="text-[10px] uppercase font-bold text-slate-500">Total Publikasi</span>
+                                <span class="text-lg font-semibold">{{ number_format($totalPublikasi) }}</span>
+                            </span>
+                            <span class="inline-flex flex-col items-start px-3 py-2 rounded-lg bg-red-50 text-red-800 dark:bg-red-900/30 dark:text-red-300 border border-red-100 shadow-sm">
+                                <span class="text-[10px] uppercase font-bold text-red-600">Skor Bobot</span>
+                                <span class="text-lg font-semibold">{{ number_format($skorPublikasi, 1) }}</span>
+                            </span>
+                        </div>
                     </div>
-                    <div class="relative w-28 h-28 flex items-center justify-center">
-                        <svg class="transform -rotate-90 w-full h-full" viewBox="0 0 36 36"><path class="text-slate-100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" /><path class="{{ $meetsTarget ? 'text-blue-500' : 'text-rose-500' }}" stroke-dasharray="{{ min($overallPercentage, 100) }}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" /></svg>
-                        <div class="absolute flex flex-col items-center"><span class="text-xs font-bold text-slate-400">Score</span><span class="text-lg font-black {{ $meetsTarget ? 'text-blue-500' : 'text-rose-500' }}">{{ number_format($overallPercentage, 1) }}%</span></div>
+                    <div class="relative w-40 h-40 flex items-center justify-center">
+                        <svg class="transform -rotate-90 w-full h-full" viewBox="0 0 36 36">
+                            <path class="text-slate-100 dark:text-slate-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" />
+                            @php $strokeColor = $meetsTarget ? 'text-red-500' : 'text-rose-500'; $percent = min($overallPercentage, 100); @endphp
+                            <path class="{{ $strokeColor }} drop-shadow-md transition-all duration-1000 ease-out" stroke-dasharray="{{ $percent }}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                        </svg>
+                        <div class="absolute flex flex-col items-center">
+                            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Score</span>
+                            <span class="text-2xl font-black {{ $strokeColor }}">{{ number_format($overallPercentage, 1) }}%</span>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            {{-- Data Table --}}
             <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden">
                 <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-700"><h3 class="text-lg font-semibold text-slate-800 dark:text-white">Data Publikasi</h3></div>
                 @if($data->count() > 0)
@@ -56,29 +86,15 @@
                         <tbody class="divide-y divide-slate-100 dark:divide-slate-700/50">
                             @foreach($data as $item)
                             <tr class="group hover:bg-slate-50/50 dark:hover:bg-slate-700/30 transition-colors duration-150">
-                                <td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">
-                                    {{ $item->tahun_akademik }}
-                                </td>
-                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
-                                    {{ number_format($item->total_publikasi) }}
-                                </td>
-                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
-                                    {{ number_format($item->publikasi_q1) }}
-                                </td>
-                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
-                                    {{ number_format($item->publikasi_q2) }}
-                                </td>
-                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
-                                    {{ number_format($item->publikasi_q3) }}
-                                </td>
-                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
-                                    {{ number_format($item->publikasi_q4) }}
-                                </td>
-                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
-                                    {{ number_format($item->prosiding_internasional) }}
-                                </td>
+                                <td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">{{ $item->tahun_akademik }}</td>
+                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->total_publikasi) }}</td>
+                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->publikasi_q1) }}</td>
+                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->publikasi_q2) }}</td>
+                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->publikasi_q3) }}</td>
+                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->publikasi_q4) }}</td>
+                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->prosiding_internasional) }}</td>
                                 <td class="px-6 py-4 text-center">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $item->persentase_iku6 >= 50 ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300' }}">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $item->persentase_iku6 >= 50 ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300' }}">
                                         {{ number_format($item->persentase_iku6, 2) }}%
                                     </span>
                                 </td>
@@ -114,32 +130,19 @@
                 </div>
                 @endif
             </div>
-            <!-- Formula Help -->
-            <div x-data="{ open: false }" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
-                <button @click="open = !open" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-white/50 dark:hover:bg-slate-800/50 transition-colors">
+
+            {{-- Panduan Collapsible --}}
+            <div x-data="{ open: false }" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                <button @click="open = !open" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                     <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700/50 flex items-center justify-center text-slate-700 dark:text-slate-300">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700/50 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-slate-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </div>
-                        <span class="font-bold text-slate-900 dark:text-white">Informasi Kriteria Bobot Quartile Publikasi (IKU 6)</span>
+                        <span class="font-bold text-slate-900 dark:text-white">Panduan & Bobot Quartile Publikasi IKU 6</span>
                     </div>
-                    <div class="w-8 h-8 rounded-full bg-white/50 dark:bg-slate-800/50 flex items-center justify-center">
-                        <svg :class="{\'rotate-180\': open}" class="w-5 h-5 text-slate-600 dark:text-slate-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </div>
+                    <svg :class="{'rotate-180': open}" class="w-5 h-5 text-slate-600 dark:text-slate-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 <div x-show="open" x-collapse class="px-6 pb-6 text-sm text-slate-600 dark:text-slate-300">
-                    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mt-2">
-                        <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-4 border border-slate-300 dark:border-slate-600 text-center shadow-sm">
-                            <span class="block text-xl font-black text-slate-900 dark:text-white mb-1">Q1</span>
-                            <span class="inline-block px-2 py-1 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-xs font-bold rounded">Bobot 1.00</span>
-                        </div>
-                        <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-4 border border-slate-300 dark:border-slate-600 text-center shadow-sm">
-                            <span class="block text-xl font-black text-slate-900 dark:text-white mb-1">Q2</span>
-                            <span class="inline-block px-2 py-1 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-xs font-bold rounded">Bobot 0.75</span>
-                        </div>
-                        <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-4 border border-slate-300 dark:border-slate-600 text-center shadow-sm">
-                            <span class="block text-xl font-black text-slate-900 dark:text-white mb-1">Q3</span>
-                            <span class="inline-block px-2 py-1 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-xs font-bold rounded">Bobot 0.50</span>
                         </div>
                         <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-4 border border-slate-300 dark:border-slate-600 text-center shadow-sm">
                             <span class="block text-xl font-black text-slate-900 dark:text-white mb-1">Q4</span>

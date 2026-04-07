@@ -1,38 +1,94 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{{ config('app.name') }} - IKU 8</title>@vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"></head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ config('app.name', 'IKU UNSAM') }} - IKU 8: SDM Penyusun Kebijakan</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
 <body class="font-sans antialiased bg-white text-slate-900">
     <x-user-layout activeIku="IKU 8">
         <x-slot name="header">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 w-full">
                 <div>
                     <h2 class="text-xl font-bold text-black tracking-tight">IKU 8: SDM Penyusun Kebijakan</h2>
-                    <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Tim penyusun, narasumber, ahli hukum, kontributor regulasi.</p>
+                    <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Dosen dan tenaga kependidikan yang terlibat dalam penyusunan kebijakan publik.</p>
                 </div>
                 <div class="flex items-center gap-3">
-                    <form method="GET" action="{{ route('user.iku8.index') }}"><select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm w-full sm:w-auto">@foreach($availableYears as $year)<option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>@endforeach</select></form>
-                    <a href="{{ route('user.iku8.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 rounded-lg text-xs text-white uppercase hover:bg-blue-700 shadow-md"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>Tambah</a>
+                    <form method="GET" action="{{ route('user.iku8.index') }}" class="flex items-center">
+                        <select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm">
+                            @foreach($availableYears as $year)
+                            <option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>
+                            @endforeach
+                        </select>
+                    </form>
+                    <a href="{{ route('user.iku8.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150 shadow-md hover:shadow-lg">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                        Tambah Data
+                    </a>
                 </div>
             </div>
         </x-slot>
+
         <div class="py-6 space-y-6" data-aos="fade-up">
-            @php $target = 5; $meetsTarget = $overallPercentage >= $target; $bgColor = $meetsTarget ? 'bg-blue-50 dark:bg-blue-900/30' : 'bg-rose-50 dark:bg-rose-900/30'; $textColor = $meetsTarget ? 'text-blue-600' : 'text-rose-600'; $valueColor = $meetsTarget ? 'text-blue-700' : 'text-rose-700'; @endphp
-            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border p-6">
-                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                    <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="text-center p-4 {{ $bgColor }} rounded-xl"><p class="text-sm {{ $textColor }}">Persentase IKU 8</p><p class="text-3xl font-bold {{ $valueColor }}">{{ number_format($overallPercentage, 2) }}%</p><p class="text-xs {{ $textColor }}">Target: {{ $target }}%</p></div>
-                        <div class="text-center p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl"><p class="text-sm text-slate-600">Total SDM</p><p class="text-3xl font-bold text-slate-700">{{ number_format($totalSdm) }}</p></div>
-                        <div class="text-center p-4 bg-cyan-50 dark:bg-cyan-900/30 rounded-xl"><p class="text-sm text-cyan-600">Total Terlibat</p><p class="text-3xl font-bold text-cyan-700">{{ number_format($totalTerlibat) }}</p></div>
+            @php $target = 5; $meetsTarget = $overallPercentage >= $target; @endphp
+
+            {{-- Summary Card --}}
+            <div class="relative overflow-hidden bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 sm:p-8">
+                <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-purple-50 dark:bg-purple-900/20 blur-3xl opacity-60"></div>
+                <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-violet-50 dark:bg-violet-900/20 blur-3xl opacity-60"></div>
+                <div class="relative flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="flex-1 text-center md:text-left space-y-2 max-w-lg">
+                        <div class="flex items-center justify-center md:justify-start gap-2 mb-2">
+                            <span class="px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400 text-xs font-bold uppercase tracking-wide">IKU 8 Performance</span>
+                        </div>
+                        <h3 class="text-4xl font-extrabold text-slate-800 dark:text-white tracking-tight">
+                            {{ number_format($overallPercentage, 2) }}<span class="text-2xl text-slate-400 dark:text-slate-500">%</span>
+                        </h3>
+                        <p class="text-lg font-medium text-slate-600 dark:text-slate-300">Rasio SDM Terlibat Kebijakan (Agregat)</p>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">
+                            Persentase SDM yang berperan sebagai tim penyusun, narasumber, atau ahli dalam regulasi publik.
+                        </p>
+                        <div class="flex flex-wrap justify-center md:justify-start gap-3 mt-4">
+                            <span class="inline-flex flex-col items-start px-3 py-2 rounded-lg bg-slate-50 text-slate-800 dark:bg-slate-900/30 dark:text-slate-300 border border-slate-200 shadow-sm">
+                                <span class="text-[10px] uppercase font-bold text-slate-500">Total SDM</span>
+                                <span class="text-lg font-semibold">{{ number_format($totalSdm) }}</span>
+                            </span>
+                            <span class="inline-flex flex-col items-start px-3 py-2 rounded-lg bg-purple-50 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300 border border-purple-100 shadow-sm">
+                                <span class="text-[10px] uppercase font-bold text-purple-600">Terlibat Kebijakan</span>
+                                <span class="text-lg font-semibold">{{ number_format($totalTerlibat) }}</span>
+                            </span>
+                        </div>
                     </div>
-                    <div class="relative w-28 h-28 flex items-center justify-center">
-                        <svg class="transform -rotate-90 w-full h-full" viewBox="0 0 36 36"><path class="text-slate-100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" /><path class="{{ $meetsTarget ? 'text-blue-500' : 'text-rose-500' }}" stroke-dasharray="{{ min($overallPercentage, 100) }}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" /></svg>
-                        <div class="absolute flex flex-col items-center"><span class="text-xs font-bold text-slate-400">Score</span><span class="text-lg font-black {{ $meetsTarget ? 'text-blue-500' : 'text-rose-500' }}">{{ number_format($overallPercentage, 1) }}%</span></div>
+                    <div class="relative w-40 h-40 flex items-center justify-center">
+                        <svg class="transform -rotate-90 w-full h-full" viewBox="0 0 36 36">
+                            <path class="text-slate-100 dark:text-slate-700"
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none" stroke="currentColor" stroke-width="3" />
+                            @php
+                            $strokeColor = $meetsTarget ? 'text-purple-500' : 'text-rose-500';
+                            $percent = min($overallPercentage, 100);
+                            @endphp
+                            <path class="{{ $strokeColor }} drop-shadow-md transition-all duration-1000 ease-out"
+                                stroke-dasharray="{{ $percent }}, 100"
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                        </svg>
+                        <div class="absolute flex flex-col items-center">
+                            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Score</span>
+                            <span class="text-2xl font-black {{ $strokeColor }}">{{ number_format($overallPercentage, 1) }}%</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border overflow-hidden">
-                <div class="px-6 py-4 border-b"><h3 class="text-lg font-semibold text-slate-800 dark:text-white">Data Keterlibatan Kebijakan</h3></div>
+
+            {{-- Data Table --}}
+            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden">
+                <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-700">
+                    <h3 class="text-lg font-semibold text-slate-800 dark:text-white">Data Keterlibatan Kebijakan</h3>
+                </div>
                 @if($data->count() > 0)
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left whitespace-nowrap md:whitespace-normal">
@@ -43,30 +99,20 @@
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Tim Penyusun</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Narasumber</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Ahli Hukum</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center">Capaian</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Capaian IKU 8</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-right">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 dark:divide-slate-700/50">
                             @foreach($data as $item)
                             <tr class="group hover:bg-slate-50/50 dark:hover:bg-slate-700/30 transition-colors duration-150">
-                                <td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">
-                                    {{ $item->tahun_akademik }}
-                                </td>
-                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
-                                    {{ number_format($item->total_sdm) }}
-                                </td>
-                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
-                                    {{ number_format($item->tim_penyusun) }}
-                                </td>
-                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
-                                    {{ number_format($item->narasumber) }}
-                                </td>
-                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
-                                    {{ number_format($item->ahli_hukum) }}
-                                </td>
+                                <td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">{{ $item->tahun_akademik }}</td>
+                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->total_sdm) }}</td>
+                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->tim_penyusun) }}</td>
+                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->narasumber) }}</td>
+                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->ahli_hukum) }}</td>
                                 <td class="px-6 py-4 text-center">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $item->persentase_iku8 >= 5 ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300' }}">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $item->persentase_iku8 >= 5 ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300' }}">
                                         {{ number_format($item->persentase_iku8, 2) }}%
                                     </span>
                                 </td>
@@ -101,6 +147,55 @@
                     </a>
                 </div>
                 @endif
+            </div>
+
+            {{-- Panduan Collapsible --}}
+            <div x-data="{ open: false }" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                <button @click="open = !open" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700/50 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-slate-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <span class="font-bold text-slate-900 dark:text-white">Panduan & Rumus Perhitungan IKU 8</span>
+                    </div>
+                    <svg :class="{'rotate-180': open}" class="w-5 h-5 text-slate-600 dark:text-slate-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div x-show="open" x-collapse class="px-6 pb-6 text-sm text-slate-600 dark:text-slate-300">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-2">
+                        <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-5 border border-slate-300 dark:border-slate-600 shadow-sm hover:-translate-y-1 transition-transform duration-300">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 font-bold text-xs">1</span>
+                                <h4 class="font-bold text-slate-800">Rumus IKU 8</h4>
+                            </div>
+                            <div class="p-3 bg-white rounded-lg text-xs font-mono text-slate-900 border border-slate-300 mb-3 text-center shadow-inner">
+                                Total Terlibat / Total SDM × 100%
+                            </div>
+                            <p class="text-xs text-slate-500 leading-relaxed">Persentase dosen dan tenaga kependidikan yang terlibat aktif dalam penyusunan kebijakan publik.</p>
+                        </div>
+                        <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-5 border border-slate-300 dark:border-slate-600 shadow-sm hover:-translate-y-1 transition-transform duration-300">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 font-bold text-xs">2</span>
+                                <h4 class="font-bold text-slate-800">Bentuk Keterlibatan</h4>
+                            </div>
+                            <ul class="space-y-1.5 text-xs text-slate-600">
+                                <li class="flex gap-2"><span class="text-purple-600">●</span> Tim Penyusun Regulasi</li>
+                                <li class="flex gap-2"><span class="text-purple-600">●</span> Narasumber Ahli</li>
+                                <li class="flex gap-2"><span class="text-purple-600">●</span> Konsultan Hukum</li>
+                                <li class="flex gap-2"><span class="text-purple-600">●</span> Reviewer Kebijakan</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-5 border border-slate-300 dark:border-slate-600 shadow-sm hover:-translate-y-1 transition-transform duration-300">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 font-bold text-xs">3</span>
+                                <h4 class="font-bold text-slate-800">Target 2025</h4>
+                            </div>
+                            <div class="p-3 bg-white rounded-lg text-xs font-mono text-center shadow-inner border border-slate-300 mb-3">
+                                Target ≥ 5%
+                            </div>
+                            <p class="text-xs text-slate-500 leading-relaxed">Minimal 5% dari total SDM aktif harus terlibat dalam kegiatan penyusunan kebijakan publik.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </x-user-layout>
