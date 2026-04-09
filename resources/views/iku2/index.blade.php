@@ -116,7 +116,7 @@
                             @foreach($data as $item)
                             <tr class="group hover:bg-slate-50/50 dark:hover:bg-slate-700/30 transition-colors duration-150">
                                 <td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">
-                                    {{ $item->program_studi ?? '-' }}
+                                    {{ strtoupper($item->program_studi) ?? '-' }}
                                 </td>
                                 <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
                                     {{ number_format($item->total_lulusan) }}

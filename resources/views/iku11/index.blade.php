@@ -108,10 +108,10 @@
                     </div>
                     <div class="p-6 flex-1 flex flex-col justify-center">
                         @if($data)
-                        <div class="space-y-10">
+                        <div class="space-y-12">
                             <div class="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-700/50">
                                 <span class="text-sm font-medium text-slate-500 dark:text-slate-400">FAKULTAS / UNIT</span>
-                                <span class="text-sm font-bold text-slate-900 dark:text-white">{{ $data->fakultas ?? 'UMUM' }}</span>
+                                <span class="text-sm font-bold text-slate-900 dark:text-white">{{ strtoupper($data->fakultas ?? 'UMUM') }}</span>
                             </div>
                             <div class="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-700/50">
                                 <span class="text-sm font-medium text-slate-500 dark:text-slate-400">Opini Audit (WTP/WDP)</span>
@@ -141,7 +141,7 @@
                     </div>
                     <div class="p-6 flex-1 flex flex-col justify-center">
                         @if($data)
-                        <div class="space-y-10">
+                        <div class="space-y-12">
                             <div class="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-700/50">
                                 <div class="flex flex-col">
                                     <span class="text-sm font-medium text-slate-500 dark:text-slate-400">Jumlah Kasus Pelanggaran Akademik</span>
