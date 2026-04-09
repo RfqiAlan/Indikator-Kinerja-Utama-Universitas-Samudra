@@ -57,25 +57,41 @@ class Iku3Controller extends Controller
             'tahun_akademik' => 'required|string',
             'program_studi' => 'nullable|string',
             'total_mahasiswa' => 'required|integer|min:1',
-            'magang' => 'required|integer|min:0',
-            'riset' => 'required|integer|min:0',
-            'pertukaran' => 'required|integer|min:0',
-            'kkn_tematik' => 'required|integer|min:0',
-            'lomba' => 'required|integer|min:0',
-            'wirausaha' => 'required|integer|min:0',
+            'magang_internasional' => 'required|integer|min:0',
+            'magang_nasional' => 'required|integer|min:0',
+            'magang_provinsi' => 'required|integer|min:0',
+            'riset_internasional' => 'required|integer|min:0',
+            'riset_nasional' => 'required|integer|min:0',
+            'riset_provinsi' => 'required|integer|min:0',
+            'pertukaran_internasional' => 'required|integer|min:0',
+            'pertukaran_nasional' => 'required|integer|min:0',
+            'pertukaran_provinsi' => 'required|integer|min:0',
+            'kkn_internasional' => 'required|integer|min:0',
+            'kkn_nasional' => 'required|integer|min:0',
+            'kkn_provinsi' => 'required|integer|min:0',
+            'lomba_internasional' => 'required|integer|min:0',
+            'lomba_nasional' => 'required|integer|min:0',
+            'lomba_provinsi' => 'required|integer|min:0',
+            'wirausaha_internasional' => 'required|integer|min:0',
+            'wirausaha_nasional' => 'required|integer|min:0',
+            'wirausaha_provinsi' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
         // Validate sum of kegiatan doesn't exceed total responden
-        $totalKegiatan = $validated['magang'] + $validated['riset'] + 
-                         $validated['pertukaran'] + $validated['kkn_tematik'] + 
-                         $validated['lomba'] + $validated['wirausaha'];
+        $totalKegiatan = 
+            $validated['magang_internasional'] + $validated['magang_nasional'] + $validated['magang_provinsi'] +
+            $validated['riset_internasional'] + $validated['riset_nasional'] + $validated['riset_provinsi'] +
+            $validated['pertukaran_internasional'] + $validated['pertukaran_nasional'] + $validated['pertukaran_provinsi'] +
+            $validated['kkn_internasional'] + $validated['kkn_nasional'] + $validated['kkn_provinsi'] +
+            $validated['lomba_internasional'] + $validated['lomba_nasional'] + $validated['lomba_provinsi'] +
+            $validated['wirausaha_internasional'] + $validated['wirausaha_nasional'] + $validated['wirausaha_provinsi'];
         
         if ($totalKegiatan > $validated['total_mahasiswa']) {
             return back()->withInput()->withErrors([
-                'total_mahasiswa' => 'Total kegiatan (' . $totalKegiatan . ') tidak boleh melebihi total mahasiswa (' . $validated['total_mahasiswa'] . ').'
+                'total_mahasiswa' => 'Total mahasiswa berkegiatan (' . $totalKegiatan . ') tidak boleh melebihi jumlah mahasiwa di prodi (' . $validated['total_mahasiswa'] . ').'
             ]);
         }
 
@@ -135,25 +151,41 @@ class Iku3Controller extends Controller
             'tahun_akademik' => 'required|string',
             'program_studi' => 'nullable|string',
             'total_mahasiswa' => 'required|integer|min:1',
-            'magang' => 'required|integer|min:0',
-            'riset' => 'required|integer|min:0',
-            'pertukaran' => 'required|integer|min:0',
-            'kkn_tematik' => 'required|integer|min:0',
-            'lomba' => 'required|integer|min:0',
-            'wirausaha' => 'required|integer|min:0',
+            'magang_internasional' => 'required|integer|min:0',
+            'magang_nasional' => 'required|integer|min:0',
+            'magang_provinsi' => 'required|integer|min:0',
+            'riset_internasional' => 'required|integer|min:0',
+            'riset_nasional' => 'required|integer|min:0',
+            'riset_provinsi' => 'required|integer|min:0',
+            'pertukaran_internasional' => 'required|integer|min:0',
+            'pertukaran_nasional' => 'required|integer|min:0',
+            'pertukaran_provinsi' => 'required|integer|min:0',
+            'kkn_internasional' => 'required|integer|min:0',
+            'kkn_nasional' => 'required|integer|min:0',
+            'kkn_provinsi' => 'required|integer|min:0',
+            'lomba_internasional' => 'required|integer|min:0',
+            'lomba_nasional' => 'required|integer|min:0',
+            'lomba_provinsi' => 'required|integer|min:0',
+            'wirausaha_internasional' => 'required|integer|min:0',
+            'wirausaha_nasional' => 'required|integer|min:0',
+            'wirausaha_provinsi' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
         // Validate sum of kegiatan doesn't exceed total responden
-        $totalKegiatan = $validated['magang'] + $validated['riset'] + 
-                         $validated['pertukaran'] + $validated['kkn_tematik'] + 
-                         $validated['lomba'] + $validated['wirausaha'];
+        $totalKegiatan = 
+            $validated['magang_internasional'] + $validated['magang_nasional'] + $validated['magang_provinsi'] +
+            $validated['riset_internasional'] + $validated['riset_nasional'] + $validated['riset_provinsi'] +
+            $validated['pertukaran_internasional'] + $validated['pertukaran_nasional'] + $validated['pertukaran_provinsi'] +
+            $validated['kkn_internasional'] + $validated['kkn_nasional'] + $validated['kkn_provinsi'] +
+            $validated['lomba_internasional'] + $validated['lomba_nasional'] + $validated['lomba_provinsi'] +
+            $validated['wirausaha_internasional'] + $validated['wirausaha_nasional'] + $validated['wirausaha_provinsi'];
         
         if ($totalKegiatan > $validated['total_mahasiswa']) {
             return back()->withInput()->withErrors([
-                'total_mahasiswa' => 'Total kegiatan (' . $totalKegiatan . ') tidak boleh melebihi total mahasiswa (' . $validated['total_mahasiswa'] . ').'
+                'total_mahasiswa' => 'Total mahasiswa berkegiatan (' . $totalKegiatan . ') tidak boleh melebihi jumlah mahasiwa di prodi (' . $validated['total_mahasiswa'] . ').'
             ]);
         }
 

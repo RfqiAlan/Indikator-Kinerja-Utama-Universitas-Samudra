@@ -7,10 +7,10 @@
         <x-slot name="header">
             <div>
                 <h2 class="text-2xl font-bold text-slate-800">Tambah Data IKU 3</h2>
-                <p class="text-sm text-slate-500 mt-1">{{ auth()->user()->fakultas_nama ?? 'Fakultas' }} - Mahasiswa Berkegiatan di Luar Prodi</p>
+                <p class="text-sm text-slate-500 mt-1">{{ auth()->user()->fakultas_nama ?? 'Fakultas' }} - Mahasiswa Berkegiatan/Berprestasi di Luar Prodi</p>
             </div>
         </x-slot>
-        <div class="py-6 max-w-4xl mx-auto" x-data="formIku3()">
+        <div class="py-6 max-w-5xl mx-auto" x-data="formIku3()">
             @if(session('warning'))
             <div class="mb-4 p-4 bg-amber-100 border border-amber-200 text-amber-700 rounded-lg">
                 {{ session('warning') }}
@@ -50,46 +50,114 @@
                             <input type="number" name="total_mahasiswa" x-model.number="totalMahasiswa" value="{{ old('total_mahasiswa', 0) }}" class="w-full rounded-lg border-slate-300 focus:ring-blue-500" required min="1">
                         </div>
                     </div>
+                </div>
 
+                <!-- Bobot Information -->
+                <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">
+                    <h4 class="font-semibold text-amber-800 mb-2 flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Bobot Penilaian (Sesuai Kemdiktisaintek 2026)
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-amber-700">
+                        <div>
+                            <p class="font-semibold mb-1">Tingkat Internasional:</p>
+                            <p>Juara 1 = 1.0 | Juara 2/3 = 0.5 | Harapan = 0.3 | Finalis = 0.2</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold mb-1">Tingkat Nasional:</p>
+                            <p>Juara 1 = 0.6 | Juara 2/3 = 0.3 | Harapan = 0.2 | Finalis = 0.1</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold mb-1">Tingkat Provinsi:</p>
+                            <p>Juara 1 = 0.4 | Juara 2/3 = 0.2 | Harapan = 0.1 | Finalis = 0.05</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="border-b pb-6">
-                    <h3 class="font-semibold text-slate-800 mb-4">Jenis Kegiatan di Luar Prodi</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                        <div class="bg-blue-50 p-3 rounded-lg">
-                            <label class="block text-sm font-medium text-blue-700 mb-1">Magang Industri</label>
-                            <input type="number" name="magang" x-model.number="magang" value="{{ old('magang', 0) }}" class="w-full rounded-lg border-blue-200" min="0">
-                        </div>
-                        <div class="bg-cyan-50 p-3 rounded-lg">
-                            <label class="block text-sm font-medium text-cyan-700 mb-1">Riset/Asistensi</label>
-                            <input type="number" name="riset" x-model.number="riset" value="{{ old('riset', 0) }}" class="w-full rounded-lg border-cyan-200" min="0">
-                        </div>
-                        <div class="bg-indigo-50 p-3 rounded-lg">
-                            <label class="block text-sm font-medium text-indigo-700 mb-1">Pertukaran Pelajar</label>
-                            <input type="number" name="pertukaran" x-model.number="pertukaran" value="{{ old('pertukaran', 0) }}" class="w-full rounded-lg border-indigo-200" min="0">
-                        </div>
-                        <div class="bg-blue-50 p-3 rounded-lg">
-                            <label class="block text-sm font-medium text-blue-700 mb-1">KKN Tematik</label>
-                            <input type="number" name="kkn_tematik" x-model.number="kkn" value="{{ old('kkn_tematik', 0) }}" class="w-full rounded-lg border-blue-200" min="0">
-                        </div>
-                        <div class="bg-indigo-50 p-3 rounded-lg">
-                            <label class="block text-sm font-medium text-indigo-700 mb-1">Lomba/Kompetisi</label>
-                            <input type="number" name="lomba" x-model.number="lomba" value="{{ old('lomba', 0) }}" class="w-full rounded-lg border-indigo-200" min="0">
-                        </div>
-                        <div class="bg-amber-50 p-3 rounded-lg">
-                            <label class="block text-sm font-medium text-amber-700 mb-1">Wirausaha</label>
-                            <input type="number" name="wirausaha" x-model.number="wirausaha" value="{{ old('wirausaha', 0) }}" class="w-full rounded-lg border-amber-200" min="0">
-                        </div>
+                    <h3 class="font-semibold text-slate-800 mb-4">Kegiatan & Prestasi Mahasiswa di Luar Prodi</h3>
+                    <p class="text-sm text-slate-500 mb-4">Masukkan jumlah mahasiswa per tingkat kegiatan/prestasi. Bobot akan dihitung otomatis.</p>
+                    
+                    <!-- Table Header -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="bg-slate-100">
+                                    <th class="px-4 py-3 text-left font-semibold text-slate-700 rounded-tl-lg">Jenis Kegiatan</th>
+                                    <th class="px-4 py-3 text-center font-semibold text-purple-700 bg-purple-50">Internasional<br><span class="text-xs font-normal">(Bobot: 1.0)</span></th>
+                                    <th class="px-4 py-3 text-center font-semibold text-blue-700 bg-blue-50">Nasional<br><span class="text-xs font-normal">(Bobot: 0.5)</span></th>
+                                    <th class="px-4 py-3 text-center font-semibold text-emerald-700 bg-emerald-50 rounded-tr-lg">Provinsi<br><span class="text-xs font-normal">(Bobot: 0.25)</span></th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200">
+                                <!-- Magang -->
+                                <tr class="hover:bg-slate-50">
+                                    <td class="px-4 py-3 font-medium text-slate-700">🏢 Magang / Praktik Kerja</td>
+                                    <td class="px-2 py-2"><input type="number" name="magang_internasional" x-model.number="magang_int" value="{{ old('magang_internasional', 0) }}" class="w-full rounded-lg border-purple-200 text-center focus:ring-purple-500" min="0"></td>
+                                    <td class="px-2 py-2"><input type="number" name="magang_nasional" x-model.number="magang_nas" value="{{ old('magang_nasional', 0) }}" class="w-full rounded-lg border-blue-200 text-center focus:ring-blue-500" min="0"></td>
+                                    <td class="px-2 py-2"><input type="number" name="magang_provinsi" x-model.number="magang_prov" value="{{ old('magang_provinsi', 0) }}" class="w-full rounded-lg border-emerald-200 text-center focus:ring-emerald-500" min="0"></td>
+                                </tr>
+                                <!-- Riset -->
+                                <tr class="hover:bg-slate-50">
+                                    <td class="px-4 py-3 font-medium text-slate-700">🔬 Riset / Asistensi Peneliti</td>
+                                    <td class="px-2 py-2"><input type="number" name="riset_internasional" x-model.number="riset_int" value="{{ old('riset_internasional', 0) }}" class="w-full rounded-lg border-purple-200 text-center focus:ring-purple-500" min="0"></td>
+                                    <td class="px-2 py-2"><input type="number" name="riset_nasional" x-model.number="riset_nas" value="{{ old('riset_nasional', 0) }}" class="w-full rounded-lg border-blue-200 text-center focus:ring-blue-500" min="0"></td>
+                                    <td class="px-2 py-2"><input type="number" name="riset_provinsi" x-model.number="riset_prov" value="{{ old('riset_provinsi', 0) }}" class="w-full rounded-lg border-emerald-200 text-center focus:ring-emerald-500" min="0"></td>
+                                </tr>
+                                <!-- Pertukaran -->
+                                <tr class="hover:bg-slate-50">
+                                    <td class="px-4 py-3 font-medium text-slate-700">🌍 Pertukaran Pelajar</td>
+                                    <td class="px-2 py-2"><input type="number" name="pertukaran_internasional" x-model.number="pertukaran_int" value="{{ old('pertukaran_internasional', 0) }}" class="w-full rounded-lg border-purple-200 text-center focus:ring-purple-500" min="0"></td>
+                                    <td class="px-2 py-2"><input type="number" name="pertukaran_nasional" x-model.number="pertukaran_nas" value="{{ old('pertukaran_nasional', 0) }}" class="w-full rounded-lg border-blue-200 text-center focus:ring-blue-500" min="0"></td>
+                                    <td class="px-2 py-2"><input type="number" name="pertukaran_provinsi" x-model.number="pertukaran_prov" value="{{ old('pertukaran_provinsi', 0) }}" class="w-full rounded-lg border-emerald-200 text-center focus:ring-emerald-500" min="0"></td>
+                                </tr>
+                                <!-- KKN -->
+                                <tr class="hover:bg-slate-50">
+                                    <td class="px-4 py-3 font-medium text-slate-700">🤝 KKN Tematik / Berdampak</td>
+                                    <td class="px-2 py-2"><input type="number" name="kkn_internasional" x-model.number="kkn_int" value="{{ old('kkn_internasional', 0) }}" class="w-full rounded-lg border-purple-200 text-center focus:ring-purple-500" min="0"></td>
+                                    <td class="px-2 py-2"><input type="number" name="kkn_nasional" x-model.number="kkn_nas" value="{{ old('kkn_nasional', 0) }}" class="w-full rounded-lg border-blue-200 text-center focus:ring-blue-500" min="0"></td>
+                                    <td class="px-2 py-2"><input type="number" name="kkn_provinsi" x-model.number="kkn_prov" value="{{ old('kkn_provinsi', 0) }}" class="w-full rounded-lg border-emerald-200 text-center focus:ring-emerald-500" min="0"></td>
+                                </tr>
+                                <!-- Lomba -->
+                                <tr class="hover:bg-slate-50">
+                                    <td class="px-4 py-3 font-medium text-slate-700">🏆 Lomba / Kompetisi</td>
+                                    <td class="px-2 py-2"><input type="number" name="lomba_internasional" x-model.number="lomba_int" value="{{ old('lomba_internasional', 0) }}" class="w-full rounded-lg border-purple-200 text-center focus:ring-purple-500" min="0"></td>
+                                    <td class="px-2 py-2"><input type="number" name="lomba_nasional" x-model.number="lomba_nas" value="{{ old('lomba_nasional', 0) }}" class="w-full rounded-lg border-blue-200 text-center focus:ring-blue-500" min="0"></td>
+                                    <td class="px-2 py-2"><input type="number" name="lomba_provinsi" x-model.number="lomba_prov" value="{{ old('lomba_provinsi', 0) }}" class="w-full rounded-lg border-emerald-200 text-center focus:ring-emerald-500" min="0"></td>
+                                </tr>
+                                <!-- Wirausaha -->
+                                <tr class="hover:bg-slate-50">
+                                    <td class="px-4 py-3 font-medium text-slate-700">💼 Wirausaha Mahasiswa</td>
+                                    <td class="px-2 py-2"><input type="number" name="wirausaha_internasional" x-model.number="wirausaha_int" value="{{ old('wirausaha_internasional', 0) }}" class="w-full rounded-lg border-purple-200 text-center focus:ring-purple-500" min="0"></td>
+                                    <td class="px-2 py-2"><input type="number" name="wirausaha_nasional" x-model.number="wirausaha_nas" value="{{ old('wirausaha_nasional', 0) }}" class="w-full rounded-lg border-blue-200 text-center focus:ring-blue-500" min="0"></td>
+                                    <td class="px-2 py-2"><input type="number" name="wirausaha_provinsi" x-model.number="wirausaha_prov" value="{{ old('wirausaha_provinsi', 0) }}" class="w-full rounded-lg border-emerald-200 text-center focus:ring-emerald-500" min="0"></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
                 <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-6">
                     <h4 class="font-semibold text-slate-800 mb-4">Preview Perhitungan</h4>
-                    <div class="grid grid-cols-3 gap-4 text-center">
-                        <div><p class="text-xs text-slate-500">Total Berkegiatan</p><p class="text-2xl font-bold text-blue-600" x-text="totalKegiatan">0</p></div>
-                        <div><p class="text-xs text-slate-500">Total Mahasiswa</p><p class="text-2xl font-bold text-slate-600" x-text="totalMahasiswa">0</p></div>
-                        <div><p class="text-xs text-slate-500">Persentase IKU 3</p><p class="text-2xl font-bold" :class="persentase >= 20 ? 'text-blue-600' : 'text-rose-600'" x-text="persentase.toFixed(2) + '%'">0%</p></div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                        <div>
+                            <p class="text-xs text-slate-500">Total Berkegiatan</p>
+                            <p class="text-2xl font-bold text-blue-600" x-text="totalKegiatan">0</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500">Skor Berbobot</p>
+                            <p class="text-2xl font-bold text-purple-600" x-text="skorBobot.toFixed(2)">0</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500">Total Mahasiswa</p>
+                            <p class="text-2xl font-bold text-slate-600" x-text="totalMahasiswa">0</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500">Persentase IKU 3</p>
+                            <p class="text-2xl font-bold" :class="persentase >= 20 ? 'text-emerald-600' : 'text-rose-600'" x-text="persentase.toFixed(2) + '%'">0%</p>
+                        </div>
                     </div>
+                    <p class="text-xs text-slate-500 mt-4 text-center">Formula: (Σ n<sub>i</sub> × k<sub>i</sub>) / Total Mahasiswa × 100%</p>
                 </div>
 
                 <div>
@@ -108,14 +176,46 @@
             function formIku3() {
                 return {
                     totalMahasiswa: {{ old('total_mahasiswa', 0) }},
-                    magang: {{ old('magang', 0) }}, 
-                    riset: {{ old('riset', 0) }}, 
-                    pertukaran: {{ old('pertukaran', 0) }}, 
-                    kkn: {{ old('kkn_tematik', 0) }}, 
-                    lomba: {{ old('lomba', 0) }}, 
-                    wirausaha: {{ old('wirausaha', 0) }},
-                    get totalKegiatan() { return this.magang + this.riset + this.pertukaran + this.kkn + this.lomba + this.wirausaha; },
-                    get persentase() { if (this.totalMahasiswa <= 0) return 0; return (this.totalKegiatan / this.totalMahasiswa) * 100; }
+                    // Internasional
+                    magang_int: {{ old('magang_internasional', 0) }},
+                    riset_int: {{ old('riset_internasional', 0) }},
+                    pertukaran_int: {{ old('pertukaran_internasional', 0) }},
+                    kkn_int: {{ old('kkn_internasional', 0) }},
+                    lomba_int: {{ old('lomba_internasional', 0) }},
+                    wirausaha_int: {{ old('wirausaha_internasional', 0) }},
+                    // Nasional
+                    magang_nas: {{ old('magang_nasional', 0) }},
+                    riset_nas: {{ old('riset_nasional', 0) }},
+                    pertukaran_nas: {{ old('pertukaran_nasional', 0) }},
+                    kkn_nas: {{ old('kkn_nasional', 0) }},
+                    lomba_nas: {{ old('lomba_nasional', 0) }},
+                    wirausaha_nas: {{ old('wirausaha_nasional', 0) }},
+                    // Provinsi
+                    magang_prov: {{ old('magang_provinsi', 0) }},
+                    riset_prov: {{ old('riset_provinsi', 0) }},
+                    pertukaran_prov: {{ old('pertukaran_provinsi', 0) }},
+                    kkn_prov: {{ old('kkn_provinsi', 0) }},
+                    lomba_prov: {{ old('lomba_provinsi', 0) }},
+                    wirausaha_prov: {{ old('wirausaha_provinsi', 0) }},
+                    
+                    get totalKegiatan() {
+                        return this.magang_int + this.magang_nas + this.magang_prov +
+                               this.riset_int + this.riset_nas + this.riset_prov +
+                               this.pertukaran_int + this.pertukaran_nas + this.pertukaran_prov +
+                               this.kkn_int + this.kkn_nas + this.kkn_prov +
+                               this.lomba_int + this.lomba_nas + this.lomba_prov +
+                               this.wirausaha_int + this.wirausaha_nas + this.wirausaha_prov;
+                    },
+                    get skorBobot() {
+                        // Bobot: Internasional=1.0, Nasional=0.5, Provinsi=0.25
+                        return (this.magang_int + this.riset_int + this.pertukaran_int + this.kkn_int + this.lomba_int + this.wirausaha_int) * 1.0 +
+                               (this.magang_nas + this.riset_nas + this.pertukaran_nas + this.kkn_nas + this.lomba_nas + this.wirausaha_nas) * 0.5 +
+                               (this.magang_prov + this.riset_prov + this.pertukaran_prov + this.kkn_prov + this.lomba_prov + this.wirausaha_prov) * 0.25;
+                    },
+                    get persentase() {
+                        if (this.totalMahasiswa <= 0) return 0;
+                        return (this.skorBobot / this.totalMahasiswa) * 100;
+                    }
                 }
             }
         </script>

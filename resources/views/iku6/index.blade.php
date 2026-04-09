@@ -74,6 +74,7 @@
                             <tr>
                                 <th scope="col" class="px-6 py-4 font-medium">Tahun</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Total Publikasi</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Top Tier</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Q1</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Q2</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Q3</th>
@@ -88,6 +89,7 @@
                             <tr class="group hover:bg-slate-50/50 dark:hover:bg-slate-700/30 transition-colors duration-150">
                                 <td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">{{ $item->tahun_akademik }}</td>
                                 <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->total_publikasi) }}</td>
+                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->publikasi_top_tier) }}</td>
                                 <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->publikasi_q1) }}</td>
                                 <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->publikasi_q2) }}</td>
                                 <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->publikasi_q3) }}</td>
@@ -143,6 +145,10 @@
                     <svg :class="{'rotate-180': open}" class="w-5 h-5 text-slate-600 dark:text-slate-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 <div x-show="open" x-collapse class="px-6 pb-6 text-sm text-slate-600 dark:text-slate-300">
+                    <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+                        <div class="bg-indigo-50 dark:bg-indigo-900/30 rounded-xl p-4 border border-indigo-200 dark:border-indigo-800 text-center shadow-sm">
+                            <span class="block text-xl font-black text-indigo-700 dark:text-indigo-400 mb-1">Top Tier</span>
+                            <span class="inline-block px-2 py-1 bg-indigo-100 dark:bg-indigo-800 text-indigo-800 dark:text-indigo-200 text-xs font-bold rounded">Bobot 1.2</span>
                         </div>
                         <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-4 border border-slate-300 dark:border-slate-600 text-center shadow-sm">
                             <span class="block text-xl font-black text-slate-900 dark:text-white mb-1">Q4</span>

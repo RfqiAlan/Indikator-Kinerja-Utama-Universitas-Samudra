@@ -63,21 +63,30 @@ class Iku2Controller extends Controller
             'tahun_akademik' => 'required|string',
             'program_studi' => 'required|string',
             'total_lulusan' => 'required|integer|min:1',
-            'bekerja_bobot_10' => 'required|integer|min:0',
-            'bekerja_bobot_6' => 'required|integer|min:0',
-            'bekerja_bobot_4' => 'required|integer|min:0',
+            'bekerja_bobot_1_0' => 'required|integer|min:0',
+            'bekerja_bobot_0_8' => 'required|integer|min:0',
+            'bekerja_bobot_0_6' => 'required|integer|min:0',
             'studi_lanjut' => 'required|integer|min:0',
-            'wirausaha_founder' => 'required|integer|min:0',
-            'wirausaha_freelancer' => 'required|integer|min:0',
+            'wirausaha_founder_1_2' => 'required|integer|min:0',
+            'wirausaha_founder_1_0' => 'required|integer|min:0',
+            'wirausaha_founder_0_8' => 'required|integer|min:0',
+            'wirausaha_founder_0_6' => 'required|integer|min:0',
+            'wirausaha_freelancer_0_5' => 'required|integer|min:0',
+            'wirausaha_freelancer_0_4' => 'required|integer|min:0',
+            'wirausaha_freelancer_0_3' => 'required|integer|min:0',
+            'wirausaha_freelancer_0_2' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
         // Validate sum of sub-fields doesn't exceed total responden
-        $totalKategori = $validated['bekerja_bobot_10'] + $validated['bekerja_bobot_6'] + 
-                         $validated['bekerja_bobot_4'] + $validated['studi_lanjut'] + 
-                         $validated['wirausaha_founder'] + $validated['wirausaha_freelancer'];
+        $totalKategori = $validated['bekerja_bobot_1_0'] + $validated['bekerja_bobot_0_8'] + 
+                         $validated['bekerja_bobot_0_6'] + $validated['studi_lanjut'] + 
+                         $validated['wirausaha_founder_1_2'] + $validated['wirausaha_founder_1_0'] + 
+                         $validated['wirausaha_founder_0_8'] + $validated['wirausaha_founder_0_6'] +
+                         $validated['wirausaha_freelancer_0_5'] + $validated['wirausaha_freelancer_0_4'] +
+                         $validated['wirausaha_freelancer_0_3'] + $validated['wirausaha_freelancer_0_2'];
         
         if ($totalKategori > $validated['total_lulusan']) {
             return back()->withInput()->withErrors([
@@ -140,12 +149,18 @@ class Iku2Controller extends Controller
             'tahun_akademik' => 'required|string',
             'program_studi' => 'required|string',
             'total_lulusan' => 'required|integer|min:1',
-            'bekerja_bobot_10' => 'required|integer|min:0',
-            'bekerja_bobot_6' => 'required|integer|min:0',
-            'bekerja_bobot_4' => 'required|integer|min:0',
+            'bekerja_bobot_1_0' => 'required|integer|min:0',
+            'bekerja_bobot_0_8' => 'required|integer|min:0',
+            'bekerja_bobot_0_6' => 'required|integer|min:0',
             'studi_lanjut' => 'required|integer|min:0',
-            'wirausaha_founder' => 'required|integer|min:0',
-            'wirausaha_freelancer' => 'required|integer|min:0',
+            'wirausaha_founder_1_2' => 'required|integer|min:0',
+            'wirausaha_founder_1_0' => 'required|integer|min:0',
+            'wirausaha_founder_0_8' => 'required|integer|min:0',
+            'wirausaha_founder_0_6' => 'required|integer|min:0',
+            'wirausaha_freelancer_0_5' => 'required|integer|min:0',
+            'wirausaha_freelancer_0_4' => 'required|integer|min:0',
+            'wirausaha_freelancer_0_3' => 'required|integer|min:0',
+            'wirausaha_freelancer_0_2' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
@@ -154,9 +169,12 @@ class Iku2Controller extends Controller
         $validated['fakultas'] = auth()->user()->fakultas;
 
         // Validate sum of sub-fields doesn't exceed total responden
-        $totalKategori = $validated['bekerja_bobot_10'] + $validated['bekerja_bobot_6'] + 
-                         $validated['bekerja_bobot_4'] + $validated['studi_lanjut'] + 
-                         $validated['wirausaha_founder'] + $validated['wirausaha_freelancer'];
+        $totalKategori = $validated['bekerja_bobot_1_0'] + $validated['bekerja_bobot_0_8'] + 
+                         $validated['bekerja_bobot_0_6'] + $validated['studi_lanjut'] + 
+                         $validated['wirausaha_founder_1_2'] + $validated['wirausaha_founder_1_0'] + 
+                         $validated['wirausaha_founder_0_8'] + $validated['wirausaha_founder_0_6'] +
+                         $validated['wirausaha_freelancer_0_5'] + $validated['wirausaha_freelancer_0_4'] +
+                         $validated['wirausaha_freelancer_0_3'] + $validated['wirausaha_freelancer_0_2'];
         
         if ($totalKategori > $validated['total_lulusan']) {
             return back()->withInput()->withErrors([

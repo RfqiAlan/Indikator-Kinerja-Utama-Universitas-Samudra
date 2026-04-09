@@ -127,11 +127,9 @@ class RekapIkuController extends Controller
         // ----- IKU 10 aggregation (DB-level) -----
         $iku10q = Iku10ZonaIntegritas::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
         $iku10TotalUnit  = $iku10Data->count();
-        $iku10WbkCount   = (clone $iku10q)->where('status', 'wbk')->count();
-        $iku10WbbmCount  = (clone $iku10q)->where('status', 'wbbm')->count();
         $iku10Percentage = $iku10Data->isEmpty()
             ? null
-            : ($iku10TotalUnit > 0 ? (($iku10WbkCount + $iku10WbbmCount) / $iku10TotalUnit) * 100 : 0);
+            : $iku10TotalUnit;
 
         $ikuStats = [
             'IKU 1'  => $iku1Data->isEmpty()

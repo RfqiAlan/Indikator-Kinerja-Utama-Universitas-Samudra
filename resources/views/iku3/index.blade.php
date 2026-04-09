@@ -36,7 +36,6 @@
 
             {{-- Summary Card --}}
             <div class="relative overflow-hidden bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 sm:p-8">
-                <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-emerald-50 dark:bg-emerald-900/20 blur-3xl opacity-60"></div>
                 <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-teal-50 dark:bg-teal-900/20 blur-3xl opacity-60"></div>
                 <div class="relative flex flex-col md:flex-row items-center justify-between gap-8">
                     <div class="flex-1 text-center md:text-left space-y-2 max-w-lg">
@@ -97,22 +96,31 @@
                         <thead class="text-xs text-slate-500 uppercase bg-slate-50/80 dark:bg-slate-700/50 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700">
                             <tr>
                                 <th scope="col" class="px-6 py-4 font-medium">Program Studi</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center">Total Mahasiswa</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center">Berkegiatan Luar</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center">Magang</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center">Pertukaran</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center">Capaian IKU 3</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Total MHS</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Berkegiatan</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center bg-purple-50 text-purple-700">Int'l</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center bg-blue-50 text-blue-700">Nasional</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center bg-emerald-50 text-emerald-700">Provinsi</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Skor</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Capaian</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-right">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 dark:divide-slate-700/50">
                             @foreach($data as $item)
+                            @php
+                                $totalInt = ($item->magang_internasional ?? 0) + ($item->riset_internasional ?? 0) + ($item->pertukaran_internasional ?? 0) + ($item->kkn_internasional ?? 0) + ($item->lomba_internasional ?? 0) + ($item->wirausaha_internasional ?? 0);
+                                $totalNas = ($item->magang_nasional ?? 0) + ($item->riset_nasional ?? 0) + ($item->pertukaran_nasional ?? 0) + ($item->kkn_nasional ?? 0) + ($item->lomba_nasional ?? 0) + ($item->wirausaha_nasional ?? 0);
+                                $totalProv = ($item->magang_provinsi ?? 0) + ($item->riset_provinsi ?? 0) + ($item->pertukaran_provinsi ?? 0) + ($item->kkn_provinsi ?? 0) + ($item->lomba_provinsi ?? 0) + ($item->wirausaha_provinsi ?? 0);
+                            @endphp
                             <tr class="group hover:bg-slate-50/50 dark:hover:bg-slate-700/30 transition-colors duration-150">
                                 <td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">{{ $item->program_studi ?? '-' }}</td>
                                 <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->total_mahasiswa) }}</td>
                                 <td class="px-6 py-4 text-center font-semibold text-emerald-600">{{ number_format($item->total_berkegiatan) }}</td>
-                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->magang ?? 0) }}</td>
-                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->pertukaran ?? 0) }}</td>
+                                <td class="px-6 py-4 text-center bg-purple-50/50 text-purple-700 font-medium">{{ $totalInt }}</td>
+                                <td class="px-6 py-4 text-center bg-blue-50/50 text-blue-700 font-medium">{{ $totalNas }}</td>
+                                <td class="px-6 py-4 text-center bg-emerald-50/50 text-emerald-700 font-medium">{{ $totalProv }}</td>
+                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->skor_bobot_kegiatan, 2) }}</td>
                                 <td class="px-6 py-4 text-center">
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $item->persentase_iku3 >= 20 ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800' }}">
                                         {{ number_format($item->persentase_iku3, 2) }}%

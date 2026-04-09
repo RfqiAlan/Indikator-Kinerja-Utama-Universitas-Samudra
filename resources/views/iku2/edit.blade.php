@@ -38,20 +38,23 @@
                 <div class="border-b pb-6">
                     <h3 class="font-semibold text-slate-800 mb-4 flex items-center">
                         <span class="bg-cyan-100 text-cyan-600 w-7 h-7 rounded-full flex items-center justify-center text-sm mr-2">2</span>
-                        Kategori Bekerja
+                        Kategori Bekerja (dengan Bobot)
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="bg-blue-50 p-4 rounded-lg">
-                            <label class="block text-sm font-medium text-blue-700 mb-1">&lt;6 bln, &gt;1.2 UMP (Bobot 10)</label>
-                            <input type="number" name="bekerja_bobot_10" x-model.number="bekerja10" class="w-full rounded-lg border-blue-200" min="0">
+                            <label class="block text-sm font-medium text-blue-700 mb-1">&lt;6 bln, Gaji &gt;1.2 UMP</label>
+                            <p class="text-xs text-blue-600 mb-2">Bobot: 1.0</p>
+                            <input type="number" name="bekerja_bobot_1_0" x-model.number="bekerja1_0" class="w-full rounded-lg border-blue-200" min="0">
                         </div>
                         <div class="bg-cyan-50 p-4 rounded-lg">
-                            <label class="block text-sm font-medium text-cyan-700 mb-1">&lt;1 thn, &gt;1.2 UMP (Bobot 6)</label>
-                            <input type="number" name="bekerja_bobot_6" x-model.number="bekerja6" class="w-full rounded-lg border-cyan-200" min="0">
+                            <label class="block text-sm font-medium text-cyan-700 mb-1">&lt;1 thn, Gaji &gt;1.2 UMP</label>
+                            <p class="text-xs text-cyan-600 mb-2">Bobot: 0.8</p>
+                            <input type="number" name="bekerja_bobot_0_8" x-model.number="bekerja0_8" class="w-full rounded-lg border-cyan-200" min="0">
                         </div>
                         <div class="bg-indigo-50 p-4 rounded-lg">
-                            <label class="block text-sm font-medium text-indigo-700 mb-1">&lt;1 thn, &lt;1.2 UMP (Bobot 4)</label>
-                            <input type="number" name="bekerja_bobot_4" x-model.number="bekerja4" class="w-full rounded-lg border-indigo-200" min="0">
+                            <label class="block text-sm font-medium text-indigo-700 mb-1">&lt;1 thn, Gaji &lt;1.2 UMP</label>
+                            <p class="text-xs text-indigo-600 mb-2">Bobot: 0.6</p>
+                            <input type="number" name="bekerja_bobot_0_6" x-model.number="bekerja0_6" class="w-full rounded-lg border-indigo-200" min="0">
                         </div>
                     </div>
                 </div>
@@ -61,18 +64,59 @@
                         <span class="bg-indigo-100 text-indigo-600 w-7 h-7 rounded-full flex items-center justify-center text-sm mr-2">3</span>
                         Studi Lanjut & Wirausaha
                     </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Studi Lanjut</label>
-                            <input type="number" name="studi_lanjut" x-model.number="studiLanjut" class="w-full rounded-lg border-slate-300" min="0">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div class="bg-emerald-50 p-4 rounded-lg">
+                            <label class="block text-sm font-medium text-emerald-700 mb-1">Studi Lanjut</label>
+                            <p class="text-xs text-emerald-600 mb-2">Bobot: 0.6</p>
+                            <input type="number" name="studi_lanjut" x-model.number="studiLanjut" class="w-full rounded-lg border-emerald-200" min="0">
                         </div>
-                        <div class="bg-amber-50 p-4 rounded-lg">
-                            <label class="block text-sm font-medium text-amber-700 mb-1">Founder (0.75)</label>
-                            <input type="number" name="wirausaha_founder" x-model.number="founder" class="w-full rounded-lg border-amber-200" min="0">
+                    </div>
+                    
+                    <h4 class="text-sm font-bold text-slate-700 mb-3 block">Posisi Founder/Co-Founder</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                        <div class="bg-amber-50 p-3 rounded-lg">
+                            <label class="block text-xs font-medium text-amber-700 mb-1">&lt;6 bln &gt;1.2 UMP</label>
+                            <span class="text-[10px] text-amber-600">Bobot: 1.2</span>
+                            <input type="number" name="wirausaha_founder_1_2" x-model.number="f1_2" class="w-full rounded-lg border-amber-200 text-sm mt-1" min="0">
                         </div>
-                        <div class="bg-orange-50 p-4 rounded-lg">
-                            <label class="block text-sm font-medium text-orange-700 mb-1">Freelancer (0.25)</label>
-                            <input type="number" name="wirausaha_freelancer" x-model.number="freelancer" class="w-full rounded-lg border-orange-200" min="0">
+                        <div class="bg-amber-50 p-3 rounded-lg">
+                            <label class="block text-xs font-medium text-amber-700 mb-1">&gt;6 bln &gt;1.2 UMP</label>
+                            <span class="text-[10px] text-amber-600">Bobot: 1.0</span>
+                            <input type="number" name="wirausaha_founder_1_0" x-model.number="f1_0" class="w-full rounded-lg border-amber-200 text-sm mt-1" min="0">
+                        </div>
+                        <div class="bg-amber-50 p-3 rounded-lg">
+                            <label class="block text-xs font-medium text-amber-700 mb-1">&lt;6 bln &lt;1.2 UMP</label>
+                            <span class="text-[10px] text-amber-600">Bobot: 0.8</span>
+                            <input type="number" name="wirausaha_founder_0_8" x-model.number="f0_8" class="w-full rounded-lg border-amber-200 text-sm mt-1" min="0">
+                        </div>
+                        <div class="bg-amber-50 p-3 rounded-lg">
+                            <label class="block text-xs font-medium text-amber-700 mb-1">&gt;6 bln &lt;1.2 UMP</label>
+                            <span class="text-[10px] text-amber-600">Bobot: 0.6</span>
+                            <input type="number" name="wirausaha_founder_0_6" x-model.number="f0_6" class="w-full rounded-lg border-amber-200 text-sm mt-1" min="0">
+                        </div>
+                    </div>
+
+                    <h4 class="text-sm font-bold text-slate-700 mb-3 block">Posisi Freelancer</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <div class="bg-orange-50 p-3 rounded-lg">
+                            <label class="block text-xs font-medium text-orange-700 mb-1">&lt;6 bln &gt;1.2 UMP</label>
+                            <span class="text-[10px] text-orange-600">Bobot: 0.5</span>
+                            <input type="number" name="wirausaha_freelancer_0_5" x-model.number="fr0_5" class="w-full rounded-lg border-orange-200 text-sm mt-1" min="0">
+                        </div>
+                        <div class="bg-orange-50 p-3 rounded-lg">
+                            <label class="block text-xs font-medium text-orange-700 mb-1">&gt;6 bln &gt;1.2 UMP</label>
+                            <span class="text-[10px] text-orange-600">Bobot: 0.4</span>
+                            <input type="number" name="wirausaha_freelancer_0_4" x-model.number="fr0_4" class="w-full rounded-lg border-orange-200 text-sm mt-1" min="0">
+                        </div>
+                        <div class="bg-orange-50 p-3 rounded-lg">
+                            <label class="block text-xs font-medium text-orange-700 mb-1">&lt;6 bln &lt;1.2 UMP</label>
+                            <span class="text-[10px] text-orange-600">Bobot: 0.3</span>
+                            <input type="number" name="wirausaha_freelancer_0_3" x-model.number="fr0_3" class="w-full rounded-lg border-orange-200 text-sm mt-1" min="0">
+                        </div>
+                        <div class="bg-orange-50 p-3 rounded-lg">
+                            <label class="block text-xs font-medium text-orange-700 mb-1">&gt;6 bln &lt;1.2 UMP</label>
+                            <span class="text-[10px] text-orange-600">Bobot: 0.2</span>
+                            <input type="number" name="wirausaha_freelancer_0_2" x-model.number="fr0_2" class="w-full rounded-lg border-orange-200 text-sm mt-1" min="0">
                         </div>
                     </div>
                 </div>
@@ -105,17 +149,26 @@
                 return {
                     prodi: '{{ old("program_studi", $iku2->program_studi) }}',
                     totalLulusan: {{ old('total_lulusan', $iku2->total_lulusan) }},
-                    bekerja10: {{ old('bekerja_bobot_10', $iku2->bekerja_bobot_10) }},
-                    bekerja6: {{ old('bekerja_bobot_6', $iku2->bekerja_bobot_6) }},
-                    bekerja4: {{ old('bekerja_bobot_4', $iku2->bekerja_bobot_4) }},
+                    bekerja1_0: {{ old('bekerja_bobot_1_0', $iku2->bekerja_bobot_1_0) }},
+                    bekerja0_8: {{ old('bekerja_bobot_0_8', $iku2->bekerja_bobot_0_8) }},
+                    bekerja0_6: {{ old('bekerja_bobot_0_6', $iku2->bekerja_bobot_0_6) }},
                     studiLanjut: {{ old('studi_lanjut', $iku2->studi_lanjut) }},
-                    founder: {{ old('wirausaha_founder', $iku2->wirausaha_founder) }},
-                    freelancer: {{ old('wirausaha_freelancer', $iku2->wirausaha_freelancer) }},
-                    get skorBekerja() { return (this.bekerja10 * 10 ) + (this.bekerja6 * 6) + (this.bekerja4 * 4); },
-                    get skorWirausaha() { return (this.founder * 0.75) + (this.freelancer * 0.25); },
+                    f1_2: {{ old('wirausaha_founder_1_2', $iku2->wirausaha_founder_1_2) }},
+                    f1_0: {{ old('wirausaha_founder_1_0', $iku2->wirausaha_founder_1_0) }},
+                    f0_8: {{ old('wirausaha_founder_0_8', $iku2->wirausaha_founder_0_8) }},
+                    f0_6: {{ old('wirausaha_founder_0_6', $iku2->wirausaha_founder_0_6) }},
+                    fr0_5: {{ old('wirausaha_freelancer_0_5', $iku2->wirausaha_freelancer_0_5) }},
+                    fr0_4: {{ old('wirausaha_freelancer_0_4', $iku2->wirausaha_freelancer_0_4) }},
+                    fr0_3: {{ old('wirausaha_freelancer_0_3', $iku2->wirausaha_freelancer_0_3) }},
+                    fr0_2: {{ old('wirausaha_freelancer_0_2', $iku2->wirausaha_freelancer_0_2) }},
+                    get skorBekerja() { return (this.bekerja1_0 * 1.0) + (this.bekerja0_8 * 0.8) + (this.bekerja0_6 * 0.6); },
+                    get skorWirausaha() { 
+                        return (this.f1_2 * 1.2) + (this.f1_0 * 1.0) + (this.f0_8 * 0.8) + (this.f0_6 * 0.6) + 
+                               (this.fr0_5 * 0.5) + (this.fr0_4 * 0.4) + (this.fr0_3 * 0.3) + (this.fr0_2 * 0.2); 
+                    },
                     get persentase() {
                         if (this.totalLulusan <= 0) return 0;
-                        return ((this.skorBekerja + this.studiLanjut + this.skorWirausaha) / this.totalLulusan) * 100;
+                        return ((this.skorBekerja + (this.studiLanjut * 0.6) + this.skorWirausaha) / this.totalLulusan) * 100;
                     }
                 }
             }

@@ -20,7 +20,8 @@
                     <div><label class="block text-sm font-medium text-slate-700 mb-1">Total Publikasi <span class="text-rose-500">*</span></label><input type="number" name="total_publikasi" x-model.number="totalPublikasi" value="{{ old('total_publikasi', 0) }}" class="w-full rounded-lg border-slate-300" required min="1"></div>
                 </div>
                 <div class="border-t pt-6"><h3 class="font-semibold text-slate-800 mb-4">Publikasi per Quartile</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+                        <div class="bg-indigo-50 p-3 rounded-lg"><label class="block text-sm font-medium text-indigo-700 mb-1">Top Tier (1.2)</label><input type="number" name="publikasi_top_tier" x-model.number="toptier" value="{{ old('publikasi_top_tier', 0) }}" class="w-full rounded-lg border-indigo-200" min="0"></div>
                         <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">Q1 (Bobot 1.0)</label><input type="number" name="publikasi_q1" x-model.number="q1" value="{{ old('publikasi_q1', 0) }}" class="w-full rounded-lg border-blue-200" min="0"></div>
                         <div class="bg-cyan-50 p-3 rounded-lg"><label class="block text-sm font-medium text-cyan-700 mb-1">Q2 (Bobot 0.75)</label><input type="number" name="publikasi_q2" x-model.number="q2" value="{{ old('publikasi_q2', 0) }}" class="w-full rounded-lg border-cyan-200" min="0"></div>
                         <div class="bg-indigo-50 p-3 rounded-lg"><label class="block text-sm font-medium text-indigo-700 mb-1">Q3 (Bobot 0.50)</label><input type="number" name="publikasi_q3" x-model.number="q3" value="{{ old('publikasi_q3', 0) }}" class="w-full rounded-lg border-indigo-200" min="0"></div>
@@ -47,14 +48,15 @@
         <script>
             function formIku6() {
                 return { 
-                    totalPublikasi: {{ old('total_publikasi', 0) }}, 
+                    totalPublikasi: {{ old('total_publikasi', 0) }},
+                    toptier: {{ old('publikasi_top_tier', 0) }}, 
                     q1: {{ old('publikasi_q1', 0) }}, 
                     q2: {{ old('publikasi_q2', 0) }}, 
                     q3: {{ old('publikasi_q3', 0) }}, 
                     q4: {{ old('publikasi_q4', 0) }}, 
                     prosiding: {{ old('prosiding_internasional', 0) }},
                     kolaborasi: {{ old('publikasi_kolaborasi', 0) }},
-                    get skorPublikasi() { return (this.q1 * 1) + (this.q2 * 0.75) + (this.q3 * 0.5) + (this.q4 * 0.25) + (this.prosiding * 0.25) + (this.kolaborasi * 0.25); },
+                    get skorPublikasi() { return (this.toptier * 1.2 ) + (this.q1 * 1) + (this.q2 * 0.75) + (this.q3 * 0.5) + (this.q4 * 0.25) + (this.prosiding * 0.25) + (this.kolaborasi * 0.25); },
                     get persentase() { if (this.totalPublikasi <= 0) return 0; return (this.skorPublikasi / this.totalPublikasi) * 100; } 
                 }
             }

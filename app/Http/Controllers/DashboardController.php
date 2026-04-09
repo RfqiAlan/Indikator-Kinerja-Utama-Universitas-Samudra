@@ -170,10 +170,8 @@ class DashboardController extends Controller
     private function calculateIku10(string $tahunAkademik): array
     {
         $q = Iku10ZonaIntegritas::where('tahun_akademik', $tahunAkademik);
-        $totalUnits    = $q->count();
-        $achievedUnits = (clone $q)->whereIn('status', ['wbk', 'wbbm'])->count();
-        $percentage = $totalUnits > 0 ? ($achievedUnits / $totalUnits) * 100 : 0;
-        return ['percentage' => round($percentage, 2), 'count' => $totalUnits];
+        $totalUsulan = $q->count();
+        return ['percentage' => $totalUsulan, 'count' => $totalUsulan];
     }
 
     /**
@@ -185,8 +183,8 @@ class DashboardController extends Controller
     {
         $q = Iku11TataKelola::where('tahun_akademik', $tahunAkademik);
         $count = $q->count();
-        $percentage = $count > 0 ? $q->avg('persentase_pencegahan') : 0;
-        return ['percentage' => round($percentage ?? 0, 2), 'count' => $count];
+        $sakipScore = $count > 0 ? $q->avg('nilai_sakip') : 0;
+        return ['percentage' => round($sakipScore ?? 0, 2), 'count' => $count];
     }
 
     /**

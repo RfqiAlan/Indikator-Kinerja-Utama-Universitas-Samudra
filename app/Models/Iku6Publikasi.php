@@ -15,6 +15,7 @@ class Iku6Publikasi extends Model
         'tahun_akademik',
         'fakultas',
         'total_publikasi',
+        'publikasi_top_tier',
         'publikasi_q1',
         'publikasi_q2',
         'publikasi_q3',
@@ -34,6 +35,7 @@ class Iku6Publikasi extends Model
     ];
 
     // Bobot quartile
+    const BOBOT_TOP_TIER = 1.20;
     const BOBOT_Q1 = 1.00;
     const BOBOT_Q2 = 0.75;
     const BOBOT_Q3 = 0.50;
@@ -54,6 +56,7 @@ class Iku6Publikasi extends Model
     {
         // Hitung skor berbobot
         $this->skor_publikasi = 
+            ($this->publikasi_top_tier * self::BOBOT_TOP_TIER) +
             ($this->publikasi_q1 * self::BOBOT_Q1) +
             ($this->publikasi_q2 * self::BOBOT_Q2) +
             ($this->publikasi_q3 * self::BOBOT_Q3) +

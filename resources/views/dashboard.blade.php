@@ -204,8 +204,11 @@
                         : ['bg' => 'bg-rose-50', 'text' => 'text-rose-600', 'bar' => 'bg-rose-500', 'glow' => 'progress-glow-red', 'badgeBg' => 'bg-rose-100', 'badgeText' => 'text-rose-700'];
                         
                     // Limit percentage for bar width visually to max 100%
-                    $barWidth = min(max($percentage, 0), 100);
-                    
+                    $progressPercentage = $percentage;
+                    if ($ikuNum === 10 || $ikuNum === 11) {
+                        $progressPercentage = $target > 0 ? ($percentage / $target) * 100 : 0;
+                    }
+                    $barWidth = min(max($progressPercentage, 0), 100);                    
                     // Determine link based on user role
                     $cardLink = '#';
                     if (auth()->check()) {
@@ -233,7 +236,13 @@
                         </div>
                         <div class="text-right">
                             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold tracking-wide {{ $themeClasses['badgeBg'] }} {{ $themeClasses['badgeText'] }}">
-                                {{ number_format($percentage, 2) }}%
+                                @if($ikuNum === 10)
+                                    {{ round($percentage) }} Unit
+                                @elseif($ikuNum === 11)
+                                    Score {{ number_format($percentage, 2) }}
+                                @else
+                                    {{ number_format($percentage, 2) }}%
+                                @endif
                             </span>
                         </div>
                     </div>
@@ -250,7 +259,15 @@
                         <div class="flex justify-between items-end mb-2">
                             <div>
                                 <span class="block text-xs font-semibold text-slate-400 uppercase tracking-widest mb-1">Target Internal</span>
-                                <span class="text-sm font-bold text-slate-700">{{ $target }}%</span>
+                                <span class="text-sm font-bold text-slate-700">
+                                    @if($ikuNum === 10)
+                                        {{ $target }} Unit
+                                    @elseif($ikuNum === 11)
+                                        {{ $target }} Poin
+                                    @else
+                                        {{ $target }}%
+                                    @endif
+                                </span>
                             </div>
                             <div class="text-right">
                                 <span class="block text-xs font-semibold text-slate-400 uppercase tracking-widest mb-1">Status</span>

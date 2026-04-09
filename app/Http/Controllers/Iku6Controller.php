@@ -64,6 +64,7 @@ class Iku6Controller extends Controller
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
             'total_publikasi' => 'required|integer|min:1',
+            'publikasi_top_tier' => 'required|integer|min:0',
             'publikasi_q1' => 'required|integer|min:0',
             'publikasi_q2' => 'required|integer|min:0',
             'publikasi_q3' => 'required|integer|min:0',
@@ -76,7 +77,7 @@ class Iku6Controller extends Controller
         ]);
 
         // Validate sum of quartiles doesn't exceed total publikasi
-        $totalQuartile = $validated['publikasi_q1'] + $validated['publikasi_q2'] + 
+        $totalQuartile = $validated['publikasi_top_tier'] + $validated['publikasi_q1'] + $validated['publikasi_q2'] + 
                          $validated['publikasi_q3'] + $validated['publikasi_q4'] +
                          $validated['prosiding_internasional'];
         
@@ -139,6 +140,7 @@ class Iku6Controller extends Controller
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
             'total_publikasi' => 'required|integer|min:1',
+            'publikasi_top_tier' => 'required|integer|min:0',
             'publikasi_q1' => 'required|integer|min:0',
             'publikasi_q2' => 'required|integer|min:0',
             'publikasi_q3' => 'required|integer|min:0',
@@ -151,7 +153,7 @@ class Iku6Controller extends Controller
         ]);
 
         // Validate sum of quartiles doesn't exceed total publikasi
-        $totalQuartile = $validated['publikasi_q1'] + $validated['publikasi_q2'] + 
+        $totalQuartile = $validated['publikasi_top_tier'] + $validated['publikasi_q1'] + $validated['publikasi_q2'] + 
                          $validated['publikasi_q3'] + $validated['publikasi_q4'] +
                          $validated['prosiding_internasional'];
         

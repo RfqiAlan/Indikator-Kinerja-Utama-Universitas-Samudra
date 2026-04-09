@@ -130,13 +130,23 @@
             ];
 
             // Overall average for hero
-            $allValues   = collect($ikuStats ?? [])->filter(fn($v) => !is_null($v));
-            $globalAvg   = $allValues->isNotEmpty() ? round($allValues->avg(), 1) : null;
-            $metTarget   = 0;
+            $sum = 0;
+            $countValid = 0;
+            $metTarget = 0;
             foreach ($ikuInfos as $info) {
                 $val = $ikuStats[$info['code']] ?? null;
-                if (!is_null($val) && $val >= $info['target']) $metTarget++;
+                if (!is_null($val)) {
+                    if ($info['num'] === 10 || $info['num'] === 11) {
+                        $p = $info['target'] > 0 ? ($val / $info['target']) * 100 : 0;
+                        $sum += min($p, 100);
+                    } else {
+                        $sum += min($val, 100);
+                    }
+                    $countValid++;
+                    if ($val >= $info['target']) $metTarget++;
+                }
             }
+            $globalAvg = $countValid > 0 ? round($sum / $countValid, 1) : null;
         @endphp
 
         <div class="pb-10 space-y-6">
@@ -148,10 +158,6 @@
 
                 <div class="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
                     <div>
-                        <span class="inline-flex items-center gap-2 py-1 px-3 rounded-full bg-white/15 text-white text-xs font-bold uppercase tracking-wider mb-4 border border-white/20 backdrop-blur-sm">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                            Executive Dashboard
-                        </span>
                         <h3 class="text-3xl md:text-4xl font-black text-white tracking-tight leading-tight mb-2">
                             Master Data <span class="text-cyan-300">Indikator Kinerja Utama</span>
                         </h3>
@@ -188,7 +194,12 @@
                         $statVal    = $ikuStats[$info['code']] ?? null;
                         $target     = $info['target'];
                         $meetsTarget = !is_null($statVal) && $statVal >= $target;
-                        $barWidth   = !is_null($statVal) ? min(max((float)$statVal, 0), 100) : 0;
+                        
+                        $progressPrc = $statVal;
+                        if ($info['num'] === 10 || $info['num'] === 11) {
+                            $progressPrc = $target > 0 ? ($statVal / $target) * 100 : 0;
+                        }
+                        $barWidth   = !is_null($statVal) ? min(max((float)$progressPrc, 0), 100) : 0;
 
                         // Status badge
                         if (is_null($statVal)) {
@@ -235,14 +246,28 @@
                                     <div>
                                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Capaian</span>
                                         @if (!is_null($statVal))
-                                            <span class="text-2xl font-black stat-value leading-none">{{ number_format($statVal, 0) }}%</span>
+                                            @if($info['num'] === 10)
+                                                <span class="text-2xl font-black stat-value leading-none">{{ number_format($statVal, 0) }}<span class="text-[10px]"> Unit</span></span>
+                                            @elseif($info['num'] === 11)
+                                                <span class="text-2xl font-black stat-value leading-none">{{ number_format($statVal, 2) }}</span>
+                                            @else
+                                                <span class="text-2xl font-black stat-value leading-none">{{ number_format($statVal, 0) }}%</span>
+                                            @endif
                                         @else
                                             <span class="text-2xl font-black text-slate-300">—</span>
                                         @endif
                                     </div>
                                     <div class="text-right">
                                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Target</span>
-                                        <span class="text-sm font-bold text-slate-500">{{ $target }}%</span>
+                                        <span class="text-sm font-bold text-slate-500">
+                                            @if($info['num'] === 10)
+                                                {{ $target }} Unit
+                                            @elseif($info['num'] === 11)
+                                                Skor {{ $target }}
+                                            @else
+                                                {{ $target }}%
+                                            @endif
+                                        </span>
                                     </div>
                                 </div>
 

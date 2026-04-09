@@ -199,19 +199,20 @@
                                 <h4 class="font-bold text-slate-800 dark:text-slate-100">Bobot Pekerjaan</h4>
                             </div>
                             <ul class="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
-                                <li class="flex gap-2"><span class="font-bold text-blue-600 w-8">10x</span> &lt;6 bulan, gaji &gt;1.2 UMP</li>
-                                <li class="flex gap-2"><span class="font-bold text-blue-600 w-8">6x</span> &lt;1 tahun, gaji &gt;1.2 UMP</li>
-                                <li class="flex gap-2"><span class="font-bold text-blue-600 w-8">4x</span> &lt;1 tahun, gaji &lt;1.2 UMP</li>
+                                <li class="flex gap-2"><span class="font-bold text-blue-600 w-8">1.0x</span> &lt;6 bulan, gaji &gt;1.2 UMP</li>
+                                <li class="flex gap-2"><span class="font-bold text-blue-600 w-8">0.8x</span> &lt;1 tahun, gaji &gt;1.2 UMP</li>
+                                <li class="flex gap-2"><span class="font-bold text-blue-600 w-8">0.6x</span> &lt;1 tahun, gaji &lt;1.2 UMP</li>
                             </ul>
                         </div>
                         <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-5 border border-slate-300 dark:border-slate-600 shadow-sm hover:-translate-y-1 transition-transform duration-300">
                             <div class="flex items-center gap-2 mb-3">
                                 <span class="flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-bold text-xs">3</span>
-                                <h4 class="font-bold text-slate-800 dark:text-slate-100">Bobot Wirausaha</h4>
+                                <h4 class="font-bold text-slate-800 dark:text-slate-100">Bobot Wirausaha / Lanjut Studi</h4>
                             </div>
                             <ul class="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
-                                <li class="flex gap-2"><span class="font-bold text-amber-600 w-10">1.25x</span> Posisi Founder</li>
-                                <li class="flex gap-2"><span class="font-bold text-amber-600 w-10">0.5x</span> Posisi Freelancer</li>
+                                <li class="flex gap-2"><span class="font-bold text-emerald-600 w-10">0.6x</span> Studi Lanjut</li>
+                                <li class="flex gap-2"><span class="font-bold text-amber-600 w-10">1.2x</span> Posisi Founder Terbaik</li>
+                                <li class="flex gap-2"><span class="font-bold text-amber-600 w-10">0.5x</span> Posisi Freelancer Terbaik</li>
                             </ul>
                         </div>
                     </div>
