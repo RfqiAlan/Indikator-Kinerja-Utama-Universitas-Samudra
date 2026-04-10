@@ -11,22 +11,49 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('iku2_lulusan_bekerja', function (Blueprint $table) {
-            $table->renameColumn('bekerja_bobot_10', 'bekerja_bobot_1_0');
-            $table->renameColumn('bekerja_bobot_6', 'bekerja_bobot_0_8');
-            $table->renameColumn('bekerja_bobot_4', 'bekerja_bobot_0_6');
+        $tableName = 'iku2_lulusan_bekerja';
 
-            $table->renameColumn('wirausaha_founder', 'wirausaha_founder_1_2');
-            $table->renameColumn('wirausaha_freelancer', 'wirausaha_freelancer_0_5');
+        if (!Schema::hasTable($tableName)) {
+            return;
+        }
 
-            $table->integer('wirausaha_founder_1_0')->default(0);
-            $table->integer('wirausaha_founder_0_8')->default(0);
-            $table->integer('wirausaha_founder_0_6')->default(0);
-            
-            $table->integer('wirausaha_freelancer_0_4')->default(0);
-            $table->integer('wirausaha_freelancer_0_3')->default(0);
-            $table->integer('wirausaha_freelancer_0_2')->default(0);
-        });
+        $renameMap = [
+            'bekerja_bobot_10' => 'bekerja_bobot_1_0',
+            'bekerja_bobot_6' => 'bekerja_bobot_0_8',
+            'bekerja_bobot_4' => 'bekerja_bobot_0_6',
+            'wirausaha_founder' => 'wirausaha_founder_1_2',
+            'wirausaha_freelancer' => 'wirausaha_freelancer_0_5',
+        ];
+
+        foreach ($renameMap as $oldColumn => $newColumn) {
+            if (Schema::hasColumn($tableName, $oldColumn) && !Schema::hasColumn($tableName, $newColumn)) {
+                Schema::table($tableName, function (Blueprint $table) use ($oldColumn, $newColumn) {
+                    $table->renameColumn($oldColumn, $newColumn);
+                });
+            }
+        }
+
+        $requiredColumns = [
+            'bekerja_bobot_1_0',
+            'bekerja_bobot_0_8',
+            'bekerja_bobot_0_6',
+            'wirausaha_founder_1_2',
+            'wirausaha_founder_1_0',
+            'wirausaha_founder_0_8',
+            'wirausaha_founder_0_6',
+            'wirausaha_freelancer_0_5',
+            'wirausaha_freelancer_0_4',
+            'wirausaha_freelancer_0_3',
+            'wirausaha_freelancer_0_2',
+        ];
+
+        foreach ($requiredColumns as $column) {
+            if (!Schema::hasColumn($tableName, $column)) {
+                Schema::table($tableName, function (Blueprint $table) use ($column) {
+                    $table->integer($column)->default(0);
+                });
+            }
+        }
     }
 
     /**
@@ -34,22 +61,46 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('iku2_lulusan_bekerja', function (Blueprint $table) {
-            $table->renameColumn('bekerja_bobot_1_0', 'bekerja_bobot_10');
-            $table->renameColumn('bekerja_bobot_0_8', 'bekerja_bobot_6');
-            $table->renameColumn('bekerja_bobot_0_6', 'bekerja_bobot_4');
+        $tableName = 'iku2_lulusan_bekerja';
 
-            $table->renameColumn('wirausaha_founder_1_2', 'wirausaha_founder');
-            $table->renameColumn('wirausaha_freelancer_0_5', 'wirausaha_freelancer');
+        if (!Schema::hasTable($tableName)) {
+            return;
+        }
 
-            $table->dropColumn([
-                'wirausaha_founder_1_0',
-                'wirausaha_founder_0_8',
-                'wirausaha_founder_0_6',
-                'wirausaha_freelancer_0_4',
-                'wirausaha_freelancer_0_3',
-                'wirausaha_freelancer_0_2',
-            ]);
-        });
+        $extraColumns = [
+            'wirausaha_founder_1_0',
+            'wirausaha_founder_0_8',
+            'wirausaha_founder_0_6',
+            'wirausaha_freelancer_0_4',
+            'wirausaha_freelancer_0_3',
+            'wirausaha_freelancer_0_2',
+        ];
+
+        $columnsToDrop = array_values(array_filter(
+            $extraColumns,
+            fn (string $column) => Schema::hasColumn($tableName, $column)
+        ));
+
+        if (!empty($columnsToDrop)) {
+            Schema::table($tableName, function (Blueprint $table) use ($columnsToDrop) {
+                $table->dropColumn($columnsToDrop);
+            });
+        }
+
+        $reverseRenameMap = [
+            'bekerja_bobot_1_0' => 'bekerja_bobot_10',
+            'bekerja_bobot_0_8' => 'bekerja_bobot_6',
+            'bekerja_bobot_0_6' => 'bekerja_bobot_4',
+            'wirausaha_founder_1_2' => 'wirausaha_founder',
+            'wirausaha_freelancer_0_5' => 'wirausaha_freelancer',
+        ];
+
+        foreach ($reverseRenameMap as $newColumn => $oldColumn) {
+            if (Schema::hasColumn($tableName, $newColumn) && !Schema::hasColumn($tableName, $oldColumn)) {
+                Schema::table($tableName, function (Blueprint $table) use ($newColumn, $oldColumn) {
+                    $table->renameColumn($newColumn, $oldColumn);
+                });
+            }
+        }
     }
 };

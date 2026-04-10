@@ -55,16 +55,20 @@
                             Proporsi lulusan yang bekerja, melanjutkan studi, atau berwirausaha terhadap total lulusan.
                         </p>
                         <div class="flex flex-wrap justify-center md:justify-start gap-3 mt-4">
+                            <span class="inline-flex flex-col items-start px-3 py-2 rounded-lg bg-violet-50 text-violet-800 dark:bg-violet-900/30 dark:text-violet-300 border border-violet-100 dark:border-violet-800 shadow-sm">
+                                <span class="text-[10px] uppercase font-bold text-violet-600 dark:text-violet-400">Total Responden</span>
+                                <span class="text-lg font-semibold">{{ number_format($totalResponden) }}</span>
+                            </span>
                             <span class="inline-flex flex-col items-start px-3 py-2 rounded-lg bg-blue-50 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 border border-blue-100 dark:border-blue-800 shadow-sm">
-                                <span class="text-[10px] uppercase font-bold text-blue-600 dark:text-blue-400">Bekerja</span>
+                                <span class="text-[10px] uppercase font-bold text-blue-600 dark:text-blue-400">Bekerja (Skor)</span>
                                 <span class="text-lg font-semibold">{{ number_format($totalBekerja, 2) }}</span>
                             </span>
                             <span class="inline-flex flex-col items-start px-3 py-2 rounded-lg bg-emerald-50 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300 border border-emerald-100 dark:border-emerald-800 shadow-sm">
                                 <span class="text-[10px] uppercase font-bold text-emerald-600 dark:text-emerald-400">Studi Lanjut</span>
-                                <span class="text-lg font-semibold">{{ number_format($totalStudiLanjut, 2) }}</span>
+                                <span class="text-lg font-semibold">{{ number_format($totalStudiLanjut) }}</span>
                             </span>
                             <span class="inline-flex flex-col items-start px-3 py-2 rounded-lg bg-amber-50 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300 border border-amber-100 dark:border-amber-800 shadow-sm">
-                                <span class="text-[10px] uppercase font-bold text-amber-600 dark:text-amber-400">Wirausaha</span>
+                                <span class="text-[10px] uppercase font-bold text-amber-600 dark:text-amber-400">Wirausaha (Skor)</span>
                                 <span class="text-lg font-semibold">{{ number_format($totalWirausaha, 2) }}</span>
                             </span>
                         </div>
@@ -104,7 +108,8 @@
                         <thead class="text-xs text-slate-500 uppercase bg-slate-50/80 dark:bg-slate-700/50 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700">
                             <tr>
                                 <th scope="col" class="px-6 py-4 font-medium">Program Studi</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center">Total Lulusan</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Lulusan / Responden</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Status Responden</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Bekerja</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Studi Lanjut</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Wirausaha</th>
@@ -119,7 +124,18 @@
                                     {{ strtoupper($item->program_studi) ?? '-' }}
                                 </td>
                                 <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
-                                    {{ number_format($item->total_lulusan) }}
+                                    <div class="flex flex-col items-center">
+                                        <span class="font-bold">{{ number_format($item->total_lulusan) }}</span>
+                                        <span class="text-[10px] text-slate-400">Responden: {{ number_format($item->total_responden) }}</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    @php $minResp = $item->getMinResponden(); @endphp
+                                    @if($item->isRespondenCukup())
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-700" title="Memenuhi Slovin (Min. {{ $minResp }})">CUKUP</span>
+                                    @else
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-100 text-rose-700" title="Kurang dari Slovin (Min. {{ $minResp }})">KURANG</span>
+                                    @endif
                                 </td>
                                 <td class="px-6 py-4 text-center font-semibold text-blue-600">
                                     {{ number_format($item->skor_bekerja, 2) }}

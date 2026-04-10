@@ -16,6 +16,7 @@ class Iku2LulusanBekerja extends Model
         'fakultas',
         'program_studi',
         'total_lulusan',
+        'total_responden',
         'bekerja_bobot_1_0',
         'bekerja_bobot_0_8',
         'bekerja_bobot_0_6',
@@ -90,17 +91,28 @@ class Iku2LulusanBekerja extends Model
         // Total A + B (studi lanjut * 0.6) + C
         $totalABC = $this->skor_bekerja + ($this->studi_lanjut * self::BOBOT_STUDI_LANJUT) + $this->skor_wirausaha;
 
-        // Hitung persentase IKU 2 (dibagi total responden)
-        if ($this->total_lulusan > 0) {
-            $this->persentase_iku2 = ($totalABC / $this->total_lulusan) * 100;
+        // Hitung persentase IKU 2 (dibagi total responden, bukan total lulusan)
+        if ($this->total_responden > 0) {
+            $this->persentase_iku2 = ($totalABC / $this->total_responden) * 100;
         } else {
             $this->persentase_iku2 = 0;
         }
     }
 
+    /**
+     * Get minimum responden according to Slovin Formula with 2.3% error
+     */
+    public function getMinResponden(): int
+    {
+        if ($this->total_lulusan <= 0) return 0;
+        $error = 0.023; // 2.3%
+        $min = $this->total_lulusan / (1 + ($this->total_lulusan * pow($error, 2)));
+        return (int) ceil($min);
+    }
+
     public function isRespondenCukup(): bool
     {
-        return true;
+        return $this->total_responden >= $this->getMinResponden();
     }
 
     /**
@@ -108,7 +120,8 @@ class Iku2LulusanBekerja extends Model
      */
     public function getRespondenPersentase(): float
     {
-        return 100.0;
+        if ($this->total_lulusan <= 0) return 0;
+        return ($this->total_responden / $this->total_lulusan) * 100;
     }
 
     public function getTotalBekerjaAttribute()

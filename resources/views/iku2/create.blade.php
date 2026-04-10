@@ -38,6 +38,11 @@
                             <label class="block text-sm font-medium text-slate-700 mb-1">Total Lulusan <span class="text-rose-500">*</span></label>
                             <input type="number" name="total_lulusan" x-model.number="totalLulusan" class="w-full rounded-lg border-slate-300 focus:ring-blue-500" required min="1">
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Total Responden <span class="text-rose-500">*</span></label>
+                            <input type="number" name="total_responden" x-model.number="totalResponden" class="w-full rounded-lg border-slate-300 focus:ring-blue-500" required min="0">
+                            <p class="text-[10px] text-slate-500 mt-1">Min. Responden (Slovin): <span class="font-bold text-slate-700" x-text="minResponden">0</span></p>
+                        </div>
                     </div>
 
 
@@ -133,7 +138,11 @@
                         <div><p class="text-xs text-slate-500">Skor Bekerja</p><p class="text-xl font-bold text-blue-600" x-text="skorBekerja.toFixed(2)">0</p></div>
                         <div><p class="text-xs text-slate-500">Studi Lanjut</p><p class="text-xl font-bold text-cyan-600" x-text="studiLanjut">0</p></div>
                         <div><p class="text-xs text-slate-500">Skor Wirausaha</p><p class="text-xl font-bold text-amber-600" x-text="skorWirausaha.toFixed(2)">0</p></div>
-                        <div><p class="text-xs text-slate-500">Persentase IKU 2</p><p class="text-2xl font-bold" :class="persentase >= 50 ? 'text-blue-600' : 'text-rose-600'" x-text="persentase.toFixed(2) + '%'">0%</p></div>
+                        <div>
+                            <p class="text-xs text-slate-500">Persentase IKU 2</p>
+                            <p class="text-2xl font-bold" :class="persentase >= 20 ? 'text-emerald-600' : 'text-rose-600'" x-text="persentase.toFixed(2) + '%'">0%</p>
+                            <p class="text-[10px]" :class="totalResponden >= minResponden ? 'text-emerald-600' : 'text-rose-600'" x-text="totalResponden >= minResponden ? 'Memenuhi Min. Responden' : 'Belum Memenuhi Min. Responden'"></p>
+                        </div>
                     </div>
                 </div>
 
@@ -154,6 +163,7 @@
                 return {
                     prodi: '{{ old("program_studi", "") }}',
                     totalLulusan: {{ old('total_lulusan', 0) }},
+                    totalResponden: {{ old('total_responden', 0) }},
                     bekerja1_0: {{ old('bekerja_bobot_1_0', 0) }},
                     bekerja0_8: {{ old('bekerja_bobot_0_8', 0) }},
                     bekerja0_6: {{ old('bekerja_bobot_0_6', 0) }},
@@ -166,12 +176,16 @@
                     fr0_4: {{ old('wirausaha_freelancer_0_4', 0) }},
                     fr0_3: {{ old('wirausaha_freelancer_0_3', 0) }},
                     fr0_2: {{ old('wirausaha_freelancer_0_2', 0) }},
+                    get minResponden() {
+                        if (this.totalLulusan <= 0) return 0;
+                        return Math.ceil(this.totalLulusan / (1 + (this.totalLulusan * Math.pow(0.023, 2))));
+                    },
                     get skorBekerja() { return (this.bekerja1_0 * 1.0) + (this.bekerja0_8 * 0.8) + (this.bekerja0_6 * 0.6); },
                     get skorWirausaha() { 
                         return (this.f1_2 * 1.2) + (this.f1_0 * 1.0) + (this.f0_8 * 0.8) + (this.f0_6 * 0.6) + 
                                (this.fr0_5 * 0.5) + (this.fr0_4 * 0.4) + (this.fr0_3 * 0.3) + (this.fr0_2 * 0.2); 
                     },
-                    get persentase() { if (this.totalLulusan <= 0) return 0; return ((this.skorBekerja + (this.studiLanjut * 0.6) + this.skorWirausaha) / this.totalLulusan) * 100; }
+                    get persentase() { if (this.totalResponden <= 0) return 0; return ((this.skorBekerja + (this.studiLanjut * 0.6) + this.skorWirausaha) / this.totalResponden) * 100; }
                 }
             }
         </script>

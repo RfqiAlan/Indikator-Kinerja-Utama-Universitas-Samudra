@@ -31,12 +31,13 @@ class Iku2Controller extends Controller
 
         // Calculate overall IKU 2 using DB-level aggregation
         $q = Iku2LulusanBekerja::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
-        $totalLulusan    = $q->sum('total_lulusan');
-        $totalBekerja    = $q->sum('skor_bekerja');
+        $totalLulusan     = $q->sum('total_lulusan');
+        $totalResponden   = $q->sum('total_responden');
+        $totalBekerja     = $q->sum('skor_bekerja');
         $totalStudiLanjut = $q->sum('studi_lanjut');
-        $totalWirausaha  = $q->sum('skor_wirausaha');
-        $overallPercentage = $totalLulusan > 0
-            ? (($totalBekerja + $totalStudiLanjut + $totalWirausaha) / $totalLulusan) * 100
+        $totalWirausaha   = $q->sum('skor_wirausaha');
+        $overallPercentage = $totalResponden > 0
+            ? (($totalBekerja + ($totalStudiLanjut * 0.6) + $totalWirausaha) / $totalResponden) * 100
             : 0;
 
         return view('iku2.index', compact(
@@ -44,6 +45,7 @@ class Iku2Controller extends Controller
             'tahunAkademik',
             'availableYears',
             'totalLulusan',
+            'totalResponden',
             'totalBekerja',
             'totalStudiLanjut',
             'totalWirausaha',
@@ -63,6 +65,7 @@ class Iku2Controller extends Controller
             'tahun_akademik' => 'required|string',
             'program_studi' => 'required|string',
             'total_lulusan' => 'required|integer|min:1',
+            'total_responden' => 'required|integer|min:0',
             'bekerja_bobot_1_0' => 'required|integer|min:0',
             'bekerja_bobot_0_8' => 'required|integer|min:0',
             'bekerja_bobot_0_6' => 'required|integer|min:0',
@@ -88,9 +91,16 @@ class Iku2Controller extends Controller
                          $validated['wirausaha_freelancer_0_5'] + $validated['wirausaha_freelancer_0_4'] +
                          $validated['wirausaha_freelancer_0_3'] + $validated['wirausaha_freelancer_0_2'];
         
-        if ($totalKategori > $validated['total_lulusan']) {
+        // Logical validation
+        if ($validated['total_responden'] > $validated['total_lulusan']) {
             return back()->withInput()->withErrors([
-                'total_lulusan' => 'Total kategori (Bekerja + Studi Lanjut + Wirausaha = ' . $totalKategori . ') tidak boleh melebihi total lulusan (' . $validated['total_lulusan'] . ').'
+                'total_responden' => 'Total responden cannot exceed total graduates.'
+            ]);
+        }
+
+        if ($totalKategori > $validated['total_responden']) {
+            return back()->withInput()->withErrors([
+                'total_responden' => 'Total kategori (Bekerja + Studi Lanjut + Wirausaha = ' . $totalKategori . ') tidak boleh melebihi total responden (' . $validated['total_responden'] . ').'
             ]);
         }
 
@@ -149,6 +159,7 @@ class Iku2Controller extends Controller
             'tahun_akademik' => 'required|string',
             'program_studi' => 'required|string',
             'total_lulusan' => 'required|integer|min:1',
+            'total_responden' => 'required|integer|min:0',
             'bekerja_bobot_1_0' => 'required|integer|min:0',
             'bekerja_bobot_0_8' => 'required|integer|min:0',
             'bekerja_bobot_0_6' => 'required|integer|min:0',
@@ -176,9 +187,16 @@ class Iku2Controller extends Controller
                          $validated['wirausaha_freelancer_0_5'] + $validated['wirausaha_freelancer_0_4'] +
                          $validated['wirausaha_freelancer_0_3'] + $validated['wirausaha_freelancer_0_2'];
         
-        if ($totalKategori > $validated['total_lulusan']) {
+        // Logical validation
+        if ($validated['total_responden'] > $validated['total_lulusan']) {
             return back()->withInput()->withErrors([
-                'total_lulusan' => 'Total kategori (Bekerja + Studi Lanjut + Wirausaha = ' . $totalKategori . ') tidak boleh melebihi total lulusan (' . $validated['total_lulusan'] . ').'
+                'total_responden' => 'Total responden cannot exceed total graduates.'
+            ]);
+        }
+
+        if ($totalKategori > $validated['total_responden']) {
+            return back()->withInput()->withErrors([
+                'total_responden' => 'Total kategori (Bekerja + Studi Lanjut + Wirausaha = ' . $totalKategori . ') tidak boleh melebihi total responden (' . $validated['total_responden'] . ').'
             ]);
         }
 
