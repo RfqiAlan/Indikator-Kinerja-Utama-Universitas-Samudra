@@ -61,7 +61,7 @@
                     totalDosenRekognisi: {{ old('total_dosen_rekognisi', $iku4->total_dosen_rekognisi ?? 0) }}, 
                     totalDosenTetapPt: {{ old('total_dosen_tetap_pt', $iku4->total_dosen_tetap_pt ?? 0) }}, 
                     totalDosenS3: {{ old('total_dosen_s3', $iku4->total_dosen_s3 ?? 0) }}, 
-                    
+                        
                     get persentaseRekognisi() { 
                         if (this.totalDosenPt <= 0) return 0; 
                         return (this.totalDosenRekognisi / this.totalDosenPt) * 100; 
