@@ -43,17 +43,6 @@
 
         /* Unique accent per IKU */
         .accent-1  { --accent: #3b82f6; --accent-soft: #eff6ff; --accent-text: #1d4ed8; }
-        .accent-2  { --accent: #8b5cf6; --accent-soft: #f5f3ff; --accent-text: #6d28d9; }
-        .accent-3  { --accent: #10b981; --accent-soft: #ecfdf5; --accent-text: #047857; }
-        .accent-4  { --accent: #f59e0b; --accent-soft: #fffbeb; --accent-text: #b45309; }
-        .accent-5  { --accent: #06b6d4; --accent-soft: #ecfeff; --accent-text: #0e7490; }
-        .accent-6  { --accent: #ef4444; --accent-soft: #fef2f2; --accent-text: #b91c1c; }
-        .accent-7  { --accent: #14b8a6; --accent-soft: #f0fdfa; --accent-text: #0f766e; }
-        .accent-8  { --accent: #a855f7; --accent-soft: #faf5ff; --accent-text: #7e22ce; }
-        .accent-9  { --accent: #f97316; --accent-soft: #fff7ed; --accent-text: #c2410c; }
-        .accent-10 { --accent: #22c55e; --accent-soft: #f0fdf4; --accent-text: #15803d; }
-        .accent-11 { --accent: #64748b; --accent-soft: #f8fafc; --accent-text: #334155; }
-
         .iku-icon-wrap {
             width: 48px; height: 48px;
             border-radius: 14px;
@@ -104,13 +93,9 @@
         <x-slot name="header">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 w-full">
                 <div>
-                    <h2 class="text-xl font-bold text-slate-800 tracking-tight">Semua Indikator Kinerja</h2>
+                    <h2 class="text-lg sm:text-xl font-bold text-slate-800 tracking-tight">Semua Indikator Kinerja</h2>
                     <p class="text-xs text-slate-500 mt-0.5 font-medium">Pilih modul IKU untuk mengelola data capaian</p>
                 </div>
-                <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-100 px-3 py-1.5 rounded-full">
-                    <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
-                    {{ count($ikuStats ?? []) }} Indikator Aktif
-                </span>
             </div>
         </x-slot>
 
@@ -152,32 +137,32 @@
         <div class="pb-10 space-y-6">
 
             {{-- ===== HERO BANNER ===== --}}
-            <div class="relative overflow-hidden hero-gradient rounded-3xl shadow-xl p-8 sm:p-10" data-aos="fade-down" data-aos-duration="800">
+            <div class="relative overflow-hidden hero-gradient rounded-2xl sm:rounded-3xl shadow-xl p-5 sm:p-8 lg:p-10" data-aos="fade-down" data-aos-duration="800">
                 <div class="absolute -right-24 -top-24 w-80 h-80 rounded-full bg-white/5 blur-2xl"></div>
                 <div class="absolute -left-16 -bottom-16 w-64 h-64 rounded-full bg-cyan-400/10 blur-3xl"></div>
 
-                <div class="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+                <div class="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 sm:gap-8">
                     <div>
-                        <h3 class="text-3xl md:text-4xl font-black text-white tracking-tight leading-tight mb-2">
+                        <h3 class="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight leading-tight mb-2">
                             Master Data <span class="text-cyan-300">Indikator Kinerja Utama</span>
                         </h3>
-                        <p class="text-blue-100/80 max-w-xl text-sm md:text-base font-medium leading-relaxed">
+                        <p class="text-blue-100/80 max-w-xl text-xs sm:text-sm md:text-base font-medium leading-relaxed">
                             Pantau, kelola, dan tingkatkan capaian 11 indikator kinerja universitas secara terpusat.
                         </p>
                     </div>
 
                     {{-- Quick Stats --}}
-                    <div class="flex gap-4 shrink-0">
-                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl px-5 py-4 text-center min-w-[100px]">
+                    <div class="grid w-full grid-cols-2 gap-3 sm:flex sm:w-auto sm:gap-4 shrink-0">
+                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl px-4 sm:px-5 py-3 sm:py-4 text-center min-w-0 sm:min-w-[100px]">
                             <div class="text-3xl font-black text-white">{{ count($ikuInfos) }}</div>
                             <div class="text-xs font-semibold text-blue-200 mt-1">Total IKU</div>
                         </div>
-                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl px-5 py-4 text-center min-w-[100px]">
+                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl px-4 sm:px-5 py-3 sm:py-4 text-center min-w-0 sm:min-w-[100px]">
                             <div class="text-3xl font-black text-emerald-300">{{ $metTarget }}</div>
                             <div class="text-xs font-semibold text-blue-200 mt-1">Capaian Target</div>
                         </div>
                         @if (!is_null($globalAvg))
-                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl px-5 py-4 text-center min-w-[110px]">
+                        <div class="col-span-2 sm:col-span-1 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl px-4 sm:px-5 py-3 sm:py-4 text-center min-w-0 sm:min-w-[110px]">
                             <div class="text-3xl font-black text-cyan-300">{{ $globalAvg }}%</div>
                             <div class="text-xs font-semibold text-blue-200 mt-1">Rata-rata</div>
                         </div>
@@ -212,13 +197,13 @@
                     @endphp
 
                     <a href="{{ Route::has($routeName) ? route($routeName) : '#' }}"
-                       class="iku-card accent-{{ $info['num'] }} group flex flex-col bg-white rounded-2xl border border-slate-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                       class="iku-card accent-1 group flex flex-col bg-white rounded-2xl border border-slate-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                        data-aos="fade-up">
 
                         {{-- Top accent line --}}
                         <div class="top-line"></div>
 
-                        <div class="p-5 flex flex-col flex-1 relative z-10">
+                        <div class="p-4 sm:p-5 flex flex-col flex-1 relative z-10">
 
                             {{-- Header: icon + code badge --}}
                             <div class="flex items-start justify-between mb-4">
@@ -235,7 +220,7 @@
                                 <h4 class="text-sm font-bold text-slate-800 leading-snug mb-1 group-hover:text-[var(--accent)] transition-colors duration-200">
                                     {{ $info['title'] }}
                                 </h4>
-                                <p class="text-xs text-slate-400 font-medium leading-relaxed line-clamp-2">
+                                <p class="text-xs text-slate-400 font-medium leading-relaxed line-clamp-3 sm:line-clamp-2">
                                     {{ $info['desc'] }}
                                 </p>
                             </div>
@@ -279,11 +264,6 @@
                                 {{-- Status badge --}}
                                 <div class="flex items-center justify-between mt-2.5">
                                     <span class="inline-flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full {{ $badgeCls }}">
-                                        @if(!is_null($statVal))
-                                            <svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 8 8">
-                                                <circle cx="4" cy="4" r="3"/>
-                                            </svg>
-                                        @endif
                                         {{ $badgeTxt }}
                                     </span>
                                     {{-- Arrow icon --}}
