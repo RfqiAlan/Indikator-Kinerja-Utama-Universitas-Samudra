@@ -38,8 +38,13 @@
                     </div>
                 </div>
                 <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-6">
-                    <div class="grid grid-cols-3 gap-4 text-center">
-                        <div><p class="text-xs text-slate-500">Total Program SDGs</p><p class="text-2xl font-bold text-blue-600" x-text="totalSdgs">0</p></div>
+                    <h4 class="font-semibold text-slate-800 mb-4">Ringkasan Perhitungan</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center text-center">
+                        <div>
+                            <p class="text-xs text-slate-500">Total Program SDGs</p>
+                            <p class="text-2xl font-bold text-blue-600" x-text="totalSdgs">0</p>
+
+                        </div>
                         <div><p class="text-xs text-slate-500">Total Program</p><p class="text-2xl font-bold text-slate-600" x-text="totalProgram">0</p></div>
                         <div><p class="text-xs text-slate-500">Persentase IKU 7</p><p class="text-2xl font-bold" :class="persentase >= 50 ? 'text-blue-600' : 'text-rose-600'" x-text="persentase.toFixed(2) + '%'">0%</p></div>
                     </div>
@@ -63,7 +68,7 @@
                     pkm: {{ old('pkm', 0) }}, 
                     kerjasama: {{ old('kerjasama', 0) }}, 
                     kebijakan: {{ old('kebijakan', 0) }},
-                    get totalSdgs() { return this.pendidikan + this.penelitian + this.pkm + this.kerjasama + this.kebijakan; },
+                    get totalSdgs() { return this.sdg1 + this.sdg4 + this.sdg5 + this.sdg13 + this.sdg17; },
                     get persentase() { if (this.totalProgram <= 0) return 0; return (this.totalSdgs / this.totalProgram) * 100; } 
                 }
             }

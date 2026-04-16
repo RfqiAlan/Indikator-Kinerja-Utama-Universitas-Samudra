@@ -47,9 +47,10 @@ class Iku7Sdgs extends Model
 
     public function calculatePercentage()
     {
-        // Total program yang mendukung SDGs
-        $this->total_program_sdgs = $this->pendidikan + $this->penelitian + 
-                                     $this->pkm + $this->kerjasama + $this->kebijakan;
+        // Total program SDGs dihitung dari jumlah program di setiap SDG
+        $this->total_program_sdgs = ($this->sdg_1 ?? 0) + ($this->sdg_4 ?? 0) +
+                                     ($this->sdg_5 ?? 0) + ($this->sdg_13 ?? 0) +
+                                     ($this->sdg_17 ?? 0);
 
         if ($this->total_program > 0) {
             $this->persentase_iku7 = ($this->total_program_sdgs / $this->total_program) * 100;

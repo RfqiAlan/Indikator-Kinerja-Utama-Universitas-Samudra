@@ -44,7 +44,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
                         <div class="bg-white/60 p-3 rounded-lg"><p class="text-xs text-slate-500">Persentase Rekognisi</p><p class="text-2xl font-bold text-blue-600" x-text="persentaseRekognisi.toFixed(2) + '%'">0%</p></div>
                         <div class="bg-white/60 p-3 rounded-lg"><p class="text-xs text-slate-500">Persentase Pend. S3</p><p class="text-2xl font-bold text-cyan-600" x-text="persentaseS3.toFixed(2) + '%'">0%</p></div>
-                        <div class="bg-white/80 p-3 rounded-lg shadow-sm border border-blue-100"><p class="text-xs text-slate-600 font-medium">✨ Capaian IKU 4 (Rata-rata)</p><p class="text-3xl font-black text-blue-700" x-text="persentaseTotal.toFixed(2) + '%'">0%</p></div>
+                        <div class="bg-white/80 p-3 rounded-lg shadow-sm border border-blue-100"><p class="text-xs text-slate-600 font-medium">Capaian IKU 4 (Rata-rata)</p><p class="text-3xl font-black text-blue-700" x-text="persentaseRekognisi.toFixed(2) + '%'">0%</p></div>
                     </div>
                 </div>
 
@@ -69,9 +69,6 @@
                         if (this.totalDosenTetapPt <= 0) return 0; 
                         return (this.totalDosenS3 / this.totalDosenTetapPt) * 100; 
                     },
-                    get persentaseTotal() {
-                        return (this.persentaseRekognisi + this.persentaseS3) / 2;
-                    }
                 }
             }
         </script>

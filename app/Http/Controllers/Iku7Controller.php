@@ -79,14 +79,12 @@ class Iku7Controller extends Controller
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
-        // Validate sum of bidang fields doesn't exceed total program
-        $totalBidang = $validated['pendidikan'] + $validated['penelitian'] + 
-                       $validated['pkm'] + $validated['kerjasama'] + 
-                       $validated['kebijakan'];
-        
-        if ($totalBidang > $validated['total_program']) {
+        // Validate sum of SDGs doesn't exceed total program
+        $totalSdgs = $validated['sdg_1'] + $validated['sdg_4'] + $validated['sdg_5'] +
+                     $validated['sdg_13'] + $validated['sdg_17'];
+        if ($totalSdgs > $validated['total_program']) {
             return back()->withInput()->withErrors([
-                'total_program' => 'Total bidang kegiatan (' . $totalBidang . ') tidak boleh melebihi total program (' . $validated['total_program'] . ').'
+                'total_program' => 'Total program SDGs (' . $totalSdgs . ') tidak boleh melebihi total program (' . $validated['total_program'] . ').'
             ]);
         }
 

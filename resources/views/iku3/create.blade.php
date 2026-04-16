@@ -10,28 +10,23 @@
                 <p class="text-sm text-slate-500 mt-1">{{ auth()->user()->fakultas_nama ?? 'Fakultas' }} - Mahasiswa Berkegiatan/Berprestasi di Luar Prodi</p>
             </div>
         </x-slot>
-        <div class="py-6 max-w-5xl mx-auto" x-data="formIku3()">
+        <div class="py-6 max-w-4xl mx-auto" x-data="formIku3()">
             @if(session('warning'))
-            <div class="mb-4 p-4 bg-amber-100 border border-amber-200 text-amber-700 rounded-lg">
-                {{ session('warning') }}
-            </div>
+            <div class="mb-4 p-4 bg-amber-100 border border-amber-200 text-amber-700 rounded-lg">{{ session('warning') }}</div>
             @endif
             @if($errors->any())
             <div class="mb-4 p-4 bg-rose-100 border border-rose-200 text-rose-700 rounded-lg">
-                <ul class="list-disc list-inside">
-                    @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+                <ul class="list-disc list-inside">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
             </div>
             @endif
-            
+
             <form action="{{ route('user.iku3.store') }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl shadow-sm p-6 space-y-6" data-aos="fade-up" onsubmit="confirmSubmit(event, 'Apakah Anda yakin ingin menyimpan data ini?')">
                 @csrf
-                
+
+                {{-- Informasi Akademik --}}
                 <div class="border-b pb-6">
                     <h3 class="font-semibold text-slate-800 mb-4">Informasi Akademik</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">Tahun <span class="text-rose-500">*</span></label>
                             <x-tahun-akademik-select :selected="$tahunAkademik" />
@@ -45,6 +40,8 @@
                                 @endforeach
                             </select>
                         </div>
+                    </div>
+                    <div class="mt-4">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">Total Mahasiswa <span class="text-rose-500">*</span></label>
                             <input type="number" name="total_mahasiswa" x-model.number="totalMahasiswa" value="{{ old('total_mahasiswa', 0) }}" class="w-full rounded-lg border-slate-300 focus:ring-blue-500" required min="1">
@@ -52,118 +49,132 @@
                     </div>
                 </div>
 
-                <!-- Bobot Information -->
+                {{-- Info Bobot --}}
                 <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">
-                    <h4 class="font-semibold text-amber-800 mb-2 flex items-center gap-2">
+                    <h4 class="font-semibold text-amber-800 mb-3 flex items-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        Bobot Penilaian (Sesuai Kemdiktisaintek 2026)
+                        Bobot Penilaian
                     </h4>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-amber-700">
-                        <div>
-                            <p class="font-semibold mb-1">Tingkat Internasional:</p>
-                            <p>Juara 1 = 1.0 | Juara 2/3 = 0.5 | Harapan = 0.3 | Finalis = 0.2</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-amber-700">
+                        <div class="bg-amber-100/60 rounded-lg p-3">
+                            <p class="font-semibold mb-1">📚 Non-Kompetisi — Bobot berdasarkan SKS:</p>
+                            <p>≤ 5 SKS = <strong>0.4</strong> | 6–10 SKS = <strong>0.6</strong> | &gt; 10 SKS = <strong>1.0</strong></p>
+                            <p class="mt-1 italic">(Magang, Riset, Pertukaran Pelajar, KKN)</p>
                         </div>
-                        <div>
-                            <p class="font-semibold mb-1">Tingkat Nasional:</p>
-                            <p>Juara 1 = 0.6 | Juara 2/3 = 0.3 | Harapan = 0.2 | Finalis = 0.1</p>
+                        <div class="bg-amber-100/60 rounded-lg p-3">
+                            <p class="font-semibold mb-1">🏆 Lomba / Kompetisi:</p>
+                            <ul class="list-disc list-inside">
+                                <li>Int: Juara 1 (1.0), J2/3/Fav (0.5), Harapan (0.3), Finalis (0.2)</li>
+                                <li>Nas: Juara 1 (0.6), J2/3/Fav (0.3), Harapan (0.2), Finalis (0.1)</li>
+                                <li>Prov: Juara 1 (0.4), J2/3/Fav (0.2), Harapan (0.1), Finalis (0.05)</li>
+                            </ul>
                         </div>
-                        <div>
-                            <p class="font-semibold mb-1">Tingkat Provinsi:</p>
-                            <p>Juara 1 = 0.4 | Juara 2/3 = 0.2 | Harapan = 0.1 | Finalis = 0.05</p>
-                        </div>
+                    </div>
                     </div>
                 </div>
 
+                {{-- Kegiatan Non-Kompetisi --}}
                 <div class="border-b pb-6">
-                    <h3 class="font-semibold text-slate-800 mb-4">Kegiatan & Prestasi Mahasiswa di Luar Prodi</h3>
-                    <p class="text-sm text-slate-500 mb-4">Masukkan jumlah mahasiswa per tingkat kegiatan/prestasi. Bobot akan dihitung otomatis.</p>
+                    <h3 class="font-semibold text-slate-800 mb-1">Kegiatan Non-Kompetisi</h3>
+                    <p class="text-xs text-slate-500 mb-4">Masukkan total mahasiswa per kegiatan berdasarkan rentang SKS.</p>
                     
-                    <!-- Table Header -->
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-sm">
-                            <thead>
-                                <tr class="bg-slate-100">
-                                    <th class="px-4 py-3 text-left font-semibold text-slate-700 rounded-tl-lg">Jenis Kegiatan</th>
-                                    <th class="px-4 py-3 text-center font-semibold text-purple-700 bg-purple-50">Internasional<br><span class="text-xs font-normal">(Bobot: 1.0)</span></th>
-                                    <th class="px-4 py-3 text-center font-semibold text-blue-700 bg-blue-50">Nasional<br><span class="text-xs font-normal">(Bobot: 0.5)</span></th>
-                                    <th class="px-4 py-3 text-center font-semibold text-emerald-700 bg-emerald-50 rounded-tr-lg">Provinsi<br><span class="text-xs font-normal">(Bobot: 0.25)</span></th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-slate-200">
-                                <!-- Magang -->
-                                <tr class="hover:bg-slate-50">
-                                    <td class="px-4 py-3 font-medium text-slate-700">🏢 Magang / Praktik Kerja</td>
-                                    <td class="px-2 py-2"><input type="number" name="magang_internasional" x-model.number="magang_int" value="{{ old('magang_internasional', 0) }}" class="w-full rounded-lg border-purple-200 text-center focus:ring-purple-500" min="0"></td>
-                                    <td class="px-2 py-2"><input type="number" name="magang_nasional" x-model.number="magang_nas" value="{{ old('magang_nasional', 0) }}" class="w-full rounded-lg border-blue-200 text-center focus:ring-blue-500" min="0"></td>
-                                    <td class="px-2 py-2"><input type="number" name="magang_provinsi" x-model.number="magang_prov" value="{{ old('magang_provinsi', 0) }}" class="w-full rounded-lg border-emerald-200 text-center focus:ring-emerald-500" min="0"></td>
-                                </tr>
-                                <!-- Riset -->
-                                <tr class="hover:bg-slate-50">
-                                    <td class="px-4 py-3 font-medium text-slate-700">🔬 Riset / Asistensi Peneliti</td>
-                                    <td class="px-2 py-2"><input type="number" name="riset_internasional" x-model.number="riset_int" value="{{ old('riset_internasional', 0) }}" class="w-full rounded-lg border-purple-200 text-center focus:ring-purple-500" min="0"></td>
-                                    <td class="px-2 py-2"><input type="number" name="riset_nasional" x-model.number="riset_nas" value="{{ old('riset_nasional', 0) }}" class="w-full rounded-lg border-blue-200 text-center focus:ring-blue-500" min="0"></td>
-                                    <td class="px-2 py-2"><input type="number" name="riset_provinsi" x-model.number="riset_prov" value="{{ old('riset_provinsi', 0) }}" class="w-full rounded-lg border-emerald-200 text-center focus:ring-emerald-500" min="0"></td>
-                                </tr>
-                                <!-- Pertukaran -->
-                                <tr class="hover:bg-slate-50">
-                                    <td class="px-4 py-3 font-medium text-slate-700">🌍 Pertukaran Pelajar</td>
-                                    <td class="px-2 py-2"><input type="number" name="pertukaran_internasional" x-model.number="pertukaran_int" value="{{ old('pertukaran_internasional', 0) }}" class="w-full rounded-lg border-purple-200 text-center focus:ring-purple-500" min="0"></td>
-                                    <td class="px-2 py-2"><input type="number" name="pertukaran_nasional" x-model.number="pertukaran_nas" value="{{ old('pertukaran_nasional', 0) }}" class="w-full rounded-lg border-blue-200 text-center focus:ring-blue-500" min="0"></td>
-                                    <td class="px-2 py-2"><input type="number" name="pertukaran_provinsi" x-model.number="pertukaran_prov" value="{{ old('pertukaran_provinsi', 0) }}" class="w-full rounded-lg border-emerald-200 text-center focus:ring-emerald-500" min="0"></td>
-                                </tr>
-                                <!-- KKN -->
-                                <tr class="hover:bg-slate-50">
-                                    <td class="px-4 py-3 font-medium text-slate-700">🤝 KKN Tematik / Berdampak</td>
-                                    <td class="px-2 py-2"><input type="number" name="kkn_internasional" x-model.number="kkn_int" value="{{ old('kkn_internasional', 0) }}" class="w-full rounded-lg border-purple-200 text-center focus:ring-purple-500" min="0"></td>
-                                    <td class="px-2 py-2"><input type="number" name="kkn_nasional" x-model.number="kkn_nas" value="{{ old('kkn_nasional', 0) }}" class="w-full rounded-lg border-blue-200 text-center focus:ring-blue-500" min="0"></td>
-                                    <td class="px-2 py-2"><input type="number" name="kkn_provinsi" x-model.number="kkn_prov" value="{{ old('kkn_provinsi', 0) }}" class="w-full rounded-lg border-emerald-200 text-center focus:ring-emerald-500" min="0"></td>
-                                </tr>
-                                <!-- Lomba -->
-                                <tr class="hover:bg-slate-50">
-                                    <td class="px-4 py-3 font-medium text-slate-700">🏆 Lomba / Kompetisi</td>
-                                    <td class="px-2 py-2"><input type="number" name="lomba_internasional" x-model.number="lomba_int" value="{{ old('lomba_internasional', 0) }}" class="w-full rounded-lg border-purple-200 text-center focus:ring-purple-500" min="0"></td>
-                                    <td class="px-2 py-2"><input type="number" name="lomba_nasional" x-model.number="lomba_nas" value="{{ old('lomba_nasional', 0) }}" class="w-full rounded-lg border-blue-200 text-center focus:ring-blue-500" min="0"></td>
-                                    <td class="px-2 py-2"><input type="number" name="lomba_provinsi" x-model.number="lomba_prov" value="{{ old('lomba_provinsi', 0) }}" class="w-full rounded-lg border-emerald-200 text-center focus:ring-emerald-500" min="0"></td>
-                                </tr>
-                                <!-- Wirausaha -->
-                                <tr class="hover:bg-slate-50">
-                                    <td class="px-4 py-3 font-medium text-slate-700">💼 Wirausaha Mahasiswa</td>
-                                    <td class="px-2 py-2"><input type="number" name="wirausaha_internasional" x-model.number="wirausaha_int" value="{{ old('wirausaha_internasional', 0) }}" class="w-full rounded-lg border-purple-200 text-center focus:ring-purple-500" min="0"></td>
-                                    <td class="px-2 py-2"><input type="number" name="wirausaha_nasional" x-model.number="wirausaha_nas" value="{{ old('wirausaha_nasional', 0) }}" class="w-full rounded-lg border-blue-200 text-center focus:ring-blue-500" min="0"></td>
-                                    <td class="px-2 py-2"><input type="number" name="wirausaha_provinsi" x-model.number="wirausaha_prov" value="{{ old('wirausaha_provinsi', 0) }}" class="w-full rounded-lg border-emerald-200 text-center focus:ring-emerald-500" min="0"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="space-y-4">
+                        <!-- Magang -->
+                        <div class="bg-blue-50 p-4 rounded-xl">
+                            <h4 class="font-semibold text-blue-800 mb-3 flex items-center gap-2">🏢 Magang / Praktik Kerja</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div><label class="block text-xs font-semibold text-blue-700 mb-1">≤ 5 SKS (Bobot: 0.4)</label><input type="number" name="magang_kurang_5" x-model.number="mg_k5" value="{{ old('magang_kurang_5', 0) }}" class="w-full rounded-lg border-blue-200 text-center text-sm focus:ring-blue-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-blue-700 mb-1">6–10 SKS (Bobot: 0.6)</label><input type="number" name="magang_6_10" x-model.number="mg_6_10" value="{{ old('magang_6_10', 0) }}" class="w-full rounded-lg border-blue-200 text-center text-sm focus:ring-blue-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-blue-700 mb-1">&gt; 10 SKS (Bobot: 1.0)</label><input type="number" name="magang_lebih_10" x-model.number="mg_l10" value="{{ old('magang_lebih_10', 0) }}" class="w-full rounded-lg border-blue-200 text-center text-sm focus:ring-blue-500" min="0"></div>
+                            </div>
+                        </div>
+
+                        <!-- Riset -->
+                        <div class="bg-purple-50 p-4 rounded-xl">
+                            <h4 class="font-semibold text-purple-800 mb-3 flex items-center gap-2">🔬 Riset / Asistensi Peneliti</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div><label class="block text-xs font-semibold text-purple-700 mb-1">≤ 5 SKS (Bobot: 0.4)</label><input type="number" name="riset_kurang_5" x-model.number="rs_k5" value="{{ old('riset_kurang_5', 0) }}" class="w-full rounded-lg border-purple-200 text-center text-sm focus:ring-purple-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-purple-700 mb-1">6–10 SKS (Bobot: 0.6)</label><input type="number" name="riset_6_10" x-model.number="rs_6_10" value="{{ old('riset_6_10', 0) }}" class="w-full rounded-lg border-purple-200 text-center text-sm focus:ring-purple-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-purple-700 mb-1">&gt; 10 SKS (Bobot: 1.0)</label><input type="number" name="riset_lebih_10" x-model.number="rs_l10" value="{{ old('riset_lebih_10', 0) }}" class="w-full rounded-lg border-purple-200 text-center text-sm focus:ring-purple-500" min="0"></div>
+                            </div>
+                        </div>
+
+                        <!-- Pertukaran -->
+                        <div class="bg-emerald-50 p-4 rounded-xl">
+                            <h4 class="font-semibold text-emerald-800 mb-3 flex items-center gap-2">🌍 Pertukaran Pelajar</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div><label class="block text-xs font-semibold text-emerald-700 mb-1">≤ 5 SKS (Bobot: 0.4)</label><input type="number" name="pertukaran_kurang_5" x-model.number="pt_k5" value="{{ old('pertukaran_kurang_5', 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-emerald-700 mb-1">6–10 SKS (Bobot: 0.6)</label><input type="number" name="pertukaran_6_10" x-model.number="pt_6_10" value="{{ old('pertukaran_6_10', 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-emerald-700 mb-1">&gt; 10 SKS (Bobot: 1.0)</label><input type="number" name="pertukaran_lebih_10" x-model.number="pt_l10" value="{{ old('pertukaran_lebih_10', 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>
+                            </div>
+                        </div>
+
+                        <!-- KKN -->
+                        <div class="bg-cyan-50 p-4 rounded-xl">
+                            <h4 class="font-semibold text-cyan-800 mb-3 flex items-center gap-2">🤝 KKN Tematik / Berdampak</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div><label class="block text-xs font-semibold text-cyan-700 mb-1">≤ 5 SKS (Bobot: 0.4)</label><input type="number" name="kkn_kurang_5" x-model.number="kn_k5" value="{{ old('kkn_kurang_5', 0) }}" class="w-full rounded-lg border-cyan-200 text-center text-sm focus:ring-cyan-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-cyan-700 mb-1">6–10 SKS (Bobot: 0.6)</label><input type="number" name="kkn_6_10" x-model.number="kn_6_10" value="{{ old('kkn_6_10', 0) }}" class="w-full rounded-lg border-cyan-200 text-center text-sm focus:ring-cyan-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-cyan-700 mb-1">&gt; 10 SKS (Bobot: 1.0)</label><input type="number" name="kkn_lebih_10" x-model.number="kn_l10" value="{{ old('kkn_lebih_10', 0) }}" class="w-full rounded-lg border-cyan-200 text-center text-sm focus:ring-cyan-500" min="0"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+                {{-- Kompetisi / Lomba --}}
+                <div class="border-b pb-6">
+                    <h3 class="font-semibold text-slate-800 mb-1">Kompetisi / Lomba</h3>
+                    <p class="text-xs text-slate-500 mb-4">Masukkan jumlah mahasiswa (bukan jumlah lomba) berdasarkan tingkat dan jenis pencapaian.</p>
+                    
+                    <div class="space-y-4">
+                        <!-- Internasional -->
+                        <div class="bg-purple-50 p-4 rounded-xl">
+                            <h4 class="font-semibold text-purple-800 mb-3 flex items-center gap-2">🌐 Tingkat Internasional</h4>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div><label class="block text-xs font-semibold text-purple-700 mb-1">Juara 1 (B: 1.0)</label><input type="number" name="lomba_int_juara1" x-model.number="l_int_j1" value="{{ old('lomba_int_juara1', 0) }}" class="w-full rounded-lg border-purple-200 text-center text-sm focus:ring-purple-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-purple-700 mb-1">Juara 2,3,Fav (B: 0.5)</label><input type="number" name="lomba_int_juara23" x-model.number="l_int_j23" value="{{ old('lomba_int_juara23', 0) }}" class="w-full rounded-lg border-purple-200 text-center text-sm focus:ring-purple-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-purple-700 mb-1">Harapan (B: 0.3)</label><input type="number" name="lomba_int_harapan" x-model.number="l_int_harapan" value="{{ old('lomba_int_harapan', 0) }}" class="w-full rounded-lg border-purple-200 text-center text-sm focus:ring-purple-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-purple-700 mb-1">Finalis (B: 0.2)</label><input type="number" name="lomba_int_finalis" x-model.number="l_int_finalis" value="{{ old('lomba_int_finalis', 0) }}" class="w-full rounded-lg border-purple-200 text-center text-sm focus:ring-purple-500" min="0"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Nasional -->
+                        <div class="bg-blue-50 p-4 rounded-xl">
+                            <h4 class="font-semibold text-blue-800 mb-3 flex items-center gap-2">🇮🇩 Tingkat Nasional</h4>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div><label class="block text-xs font-semibold text-blue-700 mb-1">Juara 1 (B: 0.6)</label><input type="number" name="lomba_nas_juara1" x-model.number="l_nas_j1" value="{{ old('lomba_nas_juara1', 0) }}" class="w-full rounded-lg border-blue-200 text-center text-sm focus:ring-blue-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-blue-700 mb-1">Juara 2,3,Fav (B: 0.3)</label><input type="number" name="lomba_nas_juara23" x-model.number="l_nas_j23" value="{{ old('lomba_nas_juara23', 0) }}" class="w-full rounded-lg border-blue-200 text-center text-sm focus:ring-blue-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-blue-700 mb-1">Harapan (B: 0.2)</label><input type="number" name="lomba_nas_harapan" x-model.number="l_nas_harapan" value="{{ old('lomba_nas_harapan', 0) }}" class="w-full rounded-lg border-blue-200 text-center text-sm focus:ring-blue-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-blue-700 mb-1">Finalis (B: 0.1)</label><input type="number" name="lomba_nas_finalis" x-model.number="l_nas_finalis" value="{{ old('lomba_nas_finalis', 0) }}" class="w-full rounded-lg border-blue-200 text-center text-sm focus:ring-blue-500" min="0"></div>
+                            </div>
+                        </div>
+
+                        <!-- Provinsi -->
+                        <div class="bg-emerald-50 p-4 rounded-xl">
+                            <h4 class="font-semibold text-emerald-800 mb-3 flex items-center gap-2">🏙️ Tingkat Provinsi</h4>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div><label class="block text-xs font-semibold text-emerald-700 mb-1">Juara 1 (B: 0.4)</label><input type="number" name="lomba_prov_juara1" x-model.number="l_prov_j1" value="{{ old('lomba_prov_juara1', 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-emerald-700 mb-1">Juara 2,3,Fav (B: 0.2)</label><input type="number" name="lomba_prov_juara23" x-model.number="l_prov_j23" value="{{ old('lomba_prov_juara23', 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-emerald-700 mb-1">Harapan (B: 0.1)</label><input type="number" name="lomba_prov_harapan" x-model.number="l_prov_harapan" value="{{ old('lomba_prov_harapan', 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-emerald-700 mb-1">Finalis (B: 0.05)</label><input type="number" name="lomba_prov_finalis" x-model.number="l_prov_finalis" value="{{ old('lomba_prov_finalis', 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Preview --}}
                 <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-6">
                     <h4 class="font-semibold text-slate-800 mb-4">Preview Perhitungan</h4>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                        <div>
-                            <p class="text-xs text-slate-500">Total Berkegiatan</p>
-                            <p class="text-2xl font-bold text-blue-600" x-text="totalKegiatan">0</p>
-                        </div>
-                        <div>
-                            <p class="text-xs text-slate-500">Skor Berbobot</p>
-                            <p class="text-2xl font-bold text-purple-600" x-text="skorBobot.toFixed(2)">0</p>
-                        </div>
-                        <div>
-                            <p class="text-xs text-slate-500">Total Mahasiswa</p>
-                            <p class="text-2xl font-bold text-slate-600" x-text="totalMahasiswa">0</p>
-                        </div>
-                        <div>
-                            <p class="text-xs text-slate-500">Persentase IKU 3</p>
-                            <p class="text-2xl font-bold" :class="persentase >= 20 ? 'text-emerald-600' : 'text-rose-600'" x-text="persentase.toFixed(2) + '%'">0%</p>
-                        </div>
+                        <div><p class="text-xs text-slate-500">Total Berkegiatan</p><p class="text-2xl font-bold text-blue-600" x-text="totalKegiatan">0</p></div>
+                        <div><p class="text-xs text-slate-500">Skor Berbobot</p><p class="text-2xl font-bold text-purple-600" x-text="skorBobot.toFixed(2)">0</p></div>
+                        <div><p class="text-xs text-slate-500">Total Mahasiswa</p><p class="text-2xl font-bold text-slate-600" x-text="totalMahasiswa">0</p></div>
+                        <div><p class="text-xs text-slate-500">Persentase IKU 3</p><p class="text-2xl font-bold" :class="persentase >= 20 ? 'text-emerald-600' : 'text-rose-600'" x-text="persentase.toFixed(2) + '%'">0%</p></div>
                     </div>
-                    <p class="text-xs text-slate-500 mt-4 text-center">Formula: (Σ n<sub>i</sub> × k<sub>i</sub>) / Total Mahasiswa × 100%</p>
+                    <p class="text-xs text-slate-500 mt-3 text-center">Formula: (Σ jumlah × bobot) / Total Mahasiswa × 100%</p>
                 </div>
 
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Keterangan</label>
-                    <textarea name="keterangan" rows="2" class="w-full rounded-lg border-slate-300">{{ old('keterangan') }}</textarea>
-                </div>
+                <div><label class="block text-sm font-medium text-slate-700 mb-1">Keterangan</label><textarea name="keterangan" rows="2" class="w-full rounded-lg border-slate-300">{{ old('keterangan') }}</textarea></div>
 
                 @include("partials.lampiran-upload", ["ikuNumber" => 3])
                 <div class="flex justify-end gap-3 pt-4">
@@ -176,41 +187,47 @@
             function formIku3() {
                 return {
                     totalMahasiswa: {{ old('total_mahasiswa', 0) }},
-                    // Internasional
-                    magang_int: {{ old('magang_internasional', 0) }},
-                    riset_int: {{ old('riset_internasional', 0) }},
-                    pertukaran_int: {{ old('pertukaran_internasional', 0) }},
-                    kkn_int: {{ old('kkn_internasional', 0) }},
-                    lomba_int: {{ old('lomba_internasional', 0) }},
-                    wirausaha_int: {{ old('wirausaha_internasional', 0) }},
-                    // Nasional
-                    magang_nas: {{ old('magang_nasional', 0) }},
-                    riset_nas: {{ old('riset_nasional', 0) }},
-                    pertukaran_nas: {{ old('pertukaran_nasional', 0) }},
-                    kkn_nas: {{ old('kkn_nasional', 0) }},
-                    lomba_nas: {{ old('lomba_nasional', 0) }},
-                    wirausaha_nas: {{ old('wirausaha_nasional', 0) }},
-                    // Provinsi
-                    magang_prov: {{ old('magang_provinsi', 0) }},
-                    riset_prov: {{ old('riset_provinsi', 0) }},
-                    pertukaran_prov: {{ old('pertukaran_provinsi', 0) }},
-                    kkn_prov: {{ old('kkn_provinsi', 0) }},
-                    lomba_prov: {{ old('lomba_provinsi', 0) }},
-                    wirausaha_prov: {{ old('wirausaha_provinsi', 0) }},
                     
+                    mg_k5: {{ old('magang_kurang_5', 0) }}, mg_6_10: {{ old('magang_6_10', 0) }}, mg_l10: {{ old('magang_lebih_10', 0) }},
+                    rs_k5: {{ old('riset_kurang_5', 0) }}, rs_6_10: {{ old('riset_6_10', 0) }}, rs_l10: {{ old('riset_lebih_10', 0) }},
+                    pt_k5: {{ old('pertukaran_kurang_5', 0) }}, pt_6_10: {{ old('pertukaran_6_10', 0) }}, pt_l10: {{ old('pertukaran_lebih_10', 0) }},
+                    kn_k5: {{ old('kkn_kurang_5', 0) }}, kn_6_10: {{ old('kkn_6_10', 0) }}, kn_l10: {{ old('kkn_lebih_10', 0) }},
+                    
+                    l_int_j1: {{ old('lomba_int_juara1', 0) }},
+                    l_int_j23: {{ old('lomba_int_juara23', 0) }},
+                    l_int_harapan: {{ old('lomba_int_harapan', 0) }},
+                    l_int_finalis: {{ old('lomba_int_finalis', 0) }},
+                    
+                    l_nas_j1: {{ old('lomba_nas_juara1', 0) }},
+                    l_nas_j23: {{ old('lomba_nas_juara23', 0) }},
+                    l_nas_harapan: {{ old('lomba_nas_harapan', 0) }},
+                    l_nas_finalis: {{ old('lomba_nas_finalis', 0) }},
+                    
+                    l_prov_j1: {{ old('lomba_prov_juara1', 0) }},
+                    l_prov_j23: {{ old('lomba_prov_juara23', 0) }},
+                    l_prov_harapan: {{ old('lomba_prov_harapan', 0) }},
+                    l_prov_finalis: {{ old('lomba_prov_finalis', 0) }},
+
                     get totalKegiatan() {
-                        return this.magang_int + this.magang_nas + this.magang_prov +
-                               this.riset_int + this.riset_nas + this.riset_prov +
-                               this.pertukaran_int + this.pertukaran_nas + this.pertukaran_prov +
-                               this.kkn_int + this.kkn_nas + this.kkn_prov +
-                               this.lomba_int + this.lomba_nas + this.lomba_prov +
-                               this.wirausaha_int + this.wirausaha_nas + this.wirausaha_prov;
+                        return this.mg_k5 + this.mg_6_10 + this.mg_l10 +
+                               this.rs_k5 + this.rs_6_10 + this.rs_l10 +
+                               this.pt_k5 + this.pt_6_10 + this.pt_l10 +
+                               this.kn_k5 + this.kn_6_10 + this.kn_l10 +
+                               this.l_int_j1 + this.l_int_j23 + this.l_int_harapan + this.l_int_finalis +
+                               this.l_nas_j1 + this.l_nas_j23 + this.l_nas_harapan + this.l_nas_finalis +
+                               this.l_prov_j1 + this.l_prov_j23 + this.l_prov_harapan + this.l_prov_finalis;
                     },
                     get skorBobot() {
-                        // Bobot: Internasional=1.0, Nasional=0.5, Provinsi=0.25
-                        return (this.magang_int + this.riset_int + this.pertukaran_int + this.kkn_int + this.lomba_int + this.wirausaha_int) * 1.0 +
-                               (this.magang_nas + this.riset_nas + this.pertukaran_nas + this.kkn_nas + this.lomba_nas + this.wirausaha_nas) * 0.5 +
-                               (this.magang_prov + this.riset_prov + this.pertukaran_prov + this.kkn_prov + this.lomba_prov + this.wirausaha_prov) * 0.25;
+                        const nonKompetisi = 
+                            ((this.mg_k5 + this.rs_k5 + this.pt_k5 + this.kn_k5) * 0.4) +
+                            ((this.mg_6_10 + this.rs_6_10 + this.pt_6_10 + this.kn_6_10) * 0.6) +
+                            ((this.mg_l10 + this.rs_l10 + this.pt_l10 + this.kn_l10) * 1.0);
+                                
+                        const lomba = 
+                            (this.l_int_j1 * 1.0) + (this.l_int_j23 * 0.5) + (this.l_int_harapan * 0.3) + (this.l_int_finalis * 0.2) +
+                            (this.l_nas_j1 * 0.6) + (this.l_nas_j23 * 0.3) + (this.l_nas_harapan * 0.2) + (this.l_nas_finalis * 0.1) +
+                            (this.l_prov_j1 * 0.4) + (this.l_prov_j23 * 0.2) + (this.l_prov_harapan * 0.1) + (this.l_prov_finalis * 0.05);
+                        return nonKompetisi + lomba;
                     },
                     get persentase() {
                         if (this.totalMahasiswa <= 0) return 0;

@@ -37,7 +37,7 @@ class Iku4Controller extends Controller
         $totalDosenTetapPt  = $q->sum('total_dosen_tetap_pt');
         $overallS3Percentage = $totalDosenTetapPt > 0 ? ($totalDosenS3 / $totalDosenTetapPt) * 100 : 0;
 
-        $overallPercentage = ($overallRekognisiPercentage + $overallS3Percentage) / 2;
+        $overallPercentage = $overallRekognisiPercentage;
 
         return view('iku4.index', compact(
             'data', 

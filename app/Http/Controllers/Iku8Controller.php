@@ -66,7 +66,6 @@ class Iku8Controller extends Controller
             'total_sdm' => 'required|integer|min:1',
             'tim_penyusun' => 'required|integer|min:0',
             'narasumber' => 'required|integer|min:0',
-            'ahli_hukum' => 'required|integer|min:0',
             'kontributor_regulasi' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
@@ -75,7 +74,7 @@ class Iku8Controller extends Controller
 
         // Validate sum of keterlibatan fields doesn't exceed total SDM
         $totalKeterlibatan = $validated['tim_penyusun'] + $validated['narasumber'] + 
-                             $validated['ahli_hukum'] + $validated['kontributor_regulasi'];
+                             $validated['kontributor_regulasi'];
         
         if ($totalKeterlibatan > $validated['total_sdm']) {
             return back()->withInput()->withErrors([
@@ -138,7 +137,6 @@ class Iku8Controller extends Controller
             'total_sdm' => 'required|integer|min:1',
             'tim_penyusun' => 'required|integer|min:0',
             'narasumber' => 'required|integer|min:0',
-            'ahli_hukum' => 'required|integer|min:0',
             'kontributor_regulasi' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',

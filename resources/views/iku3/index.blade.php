@@ -97,10 +97,11 @@
                             <tr>
                                 <th scope="col" class="px-6 py-4 font-medium">Program Studi</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Total MHS</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center">Berkegiatan</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center">Int'l</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center">Nasional</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center">Provinsi</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Magang (≤5/6-10/>10)</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Riset (≤5/6-10/>10)</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Pertukaran (≤5/6-10/>10)</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">KKN (≤5/6-10/>10)</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Lomba (I/N/P)</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Skor</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Capaian</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-right">Aksi</th>
@@ -109,18 +110,21 @@
                         <tbody class="divide-y divide-slate-100 dark:divide-slate-700/50">
                             @foreach($data as $item)
                             @php
-                                $totalInt = ($item->magang_internasional ?? 0) + ($item->riset_internasional ?? 0) + ($item->pertukaran_internasional ?? 0) + ($item->kkn_internasional ?? 0) + ($item->lomba_internasional ?? 0) + ($item->wirausaha_internasional ?? 0);
-                                $totalNas = ($item->magang_nasional ?? 0) + ($item->riset_nasional ?? 0) + ($item->pertukaran_nasional ?? 0) + ($item->kkn_nasional ?? 0) + ($item->lomba_nasional ?? 0) + ($item->wirausaha_nasional ?? 0);
-                                $totalProv = ($item->magang_provinsi ?? 0) + ($item->riset_provinsi ?? 0) + ($item->pertukaran_provinsi ?? 0) + ($item->kkn_provinsi ?? 0) + ($item->lomba_provinsi ?? 0) + ($item->wirausaha_provinsi ?? 0);
+                                $sumInt = ($item->lomba_int_juara1 ?? 0) + ($item->lomba_int_juara23 ?? 0) + ($item->lomba_int_harapan ?? 0) + ($item->lomba_int_finalis ?? 0);
+                                $sumNas = ($item->lomba_nas_juara1 ?? 0) + ($item->lomba_nas_juara23 ?? 0) + ($item->lomba_nas_harapan ?? 0) + ($item->lomba_nas_finalis ?? 0);
+                                $sumProv = ($item->lomba_prov_juara1 ?? 0) + ($item->lomba_prov_juara23 ?? 0) + ($item->lomba_prov_harapan ?? 0) + ($item->lomba_prov_finalis ?? 0);
                             @endphp
                             <tr class="group hover:bg-slate-50/50 dark:hover:bg-slate-700/30 transition-colors duration-150">
-                                <td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">{{ strtoupper ($item->program_studi ?? '-') }}</td>
+                                <td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">{{ strtoupper($item->program_studi ?? '-') }}</td>
                                 <td class="px-6 py-4 text-center text-slate-900 dark:text-slate-100">{{ number_format($item->total_mahasiswa) }}</td>
-                                <td class="px-6 py-4 text-center text-slate-900 dark:text-slate-100">{{ number_format($item->total_berkegiatan) }}</td>
-                                <td class="px-6 py-4 text-center text-slate-900 dark:text-slate-100">{{ $totalInt }}</td>
-                                <td class="px-6 py-4 text-center text-slate-900 dark:text-slate-100">{{ $totalNas }}</td>
-                                <td class="px-6 py-4 text-center text-slate-900 dark:text-slate-100">{{ $totalProv }}</td>
-                                <td class="px-6 py-4 text-center text-slate-900 dark:text-slate-100">{{ number_format($item->skor_bobot_kegiatan, 2) }}</td>
+                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ $item->magang_kurang_5 ?? 0 }}/{{ $item->magang_6_10 ?? 0 }}/{{ $item->magang_lebih_10 ?? 0 }}</td>
+                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ $item->riset_kurang_5 ?? 0 }}/{{ $item->riset_6_10 ?? 0 }}/{{ $item->riset_lebih_10 ?? 0 }}</td>
+                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ $item->pertukaran_kurang_5 ?? 0 }}/{{ $item->pertukaran_6_10 ?? 0 }}/{{ $item->pertukaran_lebih_10 ?? 0 }}</td>
+                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ $item->kkn_kurang_5 ?? 0 }}/{{ $item->kkn_6_10 ?? 0 }}/{{ $item->kkn_lebih_10 ?? 0 }}</td>
+                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">
+                                    {{ $sumInt }}/{{ $sumNas }}/{{ $sumProv }}
+                                </td>
+                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->skor_bobot_kegiatan, 2) }}</td>
                                 <td class="px-6 py-4 text-center">
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $item->persentase_iku3 >= 20 ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800' }}">
                                         {{ number_format($item->persentase_iku3, 2) }}%

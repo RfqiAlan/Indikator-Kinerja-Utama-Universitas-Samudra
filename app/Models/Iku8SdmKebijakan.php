@@ -17,7 +17,6 @@ class Iku8SdmKebijakan extends Model
         'total_sdm',
         'tim_penyusun',
         'narasumber',
-        'ahli_hukum',
         'kontributor_regulasi',
         'total_terlibat',
         'persentase_iku8',
@@ -42,7 +41,7 @@ class Iku8SdmKebijakan extends Model
     public function calculatePercentage()
     {
         $this->total_terlibat = $this->tim_penyusun + $this->narasumber + 
-                                 $this->ahli_hukum + $this->kontributor_regulasi;
+                                 $this->kontributor_regulasi;
 
         if ($this->total_sdm > 0) {
             $this->persentase_iku8 = ($this->total_terlibat / $this->total_sdm) * 100;

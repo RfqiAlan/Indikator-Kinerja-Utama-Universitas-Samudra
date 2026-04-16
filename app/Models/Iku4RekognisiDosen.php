@@ -60,7 +60,7 @@ class Iku4RekognisiDosen extends Model
             $this->persentase_s3 = 0;
         }
 
-        // Agregat (Rata-rata)
-        $this->persentase_iku4 = ($this->persentase_rekognisi + $this->persentase_s3) / 2;
+        // Capaian IKU 4 = persentase rekognisi
+        $this->persentase_iku4 = $this->persentase_rekognisi;
     }
 }

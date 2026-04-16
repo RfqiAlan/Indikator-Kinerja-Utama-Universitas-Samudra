@@ -98,7 +98,7 @@
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Total SDM</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Tim Penyusun</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Narasumber</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center">Ahli Hukum</th>
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Kontributor Regulasi</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Capaian IKU 8</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-right">Aksi</th>
                             </tr>
@@ -110,7 +110,7 @@
                                 <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->total_sdm) }}</td>
                                 <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->tim_penyusun) }}</td>
                                 <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->narasumber) }}</td>
-                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->ahli_hukum) }}</td>
+                                <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-300">{{ number_format($item->kontributor_regulasi) }}</td>
                                 <td class="px-6 py-4 text-center">
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $item->persentase_iku8 >= 5 ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300' }}">
                                         {{ number_format($item->persentase_iku8, 2) }}%

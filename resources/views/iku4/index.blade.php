@@ -223,9 +223,9 @@
                                 <h4 class="font-bold text-slate-800 dark:text-slate-100">Capaian Akhir IKU 4</h4>
                             </div>
                             <div class="p-3 bg-white dark:bg-slate-900 rounded-lg text-xs font-mono text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600/50 mb-3 text-center shadow-inner">
-                                (Sub-indikator 1 + Sub-indikator 2) / 2
+                                Capaian IKU 4 = % Rekognisi
                             </div>
-                            <p class="text-xs text-slate-500 leading-relaxed">Rata-rata dari persentase rekognisi profesi dosen dan kompetensi akademik strata-3.</p>
+                            <p class="text-xs text-slate-500 leading-relaxed">Capaian IKU 4 mengikuti persentase rekognisi dosen (Sub-indikator 1). Sub-indikator S3 ditampilkan sebagai informasi tambahan.</p>
                         </div>
                     </div>
                 </div>

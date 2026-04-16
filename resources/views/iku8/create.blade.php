@@ -20,10 +20,9 @@
                     <div><label class="block text-sm font-medium text-slate-700 mb-1">Total SDM <span class="text-rose-500">*</span></label><input type="number" name="total_sdm" x-model.number="totalSdm" value="{{ old('total_sdm', 0) }}" class="w-full rounded-lg border-slate-300" required min="1"></div>
                 </div>
                 <div class="border-t pt-6"><h3 class="font-semibold text-slate-800 mb-4">Jenis Keterlibatan Kebijakan</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                         <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">Tim Penyusun</label><input type="number" name="tim_penyusun" x-model.number="tim" value="{{ old('tim_penyusun', 0) }}" class="w-full rounded-lg border-blue-200" min="0"></div>
                         <div class="bg-cyan-50 p-3 rounded-lg"><label class="block text-sm font-medium text-cyan-700 mb-1">Narasumber</label><input type="number" name="narasumber" x-model.number="narasumber" value="{{ old('narasumber', 0) }}" class="w-full rounded-lg border-cyan-200" min="0"></div>
-                        <div class="bg-indigo-50 p-3 rounded-lg"><label class="block text-sm font-medium text-indigo-700 mb-1">Ahli Hukum</label><input type="number" name="ahli_hukum" x-model.number="ahli" value="{{ old('ahli_hukum', 0) }}" class="w-full rounded-lg border-indigo-200" min="0"></div>
                         <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">Kontributor Regulasi</label><input type="number" name="kontributor_regulasi" x-model.number="kontributor" value="{{ old('kontributor_regulasi', 0) }}" class="w-full rounded-lg border-blue-200" min="0"></div>
                     </div>
                 </div>
@@ -45,9 +44,8 @@
                     totalSdm: {{ old('total_sdm', 0) }}, 
                     tim: {{ old('tim_penyusun', 0) }}, 
                     narasumber: {{ old('narasumber', 0) }}, 
-                    ahli: {{ old('ahli_hukum', 0) }}, 
                     kontributor: {{ old('kontributor_regulasi', 0) }},
-                    get totalTerlibat() { return this.tim + this.narasumber + this.ahli + this.kontributor; },
+                    get totalTerlibat() { return this.tim + this.narasumber + this.kontributor; },
                     get persentase() { if (this.totalSdm <= 0) return 0; return (this.totalTerlibat / this.totalSdm) * 100; } 
                 }
             }
