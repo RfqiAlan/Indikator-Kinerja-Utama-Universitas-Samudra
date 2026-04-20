@@ -66,6 +66,22 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if user is TimKerjaSama
+     */
+    public function isTimKerjaSama(): bool
+    {
+        return $this->role === 'TimKerjaSama';
+    }
+
+    /**
+     * Check if user is TimKeuangan
+     */
+    public function isTimKeuangan(): bool
+    {
+        return $this->role === 'TimKeuangan';
+    }
+
+    /**
      * Get fakultas data from database
      */
     public function getFakultasDataAttribute(): ?array

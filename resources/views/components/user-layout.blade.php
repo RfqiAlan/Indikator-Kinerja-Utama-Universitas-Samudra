@@ -14,6 +14,37 @@
         ['id' => 'IKU 10', 'title' => 'Zona Integritas', 'desc' => 'Unit WBK/WBBM', 'icon' => 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', 'route' => 'user.iku10.index'],
         ['id' => 'IKU 11', 'title' => 'Tata Kelola Keuangan', 'desc' => 'WTP, SAKIP, Integritas', 'icon' => 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01', 'route' => 'user.iku11.index'],
     ];
+
+    if (auth()->check()) {
+        $user = auth()->user();
+        $ikuItems = array_filter($ikuItems, function($item) use ($user) {
+            $id = $item['id']; // e.g. "IKU 5"
+            
+            if ($user->role === 'admin') {
+                return true;
+            }
+            
+            if ($user->role === 'TimKerjaSama') {
+                return $id === 'IKU 5';
+            }
+            
+            if ($user->role === 'TimKeuangan') {
+                return $id === 'IKU 9';
+            }
+            
+            if ($user->role === 'user') {
+                if ($id === 'IKU 9') {
+                    return false;
+                }
+                if ($id === 'IKU 10') {
+                    return in_array($user->fakultas, ['fp', 'feb']);
+                }
+                return true;
+            }
+            
+            return true;
+        });
+    }
 @endphp
 
 <div class="min-h-screen lg:h-[100dvh] w-full overflow-x-hidden lg:overflow-hidden flex flex-col lg:flex-row bg-slate-50 text-slate-800 font-sans antialiased"
@@ -162,7 +193,7 @@
 
         <div class="p-4 shrink-0 border-t border-slate-100 bg-white">
             <form method="POST" action="{{ route('logout') }}"
-                onsubmit="confirmDelete(event, 'Anda akan keluar dari aplikasi.')">
+                onsubmit="confirmDelete(event, 'Anda akan keluar dari aplikasi.', 'Keluar Aplikasi?', 'Ya, keluar')">
                 @csrf
                 <button type="submit"
                     class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 hover:text-rose-700 transition-all duration-300 ring-1 ring-rose-100 hover:ring-rose-200">

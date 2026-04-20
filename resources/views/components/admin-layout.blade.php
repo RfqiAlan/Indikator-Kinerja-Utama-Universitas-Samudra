@@ -123,7 +123,7 @@
                         <p class="text-xs text-slate-400">Administrator</p>
                     </div>
                 </div>
-                <form action="{{ route('logout') }}" method="POST">
+                <form action="{{ route('logout') }}" method="POST" onsubmit="confirmDelete(event, 'Anda akan keluar dari aplikasi.', 'Keluar Aplikasi?', 'Ya, keluar')">
                     @csrf
                     <button type="submit"
                         class="w-full px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded-lg text-sm transition">

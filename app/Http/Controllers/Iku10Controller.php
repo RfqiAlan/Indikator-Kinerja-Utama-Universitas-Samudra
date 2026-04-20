@@ -8,6 +8,18 @@ use Illuminate\Http\Request;
 
 class Iku10Controller extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $user = auth()->user();
+            // Block role 'user' array who don't belong to fakultas 'fp' or 'feb'.
+            if ($user && $user->role === 'user' && !in_array($user->fakultas, ['fp', 'feb'])) {
+                return redirect()->route('dashboard')->with('error', 'Fakultas Anda tidak memiliki akses ke IKU 10. Hanya Fakultas Pertanian dan Ekonomi yang dapat mengaksesnya.');
+            }
+            return $next($request);
+        });
+    }
+
     public function index(Request $request)
     {
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());

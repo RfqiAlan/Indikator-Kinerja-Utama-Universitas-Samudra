@@ -48,7 +48,7 @@ window.showWarning = (message) => {
 };
 
 // Intercept delete actions globally
-window.confirmDelete = (eventOrId, message = "Data yang dihapus tidak dapat dikembalikan!") => {
+window.confirmDelete = (eventOrId, message = "Data yang dihapus tidak dapat dikembalikan!", title = "Hapus Data?", confirmText = "Ya, hapus!") => {
     let form;
     if (typeof eventOrId === 'string') {
         form = document.getElementById(eventOrId);
@@ -59,13 +59,13 @@ window.confirmDelete = (eventOrId, message = "Data yang dihapus tidak dapat dike
     }
 
     Swal.fire({
-        title: 'Hapus Data?',
+        title: title,
         text: message,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#ef4444',
         cancelButtonColor: '#94a3b8',
-        confirmButtonText: 'Ya, hapus!',
+        confirmButtonText: confirmText,
         cancelButtonText: 'Batal',
         customClass: {
             popup: 'rounded-2xl shadow-xl border border-slate-100',

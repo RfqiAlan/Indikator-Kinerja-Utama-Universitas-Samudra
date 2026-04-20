@@ -56,15 +56,17 @@
                     @error('password')<p class="text-rose-500 text-sm mt-1 flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> {{ $message }}</p>@enderror
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2" x-data="{ role: '{{ old('role', 'user') }}' }">
                     <div>
                         <label class="block text-sm font-bold text-slate-700 mb-2">Role Akses <span class="text-rose-500">*</span></label>
-                        <select name="role" class="w-full rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-blue-500 transition-colors" required>
+                        <select name="role" x-model="role" class="w-full rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-blue-500 transition-colors" required>
                             <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User (Operator Fakultas)</option>
-                            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin (Sistem Universial)</option>
+                            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin (Sistem Universal)</option>
+                            <option value="TimKerjaSama" {{ old('role') == 'TimKerjaSama' ? 'selected' : '' }}>Tim Kerja Sama (Khusus IKU 5)</option>
+                            <option value="TimKeuangan" {{ old('role') == 'TimKeuangan' ? 'selected' : '' }}>Tim Keuangan (Khusus IKU 9)</option>
                         </select>
                     </div>
-                    <div>
+                    <div x-show="!['TimKerjaSama', 'TimKeuangan'].includes(role)">
                         <label class="block text-sm font-bold text-slate-700 mb-2">Penempatan Fakultas</label>
                         <select name="fakultas" class="w-full rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-blue-500 transition-colors">
                             <option value="">-- Pilih Fakultas (Semua untuk Admin) --</option>

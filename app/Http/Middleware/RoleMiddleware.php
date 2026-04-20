@@ -13,13 +13,13 @@ class RoleMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, string $role): Response
+    public function handle(Request $request, Closure $next, string ...$roles): Response
     {
         if (!$request->user()) {
             return redirect()->route('login');
         }
 
-        if ($request->user()->role !== $role) {
+        if (!in_array($request->user()->role, $roles)) {
             // Redirect to appropriate dashboard instead of showing 403 error
             if ($request->user()->role === 'admin') {
                 return redirect()->route('admin.dashboard')

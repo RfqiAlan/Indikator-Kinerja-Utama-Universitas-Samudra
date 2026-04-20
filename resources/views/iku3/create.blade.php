@@ -186,52 +186,55 @@
         <script>
             function formIku3() {
                 return {
-                    totalMahasiswa: {{ old('total_mahasiswa', 0) }},
+                    totalMahasiswa: {{ (int) old('total_mahasiswa', 0) }},
                     
-                    mg_k5: {{ old('magang_kurang_5', 0) }}, mg_6_10: {{ old('magang_6_10', 0) }}, mg_l10: {{ old('magang_lebih_10', 0) }},
-                    rs_k5: {{ old('riset_kurang_5', 0) }}, rs_6_10: {{ old('riset_6_10', 0) }}, rs_l10: {{ old('riset_lebih_10', 0) }},
-                    pt_k5: {{ old('pertukaran_kurang_5', 0) }}, pt_6_10: {{ old('pertukaran_6_10', 0) }}, pt_l10: {{ old('pertukaran_lebih_10', 0) }},
-                    kn_k5: {{ old('kkn_kurang_5', 0) }}, kn_6_10: {{ old('kkn_6_10', 0) }}, kn_l10: {{ old('kkn_lebih_10', 0) }},
+                    mg_k5: {{ (int) old('magang_kurang_5', 0) }}, mg_6_10: {{ (int) old('magang_6_10', 0) }}, mg_l10: {{ (int) old('magang_lebih_10', 0) }},
+                    rs_k5: {{ (int) old('riset_kurang_5', 0) }}, rs_6_10: {{ (int) old('riset_6_10', 0) }}, rs_l10: {{ (int) old('riset_lebih_10', 0) }},
+                    pt_k5: {{ (int) old('pertukaran_kurang_5', 0) }}, pt_6_10: {{ (int) old('pertukaran_6_10', 0) }}, pt_l10: {{ (int) old('pertukaran_lebih_10', 0) }},
+                    kn_k5: {{ (int) old('kkn_kurang_5', 0) }}, kn_6_10: {{ (int) old('kkn_6_10', 0) }}, kn_l10: {{ (int) old('kkn_lebih_10', 0) }},
                     
-                    l_int_j1: {{ old('lomba_int_juara1', 0) }},
-                    l_int_j23: {{ old('lomba_int_juara23', 0) }},
-                    l_int_harapan: {{ old('lomba_int_harapan', 0) }},
-                    l_int_finalis: {{ old('lomba_int_finalis', 0) }},
+                    l_int_j1: {{ (int) old('lomba_int_juara1', 0) }},
+                    l_int_j23: {{ (int) old('lomba_int_juara23', 0) }},
+                    l_int_harapan: {{ (int) old('lomba_int_harapan', 0) }},
+                    l_int_finalis: {{ (int) old('lomba_int_finalis', 0) }},
                     
-                    l_nas_j1: {{ old('lomba_nas_juara1', 0) }},
-                    l_nas_j23: {{ old('lomba_nas_juara23', 0) }},
-                    l_nas_harapan: {{ old('lomba_nas_harapan', 0) }},
-                    l_nas_finalis: {{ old('lomba_nas_finalis', 0) }},
+                    l_nas_j1: {{ (int) old('lomba_nas_juara1', 0) }},
+                    l_nas_j23: {{ (int) old('lomba_nas_juara23', 0) }},
+                    l_nas_harapan: {{ (int) old('lomba_nas_harapan', 0) }},
+                    l_nas_finalis: {{ (int) old('lomba_nas_finalis', 0) }},
                     
-                    l_prov_j1: {{ old('lomba_prov_juara1', 0) }},
-                    l_prov_j23: {{ old('lomba_prov_juara23', 0) }},
-                    l_prov_harapan: {{ old('lomba_prov_harapan', 0) }},
-                    l_prov_finalis: {{ old('lomba_prov_finalis', 0) }},
+                    l_prov_j1: {{ (int) old('lomba_prov_juara1', 0) }},
+                    l_prov_j23: {{ (int) old('lomba_prov_juara23', 0) }},
+                    l_prov_harapan: {{ (int) old('lomba_prov_harapan', 0) }},
+                    l_prov_finalis: {{ (int) old('lomba_prov_finalis', 0) }},
 
                     get totalKegiatan() {
-                        return this.mg_k5 + this.mg_6_10 + this.mg_l10 +
-                               this.rs_k5 + this.rs_6_10 + this.rs_l10 +
-                               this.pt_k5 + this.pt_6_10 + this.pt_l10 +
-                               this.kn_k5 + this.kn_6_10 + this.kn_l10 +
-                               this.l_int_j1 + this.l_int_j23 + this.l_int_harapan + this.l_int_finalis +
-                               this.l_nas_j1 + this.l_nas_j23 + this.l_nas_harapan + this.l_nas_finalis +
-                               this.l_prov_j1 + this.l_prov_j23 + this.l_prov_harapan + this.l_prov_finalis;
+                        const n = (v) => parseInt(v) || 0;
+                        return n(this.mg_k5) + n(this.mg_6_10) + n(this.mg_l10) +
+                               n(this.rs_k5) + n(this.rs_6_10) + n(this.rs_l10) +
+                               n(this.pt_k5) + n(this.pt_6_10) + n(this.pt_l10) +
+                               n(this.kn_k5) + n(this.kn_6_10) + n(this.kn_l10) +
+                               n(this.l_int_j1) + n(this.l_int_j23) + n(this.l_int_harapan) + n(this.l_int_finalis) +
+                               n(this.l_nas_j1) + n(this.l_nas_j23) + n(this.l_nas_harapan) + n(this.l_nas_finalis) +
+                               n(this.l_prov_j1) + n(this.l_prov_j23) + n(this.l_prov_harapan) + n(this.l_prov_finalis);
                     },
                     get skorBobot() {
+                        const n = (v) => parseInt(v) || 0;
                         const nonKompetisi = 
-                            ((this.mg_k5 + this.rs_k5 + this.pt_k5 + this.kn_k5) * 0.4) +
-                            ((this.mg_6_10 + this.rs_6_10 + this.pt_6_10 + this.kn_6_10) * 0.6) +
-                            ((this.mg_l10 + this.rs_l10 + this.pt_l10 + this.kn_l10) * 1.0);
+                            ((n(this.mg_k5) + n(this.rs_k5) + n(this.pt_k5) + n(this.kn_k5)) * 0.4) +
+                            ((n(this.mg_6_10) + n(this.rs_6_10) + n(this.pt_6_10) + n(this.kn_6_10)) * 0.6) +
+                            ((n(this.mg_l10) + n(this.rs_l10) + n(this.pt_l10) + n(this.kn_l10)) * 1.0);
                                 
                         const lomba = 
-                            (this.l_int_j1 * 1.0) + (this.l_int_j23 * 0.5) + (this.l_int_harapan * 0.3) + (this.l_int_finalis * 0.2) +
-                            (this.l_nas_j1 * 0.6) + (this.l_nas_j23 * 0.3) + (this.l_nas_harapan * 0.2) + (this.l_nas_finalis * 0.1) +
-                            (this.l_prov_j1 * 0.4) + (this.l_prov_j23 * 0.2) + (this.l_prov_harapan * 0.1) + (this.l_prov_finalis * 0.05);
+                            (n(this.l_int_j1) * 1.0) + (n(this.l_int_j23) * 0.5) + (n(this.l_int_harapan) * 0.3) + (n(this.l_int_finalis) * 0.2) +
+                            (n(this.l_nas_j1) * 0.6) + (n(this.l_nas_j23) * 0.3) + (n(this.l_nas_harapan) * 0.2) + (n(this.l_nas_finalis) * 0.1) +
+                            (n(this.l_prov_j1) * 0.4) + (n(this.l_prov_j23) * 0.2) + (n(this.l_prov_harapan) * 0.1) + (n(this.l_prov_finalis) * 0.05);
                         return nonKompetisi + lomba;
                     },
                     get persentase() {
-                        if (this.totalMahasiswa <= 0) return 0;
-                        return (this.skorBobot / this.totalMahasiswa) * 100;
+                        const tm = parseInt(this.totalMahasiswa) || 0;
+                        if (tm <= 0) return 0;
+                        return (this.skorBobot / tm) * 100;
                     }
                 }
             }
