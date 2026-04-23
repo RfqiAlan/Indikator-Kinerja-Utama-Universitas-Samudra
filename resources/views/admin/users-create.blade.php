@@ -64,9 +64,10 @@
                             <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin (Sistem Universal)</option>
                             <option value="TimKerjaSama" {{ old('role') == 'TimKerjaSama' ? 'selected' : '' }}>Tim Kerja Sama (Khusus IKU 5)</option>
                             <option value="TimKeuangan" {{ old('role') == 'TimKeuangan' ? 'selected' : '' }}>Tim Keuangan (Khusus IKU 9)</option>
+                            <option value="TimPerencanaan" {{ old('role') == 'TimPerencanaan' ? 'selected' : '' }}>Tim Perencanaan (Khusus IKU 11, 12, 13)</option>
                         </select>
                     </div>
-                    <div x-show="!['TimKerjaSama', 'TimKeuangan'].includes(role)">
+                    <div x-show="!['TimKerjaSama', 'TimKeuangan', 'TimPerencanaan'].includes(role)">
                         <label class="block text-sm font-bold text-slate-700 mb-2">Penempatan Fakultas</label>
                         <select name="fakultas" class="w-full rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-blue-500 transition-colors">
                             <option value="">-- Pilih Fakultas (Semua untuk Admin) --</option>

@@ -74,12 +74,20 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
     
     // IKU 10: Zona Integritas
     Route::resource('iku10', \App\Http\Controllers\Iku10Controller::class);
-    
-    // IKU 11: Tata Kelola
-    Route::resource('iku11', \App\Http\Controllers\Iku11Controller::class);
+    });
+
+    Route::middleware('role:TimPerencanaan')->group(function () {
+        // IKU 11: Tata Kelola
+        Route::resource('iku11', \App\Http\Controllers\Iku11Controller::class);
+        
+        // IKU 12: Kesejahteraan Dosen
+        Route::resource('iku12', \App\Http\Controllers\Iku12Controller::class);
+        
+        // IKU 13: Kesehatan Finansial
+        Route::resource('iku13', \App\Http\Controllers\Iku13Controller::class);
     });
     
-    Route::middleware('role:user,TimKerjaSama,TimKeuangan')->group(function () {
+    Route::middleware('role:user,TimKerjaSama,TimKeuangan,TimPerencanaan')->group(function () {
         // General IKU routes
         Route::get('/iku/filter', [RekapIkuController::class, 'filter'])->name('iku.filter');
         Route::resource('iku', RekapIkuController::class);
@@ -89,7 +97,7 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
     });
 });
 
-Route::middleware(['auth', 'role:user,TimKerjaSama,TimKeuangan'])->group(function () {
+Route::middleware(['auth', 'role:user,TimKerjaSama,TimKeuangan,TimPerencanaan'])->group(function () {
     Route::get('/auth/google/callback', [GoogleDriveOauthController::class, 'handleCallback'])->name('user.drive.callback');
 });
 

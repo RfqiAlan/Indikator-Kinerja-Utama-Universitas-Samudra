@@ -38,7 +38,7 @@
                             $totalIkuData = $iku1Data->count() + $iku2Data->count() + $iku3Data->count() +
                                 $iku4Data->count() + $iku5Data->count() + $iku6Data->count() +
                                 $iku7Data->count() + $iku8Data->count() + $iku9Data->count() +
-                                $iku10Data->count() + $iku11Data->count();
+                                $iku10Data->count() + $iku11Data->count() + $iku12Data->count() + $iku13Data->count();
                         @endphp
                         <div class="flex items-center gap-2 bg-slate-50 rounded-lg px-3.5 py-2 border border-slate-200">
                             <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -453,6 +453,85 @@
         </div>
         @else
         <p class="text-slate-500 text-center py-4">Belum ada data IKU 11</p>
+        @endif
+    </div>
+    <!-- IKU 12 Data -->
+    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+        <h2 class="text-xl font-bold text-slate-800 mb-4">IKU 12 - Kesejahteraan Dosen</h2>
+        @if($iku12Data->count() > 0)
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead class="bg-slate-50">
+                    <tr>
+                        <th class="px-4 py-3 text-left font-semibold text-slate-600">Status Validasi</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Dokumen Perencanaan</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Finansial</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Non-Finansial</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Standar UMP</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Ditetapkan Pimpinan</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Lampiran Drive</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    @foreach($iku12Data as $row)
+                    <tr>
+                        <td class="px-4 py-3 font-bold {{ $row->status_validasi ? 'text-emerald-600' : 'text-rose-600' }}">{{ $row->status_validasi ? 'TERPENUHI' : 'BELUM' }}</td>
+                        <td class="px-4 py-3 text-center">{{ $row->ada_dokumen_perencanaan ? 'Ya' : 'Tidak' }}</td>
+                        <td class="px-4 py-3 text-center">{{ $row->memuat_kesejahteraan_finansial ? 'Ya' : 'Tidak' }}</td>
+                        <td class="px-4 py-3 text-center">{{ $row->memuat_kesejahteraan_non_finansial ? 'Ya' : 'Tidak' }}</td>
+                        <td class="px-4 py-3 text-center">{{ $row->memenuhi_standar_penghasilan ? 'Ya' : 'Tidak' }}</td>
+                        <td class="px-4 py-3 text-center">{{ $row->ditetapkan_pimpinan ? 'Ya' : 'Tidak' }}</td>
+                        <td class="px-4 py-3 text-center">
+                            @if(!empty($row->lampiran_link))
+                                <a href="{{ $row->lampiran_link[0] }}" target="_blank" class="text-blue-600 hover:underline">Lihat {{ count($row->lampiran_link) }} Berkas</a>
+                            @else
+                                <span class="text-slate-400">-</span>
+                            @endif
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        @else
+        <p class="text-slate-500 text-center py-4">Belum ada data IKU 12</p>
+        @endif
+    </div>
+
+    <!-- IKU 13 Data -->
+    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+        <h2 class="text-xl font-bold text-slate-800 mb-4">IKU 13 - Kinerja Anggaran</h2>
+        @if($iku13Data->count() > 0)
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead class="bg-slate-50">
+                    <tr>
+                        <th class="px-4 py-3 text-left font-semibold text-slate-600">Tahun Akademik</th>
+                        <th class="px-4 py-3 text-left font-semibold text-slate-600">Keterangan</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Lampiran Drive</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    @foreach($iku13Data as $row)
+                    <tr>
+                        <td class="px-4 py-3 font-medium text-slate-800">{{ $row->tahun_akademik }}</td>
+                        <td class="px-4 py-3">{{ $row->keterangan ?: '-' }}</td>
+                        <td class="px-4 py-3 text-center">
+                            @if(!empty($row->lampiran_link))
+                                @foreach($row->lampiran_link as $i => $link)
+                                    <a href="{{ $link }}" target="_blank" class="inline-block bg-blue-50 text-blue-600 px-2 py-1 rounded text-xs hover:bg-blue-100 mr-1 mb-1">Berkas {{ $i+1 }}</a>
+                                @endforeach
+                            @else
+                                <span class="text-slate-400">-</span>
+                            @endif
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        @else
+        <p class="text-slate-500 text-center py-4">Belum ada data IKU 13</p>
         @endif
     </div>
 </x-admin-layout>

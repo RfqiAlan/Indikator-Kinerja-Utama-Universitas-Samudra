@@ -151,7 +151,7 @@ class AdminController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
-            'role' => 'required|in:admin,user,TimKerjaSama,TimKeuangan',
+            'role' => 'required|in:admin,user,TimKerjaSama,TimKeuangan,TimPerencanaan',
             'fakultas' => 'nullable|string',
         ]);
 
@@ -178,7 +178,7 @@ class AdminController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'role' => 'required|in:admin,user,TimKerjaSama,TimKeuangan',
+            'role' => 'required|in:admin,user,TimKerjaSama,TimKeuangan,TimPerencanaan',
             'fakultas' => 'nullable|string',
         ]);
 
@@ -231,6 +231,8 @@ class AdminController extends Controller
         $iku9Data = Iku9Pendapatan::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
         $iku10Data = Iku10ZonaIntegritas::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
         $iku11Data = Iku11TataKelola::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
+        $iku12Data = \App\Models\Iku12KesejahteraanDosen::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
+        $iku13Data = \App\Models\Iku13KinerjaAnggaran::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
         
         $users = User::where('fakultas', $kode)->get();
 
@@ -247,6 +249,8 @@ class AdminController extends Controller
             'iku9Data',
             'iku10Data',
             'iku11Data',
+            'iku12Data',
+            'iku13Data',
             'users',
             'tahunAkademik',
             'availableYears'

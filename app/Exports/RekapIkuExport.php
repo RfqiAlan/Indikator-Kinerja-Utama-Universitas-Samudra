@@ -13,6 +13,8 @@ use App\Models\Iku8SdmKebijakan;
 use App\Models\Iku9Pendapatan;
 use App\Models\Iku10ZonaIntegritas;
 use App\Models\Iku11TataKelola;
+use App\Models\Iku12KesejahteraanDosen;
+use App\Models\Iku13KinerjaAnggaran;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use Maatwebsite\Excel\Concerns\WithTitle;
@@ -47,6 +49,8 @@ class RekapIkuExport implements WithMultipleSheets
             new Iku9Sheet($this->fakultas, $this->tahunAkademik),
             new Iku10Sheet($this->fakultas, $this->tahunAkademik),
             new Iku11Sheet($this->fakultas, $this->tahunAkademik),
+            new Iku12Sheet($this->fakultas, $this->tahunAkademik),
+            new Iku13Sheet($this->fakultas, $this->tahunAkademik),
         ];
     }
 }
@@ -533,6 +537,81 @@ class Iku11Sheet extends BaseIkuSheet
                 $item->kegiatan_direncanakan ?? 0,
                 $item->kegiatan_terlaksana ?? 0,
                 number_format($item->persentase_pencegahan ?? 0, 2),
+                $item->keterangan ?? '-',
+                is_array($item->lampiran_link) ? implode("\n", $item->lampiran_link) : ($item->lampiran_link ?? '-'),
+            ];
+        });
+    }
+}
+
+// IKU 12 Sheet
+class Iku12Sheet extends BaseIkuSheet
+{
+    public function title(): string
+    {
+        return 'IKU 12 - Kesejahteraan Dosen';
+    }
+
+    public function headings(): array
+    {
+        return [
+            'Fakultas', 'Tahun',
+            'Ada Dokumen Perencanaan', 'Kesejahteraan Finansial', 'Kesejahteraan Non-Finansial',
+            'Sesuai Standar UMP', 'Ada Indikator Kinerja', 'Ditetapkan Pimpinan', 'Terintegrasi Renstra',
+            'Status Validasi', 'Keterangan', 'Link Bukti Pendukung'
+        ];
+    }
+
+    public function collection(): Collection
+    {
+        $query = Iku12KesejahteraanDosen::where('tahun_akademik', $this->tahunAkademik);
+        if ($this->fakultas) {
+            $query->where('fakultas', $this->fakultas);
+        }
+        
+        return $query->get()->map(function ($item) {
+            return [
+                $this->getFakultasName($item->fakultas),
+                $item->tahun_akademik,
+                $item->ada_dokumen_perencanaan ? 'Ya' : 'Tidak',
+                $item->memuat_kesejahteraan_finansial ? 'Ya' : 'Tidak',
+                $item->memuat_kesejahteraan_non_finansial ? 'Ya' : 'Tidak',
+                $item->memenuhi_standar_penghasilan ? 'Ya' : 'Tidak',
+                $item->ada_indikator_kinerja ? 'Ya' : 'Tidak',
+                $item->ditetapkan_pimpinan ? 'Ya' : 'Tidak',
+                $item->terintegrasi_renstra ? 'Ya' : 'Tidak',
+                $item->status_validasi ? 'Terpenuhi' : 'Belum Terpenuhi',
+                $item->keterangan ?? '-',
+                is_array($item->lampiran_link) ? implode("\n", $item->lampiran_link) : ($item->lampiran_link ?? '-'),
+            ];
+        });
+    }
+}
+
+// IKU 13 Sheet
+class Iku13Sheet extends BaseIkuSheet
+{
+    public function title(): string
+    {
+        return 'IKU 13 - Kinerja Anggaran';
+    }
+
+    public function headings(): array
+    {
+        return ['Fakultas', 'Tahun', 'Keterangan', 'Link Bukti Pendukung'];
+    }
+
+    public function collection(): Collection
+    {
+        $query = Iku13KinerjaAnggaran::where('tahun_akademik', $this->tahunAkademik);
+        if ($this->fakultas) {
+            $query->where('fakultas', $this->fakultas);
+        }
+        
+        return $query->get()->map(function ($item) {
+            return [
+                $this->getFakultasName($item->fakultas),
+                $item->tahun_akademik,
                 $item->keterangan ?? '-',
                 is_array($item->lampiran_link) ? implode("\n", $item->lampiran_link) : ($item->lampiran_link ?? '-'),
             ];

@@ -82,6 +82,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if user is TimPerencanaan
+     */
+    public function isTimPerencanaan(): bool
+    {
+        return $this->role === 'TimPerencanaan';
+    }
+
+    /**
      * Get fakultas data from database
      */
     public function getFakultasDataAttribute(): ?array
