@@ -27,66 +27,67 @@ Route::middleware('auth')->group(function () {
 
 // User routes (CRUD for IKU data)
 Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
+
     Route::middleware('role:user')->group(function () {
-    // IKU 1: Angka Efisiensi Edukasi
-    Route::get('/iku1', [Iku1Controller::class, 'index'])->name('iku1.index');
-    Route::get('/iku1/create', [Iku1Controller::class, 'create'])->name('iku1.create');
-    Route::post('/iku1', [Iku1Controller::class, 'store'])->name('iku1.store');
-    Route::get('/iku1/{iku1}/edit', [Iku1Controller::class, 'edit'])->name('iku1.edit');
-    Route::put('/iku1/{iku1}', [Iku1Controller::class, 'update'])->name('iku1.update');
-    Route::delete('/iku1/{iku1}', [Iku1Controller::class, 'destroy'])->name('iku1.destroy');
-    
-    // IKU 2: Lulusan Bekerja/Studi/Wirausaha
-    Route::resource('iku2', \App\Http\Controllers\Iku2Controller::class);
-    
-    // IKU 3: Mahasiswa Berkegiatan di Luar Prodi
-    Route::resource('iku3', \App\Http\Controllers\Iku3Controller::class);
-    
-    // IKU 4: Dosen Rekognisi Internasional
-    Route::resource('iku4', \App\Http\Controllers\Iku4Controller::class);
-    
+        // IKU 1: Angka Efisiensi Edukasi
+        Route::get('/iku1', [Iku1Controller::class, 'index'])->name('iku1.index');
+        Route::get('/iku1/create', [Iku1Controller::class, 'create'])->name('iku1.create');
+        Route::post('/iku1', [Iku1Controller::class, 'store'])->middleware('drive.connected')->name('iku1.store');
+        Route::get('/iku1/{iku1}/edit', [Iku1Controller::class, 'edit'])->name('iku1.edit');
+        Route::put('/iku1/{iku1}', [Iku1Controller::class, 'update'])->middleware('drive.connected')->name('iku1.update');
+        Route::delete('/iku1/{iku1}', [Iku1Controller::class, 'destroy'])->name('iku1.destroy');
+
+        // IKU 2: Lulusan Bekerja/Studi/Wirausaha
+        Route::resource('iku2', \App\Http\Controllers\Iku2Controller::class)->middleware(['store' => 'drive.connected', 'update' => 'drive.connected']);
+
+        // IKU 3: Mahasiswa Berkegiatan di Luar Prodi
+        Route::resource('iku3', \App\Http\Controllers\Iku3Controller::class)->middleware(['store' => 'drive.connected', 'update' => 'drive.connected']);
+
+        // IKU 4: Dosen Rekognisi Internasional
+        Route::resource('iku4', \App\Http\Controllers\Iku4Controller::class)->middleware(['store' => 'drive.connected', 'update' => 'drive.connected']);
+
     });
 
     // IKU 5: Luaran Kerja Sama
     Route::middleware('role:user,TimKerjaSama')->group(function () {
-        Route::resource('iku5', \App\Http\Controllers\Iku5Controller::class);
+        Route::resource('iku5', \App\Http\Controllers\Iku5Controller::class)->middleware(['store' => 'drive.connected', 'update' => 'drive.connected']);
     });
-    
+
     Route::middleware('role:user')->group(function () {
-    
-    // IKU 6: Publikasi Scopus/WoS
-    Route::resource('iku6', \App\Http\Controllers\Iku6Controller::class);
-    
-    // IKU 7: Keterlibatan SDGs
-    Route::resource('iku7', \App\Http\Controllers\Iku7Controller::class);
-    
-    // IKU 8: SDM Penyusun Kebijakan
-    Route::resource('iku8', \App\Http\Controllers\Iku8Controller::class);
-    
+
+        // IKU 6: Publikasi Scopus/WoS
+        Route::resource('iku6', \App\Http\Controllers\Iku6Controller::class)->middleware(['store' => 'drive.connected', 'update' => 'drive.connected']);
+
+        // IKU 7: Keterlibatan SDGs
+        Route::resource('iku7', \App\Http\Controllers\Iku7Controller::class)->middleware(['store' => 'drive.connected', 'update' => 'drive.connected']);
+
+        // IKU 8: SDM Penyusun Kebijakan
+        Route::resource('iku8', \App\Http\Controllers\Iku8Controller::class)->middleware(['store' => 'drive.connected', 'update' => 'drive.connected']);
+
     });
 
     // IKU 9: Pendapatan Non-UKT
     Route::middleware('role:TimKeuangan')->group(function () {
-        Route::resource('iku9', \App\Http\Controllers\Iku9Controller::class);
+        Route::resource('iku9', \App\Http\Controllers\Iku9Controller::class)->middleware(['store' => 'drive.connected', 'update' => 'drive.connected']);
     });
-    
+
     Route::middleware('role:user')->group(function () {
-    
-    // IKU 10: Zona Integritas
-    Route::resource('iku10', \App\Http\Controllers\Iku10Controller::class);
+
+        // IKU 10: Zona Integritas
+        Route::resource('iku10', \App\Http\Controllers\Iku10Controller::class)->middleware(['store' => 'drive.connected', 'update' => 'drive.connected']);
     });
 
     Route::middleware('role:TimPerencanaan')->group(function () {
         // IKU 11: Tata Kelola
-        Route::resource('iku11', \App\Http\Controllers\Iku11Controller::class);
-        
+        Route::resource('iku11', \App\Http\Controllers\Iku11Controller::class)->middleware(['store' => 'drive.connected', 'update' => 'drive.connected']);
+
         // IKU 12: Kesejahteraan Dosen
-        Route::resource('iku12', \App\Http\Controllers\Iku12Controller::class);
-        
+        Route::resource('iku12', \App\Http\Controllers\Iku12Controller::class)->middleware(['store' => 'drive.connected', 'update' => 'drive.connected']);
+
         // IKU 13: Kesehatan Finansial
-        Route::resource('iku13', \App\Http\Controllers\Iku13Controller::class);
+        Route::resource('iku13', \App\Http\Controllers\Iku13Controller::class)->middleware(['store' => 'drive.connected', 'update' => 'drive.connected']);
     });
-    
+
     Route::middleware('role:user,TimKerjaSama,TimKeuangan,TimPerencanaan')->group(function () {
         // General IKU routes
         Route::get('/iku/filter', [RekapIkuController::class, 'filter'])->name('iku.filter');
