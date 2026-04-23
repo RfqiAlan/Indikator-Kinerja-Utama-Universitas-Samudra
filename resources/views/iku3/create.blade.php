@@ -59,7 +59,7 @@
                         <div class="bg-amber-100/60 rounded-lg p-3">
                             <p class="font-semibold mb-1">📚 Non-Kompetisi — Bobot berdasarkan SKS:</p>
                             <p>≤ 5 SKS = <strong>0.4</strong> | 6–10 SKS = <strong>0.6</strong> | &gt; 10 SKS = <strong>1.0</strong></p>
-                            <p class="mt-1 italic">(Magang, Riset, Pertukaran Pelajar, KKN)</p>
+                            <p class="mt-1 italic">(Magang, Riset, Pertukaran Mahasiswa, KKN)</p>
                         </div>
                         <div class="bg-amber-100/60 rounded-lg p-3">
                             <p class="font-semibold mb-1">🏆 Lomba / Kompetisi:</p>
@@ -101,7 +101,7 @@
 
                         <!-- Pertukaran -->
                         <div class="bg-emerald-50 p-4 rounded-xl">
-                            <h4 class="font-semibold text-emerald-800 mb-3 flex items-center gap-2">🌍 Pertukaran Pelajar</h4>
+                            <h4 class="font-semibold text-emerald-800 mb-3 flex items-center gap-2">🌍 Pertukaran Mahasiswa</h4>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div><label class="block text-xs font-semibold text-emerald-700 mb-1">≤ 5 SKS (Bobot: 0.4)</label><input type="number" name="pertukaran_kurang_5" x-model.number="pt_k5" value="{{ old('pertukaran_kurang_5', 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>
                                 <div><label class="block text-xs font-semibold text-emerald-700 mb-1">6–10 SKS (Bobot: 0.6)</label><input type="number" name="pertukaran_6_10" x-model.number="pt_6_10" value="{{ old('pertukaran_6_10', 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>

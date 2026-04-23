@@ -24,7 +24,7 @@ class RekapIkuController extends Controller
      */
     private $ikuDefinitions = [
         'IKU 1' => ['title' => 'Lulusan Mendapat Pekerjaan Layak', 'desc' => 'Mendapat pekerjaan, wirausaha, atau lanjut studi'],
-        'IKU 2' => ['title' => 'Pengalaman Luar Kampus', 'desc' => 'Magang, proyek desa, mengajar, pertukaran pelajar, atau riset'],
+        'IKU 2' => ['title' => 'Pengalaman Luar Kampus', 'desc' => 'Magang, proyek desa, mengajar, Pertukaran Mahasiswa, atau riset'],
         'IKU 3' => ['title' => 'Dosen Berkegiatan Luar Kampus', 'desc' => 'Pengalaman industri atau mengajar di kampus lain'],
         'IKU 4' => ['title' => 'Praktisi Mengajar di Kampus', 'desc' => 'Dosen/ahli dari luar mengajar di kampus'],
         'IKU 5' => ['title' => 'Karya Dosen Digunakan Masyarakat', 'desc' => 'Riset, produk, atau sistem yang dimanfaatkan'],
@@ -44,24 +44,24 @@ class RekapIkuController extends Controller
         $tahunAkademik = request()->get('tahun', get_tahun_akademik());
         $fakultas = auth()->user()->fakultas;
 
-        $iku1Data  = Iku1Aee::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
-        $iku2Data  = Iku2LulusanBekerja::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
-        $iku3Data  = Iku3KegiatanMahasiswa::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
-        $iku4Data  = Iku4RekognisiDosen::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
-        $iku5Data  = Iku5LuaranKerjasama::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
-        $iku6Data  = Iku6Publikasi::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
-        $iku7Data  = Iku7Sdgs::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
-        $iku8Data  = Iku8SdmKebijakan::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
-        $iku9Data  = Iku9Pendapatan::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
+        $iku1Data = Iku1Aee::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
+        $iku2Data = Iku2LulusanBekerja::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
+        $iku3Data = Iku3KegiatanMahasiswa::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
+        $iku4Data = Iku4RekognisiDosen::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
+        $iku5Data = Iku5LuaranKerjasama::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
+        $iku6Data = Iku6Publikasi::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
+        $iku7Data = Iku7Sdgs::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
+        $iku8Data = Iku8SdmKebijakan::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
+        $iku9Data = Iku9Pendapatan::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
         $iku10Data = Iku10ZonaIntegritas::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
         $iku11Data = Iku11TataKelola::where('tahun_akademik', $tahunAkademik)->first();
 
         // ----- IKU 2 aggregation (DB-level) -----
         $iku2q = Iku2LulusanBekerja::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
-        $iku2TotalLulusan    = $iku2q->sum('total_lulusan');
-        $iku2TotalBekerja    = $iku2q->sum('skor_bekerja');
+        $iku2TotalLulusan = $iku2q->sum('total_lulusan');
+        $iku2TotalBekerja = $iku2q->sum('skor_bekerja');
         $iku2TotalStudiLanjut = $iku2q->sum('studi_lanjut');
-        $iku2TotalWirausaha  = $iku2q->sum('skor_wirausaha');
+        $iku2TotalWirausaha = $iku2q->sum('skor_wirausaha');
         $iku2Percentage = $iku2Data->isEmpty()
             ? null
             : ($iku2TotalLulusan > 0
@@ -70,7 +70,7 @@ class RekapIkuController extends Controller
 
         // ----- IKU 3 aggregation (DB-level) -----
         $iku3q = Iku3KegiatanMahasiswa::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
-        $iku3TotalMahasiswa   = $iku3q->sum('total_mahasiswa');
+        $iku3TotalMahasiswa = $iku3q->sum('total_mahasiswa');
         $iku3TotalBerkegiatan = $iku3q->sum('total_berkegiatan');
         $iku3Percentage = $iku3Data->isEmpty()
             ? null
@@ -78,7 +78,7 @@ class RekapIkuController extends Controller
 
         // ----- IKU 4 aggregation (DB-level) -----
         $iku4q = Iku4RekognisiDosen::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
-        $iku4TotalDosen    = $iku4q->sum('total_dosen_pt');
+        $iku4TotalDosen = $iku4q->sum('total_dosen_pt');
         $iku4TotalRekognisi = $iku4q->sum('total_dosen_rekognisi');
         $iku4Percentage = $iku4Data->isEmpty()
             ? null
@@ -86,7 +86,7 @@ class RekapIkuController extends Controller
 
         // ----- IKU 5 aggregation (DB-level) -----
         $iku5q = Iku5LuaranKerjasama::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
-        $iku5TotalDosen  = $iku5q->sum('total_kerjasama_pt');
+        $iku5TotalDosen = $iku5q->sum('total_kerjasama_pt');
         $iku5TotalLuaran = $iku5q->sum('total_luaran');
         $iku5Percentage = $iku5Data->isEmpty()
             ? null
@@ -95,14 +95,14 @@ class RekapIkuController extends Controller
         // ----- IKU 6 aggregation (DB-level) -----
         $iku6q = Iku6Publikasi::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
         $iku6TotalPublikasi = $iku6q->sum('total_publikasi');
-        $iku6SkorPublikasi  = $iku6q->sum('skor_publikasi');
+        $iku6SkorPublikasi = $iku6q->sum('skor_publikasi');
         $iku6Percentage = $iku6Data->isEmpty()
             ? null
             : ($iku6TotalPublikasi > 0 ? ($iku6SkorPublikasi / $iku6TotalPublikasi) * 100 : 0);
 
         // ----- IKU 7 aggregation (DB-level) -----
         $iku7q = Iku7Sdgs::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
-        $iku7TotalProgram    = $iku7q->sum('total_program');
+        $iku7TotalProgram = $iku7q->sum('total_program');
         $iku7TotalProgramSdgs = $iku7q->sum('total_program_sdgs');
         $iku7Percentage = $iku7Data->isEmpty()
             ? null
@@ -110,7 +110,7 @@ class RekapIkuController extends Controller
 
         // ----- IKU 8 aggregation (DB-level) -----
         $iku8q = Iku8SdmKebijakan::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
-        $iku8TotalSdm      = $iku8q->sum('total_sdm');
+        $iku8TotalSdm = $iku8q->sum('total_sdm');
         $iku8TotalTerlibat = $iku8q->sum('total_terlibat');
         $iku8Percentage = $iku8Data->isEmpty()
             ? null
@@ -119,37 +119,37 @@ class RekapIkuController extends Controller
         // ----- IKU 9 aggregation (DB-level) -----
         $iku9q = Iku9Pendapatan::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
         $iku9TotalPendapatan = $iku9q->sum('total_pendapatan');
-        $iku9TotalNonUkt     = $iku9q->sum('pendapatan_non_mahasiswa');
+        $iku9TotalNonUkt = $iku9q->sum('pendapatan_non_mahasiswa');
         $iku9Percentage = $iku9Data->isEmpty()
             ? null
             : ($iku9TotalPendapatan > 0 ? ($iku9TotalNonUkt / $iku9TotalPendapatan) * 100 : 0);
 
         // ----- IKU 10 aggregation (DB-level) -----
         $iku10q = Iku10ZonaIntegritas::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
-        $iku10TotalUnit  = $iku10Data->count();
+        $iku10TotalUnit = $iku10Data->count();
         $iku10Percentage = $iku10Data->isEmpty()
             ? null
             : $iku10TotalUnit;
 
         $ikuStats = [
-            'IKU 1'  => $iku1Data->isEmpty()
+            'IKU 1' => $iku1Data->isEmpty()
                 ? null
                 : Iku1Aee::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->avg('tingkat_pencapaian'),
-            'IKU 2'  => $iku2Percentage,
-            'IKU 3'  => $iku3Percentage,
-            'IKU 4'  => $iku4Percentage,
-            'IKU 5'  => $iku5Percentage,
-            'IKU 6'  => $iku6Percentage,
-            'IKU 7'  => $iku7Percentage,
-            'IKU 8'  => $iku8Percentage,
-            'IKU 9'  => $iku9Percentage,
+            'IKU 2' => $iku2Percentage,
+            'IKU 3' => $iku3Percentage,
+            'IKU 4' => $iku4Percentage,
+            'IKU 5' => $iku5Percentage,
+            'IKU 6' => $iku6Percentage,
+            'IKU 7' => $iku7Percentage,
+            'IKU 8' => $iku8Percentage,
+            'IKU 9' => $iku9Percentage,
             'IKU 10' => $iku10Percentage,
             'IKU 11' => $iku11Data && $iku11Data->nilai_sakip !== null
                 ? (float) $iku11Data->nilai_sakip
                 : null,
         ];
 
-        $ikuStats = collect($ikuStats)->map(fn ($value) => $value === null ? null : round($value, 2));
+        $ikuStats = collect($ikuStats)->map(fn($value) => $value === null ? null : round($value, 2));
 
         $ikus = RekapIku::orderBy('jenis_iku')->get();
         $activeIku = null;
@@ -165,7 +165,7 @@ class RekapIkuController extends Controller
         $ikus = RekapIku::where('jenis_iku', $ikuType)->get();
         $activeIku = $ikuType;
         $ikuInfo = $this->ikuDefinitions[$ikuType] ?? ['title' => $ikuType, 'desc' => ''];
-        
+
         return view('iku.filter', compact('ikus', 'activeIku', 'ikuType', 'ikuInfo'));
     }
 
@@ -193,7 +193,7 @@ class RekapIkuController extends Controller
         ]);
 
         $iku = RekapIku::create($validated);
-        
+
         // Log activity
         activity_log('create', 'RekapIku', $iku->id, "Menambahkan data IKU: {$iku->jenis_iku}");
 
@@ -232,7 +232,7 @@ class RekapIkuController extends Controller
         ]);
 
         $iku->update($validated);
-        
+
         // Log activity
         activity_log('update', 'RekapIku', $iku->id, "Mengupdate data IKU: {$iku->jenis_iku}");
 
@@ -247,7 +247,7 @@ class RekapIkuController extends Controller
         $jenisIku = $iku->jenis_iku;
         $ikuId = $iku->id;
         $iku->delete();
-        
+
         // Log activity
         activity_log('delete', 'RekapIku', $ikuId, "Menghapus data IKU: {$jenisIku}");
 

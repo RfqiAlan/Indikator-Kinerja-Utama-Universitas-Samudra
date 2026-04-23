@@ -14,7 +14,7 @@
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 w-full">
                 <div>
                     <h2 class="text-xl font-bold text-black tracking-tight">IKU 3: Mahasiswa Berkegiatan Luar</h2>
-                    <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Magang, pertukaran pelajar, riset, dan lomba mahasiswa di luar prodi.</p>
+                    <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Magang, Pertukaran Mahasiswa, riset, dan lomba mahasiswa di luar prodi.</p>
                 </div>
                 <div class="flex items-center gap-3">
                     <form method="GET" action="{{ route('user.iku3.index') }}" class="flex items-center">
@@ -193,7 +193,7 @@
                             </div>
                             <ul class="space-y-1.5 text-xs text-slate-600">
                                 <li class="flex gap-2 items-start"><span class="text-emerald-600 mt-0.5">●</span> Magang / Praktik Industri</li>
-                                <li class="flex gap-2 items-start"><span class="text-emerald-600 mt-0.5">●</span> Pertukaran Pelajar</li>
+                                <li class="flex gap-2 items-start"><span class="text-emerald-600 mt-0.5">●</span> Pertukaran Mahasiswa</li>
                                 <li class="flex gap-2 items-start"><span class="text-emerald-600 mt-0.5">●</span> Riset / Asisten Peneliti</li>
                                 <li class="flex gap-2 items-start"><span class="text-emerald-600 mt-0.5">●</span> Wirausaha Mahasiswa</li>
                                 <li class="flex gap-2 items-start"><span class="text-emerald-600 mt-0.5">●</span> Lomba & Kompetisi Nasional</li>
