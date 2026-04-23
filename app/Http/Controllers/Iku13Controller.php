@@ -11,12 +11,13 @@ class Iku13Controller extends Controller
     public function index(Request $request)
     {
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $fakultas = auth()->user()->fakultas ?? 'universitas';
         
         $data = Iku13KinerjaAnggaran::where('tahun_akademik', $tahunAkademik)
-            ->where('fakultas', auth()->user()->fakultas)
+            ->where('fakultas', $fakultas)
             ->first();
 
-        $dbYears = Iku13KinerjaAnggaran::where('fakultas', auth()->user()->fakultas)
+        $dbYears = Iku13KinerjaAnggaran::where('fakultas', $fakultas)
             ->select('tahun_akademik')
             ->distinct()
             ->pluck('tahun_akademik');
@@ -33,7 +34,7 @@ class Iku13Controller extends Controller
     public function create()
     {
         $tahunAkademik = get_tahun_akademik();
-        $fakultas = auth()->user()->fakultas;
+        $fakultas = auth()->user()->fakultas ?? 'universitas';
         $existing = Iku13KinerjaAnggaran::where('tahun_akademik', $tahunAkademik)
             ->where('fakultas', $fakultas)
             ->first();
@@ -55,7 +56,7 @@ class Iku13Controller extends Controller
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,xls,xlsx|max:10240',
         ]);
 
-        $fakultas = auth()->user()->fakultas;
+        $fakultas = auth()->user()->fakultas ?? 'universitas';
         $existing = Iku13KinerjaAnggaran::where('tahun_akademik', $validated['tahun_akademik'])
             ->where('fakultas', $fakultas)
             ->first();
@@ -93,7 +94,8 @@ class Iku13Controller extends Controller
 
     public function edit(Iku13KinerjaAnggaran $iku13)
     {
-        if ($iku13->fakultas !== auth()->user()->fakultas) {
+        $fakultas = auth()->user()->fakultas ?? 'universitas';
+        if ($iku13->fakultas !== $fakultas) {
             abort(403, 'Anda tidak memiliki akses ke data ini.');
         }
 
@@ -102,7 +104,8 @@ class Iku13Controller extends Controller
 
     public function update(Request $request, Iku13KinerjaAnggaran $iku13)
     {
-        if ($iku13->fakultas !== auth()->user()->fakultas) {
+        $fakultas = auth()->user()->fakultas ?? 'universitas';
+        if ($iku13->fakultas !== $fakultas) {
             abort(403, 'Anda tidak memiliki akses ke data ini.');
         }
 
@@ -136,7 +139,8 @@ class Iku13Controller extends Controller
 
     public function destroy(Iku13KinerjaAnggaran $iku13)
     {
-        if ($iku13->fakultas !== auth()->user()->fakultas) {
+        $fakultas = auth()->user()->fakultas ?? 'universitas';
+        if ($iku13->fakultas !== $fakultas) {
             abort(403, 'Anda tidak memiliki akses ke data ini.');
         }
 

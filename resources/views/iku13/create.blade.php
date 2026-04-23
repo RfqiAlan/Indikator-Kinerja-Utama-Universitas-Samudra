@@ -27,33 +27,14 @@
                     @csrf
                     <input type="hidden" name="tahun_akademik" value="{{ $tahunAkademik }}">
 
-                    <!-- Lampiran -->
+                    <!-- Keterangan -->
                     <div>
-                        <h3 class="text-lg font-bold text-slate-800 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
-                            <span class="w-6 h-6 rounded bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-                            </span>
-                            Unggah Dokumen RKA-K/L
-                        </h3>
-                        <div class="space-y-6">
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2">Pilih File (Bisa lebih dari satu)</label>
-                                <p class="text-xs text-slate-500 mb-4">Format yang diizinkan: PDF, JPG, PNG, DOCX, XLSX (Maksimal 10MB per file)</p>
-                                
-                                <div class="border-2 border-dashed border-slate-300 rounded-2xl p-8 text-center hover:bg-slate-50 hover:border-emerald-300 transition-colors">
-                                    <svg class="w-12 h-12 text-slate-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                                    <input type="file" name="lampiran[]" multiple required class="block w-full max-w-sm mx-auto text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer">
-                                </div>
-                                @error('lampiran.*')<p class="text-rose-500 text-xs mt-2">{{ $message }}</p>@enderror
-                                @error('lampiran')<p class="text-rose-500 text-xs mt-2">{{ $message }}</p>@enderror
-                            </div>
-                            
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2">Keterangan Tambahan (Opsional)</label>
-                                <textarea name="keterangan" rows="4" class="w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 text-sm placeholder:text-slate-400" placeholder="Tuliskan catatan atau deskripsi singkat mengenai dokumen yang diunggah..."></textarea>
-                            </div>
-                        </div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Keterangan Tambahan (Opsional)</label>
+                        <textarea name="keterangan" rows="4" class="w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 text-sm placeholder:text-slate-400" placeholder="Tuliskan catatan atau deskripsi singkat mengenai dokumen yang diunggah...">{{ old('keterangan') }}</textarea>
                     </div>
+
+                    <!-- Lampiran dengan GDrive -->
+                    @include("partials.lampiran-upload", ["ikuNumber" => 13])
 
                     <!-- Submit -->
                     <div class="flex items-center justify-end gap-3 pt-6 border-t border-slate-100">

@@ -113,26 +113,14 @@
                         </div>
                     </div>
 
-                    <!-- Lampiran -->
+                    <!-- Keterangan -->
                     <div>
-                        <h3 class="text-lg font-bold text-slate-800 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
-                            <span class="w-6 h-6 rounded bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm">3</span>
-                            Berkas Pendukung
-                        </h3>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-1">Upload Berkas Lampiran (Multiple)</label>
-                                <p class="text-xs text-slate-500 mb-3">*Dokumen wajib diunggah agar dapat diverifikasi dan status validasi terpenuhi.</p>
-                                <input type="file" name="lampiran[]" multiple class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer border border-slate-200 rounded-xl bg-slate-50">
-                                @error('lampiran.*')<p class="text-rose-500 text-xs mt-1">{{ $message }}</p>@enderror
-                            </div>
-                            
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-1">Keterangan Tambahan (Opsional)</label>
-                                <textarea name="keterangan" rows="3" class="w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 text-sm placeholder:text-slate-400" placeholder="Catatan tambahan mengenai dokumen perencanaan..."></textarea>
-                            </div>
-                        </div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Keterangan Tambahan (Opsional)</label>
+                        <textarea name="keterangan" rows="3" class="w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 text-sm placeholder:text-slate-400" placeholder="Catatan tambahan mengenai dokumen perencanaan...">{{ old('keterangan') }}</textarea>
                     </div>
+
+                    <!-- Lampiran dengan GDrive -->
+                    @include("partials.lampiran-upload", ["ikuNumber" => 12])
 
                     <!-- Submit -->
                     <div class="flex items-center justify-end gap-3 pt-6 border-t border-slate-100">

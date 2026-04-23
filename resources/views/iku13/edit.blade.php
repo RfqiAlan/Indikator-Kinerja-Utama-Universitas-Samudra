@@ -27,46 +27,17 @@
                     @csrf @method('PUT')
                     <input type="hidden" name="tahun_akademik" value="{{ $iku13->tahun_akademik }}">
 
-                    <!-- Lampiran -->
+                    <!-- Keterangan -->
                     <div>
-                        <h3 class="text-lg font-bold text-slate-800 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
-                            <span class="w-6 h-6 rounded bg-amber-100 text-amber-700 flex items-center justify-center text-sm">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                            </span>
-                            Perbarui Dokumen RKA-K/L
-                        </h3>
-                        
-                        <div class="space-y-6">
-                            @if(!empty($iku13->lampiran_link))
-                            <div class="p-5 rounded-xl bg-slate-50 border border-slate-200">
-                                <p class="text-sm font-bold text-slate-700 mb-3">Dokumen yang sudah diunggah:</p>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                    @foreach($iku13->lampiran_link as $index => $link)
-                                        <a href="{{ $link }}" target="_blank" class="flex items-center gap-2 px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm font-bold text-blue-600 hover:bg-blue-50 hover:border-blue-200 transition-colors shadow-sm">
-                                            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                                            <span class="truncate">Berkas {{ $index + 1 }}</span>
-                                        </a>
-                                    @endforeach
-                                </div>
-                            </div>
-                            @endif
-
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2">Unggah Dokumen Tambahan (Bila Perlu)</label>
-                                <p class="text-xs text-slate-500 mb-4">File baru yang diunggah akan ditambahkan ke daftar dokumen di atas.</p>
-                                
-                                <div class="border-2 border-dashed border-slate-300 rounded-2xl p-6 text-center hover:bg-slate-50 hover:border-blue-300 transition-colors">
-                                    <input type="file" name="lampiran[]" multiple class="block w-full max-w-sm mx-auto text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer">
-                                </div>
-                                @error('lampiran.*')<p class="text-rose-500 text-xs mt-2">{{ $message }}</p>@enderror
-                            </div>
-                            
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2">Keterangan Tambahan</label>
-                                <textarea name="keterangan" rows="4" class="w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 text-sm placeholder:text-slate-400">{{ $iku13->keterangan }}</textarea>
-                            </div>
-                        </div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Keterangan Tambahan (Opsional)</label>
+                        <textarea name="keterangan" rows="4" class="w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 text-sm placeholder:text-slate-400">{{ $iku13->keterangan }}</textarea>
                     </div>
+
+                    <!-- Lampiran dengan GDrive -->
+                    @include("partials.lampiran-upload", [
+                        "ikuNumber" => 13,
+                        "existingLinks" => $iku13->lampiran_link
+                    ])
 
                     <!-- Submit -->
                     <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-slate-100">
