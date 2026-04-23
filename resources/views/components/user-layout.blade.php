@@ -33,7 +33,7 @@
             }
             
             if ($user->role === 'user') {
-                if ($id === 'IKU 9') {
+                if ($id === 'IKU 9' || $id === 'IKU 11') {
                     return false;
                 }
                 if ($id === 'IKU 10') {
