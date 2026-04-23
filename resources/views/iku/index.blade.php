@@ -112,7 +112,27 @@
                 ['num' => 9,  'code' => 'IKU 9',  'title' => 'Pendapatan Non-UKT',                 'desc' => 'Hibah riset, royalti, konsultasi, & usaha bisnis PT',       'icon' => 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'target' => 20],
                 ['num' => 10, 'code' => 'IKU 10', 'title' => 'Zona Integritas',                    'desc' => 'Unit kerja berpredikat WBK / WBBM dari Kemenpan-RB',       'icon' => 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', 'target' => 10],
                 ['num' => 11, 'code' => 'IKU 11', 'title' => 'Tata Kelola Keuangan',               'desc' => 'WTP, SAKIP, & nilai integritas laporan keuangan PT',       'icon' => 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01', 'target' => 80],
+                ['num' => 12, 'code' => 'IKU 12', 'title' => 'Kesejahteraan Dosen',              'desc' => 'Perencanaan strategis peningkatan kesejahteraan dosen',   'icon' => 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z', 'target' => 100],
+                ['num' => 13, 'code' => 'IKU 13', 'title' => 'Kinerja Anggaran',                 'desc' => 'Nilai Kinerja Anggaran atas Pelaksanaan RKA-K/L',         'icon' => 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'target' => 100],
             ];
+
+            // Filter by Role
+            if (auth()->check()) {
+                $user = auth()->user();
+                $ikuInfos = array_filter($ikuInfos, function($info) use ($user) {
+                    $id = $info['code'];
+                    if ($user->role === 'admin') return true;
+                    if ($user->role === 'TimKerjaSama') return $id === 'IKU 5';
+                    if ($user->role === 'TimKeuangan') return $id === 'IKU 9';
+                    if ($user->role === 'TimPerencanaan') return in_array($id, ['IKU 11', 'IKU 12', 'IKU 13']);
+                    if ($user->role === 'user') {
+                        if (in_array($id, ['IKU 9', 'IKU 11', 'IKU 12', 'IKU 13'])) return false;
+                        if ($id === 'IKU 10') return in_array($user->fakultas, ['fp', 'feb']);
+                        return true;
+                    }
+                    return true;
+                });
+            }
 
             // Overall average for hero
             $sum = 0;
@@ -249,6 +269,8 @@
                                                 {{ $target }} Unit
                                             @elseif($info['num'] === 11)
                                                 Skor {{ $target }}
+                                            @elseif($info['num'] === 12 || $info['num'] === 13)
+                                                Tersedia
                                             @else
                                                 {{ $target }}%
                                             @endif

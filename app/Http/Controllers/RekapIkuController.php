@@ -55,6 +55,8 @@ class RekapIkuController extends Controller
         $iku9Data = Iku9Pendapatan::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
         $iku10Data = Iku10ZonaIntegritas::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->get();
         $iku11Data = Iku11TataKelola::where('tahun_akademik', $tahunAkademik)->first();
+        $iku12Data = \App\Models\Iku12KesejahteraanDosen::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->first();
+        $iku13Data = \App\Models\Iku13KinerjaAnggaran::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->first();
 
         // ----- IKU 2 aggregation (DB-level) -----
         $iku2q = Iku2LulusanBekerja::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
@@ -147,6 +149,8 @@ class RekapIkuController extends Controller
             'IKU 11' => $iku11Data && $iku11Data->nilai_sakip !== null
                 ? (float) $iku11Data->nilai_sakip
                 : null,
+            'IKU 12' => $iku12Data ? ($iku12Data->status_validasi ? 100 : 0) : null,
+            'IKU 13' => $iku13Data ? 100 : null,
         ];
 
         $ikuStats = collect($ikuStats)->map(fn($value) => $value === null ? null : round($value, 2));
