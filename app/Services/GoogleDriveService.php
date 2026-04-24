@@ -47,7 +47,7 @@ class GoogleDriveService
             }
 
             $driveFile = new DriveFile([
-                'name' => time() . '_' . $file->getClientOriginalName(),
+                'name' => now()->format('Y-m-d-H-i') . '_' . $file->getClientOriginalName(),
                 'parents' => [$parentId],
             ]);
 
