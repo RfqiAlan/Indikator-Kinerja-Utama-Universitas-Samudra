@@ -59,7 +59,7 @@ class Iku12Controller extends Controller
             'ditetapkan_pimpinan' => 'boolean',
             'terintegrasi_renstra' => 'boolean',
             'keterangan' => 'nullable|string',
-            'lampiran' => 'nullable|array',
+            'lampiran' => 'required|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 

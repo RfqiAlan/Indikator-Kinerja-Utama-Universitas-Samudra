@@ -68,7 +68,7 @@ class Iku8Controller extends Controller
             'narasumber' => 'required|integer|min:0',
             'kontributor_regulasi' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
-            'lampiran' => 'nullable|array',
+            'lampiran' => 'required|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 

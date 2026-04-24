@@ -70,7 +70,9 @@ class Iku9Controller extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate($this->validationRules());
+        $rules = $this->validationRules();
+        $rules['lampiran'] = 'required|array';
+        $validated = $request->validate($rules);
 
         $fakultas = auth()->user()->fakultas;
         $existing = Iku9Pendapatan::where('tahun_akademik', $validated['tahun_akademik'])

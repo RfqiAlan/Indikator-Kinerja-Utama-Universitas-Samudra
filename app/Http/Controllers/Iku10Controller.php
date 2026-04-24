@@ -74,7 +74,7 @@ class Iku10Controller extends Controller implements \Illuminate\Routing\Controll
             'dokumen_lengkap' => 'boolean',
             'terdaftar_kemenpan' => 'boolean',
             'keterangan' => 'nullable|string',
-            'lampiran' => 'nullable|array',
+            'lampiran' => 'required|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 

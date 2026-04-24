@@ -82,7 +82,7 @@ class Iku3Controller extends Controller
             'lomba_prov_harapan' => 'nullable|integer|min:0',
             'lomba_prov_finalis' => 'nullable|integer|min:0',
             'keterangan' => 'nullable|string',
-            'lampiran' => 'nullable|array',
+            'lampiran' => 'required|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
         // Default empty numeric fields to 0

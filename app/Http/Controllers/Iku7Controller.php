@@ -75,7 +75,7 @@ class Iku7Controller extends Controller
             'kerjasama' => 'required|integer|min:0',
             'kebijakan' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
-            'lampiran' => 'nullable|array',
+            'lampiran' => 'required|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 

@@ -19,8 +19,8 @@
                 {{-- Tahun & Data Dasar --}}
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div><label class="block text-sm font-medium text-slate-700 mb-1">Tahun <span class="text-rose-500">*</span></label><x-tahun-akademik-select :selected="$tahunAkademik" /></div>
-                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Total Pendapatan PT (Rp) <span class="text-rose-500">*</span></label><input type="number" name="total_pendapatan" x-model.number="totalPendapatan" value="{{ old('total_pendapatan', 0) }}" class="w-full rounded-lg border-slate-300" required min="0"></div>
-                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Total Aset PT (Rp) <span class="text-rose-500">*</span></label><input type="number" name="total_aset" x-model.number="totalAset" value="{{ old('total_aset', 0) }}" class="w-full rounded-lg border-slate-300" required min="0"></div>
+                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Total Pendapatan PT (Rp) <span class="text-rose-500">*</span></label><x-currency-input name="total_pendapatan" model="totalPendapatan" value="{{ old('total_pendapatan', 0) }}" class="w-full rounded-lg border-slate-300" required min="0" /></div>
+                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Total Aset PT (Rp) <span class="text-rose-500">*</span></label><x-currency-input name="total_aset" model="totalAset" value="{{ old('total_aset', 0) }}" class="w-full rounded-lg border-slate-300" required min="0" /></div>
                 </div>
 
                 {{-- IKU 9.1 --}}
@@ -28,9 +28,9 @@
                     <h3 class="font-semibold text-slate-800 mb-1">1. Pendapatan Non Pendidikan/UKT</h3>
                     <p class="text-xs text-slate-400 mb-4">Formula: (Realisasi Pendapatan Non Mahasiswa / Total Pendapatan PT) × 100%</p>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">Pendapatan Riset & Inovasi (Rp)</label><input type="number" name="pendapatan_riset_inovasi" x-model.number="risetInovasi" value="{{ old('pendapatan_riset_inovasi', 0) }}" class="w-full rounded-lg border-blue-200" min="0"></div>
-                        <div class="bg-cyan-50 p-3 rounded-lg"><label class="block text-sm font-medium text-cyan-700 mb-1">Pendapatan Kerja Sama & Layanan (Rp)</label><input type="number" name="pendapatan_kerjasama_layanan" x-model.number="kerjasamaLayanan" value="{{ old('pendapatan_kerjasama_layanan', 0) }}" class="w-full rounded-lg border-cyan-200" min="0"></div>
-                        <div class="bg-indigo-50 p-3 rounded-lg"><label class="block text-sm font-medium text-indigo-700 mb-1">Pendapatan Usaha & Unit Bisnis (Rp)</label><input type="number" name="pendapatan_usaha_bisnis" x-model.number="usahaBisnis" value="{{ old('pendapatan_usaha_bisnis', 0) }}" class="w-full rounded-lg border-indigo-200" min="0"></div>
+                        <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">Pendapatan Riset & Inovasi (Rp)</label><x-currency-input name="pendapatan_riset_inovasi" model="risetInovasi" value="{{ old('pendapatan_riset_inovasi', 0) }}" class="w-full rounded-lg border-blue-200" min="0" /></div>
+                        <div class="bg-cyan-50 p-3 rounded-lg"><label class="block text-sm font-medium text-cyan-700 mb-1">Pendapatan Kerja Sama & Layanan (Rp)</label><x-currency-input name="pendapatan_kerjasama_layanan" model="kerjasamaLayanan" value="{{ old('pendapatan_kerjasama_layanan', 0) }}" class="w-full rounded-lg border-cyan-200" min="0" /></div>
+                        <div class="bg-indigo-50 p-3 rounded-lg"><label class="block text-sm font-medium text-indigo-700 mb-1">Pendapatan Usaha & Unit Bisnis (Rp)</label><x-currency-input name="pendapatan_usaha_bisnis" model="usahaBisnis" value="{{ old('pendapatan_usaha_bisnis', 0) }}" class="w-full rounded-lg border-indigo-200" min="0" /></div>
                     </div>
                     <div class="mt-3 bg-blue-50/50 rounded-lg p-3 flex justify-between items-center">
                         <span class="text-sm text-slate-600">Persentase Non-UKT:</span>
@@ -54,13 +54,13 @@
                         <div>
                             <h3 class="font-semibold text-slate-800 mb-1">3. DIPA/APBN</h3>
                             <p class="text-xs text-slate-400 mb-3">Formula: (DIPA/APBN / Total Pendapatan) × 100%</p>
-                            <div class="bg-emerald-50 p-3 rounded-lg"><label class="block text-sm font-medium text-emerald-700 mb-1">Pendapatan DIPA/APBN (Rp)</label><input type="number" name="pendapatan_dipa_apbn" x-model.number="dipaApbn" value="{{ old('pendapatan_dipa_apbn', 0) }}" class="w-full rounded-lg border-emerald-200" min="0"></div>
+                            <div class="bg-emerald-50 p-3 rounded-lg"><label class="block text-sm font-medium text-emerald-700 mb-1">Pendapatan DIPA/APBN (Rp)</label><x-currency-input name="pendapatan_dipa_apbn" model="dipaApbn" value="{{ old('pendapatan_dipa_apbn', 0) }}" class="w-full rounded-lg border-emerald-200" min="0" /></div>
                             <div class="mt-2 text-right"><span class="text-sm font-bold text-emerald-700" x-text="persenDipa.toFixed(2) + '%'">0%</span></div>
                         </div>
                         <div>
                             <h3 class="font-semibold text-slate-800 mb-1">4. Pendapatan Industri</h3>
                             <p class="text-xs text-slate-400 mb-3">Formula: (Pendapatan Industri / Total Pendapatan) × 100%</p>
-                            <div class="bg-amber-50 p-3 rounded-lg"><label class="block text-sm font-medium text-amber-700 mb-1">Pendapatan dari Industri (Rp)</label><input type="number" name="pendapatan_industri" x-model.number="industri" value="{{ old('pendapatan_industri', 0) }}" class="w-full rounded-lg border-amber-200" min="0"></div>
+                            <div class="bg-amber-50 p-3 rounded-lg"><label class="block text-sm font-medium text-amber-700 mb-1">Pendapatan dari Industri (Rp)</label><x-currency-input name="pendapatan_industri" model="industri" value="{{ old('pendapatan_industri', 0) }}" class="w-full rounded-lg border-amber-200" min="0" /></div>
                             <div class="mt-2 text-right"><span class="text-sm font-bold text-amber-700" x-text="persenIndustri.toFixed(2) + '%'">0%</span></div>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                 <div class="border-t pt-6">
                     <h3 class="font-semibold text-slate-800 mb-1">5. Dana Abadi terhadap Total Aset</h3>
                     <p class="text-xs text-slate-400 mb-3">Formula: (Dana Abadi / Total Aset) × 100%</p>
-                    <div class="bg-violet-50 p-3 rounded-lg"><label class="block text-sm font-medium text-violet-700 mb-1">Total Dana Abadi (Rp)</label><input type="number" name="dana_abadi" x-model.number="danaAbadi" value="{{ old('dana_abadi', 0) }}" class="w-full rounded-lg border-violet-200" min="0"></div>
+                    <div class="bg-violet-50 p-3 rounded-lg"><label class="block text-sm font-medium text-violet-700 mb-1">Total Dana Abadi (Rp)</label><x-currency-input name="dana_abadi" model="danaAbadi" value="{{ old('dana_abadi', 0) }}" class="w-full rounded-lg border-violet-200" min="0" /></div>
                     <div class="mt-2 text-right"><span class="text-sm font-bold text-violet-700" x-text="persenDanaAbadi.toFixed(2) + '%'">0%</span></div>
                 </div>
 
@@ -78,21 +78,21 @@
                 <div class="border-t pt-6">
                     <h3 class="font-semibold text-slate-800 mb-1">6. Alokasi Dana Masyarakat</h3>
                     <p class="text-xs text-slate-400 mb-4">Dana Masyarakat dialokasikan untuk Riset, Kompetensi Dosen, Laboratorium. Target masing-masing: 5% dari Dana Masyarakat.</p>
-                    <div class="mb-4 bg-teal-50 p-3 rounded-lg"><label class="block text-sm font-medium text-teal-700 mb-1">Total Pendapatan Dana Masyarakat (Rp)</label><input type="number" name="dana_masyarakat" x-model.number="danaMasyarakat" value="{{ old('dana_masyarakat', 0) }}" class="w-full rounded-lg border-teal-200" min="0"></div>
+                    <div class="mb-4 bg-teal-50 p-3 rounded-lg"><label class="block text-sm font-medium text-teal-700 mb-1">Total Pendapatan Dana Masyarakat (Rp)</label><x-currency-input name="dana_masyarakat" model="danaMasyarakat" value="{{ old('dana_masyarakat', 0) }}" class="w-full rounded-lg border-teal-200" min="0" /></div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="bg-teal-50/50 p-3 rounded-lg">
                             <label class="block text-sm font-medium text-teal-700 mb-1">Alokasi Riset (Rp)</label>
-                            <input type="number" name="alokasi_riset" x-model.number="alokasiRiset" value="{{ old('alokasi_riset', 0) }}" class="w-full rounded-lg border-teal-200" min="0">
+                            <x-currency-input name="alokasi_riset" model="alokasiRiset" value="{{ old('alokasi_riset', 0) }}" class="w-full rounded-lg border-teal-200" min="0" />
                             <p class="text-xs text-teal-500 mt-1">Target: Rp <span x-text="targetAlokasi.toLocaleString('id')">0</span></p>
                         </div>
                         <div class="bg-teal-50/50 p-3 rounded-lg">
                             <label class="block text-sm font-medium text-teal-700 mb-1">Alokasi Kompetensi Dosen (Rp)</label>
-                            <input type="number" name="alokasi_kompetensi_dosen" x-model.number="alokasiDosen" value="{{ old('alokasi_kompetensi_dosen', 0) }}" class="w-full rounded-lg border-teal-200" min="0">
+                            <x-currency-input name="alokasi_kompetensi_dosen" model="alokasiDosen" value="{{ old('alokasi_kompetensi_dosen', 0) }}" class="w-full rounded-lg border-teal-200" min="0" />
                             <p class="text-xs text-teal-500 mt-1">Target: Rp <span x-text="targetAlokasi.toLocaleString('id')">0</span></p>
                         </div>
                         <div class="bg-teal-50/50 p-3 rounded-lg">
                             <label class="block text-sm font-medium text-teal-700 mb-1">Alokasi Laboratorium (Rp)</label>
-                            <input type="number" name="alokasi_laboratorium" x-model.number="alokasiLab" value="{{ old('alokasi_laboratorium', 0) }}" class="w-full rounded-lg border-teal-200" min="0">
+                            <x-currency-input name="alokasi_laboratorium" model="alokasiLab" value="{{ old('alokasi_laboratorium', 0) }}" class="w-full rounded-lg border-teal-200" min="0" />
                             <p class="text-xs text-teal-500 mt-1">Target: Rp <span x-text="targetAlokasi.toLocaleString('id')">0</span></p>
                         </div>
                     </div>

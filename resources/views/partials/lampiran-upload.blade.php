@@ -88,12 +88,7 @@
 
 
 
-        <label class="block text-sm font-medium text-slate-700 mb-2">Upload File (PDF, JPG, PNG, DOC - Max 10MB per file)</label>
-        <input type="file" name="lampiran[]" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" multiple
-            class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer border border-slate-300 rounded-lg focus:ring-blue-500">
-        <p class="text-xs text-slate-400 mt-1">Bisa upload lebih dari 1 file sekaligus. File akan diupload ke Google Drive sebagai bukti pendukung.</p>
-
-        {{-- Display existing uploaded files --}}
+        {{-- Get existing uploaded files --}}
         @php
             $links = [];
             if (isset($existingLinks) && is_array($existingLinks)) {
@@ -102,6 +97,15 @@
                 $links = is_array($existingLink) ? $existingLink : [$existingLink];
             }
         @endphp
+
+        <label class="block text-sm font-medium text-slate-700 mb-2">
+            Upload File (PDF, JPG, PNG, DOC - Max 10MB per file) 
+            @if(count($links) === 0) <span class="text-red-500">*</span> @endif
+        </label>
+        <input type="file" name="lampiran[]" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" multiple
+            @if(count($links) === 0) required @endif
+            class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer border border-slate-300 rounded-lg focus:ring-blue-500">
+        <p class="text-xs text-slate-400 mt-1">Bisa upload lebih dari 1 file sekaligus. File akan diupload ke Google Drive sebagai bukti pendukung.</p>
 
         @if(count($links) > 0)
             <div class="mt-3 bg-blue-50 rounded-lg p-3 space-y-2">

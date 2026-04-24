@@ -68,7 +68,7 @@ class Iku5Controller extends Controller
             'karya_terapan' => 'required|integer|min:0',
             'karya_seni' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
-            'lampiran' => 'nullable|array',
+            'lampiran' => 'required|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
         ]);
 
