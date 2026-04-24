@@ -22,7 +22,7 @@
 
                 <div class="border-t pt-6"><h3 class="font-semibold text-slate-800 mb-4">Sub-indikator 1: Dosen dengan Rekognisi Internasional</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div class="bg-slate-50 p-3 rounded-lg"><label class="block text-sm font-medium text-slate-700 mb-1">Total Dosen PT <span class="text-rose-500">*</span></label><input type="number" name="total_dosen_pt" x-model.number="totalDosenPt" value="{{ old('total_dosen_pt', $iku4->total_dosen_pt) }}" class="w-full rounded-lg border-slate-300" required min="1"></div>
+                        <div class="bg-slate-50 p-3 rounded-lg"><label class="block text-sm font-medium text-slate-700 mb-1">Total Dosen Fakultas <span class="text-rose-500">*</span></label><input type="number" name="total_dosen_pt" x-model.number="totalDosenPt" value="{{ old('total_dosen_pt', $iku4->total_dosen_pt) }}" class="w-full rounded-lg border-slate-300" required min="1"></div>
                         <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">Jml Dosen dgn Rekognisi <span class="text-rose-500">*</span></label><input type="number" name="total_dosen_rekognisi" x-model.number="totalDosenRekognisi" value="{{ old('total_dosen_rekognisi', $iku4->total_dosen_rekognisi) }}" class="w-full rounded-lg border-blue-200" required min="0"></div>
                     </div>
                     

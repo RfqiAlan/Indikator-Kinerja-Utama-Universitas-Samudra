@@ -107,7 +107,7 @@
                                 <th scope="col" class="px-6 py-4 font-medium text-right" rowspan="2">Aksi</th>
                             </tr>
                             <tr>
-                                <th scope="col" class="px-3 py-2 font-medium text-center text-[10px]">Dosen PT</th>
+                                <th scope="col" class="px-3 py-2 font-medium text-center text-[10px]">Dosen Fakultas</th>
                                 <th scope="col" class="px-3 py-2 font-medium text-center text-[10px]">Rekognisi</th>
                                 <th scope="col" class="px-3 py-2 font-medium text-center text-[10px]">% Rek.</th>
                                 <th scope="col" class="px-3 py-2 font-medium text-center text-[10px]">Dosen Tetap</th>
@@ -203,7 +203,7 @@
                                 <h4 class="font-bold text-slate-800 dark:text-slate-100">Sub-Indikator 1 (Rekognisi)</h4>
                             </div>
                             <div class="p-3 bg-white dark:bg-slate-900 rounded-lg text-xs font-mono text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600/50 mb-3 text-center shadow-inner">
-                                (Dosen dgn Rekognisi / Total Dosen PT) × 100%
+                                (Dosen dgn Rekognisi / Total Dosen Fakultas) × 100%
                             </div>
                             <p class="text-xs text-slate-500 leading-relaxed">Persentase dosen yang memiliki sertifikat kompetensi/profesi yang diakui oleh industri atau dunia kerja.</p>
                         </div>
@@ -213,7 +213,7 @@
                                 <h4 class="font-bold text-slate-800 dark:text-slate-100">Sub-Indikator 2 (S3)</h4>
                             </div>
                             <div class="p-3 bg-white dark:bg-slate-900 rounded-lg text-xs font-mono text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600/50 mb-3 text-center shadow-inner">
-                                (Dosen S3 / Total Dosen Tetap PT) × 100%
+                                (Dosen S3 / Total Dosen Tetap Fakultas) × 100%
                             </div>
                             <p class="text-xs text-slate-500 leading-relaxed">Persentase dosen tetap perguruan tinggi yang kualifikasi pendidikannya mencapai jenjang S3.</p>
                         </div>
