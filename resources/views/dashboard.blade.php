@@ -165,6 +165,8 @@
                     ['id' => 'IKU 9', 'title' => 'Pendapatan Non-UKT', 'desc' => 'Hibah, konsultasi, royalti', 'icon' => 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'route' => 'user.iku9.index', 'target' => 20],
                     ['id' => 'IKU 10', 'title' => 'Zona Integritas', 'desc' => 'Unit WBK/WBBM', 'icon' => 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', 'route' => 'user.iku10.index', 'target' => 10],
                     ['id' => 'IKU 11', 'title' => 'Tata Kelola Keuangan', 'desc' => 'WTP, SAKIP, Integritas', 'icon' => 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01', 'route' => 'user.iku11.index', 'target' => 80],
+                    ['id' => 'IKU 12', 'title' => 'Kesejahteraan Dosen', 'desc' => 'Standar penghasilan dosen', 'icon' => 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z', 'route' => 'user.iku12.index', 'target' => 100],
+                    ['id' => 'IKU 13', 'title' => 'Kinerja Anggaran', 'desc' => 'Serapan dan efisiensi anggaran', 'icon' => 'M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2zM10 8.5a.5.5 0 11-1 0 .5.5 0 011 0zm5 5a.5.5 0 11-1 0 .5.5 0 011 0z', 'route' => 'user.iku13.index', 'target' => 100],
                 ];
 
                 if (auth()->check()) {
@@ -183,10 +185,14 @@
                         if ($user->role === 'TimKeuangan') {
                             return $id === 'IKU 9'; // Tim Keuangan only sees IKU 9
                         }
+
+                        if ($user->role === 'TimPerencanaan') {
+                            return in_array($id, ['IKU 11', 'IKU 12', 'IKU 13']);
+                        }
                         
                         if ($user->role === 'user') {
-                            if ($id === 'IKU 9') {
-                                return false; // Common user unsees IKU 9
+                            if (in_array($id, ['IKU 9', 'IKU 11', 'IKU 12', 'IKU 13'])) {
+                                return false; // Common user unsees IKU 9, 11, 12, 13
                             }
                             if ($id === 'IKU 10') {
                                 return in_array($user->fakultas, ['fp', 'feb']); // Only fp & feb can see IKU 10
@@ -205,16 +211,16 @@
                     <h2 class="text-3xl font-bold outfit text-slate-900 mb-2">Sebaran <span class="text-blue-600">Pencapaian</span></h2>
                     <p class="text-slate-500 font-medium">Monitoring capaian target secara komprehensif</p>
                 </div>
-                <div class="flex items-center gap-3 bg-white p-2 rounded-xl border border-slate-200 shadow-sm">
+                <form method="GET" action="{{ route('home') }}" class="flex items-center gap-3 bg-white p-2 rounded-xl border border-slate-200 shadow-sm">
                     <div class="h-10 w-10 bg-slate-100 rounded-lg flex items-center justify-center text-slate-500">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                     </div>
-                    <select class="border-0 bg-transparent text-sm font-semibold text-slate-700 pr-8 focus:ring-0 cursor-pointer">
-                        @foreach(get_tahun_akademik_list() as $year)
-                            <option value="{{ $year }}" {{ get_tahun_akademik() === $year ? 'selected' : '' }}>Tahun {{ $year }}</option>
+                    <select name="tahun" onchange="this.form.submit()" class="border-0 bg-transparent text-sm font-semibold text-slate-700 pr-8 focus:ring-0 cursor-pointer">
+                        @foreach($availableYears as $year)
+                            <option value="{{ $year }}" {{ $tahunAkademik === $year ? 'selected' : '' }}>Tahun {{ $year }}</option>
                         @endforeach
                     </select>
-                </div>
+                </form>
             </div>
 
             <!-- IKU Grid Network -->

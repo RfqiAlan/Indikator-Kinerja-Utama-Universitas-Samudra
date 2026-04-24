@@ -22,9 +22,10 @@ class DashboardController extends Controller
      * Aggregates IKU 1-11 data in real-time from the actual IKU tables
      * across all 5 faculties.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tahunAkademik = get_tahun_akademik();
+        $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $availableYears = collect(get_tahun_akademik_list())->sortDesc()->values();
 
         $ikuData = [
             1  => $this->calculateIku1($tahunAkademik),
@@ -38,9 +39,11 @@ class DashboardController extends Controller
             9  => $this->calculateIku9($tahunAkademik),
             10 => $this->calculateIku10($tahunAkademik),
             11 => $this->calculateIku11($tahunAkademik),
+            12 => $this->calculateIku12($tahunAkademik),
+            13 => $this->calculateIku13($tahunAkademik),
         ];
 
-        return view('dashboard', compact('ikuData', 'tahunAkademik'));
+        return view('dashboard', compact('ikuData', 'tahunAkademik', 'availableYears'));
     }
 
     /**
@@ -185,6 +188,30 @@ class DashboardController extends Controller
         $count = $q->count();
         $sakipScore = $count > 0 ? $q->avg('nilai_sakip') : 0;
         return ['percentage' => round($sakipScore ?? 0, 2), 'count' => $count];
+    }
+
+    /**
+     * IKU 12 — Kesejahteraan Dosen
+     * Count rows with status_validasi = true vs total rows
+     */
+    private function calculateIku12(string $tahunAkademik): array
+    {
+        $q = \App\Models\Iku12KesejahteraanDosen::where('tahun_akademik', $tahunAkademik);
+        $count = $q->count();
+        $valid = $q->where('status_validasi', true)->count();
+        $percentage = $count > 0 ? ($valid / $count) * 100 : 0;
+        return ['percentage' => round($percentage, 2), 'count' => $count];
+    }
+
+    /**
+     * IKU 13 — Kinerja Anggaran
+     * Simply returns the count of submitted documents
+     */
+    private function calculateIku13(string $tahunAkademik): array
+    {
+        $q = \App\Models\Iku13KinerjaAnggaran::where('tahun_akademik', $tahunAkademik);
+        $count = $q->count();
+        return ['percentage' => $count, 'count' => $count];
     }
 
     /**
