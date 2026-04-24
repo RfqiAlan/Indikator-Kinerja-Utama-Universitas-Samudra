@@ -106,7 +106,7 @@ Route::middleware(['auth', 'role:user,TimKerjaSama,TimKeuangan,TimPerencanaan'])
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('dashboard');
     Route::get('/activities', [AdminController::class, 'activities'])->name('activities');
-    
+
     // User management
     Route::get('/users', [AdminController::class, 'users'])->name('users');
     Route::get('/users/create', [AdminController::class, 'createUser'])->name('users.create');
@@ -114,10 +114,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/users/{user}/edit', [AdminController::class, 'editUser'])->name('users.edit');
     Route::put('/users/{user}', [AdminController::class, 'updateUser'])->name('users.update');
     Route::delete('/users/{user}', [AdminController::class, 'destroyUser'])->name('users.destroy');
-    
+
     // Faculty detail
     Route::get('/fakultas/{kode}', [AdminController::class, 'fakultasDetail'])->name('fakultas');
-    
+
     // Fakultas & Prodi Management
     Route::get('/fakultas-manage', [AdminController::class, 'fakultasManage'])->name('fakultas.manage');
     Route::post('/fakultas', [AdminController::class, 'storeFakultas'])->name('fakultas.store');
@@ -126,9 +126,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/prodi', [AdminController::class, 'storeProdi'])->name('prodi.store');
     Route::put('/prodi/{prodi}', [AdminController::class, 'updateProdi'])->name('prodi.update');
     Route::delete('/prodi/{prodi}', [AdminController::class, 'destroyProdi'])->name('prodi.destroy');
-    
+
     // Export rekap
     Route::get('/export', [AdminController::class, 'exportRekap'])->name('export');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

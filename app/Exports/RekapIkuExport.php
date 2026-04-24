@@ -28,16 +28,30 @@ class RekapIkuExport implements WithMultipleSheets
 {
     protected ?string $fakultas;
     protected string $tahunAkademik;
+    protected ?string $role;
 
-    public function __construct(?string $fakultas = null, string $tahunAkademik = null)
+    public function __construct(?string $fakultas = null, string $tahunAkademik = null, ?string $role = null)
     {
         $this->fakultas = $fakultas;
         $this->tahunAkademik = $tahunAkademik ?? date('Y') . '/' . (date('Y') + 1);
+        $this->role = $role;
     }
 
     public function sheets(): array
     {
-        return [
+        if ($this->role === 'TimKerjaSama') {
+            return [new Iku5Sheet($this->fakultas, $this->tahunAkademik)];
+        } elseif ($this->role === 'TimKeuangan') {
+            return [new Iku9Sheet($this->fakultas, $this->tahunAkademik)];
+        } elseif ($this->role === 'TimPerencanaan') {
+            return [
+                new Iku11Sheet($this->fakultas, $this->tahunAkademik),
+                new Iku12Sheet($this->fakultas, $this->tahunAkademik),
+                new Iku13Sheet($this->fakultas, $this->tahunAkademik),
+            ];
+        }
+
+        $sheets = [
             new Iku1Sheet($this->fakultas, $this->tahunAkademik),
             new Iku2Sheet($this->fakultas, $this->tahunAkademik),
             new Iku3Sheet($this->fakultas, $this->tahunAkademik),
@@ -46,12 +60,24 @@ class RekapIkuExport implements WithMultipleSheets
             new Iku6Sheet($this->fakultas, $this->tahunAkademik),
             new Iku7Sheet($this->fakultas, $this->tahunAkademik),
             new Iku8Sheet($this->fakultas, $this->tahunAkademik),
-            new Iku9Sheet($this->fakultas, $this->tahunAkademik),
-            new Iku10Sheet($this->fakultas, $this->tahunAkademik),
-            new Iku11Sheet($this->fakultas, $this->tahunAkademik),
-            new Iku12Sheet($this->fakultas, $this->tahunAkademik),
-            new Iku13Sheet($this->fakultas, $this->tahunAkademik),
         ];
+
+        if ($this->fakultas) {
+            // Jika fakultas spesifik dipilih, hanya tambahkan IKU 10 jika FP atau FEB
+            if (in_array($this->fakultas, ['fp', 'feb'])) {
+                $sheets[] = new Iku10Sheet($this->fakultas, $this->tahunAkademik);
+            }
+            // IKU 9, 11, 12, 13 tidak ditambahkan karena bukan ranah fakultas
+        } else {
+            // Jika "Semua Fakultas" dipilih, tambahkan sisa IKU
+            $sheets[] = new Iku9Sheet($this->fakultas, $this->tahunAkademik);
+            $sheets[] = new Iku10Sheet($this->fakultas, $this->tahunAkademik);
+            $sheets[] = new Iku11Sheet($this->fakultas, $this->tahunAkademik);
+            $sheets[] = new Iku12Sheet($this->fakultas, $this->tahunAkademik);
+            $sheets[] = new Iku13Sheet($this->fakultas, $this->tahunAkademik);
+        }
+
+        return $sheets;
     }
 }
 
@@ -60,6 +86,7 @@ abstract class BaseIkuSheet implements FromCollection, WithTitle, WithHeadings, 
 {
     protected ?string $fakultas;
     protected string $tahunAkademik;
+    protected ?string $role;
 
     public function __construct(?string $fakultas, string $tahunAkademik)
     {

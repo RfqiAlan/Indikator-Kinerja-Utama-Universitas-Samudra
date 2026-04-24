@@ -264,15 +264,17 @@ class AdminController extends Controller
     {
         $fakultas = $request->get('fakultas');
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $role = $request->get('role');
         
         $fakultasModel = $fakultas ? Fakultas::findByKode($fakultas) : null;
         $fakultasName = $fakultasModel ? $fakultasModel->nama : 'Semua_Fakultas';
+        $roleName = $role ? $role : 'Semua_IKU';
         
-        $filename = "Rekap_IKU_{$fakultasName}_{$tahunAkademik}.xlsx";
+        $filename = "Rekap_IKU_{$fakultasName}_{$roleName}_{$tahunAkademik}.xlsx";
         $filename = str_replace(['/', ' '], ['_', '_'], $filename);
         
         return \Maatwebsite\Excel\Facades\Excel::download(
-            new \App\Exports\RekapIkuExport($fakultas, $tahunAkademik),
+            new \App\Exports\RekapIkuExport($fakultas, $tahunAkademik, $role),
             $filename
         );
     }

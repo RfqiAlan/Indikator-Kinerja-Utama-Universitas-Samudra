@@ -114,7 +114,13 @@
                         <option value="{{ $kode }}" class="text-slate-800">{{ $data['nama'] }}</option>
                     @endforeach
                 </select>
-                <select name="tahun" class="col-span-1 px-3 py-2 rounded-lg bg-white/20 border border-white/30 text-white text-sm focus:ring-2 focus:ring-white/50 focus:border-transparent backdrop-blur-sm">
+                <select name="role" class="col-span-1 px-3 py-2 rounded-lg bg-white/20 border border-white/30 text-white text-sm focus:ring-2 focus:ring-white/50 focus:border-transparent backdrop-blur-sm">
+                    <option value="" class="text-slate-800">Semua Role</option>
+                    <option value="TimKerjaSama" class="text-slate-800">Tim Kerja Sama (IKU 5)</option>
+                    <option value="TimKeuangan" class="text-slate-800">Tim Keuangan (IKU 9)</option>
+                    <option value="TimPerencanaan" class="text-slate-800">Tim Perenc. (IKU 11, 12, 13)</option>
+                </select>
+                <select name="tahun" class="col-span-2 sm:col-span-1 px-3 py-2 rounded-lg bg-white/20 border border-white/30 text-white text-sm focus:ring-2 focus:ring-white/50 focus:border-transparent backdrop-blur-sm">
                     @foreach($availableYears as $year)
                         <option value="{{ $year }}" class="text-slate-800" {{ $tahunAkademik === $year ? 'selected' : '' }}>{{ $year }}</option>
                     @endforeach
