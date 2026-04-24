@@ -19,6 +19,6 @@
     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
         <span class="text-slate-500 font-medium sm:text-sm">Rp</span>
     </div>
-    <input type="text" x-model="display" @input="update($event.target.value)" class="!pl-10 {{ $class }}" placeholder="0">
+    <input type="text" x-model="display" @input="update($event.target.value)" class="{{ $class }}" style="padding-left: 2.75rem !important;" placeholder="0">
     <input type="hidden" name="{{ $name }}" x-bind:value="raw">
 </div>
