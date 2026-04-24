@@ -17,7 +17,14 @@
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div><label class="block text-sm font-medium text-slate-700 mb-1">Tahun <span class="text-rose-500">*</span></label><x-tahun-akademik-select :selected="$tahunAkademik" /></div>
-                    <div><label class="block text-sm font-medium text-slate-700 mb-1">Total Kerja Sama Perguruan Tinggi <span class="text-rose-500">*</span></label><input type="number" name="total_kerjasama_pt" x-model.number="totalKerjasamaPt" value="{{ old('total_kerjasama_pt', 0) }}" class="w-full rounded-lg border-slate-300" required min="1"></div>
+                    <div>
+                        @if(auth()->user()->role === 'TimPerencanaan')
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Total Kerja Sama Perguruan Tinggi <span class="text-rose-500">*</span></label>
+                        @else
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Total Kerja Sama Fakultas <span class="text-rose-500">*</span></label>
+                        @endif
+                        <input type="number" name="total_kerjasama_pt" x-model.number="totalKerjasamaPt" value="{{ old('total_kerjasama_pt', 0) }}" class="w-full rounded-lg border-slate-300" required min="1">
+                    </div>
                 </div>
                 <div class="border-t pt-6"><h3 class="font-semibold text-slate-800 mb-4">Jenis Luaran Kerja Sama</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
