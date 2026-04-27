@@ -2,61 +2,6 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Tambah IKU 3</title>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('formIku3', () => ({
-                totalMahasiswa: {{ (int) old('total_mahasiswa', 0) }},
-
-                mg_k5: {{ (int) old('magang_kurang_5', 0) }}, mg_6_10: {{ (int) old('magang_6_10', 0) }}, mg_l10: {{ (int) old('magang_lebih_10', 0) }},
-                rs_k5: {{ (int) old('riset_kurang_5', 0) }}, rs_6_10: {{ (int) old('riset_6_10', 0) }}, rs_l10: {{ (int) old('riset_lebih_10', 0) }},
-                pt_k5: {{ (int) old('pertukaran_kurang_5', 0) }}, pt_6_10: {{ (int) old('pertukaran_6_10', 0) }}, pt_l10: {{ (int) old('pertukaran_lebih_10', 0) }},
-                kn_k5: {{ (int) old('kkn_kurang_5', 0) }}, kn_6_10: {{ (int) old('kkn_6_10', 0) }}, kn_l10: {{ (int) old('kkn_lebih_10', 0) }},
-
-                l_int_j1: {{ (int) old('lomba_int_juara1', 0) }},
-                l_int_j23: {{ (int) old('lomba_int_juara23', 0) }},
-                l_int_harapan: {{ (int) old('lomba_int_harapan', 0) }},
-                l_int_finalis: {{ (int) old('lomba_int_finalis', 0) }},
-
-                l_nas_j1: {{ (int) old('lomba_nas_juara1', 0) }},
-                l_nas_j23: {{ (int) old('lomba_nas_juara23', 0) }},
-                l_nas_harapan: {{ (int) old('lomba_nas_harapan', 0) }},
-                l_nas_finalis: {{ (int) old('lomba_nas_finalis', 0) }},
-
-                l_prov_j1: {{ (int) old('lomba_prov_juara1', 0) }},
-                l_prov_j23: {{ (int) old('lomba_prov_juara23', 0) }},
-                l_prov_harapan: {{ (int) old('lomba_prov_harapan', 0) }},
-                l_prov_finalis: {{ (int) old('lomba_prov_finalis', 0) }},
-
-                get totalKegiatan() {
-                    const n = (v) => parseInt(v) || 0;
-                    return n(this.mg_k5) + n(this.mg_6_10) + n(this.mg_l10) +
-                           n(this.rs_k5) + n(this.rs_6_10) + n(this.rs_l10) +
-                           n(this.pt_k5) + n(this.pt_6_10) + n(this.pt_l10) +
-                           n(this.kn_k5) + n(this.kn_6_10) + n(this.kn_l10) +
-                           n(this.l_int_j1) + n(this.l_int_j23) + n(this.l_int_harapan) + n(this.l_int_finalis) +
-                           n(this.l_nas_j1) + n(this.l_nas_j23) + n(this.l_nas_harapan) + n(this.l_nas_finalis) +
-                           n(this.l_prov_j1) + n(this.l_prov_j23) + n(this.l_prov_harapan) + n(this.l_prov_finalis);
-                },
-                get skorBobot() {
-                    const n = (v) => parseInt(v) || 0;
-                    const nonKompetisi =
-                        ((n(this.mg_k5) + n(this.rs_k5) + n(this.pt_k5) + n(this.kn_k5)) * 0.4) +
-                        ((n(this.mg_6_10) + n(this.rs_6_10) + n(this.pt_6_10) + n(this.kn_6_10)) * 0.6) +
-                        ((n(this.mg_l10) + n(this.rs_l10) + n(this.pt_l10) + n(this.kn_l10)) * 1.0);
-                    const lomba =
-                        (n(this.l_int_j1) * 1.0) + (n(this.l_int_j23) * 0.5) + (n(this.l_int_harapan) * 0.3) + (n(this.l_int_finalis) * 0.2) +
-                        (n(this.l_nas_j1) * 0.6) + (n(this.l_nas_j23) * 0.3) + (n(this.l_nas_harapan) * 0.2) + (n(this.l_nas_finalis) * 0.1) +
-                        (n(this.l_prov_j1) * 0.4) + (n(this.l_prov_j23) * 0.2) + (n(this.l_prov_harapan) * 0.1) + (n(this.l_prov_finalis) * 0.05);
-                    return nonKompetisi + lomba;
-                },
-                get persentase() {
-                    const tm = parseInt(this.totalMahasiswa) || 0;
-                    if (tm <= 0) return 0;
-                    return (this.skorBobot / tm) * 100;
-                }
-            }));
-        });
-    <\/script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])</head>
 <body class="font-sans antialiased bg-white text-slate-900">
     <x-user-layout activeIku="IKU 3">
@@ -125,7 +70,6 @@
                                 <li>Prov: Juara 1 (0.4), J2/3/Fav (0.2), Harapan (0.1), Finalis (0.05)</li>
                             </ul>
                         </div>
-                    </div>
                     </div>
                 </div>
 
@@ -239,9 +183,61 @@
                 </div>
             </form>
         </div>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 50 });</script>
+        <script>
+            function formIku3() {
+                return {
+                    totalMahasiswa: {{ (int) old('total_mahasiswa', 0) }},
 
+                    mg_k5: {{ (int) old('magang_kurang_5', 0) }}, mg_6_10: {{ (int) old('magang_6_10', 0) }}, mg_l10: {{ (int) old('magang_lebih_10', 0) }},
+                    rs_k5: {{ (int) old('riset_kurang_5', 0) }}, rs_6_10: {{ (int) old('riset_6_10', 0) }}, rs_l10: {{ (int) old('riset_lebih_10', 0) }},
+                    pt_k5: {{ (int) old('pertukaran_kurang_5', 0) }}, pt_6_10: {{ (int) old('pertukaran_6_10', 0) }}, pt_l10: {{ (int) old('pertukaran_lebih_10', 0) }},
+                    kn_k5: {{ (int) old('kkn_kurang_5', 0) }}, kn_6_10: {{ (int) old('kkn_6_10', 0) }}, kn_l10: {{ (int) old('kkn_lebih_10', 0) }},
+
+                    l_int_j1: {{ (int) old('lomba_int_juara1', 0) }},
+                    l_int_j23: {{ (int) old('lomba_int_juara23', 0) }},
+                    l_int_harapan: {{ (int) old('lomba_int_harapan', 0) }},
+                    l_int_finalis: {{ (int) old('lomba_int_finalis', 0) }},
+
+                    l_nas_j1: {{ (int) old('lomba_nas_juara1', 0) }},
+                    l_nas_j23: {{ (int) old('lomba_nas_juara23', 0) }},
+                    l_nas_harapan: {{ (int) old('lomba_nas_harapan', 0) }},
+                    l_nas_finalis: {{ (int) old('lomba_nas_finalis', 0) }},
+
+                    l_prov_j1: {{ (int) old('lomba_prov_juara1', 0) }},
+                    l_prov_j23: {{ (int) old('lomba_prov_juara23', 0) }},
+                    l_prov_harapan: {{ (int) old('lomba_prov_harapan', 0) }},
+                    l_prov_finalis: {{ (int) old('lomba_prov_finalis', 0) }},
+
+                    get totalKegiatan() {
+                        const n = (v) => parseInt(v) || 0;
+                        return n(this.mg_k5) + n(this.mg_6_10) + n(this.mg_l10) +
+                               n(this.rs_k5) + n(this.rs_6_10) + n(this.rs_l10) +
+                               n(this.pt_k5) + n(this.pt_6_10) + n(this.pt_l10) +
+                               n(this.kn_k5) + n(this.kn_6_10) + n(this.kn_l10) +
+                               n(this.l_int_j1) + n(this.l_int_j23) + n(this.l_int_harapan) + n(this.l_int_finalis) +
+                               n(this.l_nas_j1) + n(this.l_nas_j23) + n(this.l_nas_harapan) + n(this.l_nas_finalis) +
+                               n(this.l_prov_j1) + n(this.l_prov_j23) + n(this.l_prov_harapan) + n(this.l_prov_finalis);
+                    },
+                    get skorBobot() {
+                        const n = (v) => parseInt(v) || 0;
+                        const nonKompetisi =
+                            ((n(this.mg_k5) + n(this.rs_k5) + n(this.pt_k5) + n(this.kn_k5)) * 0.4) +
+                            ((n(this.mg_6_10) + n(this.rs_6_10) + n(this.pt_6_10) + n(this.kn_6_10)) * 0.6) +
+                            ((n(this.mg_l10) + n(this.rs_l10) + n(this.pt_l10) + n(this.kn_l10)) * 1.0);
+                        const lomba =
+                            (n(this.l_int_j1) * 1.0) + (n(this.l_int_j23) * 0.5) + (n(this.l_int_harapan) * 0.3) + (n(this.l_int_finalis) * 0.2) +
+                            (n(this.l_nas_j1) * 0.6) + (n(this.l_nas_j23) * 0.3) + (n(this.l_nas_harapan) * 0.2) + (n(this.l_nas_finalis) * 0.1) +
+                            (n(this.l_prov_j1) * 0.4) + (n(this.l_prov_j23) * 0.2) + (n(this.l_prov_harapan) * 0.1) + (n(this.l_prov_finalis) * 0.05);
+                        return nonKompetisi + lomba;
+                    },
+                    get persentase() {
+                        const tm = parseInt(this.totalMahasiswa) || 0;
+                        if (tm <= 0) return 0;
+                        return (this.skorBobot / tm) * 100;
+                    }
+                };
+            }
+        </script>
     </x-user-layout>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 50 });</script>
-</body>
-</html>
