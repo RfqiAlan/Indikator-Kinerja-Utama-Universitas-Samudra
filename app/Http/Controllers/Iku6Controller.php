@@ -73,7 +73,7 @@ class Iku6Controller extends Controller
             'publikasi_kolaborasi' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
             'lampiran' => 'required|array',
-            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,rar,zip|max:51200',
         ]);
 
         // Validate sum of quartiles doesn't exceed total publikasi
@@ -149,7 +149,7 @@ class Iku6Controller extends Controller
             'publikasi_kolaborasi' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
-            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,rar,zip|max:51200',
         ]);
 
         // Validate sum of quartiles doesn't exceed total publikasi

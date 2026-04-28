@@ -81,7 +81,7 @@ class Iku1Controller extends Controller
             'jumlah_lulus_tepat_waktu' => 'required|integer|min:0|lte:total_mahasiswa_aktif',
             'keterangan' => 'nullable|string',
             'lampiran' => 'required|array',
-            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,rar,zip|max:51200',
         ], [
             'jumlah_lulus_tepat_waktu.lte' => 'Jumlah lulus tepat waktu tidak boleh melebihi total mahasiswa aktif.',
         ]);
@@ -161,7 +161,7 @@ class Iku1Controller extends Controller
             'total_mahasiswa_aktif' => 'required|integer|min:1',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
-            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,rar,zip|max:51200',
         ]);
 
         // Auto-lookup jenjang from Prodi

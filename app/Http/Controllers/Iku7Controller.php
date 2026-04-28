@@ -76,7 +76,7 @@ class Iku7Controller extends Controller
             'kebijakan' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
             'lampiran' => 'required|array',
-            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,rar,zip|max:51200',
         ]);
 
         // Validate sum of SDGs doesn't exceed total program
@@ -153,7 +153,7 @@ class Iku7Controller extends Controller
             'kebijakan' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
-            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,rar,zip|max:51200',
         ]);
 
         // Upload lampiran to Google Drive (folder per fakultas)

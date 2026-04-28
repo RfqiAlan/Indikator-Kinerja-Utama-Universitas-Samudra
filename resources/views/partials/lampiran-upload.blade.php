@@ -99,13 +99,94 @@
         @endphp
 
         <label class="block text-sm font-medium text-slate-700 mb-2">
-            Upload File (PDF, JPG, PNG, DOC - Max 10MB per file) 
+            Upload File Lampiran <span class="text-slate-400 font-normal">(PDF, JPG, PNG, DOC, RAR, ZIP — Maks. 50MB/file)</span>
             @if(count($links) === 0) <span class="text-red-500">*</span> @endif
         </label>
-        <input type="file" name="lampiran[]" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" multiple
-            @if(count($links) === 0) required @endif
-            class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer border border-slate-300 rounded-lg focus:ring-blue-500">
-        <p class="text-xs text-slate-400 mt-1">Bisa upload lebih dari 1 file sekaligus. File akan diupload ke Google Drive sebagai bukti pendukung.</p>
+
+        {{-- Drop zone wrapper --}}
+        <div x-data="lampiranUpload()" class="relative">
+            {{-- Visual drop zone --}}
+            <label
+                @dragover.prevent="dragging = true"
+                @dragleave.prevent="dragging = false"
+                @drop.prevent="onDrop($event)"
+                :class="dragging ? 'border-blue-400 bg-blue-50' : 'border-slate-300 bg-white hover:bg-slate-50'"
+                class="flex flex-col items-center justify-center w-full px-4 py-6 border-2 border-dashed rounded-xl cursor-pointer transition-colors duration-200 group"
+            >
+                <input
+                    type="file"
+                    name="lampiran[]"
+                    accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.rar,.zip"
+                    multiple
+                    @if(count($links) === 0) required @endif
+                    class="sr-only"
+                    @change="onFileChange($event)"
+                    x-ref="fileInput"
+                >
+                {{-- Icon --}}
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-2 text-slate-400 group-hover:text-blue-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                </svg>
+                <p class="text-sm text-slate-600 font-medium">Klik untuk pilih file <span class="text-blue-600">atau seret & lepas di sini</span></p>
+                <p class="text-xs text-slate-400 mt-1">PDF · JPG · PNG · DOC · DOCX · <strong>RAR · ZIP</strong> — Maks. 50MB per file</p>
+            </label>
+
+            {{-- Selected files preview --}}
+            <template x-if="selectedFiles.length > 0">
+                <ul class="mt-3 space-y-1.5">
+                    <template x-for="(f, i) in selectedFiles" :key="i">
+                        <li class="flex items-center gap-2 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            <span class="truncate text-slate-700 flex-1" x-text="f.name"></span>
+                            <span class="text-xs text-slate-400 flex-shrink-0" x-text="formatSize(f.size)"></span>
+                            <button type="button" @click="removeFile(i)" class="text-slate-400 hover:text-red-500 transition-colors flex-shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+        </div>
+
+        <script>
+        function lampiranUpload() {
+            return {
+                dragging: false,
+                selectedFiles: [],
+                dt: null,
+                onFileChange(e) {
+                    const files = Array.from(e.target.files || []);
+                    this.selectedFiles = files;
+                },
+                onDrop(e) {
+                    this.dragging = false;
+                    const files = Array.from(e.dataTransfer.files || []);
+                    this.selectedFiles = files;
+                    // Transfer to actual input via DataTransfer
+                    const dt = new DataTransfer();
+                    files.forEach(f => dt.items.add(f));
+                    this.$refs.fileInput.files = dt.files;
+                },
+                removeFile(index) {
+                    this.selectedFiles.splice(index, 1);
+                    const dt = new DataTransfer();
+                    this.selectedFiles.forEach(f => dt.items.add(f));
+                    this.$refs.fileInput.files = dt.files;
+                },
+                formatSize(bytes) {
+                    if (bytes < 1024) return bytes + ' B';
+                    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+                    return (bytes / 1048576).toFixed(1) + ' MB';
+                }
+            }
+        }
+        </script>
+
+        <p class="text-xs text-slate-400 mt-2">File akan diupload ke Google Drive sebagai bukti pendukung. Bisa pilih lebih dari 1 file.</p>
 
         @if(count($links) > 0)
             <div class="mt-3 bg-blue-50 rounded-lg p-3 space-y-2">

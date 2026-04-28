@@ -53,7 +53,7 @@ class Iku13Controller extends Controller
             'tahun_akademik' => 'required|string',
             'keterangan' => 'nullable|string',
             'lampiran' => 'required|array',
-            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,xls,xlsx|max:10240',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,xls,xlsx,rar,zip|max:51200',
         ]);
 
         $fakultas = auth()->user()->fakultas ?? 'universitas';
@@ -113,7 +113,7 @@ class Iku13Controller extends Controller
             'tahun_akademik' => 'required|string',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
-            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,xls,xlsx|max:10240',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,xls,xlsx,rar,zip|max:51200',
         ]);
 
         // Upload lampiran

@@ -60,7 +60,7 @@ class Iku12Controller extends Controller
             'terintegrasi_renstra' => 'boolean',
             'keterangan' => 'nullable|string',
             'lampiran' => 'required|array',
-            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,rar,zip|max:51200',
         ]);
 
         $fakultas = auth()->user()->fakultas ?? 'universitas';
@@ -133,7 +133,7 @@ class Iku12Controller extends Controller
             'tahun_akademik' => 'required|string',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
-            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,rar,zip|max:51200',
         ]);
 
         $checkboxes = [

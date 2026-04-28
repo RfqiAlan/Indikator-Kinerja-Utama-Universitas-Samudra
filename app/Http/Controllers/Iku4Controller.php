@@ -78,7 +78,7 @@ class Iku4Controller extends Controller
             'total_dosen_s3' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
             'lampiran' => 'required|array',
-            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,rar,zip|max:51200',
         ]);
 
         // Validate total_dosen_rekognisi doesn't exceed total_dosen_pt
@@ -156,7 +156,7 @@ class Iku4Controller extends Controller
             'total_dosen_s3' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
-            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,rar,zip|max:51200',
         ]);
 
         // Validate total_dosen_rekognisi doesn't exceed total_dosen_pt

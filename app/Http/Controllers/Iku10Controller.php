@@ -75,7 +75,7 @@ class Iku10Controller extends Controller implements \Illuminate\Routing\Controll
             'terdaftar_kemenpan' => 'boolean',
             'keterangan' => 'nullable|string',
             'lampiran' => 'required|array',
-            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,rar,zip|max:51200',
         ]);
 
         $validated['dokumen_lengkap'] = $request->has('dokumen_lengkap');
@@ -141,7 +141,7 @@ class Iku10Controller extends Controller implements \Illuminate\Routing\Controll
             'terdaftar_kemenpan' => 'boolean',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
-            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,rar,zip|max:51200',
         ]);
 
         $validated['dokumen_lengkap'] = $request->has('dokumen_lengkap');

@@ -100,7 +100,7 @@ abstract class BaseIkuSheet implements FromCollection, WithTitle, WithHeadings, 
             1 => ['font' => ['bold' => true, 'size' => 11], 'fill' => [
                 'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
                 'startColor' => ['rgb' => '10B981']
-            ], 'font' => ['color' => ['rgb' => 'FFFFFF'], 'bold' => true]],
+            ],  'font' => ['color' => ['rgb' => 'FFFFFF'], 'bold' => true]],
         ];
     }
 

@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class RekapIku extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'jenis_iku',
         'kriteria',
