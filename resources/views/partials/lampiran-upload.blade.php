@@ -175,37 +175,79 @@
 
         <script>
         function lampiranUpload() {
+            const MAX_SIZE_MB = 50;
+            const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
+            const ALLOWED_EXTENSIONS = ['pdf', 'jpg', 'jpeg', 'png', 'doc', 'docx', 'rar', 'zip'];
+
             return {
                 dragging: false,
                 selectedFiles: [],
-                dt: null,
                 onFileChange(e) {
                     const files = Array.from(e.target.files || []);
-                    this.selectedFiles = files;
+                    this.processFiles(files);
                 },
                 onDrop(e) {
                     this.dragging = false;
                     const files = Array.from(e.dataTransfer.files || []);
-                    this.selectedFiles = files;
-                    // Transfer to actual input via DataTransfer
-                    const dt = new DataTransfer();
-                    files.forEach(f => dt.items.add(f));
-                    this.$refs.fileInput.files = dt.files;
+                    this.processFiles(files);
+                },
+                processFiles(files) {
+                    let validFiles = [...this.selectedFiles];
+                    let errors = [];
+
+                    files.forEach(file => {
+                        const ext = file.name.split('.').pop().toLowerCase();
+                        if (file.size > MAX_SIZE_BYTES) {
+                            errors.push(`File "${file.name}" terlalu besar (maks ${MAX_SIZE_MB}MB)`);
+                        } else if (!ALLOWED_EXTENSIONS.includes(ext)) {
+                            errors.push(`Format file "${file.name}" tidak didukung`);
+                        } else {
+                            // Cek duplikasi nama file agar tidak dobel
+                            if (!validFiles.some(f => f.name === file.name && f.size === file.size)) {
+                                validFiles.push(file);
+                            }
+                        }
+                    });
+
+                    if (errors.length > 0) {
+                        if (window.Swal) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Beberapa File Ditolak',
+                                html: '<div class="text-left text-sm mt-2 font-sans">' + errors.join('<br>') + '</div>',
+                                confirmButtonColor: '#3085d6'
+                            });
+                        } else {
+                            alert(errors.join('\n'));
+                        }
+                    }
+
+                    this.selectedFiles = validFiles;
+                    this.syncInput();
                 },
                 removeFile(index) {
                     this.selectedFiles.splice(index, 1);
+                    this.syncInput();
+                },
+                syncInput() {
                     const dt = new DataTransfer();
                     this.selectedFiles.forEach(f => dt.items.add(f));
                     this.$refs.fileInput.files = dt.files;
+                    
+                    // Trigger manual change event to satisfy browser's "required" attribute
+                    this.$refs.fileInput.dispatchEvent(new Event('change', { bubbles: true }));
                 },
                 formatSize(bytes) {
-                    if (bytes < 1024) return bytes + ' B';
-                    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
-                    return (bytes / 1048576).toFixed(1) + ' MB';
+                    if (bytes === 0) return '0 B';
+                    const k = 1024;
+                    const sizes = ['B', 'KB', 'MB', 'GB'];
+                    const i = Math.floor(Math.log(bytes) / Math.log(k));
+                    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
                 }
             }
         }
         </script>
+
 
         <p class="text-xs text-slate-400 mt-2">File akan diupload ke Google Drive sebagai bukti pendukung. Bisa pilih lebih dari 1 file.</p>
 
