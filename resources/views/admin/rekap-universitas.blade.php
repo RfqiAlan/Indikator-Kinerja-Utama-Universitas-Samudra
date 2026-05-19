@@ -21,6 +21,19 @@
     </div>
 
     <div class="grid grid-cols-1 gap-6">
+
+        <!-- Section Separator for Indikator Wajib -->
+        <div class="border-b border-slate-200 pb-2" data-aos="fade-in">
+            <div class="flex items-center gap-3">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-700">
+                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                    WAJIB
+                </span>
+                <h2 class="text-2xl font-extrabold text-slate-800">Indikator Kinerja Utama Wajib</h2>
+            </div>
+            <p class="text-slate-500 text-sm mt-1">IKU 1 (AEE), Sub IKU 1.1, IKU 2, IKU 3, IKU 5, IKU 7, IKU 9, IKU 12</p>
+        </div>
+
         <!-- IKU 1 -->
         <div class="bg-white rounded-2xl shadow-sm p-6" data-aos="fade-up" data-aos-delay="100">
             <h2 class="text-xl font-bold text-slate-800 mb-4">IKU 1 - Angka Efisiensi Edukasi (AEE) per Jenjang</h2>
@@ -270,5 +283,146 @@
                 </div>
             </div>
         </div>
+
+        <!-- Section Separator for Indikator Pilihan -->
+        <div class="mt-4 border-b border-slate-200 pb-2" data-aos="fade-in" data-aos-delay="480">
+            <div class="flex items-center gap-3">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-violet-100 text-violet-700">
+                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    PILIHAN
+                </span>
+                <h2 class="text-2xl font-extrabold text-slate-800">Indikator Kinerja Utama Pilihan</h2>
+            </div>
+            <p class="text-slate-500 text-sm mt-1">IKU 4, IKU 6, IKU 8, IKU 10, IKU 11</p>
+        </div>
+
+        <!-- IKU 4 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6" data-aos="fade-up" data-aos-delay="500">
+            <h2 class="text-xl font-bold text-slate-800 mb-4">IKU 4 - Dosen dengan Rekognisi Internasional & S3</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-blue-50/50 rounded-xl p-6 border border-blue-100 flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-slate-600 mb-1">Persentase Dosen Rekognisi Internasional</p>
+                        <p class="text-3xl font-black text-blue-700">{{ number_format($iku4Rekap['persen_rekognisi'], 2) }}%</p>
+                        <p class="text-xs text-slate-500 mt-2">{{ number_format($iku4Rekap['total_rekognisi']) }} dari {{ number_format($iku4Rekap['total_dosen_pt']) }} Dosen PT</p>
+                    </div>
+                </div>
+                <div class="bg-indigo-50/50 rounded-xl p-6 border border-indigo-100 flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-slate-600 mb-1">Persentase Dosen Berpendidikan S3</p>
+                        <p class="text-3xl font-black text-indigo-700">{{ number_format($iku4Rekap['persen_s3'], 2) }}%</p>
+                        <p class="text-xs text-slate-500 mt-2">{{ number_format($iku4Rekap['total_s3']) }} dari {{ number_format($iku4Rekap['total_tetap']) }} Dosen Tetap PT</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- IKU 6 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6" data-aos="fade-up" data-aos-delay="550">
+            <h2 class="text-xl font-bold text-slate-800 mb-6">IKU 6 - Publikasi Bereputasi Internasional</h2>
+            <div class="flex flex-col md:flex-row gap-6 items-center">
+                <div class="w-48 h-48 rounded-full border-8 {{ $iku6Rekap['total'] > 0 ? 'border-sky-500 text-sky-600' : 'border-slate-200 text-slate-400' }} flex flex-col items-center justify-center shrink-0">
+                    <span class="text-4xl font-black">{{ number_format($iku6Rekap['total']) }}</span>
+                    <span class="text-xs font-bold uppercase mt-1 text-slate-500 text-center">Total<br>Publikasi</span>
+                </div>
+                <div class="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 text-center sm:text-left flex flex-col justify-center">
+                        <p class="text-xs font-medium text-slate-500 mb-1">Publikasi Top Tier</p>
+                        <p class="text-2xl font-bold text-slate-800">{{ number_format($iku6Rekap['persen_top_tier'], 2) }}%</p>
+                        <p class="text-[10px] text-slate-400 mt-1">{{ number_format($iku6Rekap['top_tier']) }} Publikasi</p>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 text-center sm:text-left flex flex-col justify-center">
+                        <p class="text-xs font-medium text-slate-500 mb-1">Publikasi Q1</p>
+                        <p class="text-2xl font-bold text-slate-800">{{ number_format($iku6Rekap['persen_q1'], 2) }}%</p>
+                        <p class="text-[10px] text-slate-400 mt-1">{{ number_format($iku6Rekap['q1']) }} Publikasi</p>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 text-center sm:text-left flex flex-col justify-center">
+                        <p class="text-xs font-medium text-slate-500 mb-1">Kolaborasi Internasional</p>
+                        <p class="text-2xl font-bold text-slate-800">{{ number_format($iku6Rekap['persen_kolaborasi'], 2) }}%</p>
+                        <p class="text-[10px] text-slate-400 mt-1">{{ number_format($iku6Rekap['kolaborasi']) }} Penelitian</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- IKU 8 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6" data-aos="fade-up" data-aos-delay="600">
+            <h2 class="text-xl font-bold text-slate-800 mb-4">IKU 8 - SDM yang Terlibat Penyusunan Kebijakan</h2>
+            <div class="flex items-center gap-6">
+                <div class="flex-1 bg-amber-50/50 rounded-xl p-6 border border-amber-100 flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-slate-600 mb-1">Dosen/Peneliti Terlibat</p>
+                        <p class="text-3xl font-black text-amber-700">{{ number_format($iku8Rekap['terlibat']) }} <span class="text-lg">dari {{ number_format($iku8Rekap['sdm']) }} SDM</span></p>
+                    </div>
+                    <div class="w-20 h-20 bg-white rounded-full shadow-sm flex items-center justify-center text-amber-600 shrink-0 border-4 border-amber-200">
+                        <span class="text-2xl font-bold">{{ number_format($iku8Rekap['persen'], 2) }}%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- IKU 10 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6" data-aos="fade-up" data-aos-delay="650">
+            <h2 class="text-xl font-bold text-slate-800 mb-4">IKU 10 - Zona Integritas (WBK/WBBM)</h2>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 text-center">
+                    <p class="text-xs font-bold text-slate-500 mb-1">Total Usulan</p>
+                    <p class="text-2xl font-black text-slate-800">{{ number_format($iku10Rekap['total']) }}</p>
+                </div>
+                <div class="bg-yellow-50 rounded-xl p-4 border border-yellow-100 text-center">
+                    <p class="text-xs font-bold text-yellow-600 mb-1">Diajukan</p>
+                    <p class="text-2xl font-black text-yellow-800">{{ number_format($iku10Rekap['diajukan']) }}</p>
+                </div>
+                <div class="bg-blue-50 rounded-xl p-4 border border-blue-100 text-center">
+                    <p class="text-xs font-bold text-blue-600 mb-1">Lolos TPI</p>
+                    <p class="text-2xl font-black text-blue-800">{{ number_format($iku10Rekap['lolos_tpi']) }}</p>
+                </div>
+                <div class="bg-emerald-50 rounded-xl p-4 border border-emerald-100 text-center">
+                    <p class="text-xs font-bold text-emerald-600 mb-1">WBK</p>
+                    <p class="text-2xl font-black text-emerald-800">{{ number_format($iku10Rekap['wbk']) }}</p>
+                </div>
+                <div class="bg-teal-50 rounded-xl p-4 border border-teal-100 text-center">
+                    <p class="text-xs font-bold text-teal-600 mb-1">WBBM</p>
+                    <p class="text-2xl font-black text-teal-800">{{ number_format($iku10Rekap['wbbm']) }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- IKU 11 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6" data-aos="fade-up" data-aos-delay="700">
+            <h2 class="text-xl font-bold text-slate-800 mb-6">IKU 11 - Tata Kelola Perguruan Tinggi</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-slate-50 p-5 rounded-xl border border-slate-100 flex justify-between items-center">
+                    <div>
+                        <p class="text-sm font-medium text-slate-500 mb-1">Opini Audit WTP (Laporan Keuangan)</p>
+                        <p class="text-2xl font-black text-emerald-600">{{ $iku11Rekap['wtp_count'] }} <span class="text-sm text-slate-400 font-normal">dari {{ $iku11Rekap['wtp_total'] }} Laporan</span></p>
+                    </div>
+                </div>
+                <div class="bg-slate-50 p-5 rounded-xl border border-slate-100 flex justify-between items-center">
+                    <div>
+                        <p class="text-sm font-medium text-slate-500 mb-1">Predikat SAKIP Institusi</p>
+                        <p class="text-2xl font-black text-blue-600">{{ $iku11Rekap['predikat_sakip'] }}</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs text-slate-400">Rata-rata Nilai</span><br>
+                        <span class="text-xl font-bold text-slate-700">{{ number_format($iku11Rekap['avg_sakip'], 2) }}</span>
+                    </div>
+                </div>
+                <div class="bg-rose-50/50 p-5 rounded-xl border border-rose-100 flex justify-between items-center">
+                    <div>
+                        <p class="text-sm font-medium text-rose-600 mb-1">Laporan Pelanggaran Integritas Akademik</p>
+                        <p class="text-2xl font-black text-rose-700">{{ number_format($iku11Rekap['pelanggaran']) }} <span class="text-sm font-normal text-rose-600">Kasus</span></p>
+                    </div>
+                </div>
+                <div class="bg-teal-50/50 p-5 rounded-xl border border-teal-100 flex justify-between items-center">
+                    <div>
+                        <p class="text-sm font-medium text-teal-600 mb-1">Pencegahan Kekerasan / Narkoba / Korupsi</p>
+                        <p class="text-2xl font-black text-teal-700">{{ number_format($iku11Rekap['persen_pencegahan'], 2) }}%</p>
+                        <p class="text-xs text-teal-600 mt-1">{{ number_format($iku11Rekap['lak']) }} terlaksana dari {{ number_format($iku11Rekap['ren']) }} rencana</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </x-admin-layout>

@@ -408,6 +408,83 @@ class AdminController extends Controller
             'persen_alokasi_lab' => ($dm > 0) ? (($iku9->alokasi_laboratorium ?? 0) / $dm) * 100 : 0,
         ];
 
+        // --- IKU 4: Rekognisi Dosen ---
+        $iku4 = \App\Models\Iku4RekognisiDosen::where('tahun_akademik', $tahunAkademik)
+            ->selectRaw('SUM(total_dosen_pt) as total_dosen_pt, SUM(total_dosen_rekognisi) as total_rekognisi, SUM(total_dosen_tetap_pt) as total_tetap, SUM(total_dosen_s3) as total_s3')
+            ->first();
+        $iku4Rekap = [
+            'total_dosen_pt' => $iku4->total_dosen_pt ?? 0,
+            'total_rekognisi' => $iku4->total_rekognisi ?? 0,
+            'persen_rekognisi' => ($iku4->total_dosen_pt > 0) ? ($iku4->total_rekognisi / $iku4->total_dosen_pt) * 100 : 0,
+            'total_tetap' => $iku4->total_tetap ?? 0,
+            'total_s3' => $iku4->total_s3 ?? 0,
+            'persen_s3' => ($iku4->total_tetap > 0) ? ($iku4->total_s3 / $iku4->total_tetap) * 100 : 0,
+        ];
+
+        // --- IKU 6: Publikasi Bereputasi ---
+        $iku6 = \App\Models\Iku6Publikasi::where('tahun_akademik', $tahunAkademik)
+            ->selectRaw('SUM(total_publikasi) as total, SUM(publikasi_top_tier) as top_tier, SUM(publikasi_q1) as q1, SUM(publikasi_kolaborasi) as kolaborasi')
+            ->first();
+        $totalPub = $iku6->total ?? 0;
+        $iku6Rekap = [
+            'total' => $totalPub,
+            'top_tier' => $iku6->top_tier ?? 0,
+            'persen_top_tier' => ($totalPub > 0) ? (($iku6->top_tier ?? 0) / $totalPub) * 100 : 0,
+            'q1' => $iku6->q1 ?? 0,
+            'persen_q1' => ($totalPub > 0) ? (($iku6->q1 ?? 0) / $totalPub) * 100 : 0,
+            'kolaborasi' => $iku6->kolaborasi ?? 0,
+            'persen_kolaborasi' => ($totalPub > 0) ? (($iku6->kolaborasi ?? 0) / $totalPub) * 100 : 0,
+        ];
+
+        // --- IKU 8: SDM Kebijakan ---
+        $iku8 = \App\Models\Iku8SdmKebijakan::where('tahun_akademik', $tahunAkademik)
+            ->selectRaw('SUM(total_sdm) as sdm, SUM(total_terlibat) as terlibat')
+            ->first();
+        $iku8Rekap = [
+            'sdm' => $iku8->sdm ?? 0,
+            'terlibat' => $iku8->terlibat ?? 0,
+            'persen' => ($iku8->sdm > 0) ? (($iku8->terlibat ?? 0) / $iku8->sdm) * 100 : 0,
+        ];
+
+        // --- IKU 10: Zona Integritas ---
+        $iku10 = \App\Models\Iku10ZonaIntegritas::where('tahun_akademik', $tahunAkademik)->get();
+        $iku10Rekap = [
+            'total' => $iku10->count(),
+            'diajukan' => $iku10->where('status', 'diajukan')->count(),
+            'lolos_tpi' => $iku10->where('status', 'lolos_tpi')->count(),
+            'wbk' => $iku10->where('status', 'wbk')->count(),
+            'wbbm' => $iku10->where('status', 'wbbm')->count(),
+        ];
+
+        // --- IKU 11: Tata Kelola ---
+        $iku11Data = \App\Models\Iku11TataKelola::where('tahun_akademik', $tahunAkademik)->get();
+        $iku11Sum = \App\Models\Iku11TataKelola::where('tahun_akademik', $tahunAkademik)
+            ->selectRaw('SUM(jumlah_pelanggaran) as pelanggaran, SUM(kegiatan_direncanakan) as ren, SUM(kegiatan_terlaksana) as lak, AVG(nilai_sakip) as avg_sakip')
+            ->first();
+            
+        // Hitung predikat SAKIP universitas
+        $avgSakip = $iku11Sum->avg_sakip ?? 0;
+        $predikatSakip = 'N/A';
+        foreach (\App\Models\Iku11TataKelola::PREDIKAT_SAKIP as $key => $config) {
+            if ($avgSakip >= $config['min'] && $avgSakip <= $config['max']) {
+                $predikatSakip = $config['label'];
+                break;
+            }
+        }
+        
+        $wtpCount = $iku11Data->where('opini_audit', 'wtp')->count();
+
+        $iku11Rekap = [
+            'wtp_count' => $wtpCount,
+            'wtp_total' => max(1, $iku11Data->count()),
+            'avg_sakip' => $avgSakip,
+            'predikat_sakip' => $predikatSakip,
+            'pelanggaran' => $iku11Sum->pelanggaran ?? 0,
+            'ren' => $iku11Sum->ren ?? 0,
+            'lak' => $iku11Sum->lak ?? 0,
+            'persen_pencegahan' => (($iku11Sum->ren ?? 0) > 0) ? (($iku11Sum->lak ?? 0) / $iku11Sum->ren) * 100 : 0,
+        ];
+
         return view('admin.rekap-universitas', compact(
             'tahunAkademik',
             'availableYears',
@@ -418,7 +495,12 @@ class AdminController extends Controller
             'iku5Rekap',
             'iku7Rekap',
             'iku12Rekap',
-            'iku9Rekap'
+            'iku9Rekap',
+            'iku4Rekap',
+            'iku6Rekap',
+            'iku8Rekap',
+            'iku10Rekap',
+            'iku11Rekap'
         ));
     }
 
