@@ -109,6 +109,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/', [AdminController::class, 'index'])->name('dashboard');
     Route::get('/activities', [AdminController::class, 'activities'])->name('activities');
 
+    Route::get('/rekap-universitas', [AdminController::class, 'rekapUniversitas'])->name('rekap-universitas');
+
     // User management
     Route::get('/users', [AdminController::class, 'users'])->name('users');
     Route::get('/users/create', [AdminController::class, 'createUser'])->name('users.create');

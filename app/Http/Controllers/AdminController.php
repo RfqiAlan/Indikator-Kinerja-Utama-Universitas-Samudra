@@ -260,6 +260,84 @@ class AdminController extends Controller
     }
 
     /**
+     * Display Rekap Universitas
+     */
+    public function rekapUniversitas(Request $request)
+    {
+        $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $availableYears = $this->getAvailableYears();
+
+        // --- IKU 1: AEE per jenjang ---
+        // D1, D2, D3, D4, S1, S2, S3
+        $iku1Data = Iku1Aee::where('tahun_akademik', $tahunAkademik)
+            ->selectRaw('jenjang, SUM(jumlah_lulus_tepat_waktu) as lulus, SUM(total_mahasiswa_aktif) as total')
+            ->groupBy('jenjang')
+            ->get()
+            ->keyBy('jenjang');
+
+        $jenjangList = ['D1', 'D2', 'D3', 'D4', 'S1', 'S2', 'S3'];
+        $iku1Rekap = [];
+        foreach ($jenjangList as $j) {
+            $data = $iku1Data->get($j);
+            $lulus = $data ? $data->lulus : 0;
+            $total = $data ? $data->total : 0;
+            $persen = $total > 0 ? ($lulus / $total) * 100 : 0;
+            $iku1Rekap[$j] = [
+                'lulus' => $lulus,
+                'total' => $total,
+                'persen' => $persen
+            ];
+        }
+
+        // --- Sub IKU 1.1 ---
+        $iku1Sub1 = \App\Models\Iku1Sub1::where('tahun_akademik', $tahunAkademik)
+            ->selectRaw('SUM(total_mahasiswa_aktif) as total, SUM(mahasiswa_aktif_s2) as s2, SUM(mahasiswa_aktif_s3) as s3, SUM(mahasiswa_internasional) as internasional')
+            ->first();
+            
+        $subIku1Rekap = [
+            'total' => $iku1Sub1->total ?? 0,
+            's2' => $iku1Sub1->s2 ?? 0,
+            's3' => $iku1Sub1->s3 ?? 0,
+            'internasional' => $iku1Sub1->internasional ?? 0,
+            'persen_s2' => ($iku1Sub1->total > 0) ? ($iku1Sub1->s2 / $iku1Sub1->total) * 100 : 0,
+            'persen_s3' => ($iku1Sub1->total > 0) ? ($iku1Sub1->s3 / $iku1Sub1->total) * 100 : 0,
+            'persen_internasional' => ($iku1Sub1->total > 0) ? ($iku1Sub1->internasional / $iku1Sub1->total) * 100 : 0,
+        ];
+
+        // --- IKU 2: Lulusan Bekerja ---
+        $iku2 = Iku2LulusanBekerja::where('tahun_akademik', $tahunAkademik)
+            ->selectRaw('SUM(total_lulusan) as total_lulusan, SUM(total_responden) as total_responden, SUM(skor_bekerja) as bekerja, SUM(studi_lanjut * 0.6) as studi, SUM(skor_wirausaha) as wirausaha')
+            ->first();
+            
+        $iku2Rekap = [
+            'total_lulusan' => $iku2->total_lulusan ?? 0,
+            'total_responden' => $iku2->total_responden ?? 0,
+            'skor_total' => ($iku2->bekerja ?? 0) + ($iku2->studi ?? 0) + ($iku2->wirausaha ?? 0),
+            'persen' => ($iku2->total_responden > 0) ? ((($iku2->bekerja ?? 0) + ($iku2->studi ?? 0) + ($iku2->wirausaha ?? 0)) / $iku2->total_responden) * 100 : 0,
+        ];
+
+        // --- IKU 3: Kegiatan Mahasiswa ---
+        $iku3 = Iku3KegiatanMahasiswa::where('tahun_akademik', $tahunAkademik)
+            ->selectRaw('SUM(total_mahasiswa) as total_mhs, SUM(skor_bobot_kegiatan) as total_kegiatan')
+            ->first();
+            
+        $iku3Rekap = [
+            'total_mhs' => $iku3->total_mhs ?? 0,
+            'total_kegiatan' => $iku3->total_kegiatan ?? 0,
+            'persen' => ($iku3->total_mhs > 0) ? ($iku3->total_kegiatan / $iku3->total_mhs) * 100 : 0,
+        ];
+
+        return view('admin.rekap-universitas', compact(
+            'tahunAkademik',
+            'availableYears',
+            'iku1Rekap',
+            'subIku1Rekap',
+            'iku2Rekap',
+            'iku3Rekap'
+        ));
+    }
+
+    /**
      * Export IKU recap data to Excel
      */
     public function exportRekap(Request $request)
