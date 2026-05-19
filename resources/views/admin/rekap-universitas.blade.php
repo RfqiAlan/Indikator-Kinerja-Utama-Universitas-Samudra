@@ -319,28 +319,44 @@
 
         <!-- IKU 6 -->
         <div class="bg-white rounded-2xl shadow-sm p-6" data-aos="fade-up" data-aos-delay="550">
-            <h2 class="text-xl font-bold text-slate-800 mb-6">IKU 6 - Publikasi Bereputasi Internasional</h2>
-            <div class="flex flex-col md:flex-row gap-6 items-center">
-                <div class="w-48 h-48 rounded-full border-8 {{ $iku6Rekap['total'] > 0 ? 'border-sky-500 text-sky-600' : 'border-slate-200 text-slate-400' }} flex flex-col items-center justify-center shrink-0">
-                    <span class="text-4xl font-black">{{ number_format($iku6Rekap['total']) }}</span>
-                    <span class="text-xs font-bold uppercase mt-1 text-slate-500 text-center">Total<br>Publikasi</span>
+            <h2 class="text-xl font-bold text-slate-800 mb-2">IKU 6 - Publikasi Bereputasi Internasional (Scopus / WoS)</h2>
+            <p class="text-xs text-slate-500 mb-6">
+                Formula keseluruhan: <span class="font-semibold text-slate-700">(Nilai Bobot Publikasi + Nilai Bonus Kolaborasi) / Total Publikasi PT × 100</span>
+            </p>
+
+            {{-- Hero: Persentase keseluruhan --}}
+            <div class="bg-gradient-to-br from-sky-500 to-indigo-600 rounded-2xl p-6 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-white">
+                <div>
+                    <p class="text-sky-100 text-sm font-semibold uppercase tracking-wider mb-1">Persentase Publikasi Bereputasi Internasional (Scopus/WoS)</p>
+                    <p class="text-5xl font-black tracking-tight">{{ number_format($iku6Rekap['persen_keseluruhan'], 2) }}%</p>
+                    <p class="text-sky-200 text-xs mt-2">
+                        Skor Bobot Total: <strong>{{ number_format($iku6Rekap['skor_total'], 2) }}</strong>
+                        &nbsp;/&nbsp;
+                        Total Publikasi PT: <strong>{{ number_format($iku6Rekap['total']) }}</strong>
+                    </p>
                 </div>
-                <div class="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
-                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 text-center sm:text-left flex flex-col justify-center">
-                        <p class="text-xs font-medium text-slate-500 mb-1">Publikasi Top Tier</p>
-                        <p class="text-2xl font-bold text-slate-800">{{ number_format($iku6Rekap['persen_top_tier'], 2) }}%</p>
-                        <p class="text-[10px] text-slate-400 mt-1">{{ number_format($iku6Rekap['top_tier']) }} Publikasi</p>
-                    </div>
-                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 text-center sm:text-left flex flex-col justify-center">
-                        <p class="text-xs font-medium text-slate-500 mb-1">Publikasi Q1</p>
-                        <p class="text-2xl font-bold text-slate-800">{{ number_format($iku6Rekap['persen_q1'], 2) }}%</p>
-                        <p class="text-[10px] text-slate-400 mt-1">{{ number_format($iku6Rekap['q1']) }} Publikasi</p>
-                    </div>
-                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 text-center sm:text-left flex flex-col justify-center">
-                        <p class="text-xs font-medium text-slate-500 mb-1">Kolaborasi Internasional</p>
-                        <p class="text-2xl font-bold text-slate-800">{{ number_format($iku6Rekap['persen_kolaborasi'], 2) }}%</p>
-                        <p class="text-[10px] text-slate-400 mt-1">{{ number_format($iku6Rekap['kolaborasi']) }} Penelitian</p>
-                    </div>
+                <div class="shrink-0 bg-white/20 rounded-2xl p-5 text-center">
+                    <p class="text-sky-100 text-xs font-bold uppercase mb-1">Total Publikasi</p>
+                    <p class="text-4xl font-black">{{ number_format($iku6Rekap['total']) }}</p>
+                </div>
+            </div>
+
+            {{-- Rincian sub-metrik --}}
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 flex flex-col justify-center">
+                    <p class="text-xs font-medium text-slate-500 mb-1">% Publikasi Top Tier</p>
+                    <p class="text-2xl font-bold text-slate-800">{{ number_format($iku6Rekap['persen_top_tier'], 2) }}%</p>
+                    <p class="text-[10px] text-slate-400 mt-1">{{ number_format($iku6Rekap['top_tier']) }} publikasi &times; bobot 1.20</p>
+                </div>
+                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 flex flex-col justify-center">
+                    <p class="text-xs font-medium text-slate-500 mb-1">% Publikasi Q1</p>
+                    <p class="text-2xl font-bold text-slate-800">{{ number_format($iku6Rekap['persen_q1'], 2) }}%</p>
+                    <p class="text-[10px] text-slate-400 mt-1">{{ number_format($iku6Rekap['q1']) }} publikasi &times; bobot 1.00</p>
+                </div>
+                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 flex flex-col justify-center">
+                    <p class="text-xs font-medium text-slate-500 mb-1">% Penelitian Kolaborasi Internasional</p>
+                    <p class="text-2xl font-bold text-slate-800">{{ number_format($iku6Rekap['persen_kolaborasi'], 2) }}%</p>
+                    <p class="text-[10px] text-slate-400 mt-1">{{ number_format($iku6Rekap['kolaborasi']) }} penelitian &times; bonus 0.25</p>
                 </div>
             </div>
         </div>
@@ -420,6 +436,70 @@
                         <p class="text-2xl font-black text-teal-700">{{ number_format($iku11Rekap['persen_pencegahan'], 2) }}%</p>
                         <p class="text-xs text-teal-600 mt-1">{{ number_format($iku11Rekap['lak']) }} terlaksana dari {{ number_format($iku11Rekap['ren']) }} rencana</p>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Separator for Indikator Partisipatif -->
+        <div class="mt-4 border-b border-slate-200 pb-2" data-aos="fade-in" data-aos-delay="720">
+            <div class="flex items-center gap-3">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700">
+                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+                    </svg>
+                    PARTISIPATIF
+                </span>
+                <h2 class="text-2xl font-extrabold text-slate-800">Indikator Kinerja Partisipatif</h2>
+            </div>
+            <p class="text-slate-500 text-sm mt-1">Indikator berbasis kontribusi mitra dan pemangku kepentingan eksternal</p>
+        </div>
+
+        <!-- Mitra Kontributor -->
+        <div class="bg-white rounded-2xl shadow-sm p-6" data-aos="fade-up" data-aos-delay="740">
+            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-6">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800">Lainnya — Persentase Mitra Berkontribusi</h2>
+                    <p class="text-sm text-slate-500 mt-1">Persentase mitra yang berkontribusi terhadap kegiatan pengembangan Universitas Samudra</p>
+                </div>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-700 shrink-0">
+                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                    </svg>
+                    Data Belum Terhubung
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="bg-slate-50 border-2 border-dashed border-slate-200 rounded-xl p-5 text-center flex flex-col items-center justify-center gap-2">
+                    <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-400">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                    </div>
+                    <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Mitra Terdaftar</p>
+                    <p class="text-2xl font-black text-slate-400">—</p>
+                </div>
+                <div class="bg-slate-50 border-2 border-dashed border-slate-200 rounded-xl p-5 text-center flex flex-col items-center justify-center gap-2">
+                    <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-400">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Mitra Aktif Berkontribusi</p>
+                    <p class="text-2xl font-black text-slate-400">—</p>
+                </div>
+                <div class="bg-emerald-50 border-2 border-dashed border-emerald-200 rounded-xl p-5 text-center flex flex-col items-center justify-center gap-2">
+                    <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-400">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                    </div>
+                    <p class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Persentase Kontribusi</p>
+                    <p class="text-2xl font-black text-emerald-400">—%</p>
+                </div>
+            </div>
+
+            <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 flex items-start gap-3">
+                <svg class="w-5 h-5 text-blue-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                </svg>
+                <div>
+                    <p class="text-sm font-semibold text-blue-800">Modul Data Mitra Belum Tersedia</p>
+                    <p class="text-xs text-blue-600 mt-0.5">Indikator ini memerlukan modul manajemen mitra tersendiri. Data akan otomatis terakumulasi di sini setelah modul tersebut dibuat dan diintegrasikan ke sistem. Hubungi tim pengembang untuk implementasi lebih lanjut.</p>
                 </div>
             </div>
         </div>

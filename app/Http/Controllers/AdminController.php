@@ -422,12 +422,24 @@ class AdminController extends Controller
         ];
 
         // --- IKU 6: Publikasi Bereputasi ---
+        // Formula: (Nilai Bobot Publikasi + Nilai Bonus Kolaborasi) / Total Publikasi PT × 100
+        // skor_publikasi sudah mencakup bobot per Q dan bonus kolaborasi (sesuai model)
         $iku6 = \App\Models\Iku6Publikasi::where('tahun_akademik', $tahunAkademik)
-            ->selectRaw('SUM(total_publikasi) as total, SUM(publikasi_top_tier) as top_tier, SUM(publikasi_q1) as q1, SUM(publikasi_kolaborasi) as kolaborasi')
+            ->selectRaw('
+                SUM(total_publikasi) as total,
+                SUM(publikasi_top_tier) as top_tier,
+                SUM(publikasi_q1) as q1,
+                SUM(publikasi_kolaborasi) as kolaborasi,
+                SUM(skor_publikasi) as skor_total
+            ')
             ->first();
         $totalPub = $iku6->total ?? 0;
+        $skorTotal = $iku6->skor_total ?? 0;
         $iku6Rekap = [
             'total' => $totalPub,
+            'skor_total' => $skorTotal,
+            // Persentase keseluruhan IKU 6: (Nilai Bobot + Bonus Kolaborasi) / Total Publikasi PT × 100
+            'persen_keseluruhan' => ($totalPub > 0) ? ($skorTotal / $totalPub) * 100 : 0,
             'top_tier' => $iku6->top_tier ?? 0,
             'persen_top_tier' => ($totalPub > 0) ? (($iku6->top_tier ?? 0) / $totalPub) * 100 : 0,
             'q1' => $iku6->q1 ?? 0,
