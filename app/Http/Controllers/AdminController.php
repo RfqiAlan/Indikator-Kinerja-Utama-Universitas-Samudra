@@ -221,6 +221,7 @@ class AdminController extends Controller
         $availableYears = $this->getAvailableYears();
         
         $iku1Data = Iku1Aee::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
+        $iku1Sub1Data = \App\Models\Iku1Sub1::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
         $iku2Data = Iku2LulusanBekerja::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
         $iku3Data = Iku3KegiatanMahasiswa::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
         $iku4Data = Iku4RekognisiDosen::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
@@ -239,6 +240,7 @@ class AdminController extends Controller
         return view('admin.fakultas-detail', compact(
             'fakultas',
             'iku1Data',
+            'iku1Sub1Data',
             'iku2Data',
             'iku3Data',
             'iku4Data',

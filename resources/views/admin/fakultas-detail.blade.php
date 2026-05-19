@@ -35,7 +35,7 @@
                             <span class="text-sm font-semibold text-slate-700">{{ $users->count() }} User</span>
                         </div>
                         @php
-                            $totalIkuData = $iku1Data->count() + $iku2Data->count() + $iku3Data->count() +
+                            $totalIkuData = $iku1Data->count() + $iku1Sub1Data->count() + $iku2Data->count() + $iku3Data->count() +
                                 $iku4Data->count() + $iku5Data->count() + $iku6Data->count() +
                                 $iku7Data->count() + $iku8Data->count() + $iku9Data->count() +
                                 $iku10Data->count() + $iku11Data->count() + $iku12Data->count() + $iku13Data->count();
@@ -111,6 +111,39 @@
         </div>
         @else
         <p class="text-slate-500 text-center py-4">Belum ada data IKU 1</p>
+        @endif
+    </div>
+
+    <!-- IKU 1.1 Data -->
+    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6" data-aos="fade-up">
+        <h2 class="text-xl font-bold text-slate-800 mb-4">IKU 1.1 - Mahasiswa S2/S3 & Asing</h2>
+        @if($iku1Sub1Data->count() > 0)
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead class="bg-slate-50">
+                    <tr>
+                        <th class="px-4 py-3 text-left font-semibold text-slate-600">Total Mahasiswa Aktif</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">% S2</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">% S2 & S3</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">% S3 (Doktor)</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">% Internasional</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    @foreach($iku1Sub1Data as $row)
+                    <tr>
+                        <td class="px-4 py-3 font-medium">{{ number_format($row->total_mahasiswa_aktif) }}</td>
+                        <td class="px-4 py-3 text-center font-semibold text-blue-600">{{ number_format($row->persentase_s2, 2) }}%</td>
+                        <td class="px-4 py-3 text-center font-semibold text-blue-600">{{ number_format($row->persentase_s2_s3, 2) }}%</td>
+                        <td class="px-4 py-3 text-center font-semibold text-blue-600">{{ number_format($row->persentase_s3, 2) }}%</td>
+                        <td class="px-4 py-3 text-center font-semibold text-blue-600">{{ number_format($row->persentase_internasional, 2) }}%</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        @else
+        <p class="text-slate-500 text-center py-4">Belum ada data IKU 1.1</p>
         @endif
     </div>
 

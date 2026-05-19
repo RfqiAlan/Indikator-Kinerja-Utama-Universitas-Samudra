@@ -141,9 +141,9 @@
                         ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20 ring-1 ring-blue-500'
                         : 'text-slate-600 hover:bg-slate-50 hover:text-blue-700' }}">
                         
-                                        @if($isSubItem)
-                                        <div class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-[1px] bg-slate-300 {{ $isActive ? 'bg-blue-300' : '' }}"></div>
-                                        <div class="absolute left-4 top-0 h-1/2 w-[1px] bg-slate-300 {{ $isActive ? 'bg-blue-300' : '' }}"></div>
+                                        @if($isSubItem && !$isActive)
+                                        <div class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-[1px] bg-slate-300"></div>
+                                        <div class="absolute left-4 top-0 h-1/2 w-[1px] bg-slate-300"></div>
                                         @endif
 
                                         <div
