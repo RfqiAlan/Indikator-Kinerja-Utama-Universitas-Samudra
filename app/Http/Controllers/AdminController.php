@@ -327,13 +327,98 @@ class AdminController extends Controller
             'persen' => ($iku3->total_mhs > 0) ? ($iku3->total_kegiatan / $iku3->total_mhs) * 100 : 0,
         ];
 
+        // --- IKU 5: Luaran Kerjasama ---
+        $iku5 = \App\Models\Iku5LuaranKerjasama::where('tahun_akademik', $tahunAkademik)
+            ->selectRaw('SUM(total_kerjasama_pt) as total_kerjasama_pt, SUM(total_luaran) as total_luaran')
+            ->first();
+        $iku5Rekap = [
+            'total_kerjasama_pt' => $iku5->total_kerjasama_pt ?? 0,
+            'total_luaran' => $iku5->total_luaran ?? 0,
+            'persen' => ($iku5->total_kerjasama_pt > 0) ? ($iku5->total_luaran / $iku5->total_kerjasama_pt) * 100 : 0,
+        ];
+
+        // --- IKU 7: SDGs ---
+        $iku7 = \App\Models\Iku7Sdgs::where('tahun_akademik', $tahunAkademik)
+            ->selectRaw('SUM(total_program) as total_program, SUM(total_program_sdgs) as total_program_sdgs, SUM(sdg_1) as sdg_1, SUM(sdg_4) as sdg_4, SUM(sdg_17) as sdg_17, SUM(sdg_5 + sdg_13) as sdg_lainnya')
+            ->first();
+        $iku7Rekap = [
+            'total_program' => $iku7->total_program ?? 0,
+            'total_program_sdgs' => $iku7->total_program_sdgs ?? 0,
+            'sdg_1' => $iku7->sdg_1 ?? 0,
+            'sdg_4' => $iku7->sdg_4 ?? 0,
+            'sdg_17' => $iku7->sdg_17 ?? 0,
+            'sdg_lainnya' => $iku7->sdg_lainnya ?? 0,
+            'persen' => ($iku7->total_program > 0) ? ($iku7->total_program_sdgs / $iku7->total_program) * 100 : 0,
+        ];
+
+        // --- IKU 12: Kesejahteraan Dosen ---
+        $totalFakultas = \App\Models\Fakultas::count();
+        if($totalFakultas == 0) $totalFakultas = 5; // Default 5 jika belum ada di db master
+        $iku12 = \App\Models\Iku12KesejahteraanDosen::where('tahun_akademik', $tahunAkademik)
+            ->where('status_validasi', true)
+            ->count();
+        $iku12Rekap = [
+            'fakultas_valid' => $iku12,
+            'total_fakultas' => $totalFakultas,
+            'persen' => ($totalFakultas > 0) ? ($iku12 / $totalFakultas) * 100 : 0,
+        ];
+
+        // --- IKU 9: Pendapatan ---
+        $iku9 = \App\Models\Iku9Pendapatan::where('tahun_akademik', $tahunAkademik)
+            ->selectRaw('
+                SUM(total_pendapatan) as total_pendapatan, 
+                SUM(pendapatan_non_mahasiswa) as pendapatan_non_mahasiswa,
+                SUM(total_aset) as total_aset,
+                SUM(pendapatan_dipa_apbn) as pendapatan_dipa_apbn,
+                SUM(pendapatan_industri) as pendapatan_industri,
+                SUM(dana_abadi) as dana_abadi,
+                SUM(dana_masyarakat) as dana_masyarakat,
+                SUM(alokasi_riset) as alokasi_riset,
+                SUM(alokasi_kompetensi_dosen) as alokasi_kompetensi_dosen,
+                SUM(alokasi_laboratorium) as alokasi_laboratorium
+            ')->first();
+        
+        $tp = $iku9->total_pendapatan ?? 0;
+        $ta = $iku9->total_aset ?? 0;
+        $dm = $iku9->dana_masyarakat ?? 0;
+        
+        $iku9Rekap = [
+            'total_pendapatan' => $tp,
+            'pendapatan_non_mahasiswa' => $iku9->pendapatan_non_mahasiswa ?? 0,
+            'persen_non_ukt' => ($tp > 0) ? (($iku9->pendapatan_non_mahasiswa ?? 0) / $tp) * 100 : 0,
+            
+            'total_aset' => $ta,
+            'persen_pendapatan_aset' => ($ta > 0) ? ($tp / $ta) * 100 : 0,
+            
+            'pendapatan_dipa_apbn' => $iku9->pendapatan_dipa_apbn ?? 0,
+            'persen_dipa_apbn' => ($tp > 0) ? (($iku9->pendapatan_dipa_apbn ?? 0) / $tp) * 100 : 0,
+            
+            'pendapatan_industri' => $iku9->pendapatan_industri ?? 0,
+            'persen_industri' => ($tp > 0) ? (($iku9->pendapatan_industri ?? 0) / $tp) * 100 : 0,
+            
+            'dana_abadi' => $iku9->dana_abadi ?? 0,
+            'persen_dana_abadi' => ($ta > 0) ? (($iku9->dana_abadi ?? 0) / $ta) * 100 : 0,
+
+            'alokasi_riset' => $iku9->alokasi_riset ?? 0,
+            'alokasi_kompetensi_dosen' => $iku9->alokasi_kompetensi_dosen ?? 0,
+            'alokasi_laboratorium' => $iku9->alokasi_laboratorium ?? 0,
+            'dana_masyarakat' => $dm,
+            'persen_alokasi_riset' => ($dm > 0) ? (($iku9->alokasi_riset ?? 0) / $dm) * 100 : 0,
+            'persen_alokasi_dosen' => ($dm > 0) ? (($iku9->alokasi_kompetensi_dosen ?? 0) / $dm) * 100 : 0,
+            'persen_alokasi_lab' => ($dm > 0) ? (($iku9->alokasi_laboratorium ?? 0) / $dm) * 100 : 0,
+        ];
+
         return view('admin.rekap-universitas', compact(
             'tahunAkademik',
             'availableYears',
             'iku1Rekap',
             'subIku1Rekap',
             'iku2Rekap',
-            'iku3Rekap'
+            'iku3Rekap',
+            'iku5Rekap',
+            'iku7Rekap',
+            'iku12Rekap',
+            'iku9Rekap'
         ));
     }
 
