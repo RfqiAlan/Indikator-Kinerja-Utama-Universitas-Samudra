@@ -36,6 +36,8 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
         Route::get('/iku1/{iku1}/edit', [Iku1Controller::class, 'edit'])->name('iku1.edit');
         Route::put('/iku1/{iku1}', [Iku1Controller::class, 'update'])->middleware('drive.connected')->name('iku1.update');
         Route::delete('/iku1/{iku1}', [Iku1Controller::class, 'destroy'])->name('iku1.destroy');
+        // IKU 1.1: Sub IKU 1.1
+        Route::resource('iku1_sub1', \App\Http\Controllers\Iku1Sub1Controller::class)->middleware(['store' => 'drive.connected', 'update' => 'drive.connected']);
 
         // IKU 2: Lulusan Bekerja/Studi/Wirausaha
         Route::resource('iku2', \App\Http\Controllers\Iku2Controller::class)->middleware(['store' => 'drive.connected', 'update' => 'drive.connected']);
