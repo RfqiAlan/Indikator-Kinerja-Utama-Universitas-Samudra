@@ -13,6 +13,7 @@ class Iku5LuaranKerjasama extends Model
 
     protected $fillable = [
         'tahun_akademik',
+        'triwulan',
         'fakultas',
         'total_kerjasama_pt',
         'karya_tulis_ilmiah',

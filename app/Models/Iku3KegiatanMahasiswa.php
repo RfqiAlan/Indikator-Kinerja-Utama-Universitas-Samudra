@@ -13,6 +13,7 @@ class Iku3KegiatanMahasiswa extends Model
 
     protected $fillable = [
         'tahun_akademik',
+        'triwulan',
         'fakultas',
         'program_studi',
         'total_mahasiswa',

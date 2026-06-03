@@ -11,11 +11,15 @@ class Iku13Controller extends Controller
     public function index(Request $request)
     {
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $triwulan = $request->get('triwulan');
         $fakultas = auth()->user()->fakultas ?? 'universitas';
         
         $data = Iku13KinerjaAnggaran::where('tahun_akademik', $tahunAkademik)
             ->where('fakultas', $fakultas)
             ->first();
+        if ($triwulan && $triwulan !== 'Semua') {
+            $data = $data->where('triwulan', $triwulan);
+        }
 
         $dbYears = Iku13KinerjaAnggaran::where('fakultas', $fakultas)
             ->select('tahun_akademik')
@@ -28,7 +32,7 @@ class Iku13Controller extends Controller
             ->sortDesc()
             ->values();
 
-        return view('iku13.index', compact('data', 'tahunAkademik', 'availableYears'));
+        return view('iku13.index', compact('data', 'tahunAkademik', 'availableYears', 'triwulan'));
     }
 
     public function create()
@@ -44,13 +48,14 @@ class Iku13Controller extends Controller
                 ->with('warning', 'Data IKU 13 untuk tahun ini sudah ada. Silakan edit data yang sudah ada.');
         }
 
-        return view('iku13.create', compact('tahunAkademik'));
+        return view('iku13.create', compact('tahunAkademik', 'triwulan'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'keterangan' => 'nullable|string',
             'lampiran' => 'required|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,xls,xlsx,rar,zip|max:51200',
@@ -99,7 +104,7 @@ class Iku13Controller extends Controller
             abort(403, 'Anda tidak memiliki akses ke data ini.');
         }
 
-        return view('iku13.edit', compact('iku13'));
+        return view('iku13.edit', compact('iku13', 'triwulan'));
     }
 
     public function update(Request $request, Iku13KinerjaAnggaran $iku13)
@@ -111,6 +116,7 @@ class Iku13Controller extends Controller
 
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,xls,xlsx,rar,zip|max:51200',

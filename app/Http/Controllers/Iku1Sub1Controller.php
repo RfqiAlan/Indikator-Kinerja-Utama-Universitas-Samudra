@@ -10,9 +10,13 @@ class Iku1Sub1Controller extends Controller
     public function index(Request $request)
     {
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $triwulan = $request->get('triwulan');
         $fakultas = auth()->user()->fakultas;
 
         $data = Iku1Sub1::where('tahun_akademik', $tahunAkademik);
+        if ($triwulan && $triwulan !== 'Semua') {
+            $data = $data->where('triwulan', $triwulan);
+        }
         if ($fakultas) {
             $data->where('fakultas', $fakultas);
         }
@@ -21,19 +25,20 @@ class Iku1Sub1Controller extends Controller
         $dbYears = Iku1Sub1::select('tahun_akademik')->distinct()->pluck('tahun_akademik');
         $availableYears = collect(get_tahun_akademik_list())->merge($dbYears)->unique()->sortDesc()->values();
 
-        return view('iku1_sub1.index', compact('data', 'tahunAkademik', 'availableYears'));
+        return view('iku1_sub1.index', compact('data', 'tahunAkademik', 'availableYears', 'triwulan'));
     }
 
     public function create()
     {
         $tahunAkademik = get_tahun_akademik();
-        return view('iku1_sub1.create', compact('tahunAkademik'));
+        return view('iku1_sub1.create', compact('tahunAkademik', 'triwulan'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'total_mahasiswa_aktif' => 'required|integer|min:1',
             'mahasiswa_aktif_s2' => 'required|integer|min:0',
             'mahasiswa_aktif_s3' => 'required|integer|min:0',
@@ -87,7 +92,7 @@ class Iku1Sub1Controller extends Controller
             abort(403, 'Anda tidak memiliki akses ke data ini.');
         }
 
-        return view('iku1_sub1.edit', compact('iku1Sub1'));
+        return view('iku1_sub1.edit', compact('iku1Sub1', 'triwulan'));
     }
 
     public function update(Request $request, Iku1Sub1 $iku1Sub1)
@@ -98,6 +103,7 @@ class Iku1Sub1Controller extends Controller
 
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'total_mahasiswa_aktif' => 'required|integer|min:1',
             'mahasiswa_aktif_s2' => 'required|integer|min:0',
             'mahasiswa_aktif_s3' => 'required|integer|min:0',

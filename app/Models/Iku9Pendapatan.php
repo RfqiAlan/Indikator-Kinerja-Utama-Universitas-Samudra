@@ -13,6 +13,7 @@ class Iku9Pendapatan extends Model
 
     protected $fillable = [
         'tahun_akademik',
+        'triwulan',
         'fakultas',
         'total_pendapatan',
         // IKU 9.1 — Pendapatan Non Pendidikan/UKT

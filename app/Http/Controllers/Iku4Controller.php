@@ -11,10 +11,11 @@ class Iku4Controller extends Controller
     public function index(Request $request)
     {
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $triwulan = $request->get('triwulan');
         $fakultas = auth()->user()->fakultas;
         
         $data = Iku4RekognisiDosen::where('tahun_akademik', $tahunAkademik)
-            ->where('fakultas', $fakultas)->get();
+            ->where('fakultas', $fakultas)->when($triwulan && $triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
 
         $dbYears = Iku4RekognisiDosen::where('fakultas', $fakultas)
             ->select('tahun_akademik')
@@ -62,13 +63,14 @@ class Iku4Controller extends Controller
                 ->with('warning', 'Data IKU 4 untuk tahun ini sudah ada. Silakan edit data yang sudah ada.');
         }
 
-        return view('iku4.create', compact('tahunAkademik'));
+        return view('iku4.create', compact('tahunAkademik', 'triwulan'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'total_dosen_pt' => 'required|integer|min:1',
             'total_dosen_rekognisi' => 'required|integer|min:0',
             'karya_tulis_ilmiah' => 'required|integer|min:0',
@@ -136,7 +138,7 @@ class Iku4Controller extends Controller
             abort(403, 'Anda tidak memiliki akses ke data ini.');
         }
 
-        return view('iku4.edit', compact('iku4'));
+        return view('iku4.edit', compact('iku4', 'triwulan'));
     }
 
     public function update(Request $request, Iku4RekognisiDosen $iku4)
@@ -147,6 +149,7 @@ class Iku4Controller extends Controller
 
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'total_dosen_pt' => 'required|integer|min:1',
             'total_dosen_rekognisi' => 'required|integer|min:0',
             'karya_tulis_ilmiah' => 'required|integer|min:0',

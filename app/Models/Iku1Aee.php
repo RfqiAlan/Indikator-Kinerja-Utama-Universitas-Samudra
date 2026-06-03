@@ -13,6 +13,7 @@ class Iku1Aee extends Model
 
     protected $fillable = [
         'tahun_akademik',
+        'triwulan',
         'fakultas',
         'jenjang',
         'program_studi',
@@ -100,7 +101,8 @@ class Iku1Aee extends Model
      */
     public static function calculateAeePt(string $tahunAkademik, ?string $fakultas = null): float
     {
-        $query = self::where('tahun_akademik', $tahunAkademik);
+        $query = self::where('tahun_akademik',
+        'triwulan', $tahunAkademik);
         
         if ($fakultas) {
             $query->where('fakultas', $fakultas);

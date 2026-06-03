@@ -36,7 +36,15 @@
                                         <option value="{{ $year }}" {{ $tahunAkademik === $year ? 'selected' : '' }}>Tahun {{ $year }}</option>
                                     @endforeach
                                 </select>
-                            </form>
+                        <select name="triwulan" onchange="this.form.submit()"
+                            class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm">
+                            <option value="Semua" {{ ($triwulan ?? "Semua") == "Semua" ? "selected" : "" }}>Semua Triwulan</option>
+                            <option value="1" {{ ($triwulan ?? "") == "1" ? "selected" : "" }}>Triwulan 1</option>
+                            <option value="2" {{ ($triwulan ?? "") == "2" ? "selected" : "" }}>Triwulan 2</option>
+                            <option value="3" {{ ($triwulan ?? "") == "3" ? "selected" : "" }}>Triwulan 3</option>
+                            <option value="4" {{ ($triwulan ?? "") == "4" ? "selected" : "" }}>Triwulan 4</option>
+                        </select>
+                    </form>
                         </div>
                         
                         <form method="POST" action="{{ route('logout') }}">
@@ -124,6 +132,13 @@
                     @foreach($availableYears as $year)
                         <option value="{{ $year }}" class="text-slate-800" {{ $tahunAkademik === $year ? 'selected' : '' }}>{{ $year }}</option>
                     @endforeach
+                </select>
+                <select name="triwulan" class="col-span-2 sm:col-span-1 px-3 py-2 rounded-lg bg-white/20 border border-white/30 text-white text-sm focus:ring-2 focus:ring-white/50 focus:border-transparent backdrop-blur-sm">
+                    <option value="Semua" class="text-slate-800" {{ ($triwulan ?? 'Semua') == 'Semua' ? 'selected' : '' }}>Semua Triwulan</option>
+                    <option value="1" class="text-slate-800" {{ ($triwulan ?? '') == '1' ? 'selected' : '' }}>Triwulan 1</option>
+                    <option value="2" class="text-slate-800" {{ ($triwulan ?? '') == '2' ? 'selected' : '' }}>Triwulan 2</option>
+                    <option value="3" class="text-slate-800" {{ ($triwulan ?? '') == '3' ? 'selected' : '' }}>Triwulan 3</option>
+                    <option value="4" class="text-slate-800" {{ ($triwulan ?? '') == '4' ? 'selected' : '' }}>Triwulan 4</option>
                 </select>
                 <button type="submit" class="col-span-2 sm:col-span-auto inline-flex items-center justify-center px-4 py-2 bg-white text-blue-600 rounded-lg font-semibold text-sm hover:bg-blue-50 transition-colors shadow-md min-h-[40px]">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

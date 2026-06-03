@@ -27,6 +27,17 @@
                     @csrf
                     <input type="hidden" name="tahun_akademik" value="{{ $tahunAkademik }}">
 
+                    <div class="mb-4">
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Triwulan <span class="text-rose-500">*</span></label>
+                        <select name="triwulan" class="w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 text-sm" required>
+                            <option value="">-- Pilih --</option>
+                            <option value="1" {{ old('triwulan') == 1 ? 'selected' : '' }}>Triwulan 1</option>
+                            <option value="2" {{ old('triwulan') == 2 ? 'selected' : '' }}>Triwulan 2</option>
+                            <option value="3" {{ old('triwulan') == 3 ? 'selected' : '' }}>Triwulan 3</option>
+                            <option value="4" {{ old('triwulan') == 4 ? 'selected' : '' }}>Triwulan 4</option>
+                        </select>
+                    </div>
+
                     <!-- Section: Kelengkapan Dokumen Perencanaan -->
                     <div>
                         <h3 class="text-lg font-bold text-slate-800 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">

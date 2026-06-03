@@ -11,11 +11,15 @@ class Iku12Controller extends Controller
     public function index(Request $request)
     {
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $triwulan = $request->get('triwulan');
         $fakultas = auth()->user()->fakultas ?? 'universitas';
         
         $data = Iku12KesejahteraanDosen::where('tahun_akademik', $tahunAkademik)
             ->where('fakultas', $fakultas)
             ->first();
+        if ($triwulan && $triwulan !== 'Semua') {
+            $data = $data->where('triwulan', $triwulan);
+        }
 
         $dbYears = Iku12KesejahteraanDosen::where('fakultas', $fakultas)
             ->select('tahun_akademik')
@@ -28,7 +32,7 @@ class Iku12Controller extends Controller
             ->sortDesc()
             ->values();
 
-        return view('iku12.index', compact('data', 'tahunAkademik', 'availableYears'));
+        return view('iku12.index', compact('data', 'tahunAkademik', 'availableYears', 'triwulan'));
     }
 
     public function create()
@@ -44,13 +48,14 @@ class Iku12Controller extends Controller
                 ->with('warning', 'Data IKU 12 untuk tahun ini sudah ada. Silakan edit data yang sudah ada.');
         }
 
-        return view('iku12.create', compact('tahunAkademik'));
+        return view('iku12.create', compact('tahunAkademik', 'triwulan'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'ada_dokumen_perencanaan' => 'boolean',
             'memuat_kesejahteraan_finansial' => 'boolean',
             'memuat_kesejahteraan_non_finansial' => 'boolean',
@@ -119,7 +124,7 @@ class Iku12Controller extends Controller
             abort(403, 'Anda tidak memiliki akses ke data ini.');
         }
 
-        return view('iku12.edit', compact('iku12'));
+        return view('iku12.edit', compact('iku12', 'triwulan'));
     }
 
     public function update(Request $request, Iku12KesejahteraanDosen $iku12)
@@ -131,6 +136,7 @@ class Iku12Controller extends Controller
 
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'keterangan' => 'nullable|string',
             'lampiran' => 'nullable|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,rar,zip|max:51200',

@@ -35,12 +35,13 @@ class Iku1Controller extends Controller
     public function index(Request $request)
     {
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $triwulan = $request->get('triwulan');
         $fakultas = $this->resolveFakultas(auth()->user()->fakultas, null);
         
         $data = Iku1Aee::where('tahun_akademik', $tahunAkademik)
                        ->where('fakultas', $fakultas)
                        ->orderBy('jenjang')
-                       ->get();
+                       ->when($triwulan && $triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
         
         $aeePt = Iku1Aee::calculateAeePt($tahunAkademik, $fakultas);
         
@@ -56,7 +57,7 @@ class Iku1Controller extends Controller
             ->sortDesc()
             ->values();
 
-        return view('iku1.index', compact('data', 'aeePt', 'tahunAkademik', 'availableYears'));
+        return view('iku1.index', compact('data', 'aeePt', 'tahunAkademik', 'availableYears', 'triwulan'));
     }
 
     /**
@@ -66,7 +67,7 @@ class Iku1Controller extends Controller
     {
         $tahunAkademik = get_tahun_akademik();
         
-        return view('iku1.create', compact('tahunAkademik'));
+        return view('iku1.create', compact('tahunAkademik', 'triwulan'));
     }
 
     /**
@@ -76,6 +77,7 @@ class Iku1Controller extends Controller
     {
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'program_studi' => 'required|string',
             'total_mahasiswa_aktif' => 'required|integer|min:1',
             'jumlah_lulus_tepat_waktu' => 'required|integer|min:0|lte:total_mahasiswa_aktif',
@@ -141,7 +143,7 @@ class Iku1Controller extends Controller
             abort(403, 'Anda tidak memiliki akses ke data ini.');
         }
 
-        return view('iku1.edit', compact('iku1'));
+        return view('iku1.edit', compact('iku1', 'triwulan'));
     }
 
     /**
@@ -156,6 +158,7 @@ class Iku1Controller extends Controller
 
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'program_studi' => 'required|string',
             'jumlah_lulus_tepat_waktu' => 'required|integer|min:0',
             'total_mahasiswa_aktif' => 'required|integer|min:1',

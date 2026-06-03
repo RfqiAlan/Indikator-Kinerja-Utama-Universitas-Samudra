@@ -11,10 +11,11 @@ class Iku8Controller extends Controller
     public function index(Request $request)
     {
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $triwulan = $request->get('triwulan');
         $fakultas = auth()->user()->fakultas;
         
         $data = Iku8SdmKebijakan::where('tahun_akademik', $tahunAkademik)
-            ->where('fakultas', $fakultas)->get();
+            ->where('fakultas', $fakultas)->when($triwulan && $triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
 
         $dbYears = Iku8SdmKebijakan::where('fakultas', $fakultas)
             ->select('tahun_akademik')
@@ -56,13 +57,14 @@ class Iku8Controller extends Controller
                 ->with('warning', 'Data IKU 8 untuk tahun ini sudah ada. Silakan edit data yang sudah ada.');
         }
 
-        return view('iku8.create', compact('tahunAkademik'));
+        return view('iku8.create', compact('tahunAkademik', 'triwulan'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'total_sdm' => 'required|integer|min:1',
             'tim_penyusun' => 'required|integer|min:0',
             'narasumber' => 'required|integer|min:0',
@@ -123,7 +125,7 @@ class Iku8Controller extends Controller
             abort(403, 'Anda tidak memiliki akses ke data ini.');
         }
 
-        return view('iku8.edit', compact('iku8'));
+        return view('iku8.edit', compact('iku8', 'triwulan'));
     }
 
     public function update(Request $request, Iku8SdmKebijakan $iku8)
@@ -134,6 +136,7 @@ class Iku8Controller extends Controller
 
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'total_sdm' => 'required|integer|min:1',
             'tim_penyusun' => 'required|integer|min:0',
             'narasumber' => 'required|integer|min:0',

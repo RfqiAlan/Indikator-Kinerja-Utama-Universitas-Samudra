@@ -13,6 +13,7 @@ class Iku11TataKelola extends Model
 
     protected $fillable = [
         'tahun_akademik',
+        'triwulan',
         'fakultas',
         // IKU 11.1 — Opini WTP
         'opini_audit',

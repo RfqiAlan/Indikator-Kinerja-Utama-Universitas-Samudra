@@ -10,6 +10,7 @@ class Iku13KinerjaAnggaran extends Model
 
     protected $fillable = [
         'tahun_akademik',
+        'triwulan',
         'fakultas',
         'lampiran_link',
         'keterangan',

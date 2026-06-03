@@ -15,7 +15,15 @@
                             <option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>Tahun {{ $year }}</option>
                         @endforeach
                     </select>
-                </form>
+                        <select name="triwulan" onchange="this.form.submit()"
+                            class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm">
+                            <option value="Semua" {{ ($triwulan ?? "Semua") == "Semua" ? "selected" : "" }}>Semua Triwulan</option>
+                            <option value="1" {{ ($triwulan ?? "") == "1" ? "selected" : "" }}>Triwulan 1</option>
+                            <option value="2" {{ ($triwulan ?? "") == "2" ? "selected" : "" }}>Triwulan 2</option>
+                            <option value="3" {{ ($triwulan ?? "") == "3" ? "selected" : "" }}>Triwulan 3</option>
+                            <option value="4" {{ ($triwulan ?? "") == "4" ? "selected" : "" }}>Triwulan 4</option>
+                        </select>
+                    </form>
             </div>
         </div>
     </div>
@@ -195,8 +203,7 @@
             <div class="flex items-center gap-6">
                 <div class="flex-1 bg-teal-50/50 rounded-xl p-6 border border-teal-100 flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-slate-600 mb-1">Fakultas dengan Perencanaan Strategis (Tervalidasi / Pimpinan)</p>
-                        <p class="text-3xl font-black text-teal-700">{{ $iku12Rekap['fakultas_valid'] }} <span class="text-lg">/ {{ $iku12Rekap['total_fakultas'] }} Fakultas</span></p>
+                        <p class="text-3xl font-black text-teal-700">Fakultas dengan Perencanaan Strategis (Tervalidasi / Pimpinan)</p>
                     </div>
                     <div class="w-16 h-16 bg-white rounded-full shadow-sm flex items-center justify-center text-teal-600 shrink-0">
                         <span class="text-2xl font-bold">{{ number_format($iku12Rekap['persen']) }}%</span>
@@ -266,7 +273,12 @@
 
             <!-- Rincian Alokasi Dana Masyarakat -->
             <div class="mt-8 pt-6 border-t border-slate-100">
-                <h3 class="text-sm font-bold text-slate-800 mb-4">Alokasi Dana Masyarakat (Riset, Upskilling, Lab)</h3>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                    <h3 class="text-sm font-bold text-slate-800">Alokasi Dana Masyarakat (Riset, Upskilling, Lab)</h3>
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-700 w-fit border border-blue-200">
+                        Total Alokasi: {{ number_format($iku9Rekap['persen_alokasi_riset'] + $iku9Rekap['persen_alokasi_dosen'] + $iku9Rekap['persen_alokasi_lab'], 2) }}%
+                    </div>
+                </div>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
                         <p class="text-xs text-slate-500 mb-1">Alokasi Riset</p>
@@ -325,19 +337,19 @@
             </p>
 
             {{-- Hero: Persentase keseluruhan --}}
-            <div class="bg-gradient-to-br from-sky-500 to-indigo-600 rounded-2xl p-6 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-white">
+            <div class="bg-blue-50 rounded-2xl p-6 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4 border border-blue-100">
                 <div>
-                    <p class="text-sky-100 text-sm font-semibold uppercase tracking-wider mb-1">Persentase Publikasi Bereputasi Internasional (Scopus/WoS)</p>
-                    <p class="text-5xl font-black tracking-tight">{{ number_format($iku6Rekap['persen_keseluruhan'], 2) }}%</p>
-                    <p class="text-sky-200 text-xs mt-2">
-                        Skor Bobot Total: <strong>{{ number_format($iku6Rekap['skor_total'], 2) }}</strong>
+                    <p class="text-sm font-semibold uppercase tracking-wider mb-1 text-slate-600">Persentase Publikasi Bereputasi Internasional (Scopus/WoS)</p>
+                    <p class="text-5xl font-black tracking-tight text-blue-700">{{ number_format($iku6Rekap['persen_keseluruhan'], 2) }}%</p>
+                    <p class="text-slate-500 text-xs mt-2">
+                        Skor Bobot Total: <strong class="text-slate-700">{{ number_format($iku6Rekap['skor_total'], 2) }}</strong>
                         &nbsp;/&nbsp;
-                        Total Publikasi PT: <strong>{{ number_format($iku6Rekap['total']) }}</strong>
+                        Total Publikasi PT: <strong class="text-slate-700">{{ number_format($iku6Rekap['total']) }}</strong>
                     </p>
                 </div>
-                <div class="shrink-0 bg-white/20 rounded-2xl p-5 text-center">
-                    <p class="text-sky-100 text-xs font-bold uppercase mb-1">Total Publikasi</p>
-                    <p class="text-4xl font-black">{{ number_format($iku6Rekap['total']) }}</p>
+                <div class="shrink-0 bg-white border border-blue-100 rounded-2xl p-5 text-center shadow-sm">
+                    <p class="text-slate-500 text-xs font-bold uppercase mb-1">Total Publikasi</p>
+                    <p class="text-4xl font-black text-blue-700">{{ number_format($iku6Rekap['total']) }}</p>
                 </div>
             </div>
 

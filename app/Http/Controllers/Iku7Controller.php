@@ -11,10 +11,11 @@ class Iku7Controller extends Controller
     public function index(Request $request)
     {
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $triwulan = $request->get('triwulan');
         $fakultas = auth()->user()->fakultas;
         
         $data = Iku7Sdgs::where('tahun_akademik', $tahunAkademik)
-            ->where('fakultas', $fakultas)->get();
+            ->where('fakultas', $fakultas)->when($triwulan && $triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
 
         $dbYears = Iku7Sdgs::where('fakultas', $fakultas)
             ->select('tahun_akademik')
@@ -56,13 +57,14 @@ class Iku7Controller extends Controller
                 ->with('warning', 'Data IKU 7 untuk tahun ini sudah ada. Silakan edit data yang sudah ada.');
         }
 
-        return view('iku7.create', compact('tahunAkademik'));
+        return view('iku7.create', compact('tahunAkademik', 'triwulan'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'total_program' => 'required|integer|min:1',
             'sdg_1' => 'required|integer|min:0',
             'sdg_4' => 'required|integer|min:0',
@@ -129,7 +131,7 @@ class Iku7Controller extends Controller
             abort(403, 'Anda tidak memiliki akses ke data ini.');
         }
 
-        return view('iku7.edit', compact('iku7'));
+        return view('iku7.edit', compact('iku7', 'triwulan'));
     }
 
     public function update(Request $request, Iku7Sdgs $iku7)
@@ -140,6 +142,7 @@ class Iku7Controller extends Controller
 
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'total_program' => 'required|integer|min:1',
             'sdg_1' => 'required|integer|min:0',
             'sdg_4' => 'required|integer|min:0',

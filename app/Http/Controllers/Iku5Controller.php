@@ -11,10 +11,11 @@ class Iku5Controller extends Controller
     public function index(Request $request)
     {
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $triwulan = $request->get('triwulan');
         $fakultas = auth()->user()->fakultas;
         
         $data = Iku5LuaranKerjasama::where('tahun_akademik', $tahunAkademik)
-            ->where('fakultas', $fakultas)->get();
+            ->where('fakultas', $fakultas)->when($triwulan && $triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
 
         $dbYears = Iku5LuaranKerjasama::where('fakultas', $fakultas)
             ->select('tahun_akademik')
@@ -56,13 +57,14 @@ class Iku5Controller extends Controller
                 ->with('warning', 'Data IKU 5 untuk tahun ini sudah ada. Silakan edit data yang sudah ada.');
         }
 
-        return view('iku5.create', compact('tahunAkademik'));
+        return view('iku5.create', compact('tahunAkademik', 'triwulan'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'total_kerjasama_pt' => 'required|integer|min:1',
             'karya_tulis_ilmiah' => 'required|integer|min:0',
             'karya_terapan' => 'required|integer|min:0',
@@ -113,7 +115,7 @@ class Iku5Controller extends Controller
             abort(403, 'Anda tidak memiliki akses ke data ini.');
         }
 
-        return view('iku5.edit', compact('iku5'));
+        return view('iku5.edit', compact('iku5', 'triwulan'));
     }
 
     public function update(Request $request, Iku5LuaranKerjasama $iku5)
@@ -124,6 +126,7 @@ class Iku5Controller extends Controller
 
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'total_kerjasama_pt' => 'required|integer|min:1',
             'karya_tulis_ilmiah' => 'required|integer|min:0',
             'karya_terapan' => 'required|integer|min:0',

@@ -29,6 +29,7 @@ class AdminController extends Controller
     {
         $fakultasConfig = Fakultas::getAllAsConfig();
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $triwulan = $request->get('triwulan', 'Semua');
 
         // --- N+1 Fix: load all per-faculty counts in a single query each ---
         $counts = [];
@@ -46,7 +47,9 @@ class AdminController extends Controller
             'iku11' => Iku11TataKelola::class,
         ];
         foreach ($tables as $key => $model) {
-            $counts[$key] = $model::where('tahun_akademik', $tahunAkademik)
+            $query = $model::where('tahun_akademik', $tahunAkademik);
+            if ($triwulan !== 'Semua') $query->where('triwulan', $triwulan);
+            $counts[$key] = $query
                 ->selectRaw('fakultas, COUNT(*) as total')
                 ->groupBy('fakultas')
                 ->pluck('total', 'fakultas');
@@ -107,7 +110,7 @@ class AdminController extends Controller
             ];
         }
 
-        return view('admin.dashboard', compact('fakultasStats', 'totalUsers', 'totalActivities', 'tahunAkademik', 'availableYears', 'yearlyComparison'));
+        return view('admin.dashboard', compact('fakultasStats', 'totalUsers', 'totalActivities', 'tahunAkademik', 'triwulan', 'availableYears', 'yearlyComparison'));
     }
 
     /**
@@ -218,22 +221,23 @@ class AdminController extends Controller
         $fakultas['kode'] = $kode;
         
         $tahunAkademik = request()->get('tahun', get_tahun_akademik());
+        $triwulan = request()->get('triwulan', 'Semua');
         $availableYears = $this->getAvailableYears();
         
-        $iku1Data = Iku1Aee::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
-        $iku1Sub1Data = \App\Models\Iku1Sub1::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
-        $iku2Data = Iku2LulusanBekerja::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
-        $iku3Data = Iku3KegiatanMahasiswa::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
-        $iku4Data = Iku4RekognisiDosen::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
-        $iku5Data = Iku5LuaranKerjasama::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
-        $iku6Data = Iku6Publikasi::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
-        $iku7Data = Iku7Sdgs::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
-        $iku8Data = Iku8SdmKebijakan::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
-        $iku9Data = Iku9Pendapatan::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
-        $iku10Data = Iku10ZonaIntegritas::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
-        $iku11Data = Iku11TataKelola::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
-        $iku12Data = \App\Models\Iku12KesejahteraanDosen::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
-        $iku13Data = \App\Models\Iku13KinerjaAnggaran::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->get();
+        $iku1Data = Iku1Aee::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->when($triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
+        $iku1Sub1Data = \App\Models\Iku1Sub1::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->when($triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
+        $iku2Data = Iku2LulusanBekerja::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->when($triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
+        $iku3Data = Iku3KegiatanMahasiswa::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->when($triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
+        $iku4Data = Iku4RekognisiDosen::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->when($triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
+        $iku5Data = Iku5LuaranKerjasama::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->when($triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
+        $iku6Data = Iku6Publikasi::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->when($triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
+        $iku7Data = Iku7Sdgs::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->when($triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
+        $iku8Data = Iku8SdmKebijakan::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->when($triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
+        $iku9Data = Iku9Pendapatan::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->when($triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
+        $iku10Data = Iku10ZonaIntegritas::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->when($triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
+        $iku11Data = Iku11TataKelola::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->when($triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
+        $iku12Data = \App\Models\Iku12KesejahteraanDosen::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->when($triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
+        $iku13Data = \App\Models\Iku13KinerjaAnggaran::where('fakultas', $kode)->where('tahun_akademik', $tahunAkademik)->when($triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
         
         $users = User::where('fakultas', $kode)->get();
 
@@ -255,6 +259,7 @@ class AdminController extends Controller
             'iku13Data',
             'users',
             'tahunAkademik',
+            'triwulan',
             'availableYears'
         ));
     }
@@ -265,6 +270,7 @@ class AdminController extends Controller
     public function rekapUniversitas(Request $request)
     {
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $triwulan = $request->get('triwulan', 'Semua');
         $availableYears = $this->getAvailableYears();
 
         // --- IKU 1: AEE per jenjang ---
@@ -499,6 +505,7 @@ class AdminController extends Controller
 
         return view('admin.rekap-universitas', compact(
             'tahunAkademik',
+            'triwulan',
             'availableYears',
             'iku1Rekap',
             'subIku1Rekap',
@@ -523,7 +530,9 @@ class AdminController extends Controller
     {
         $fakultas = $request->get('fakultas');
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $triwulan = $request->get('triwulan', 'Semua');
         $role = $request->get('role');
+        $triwulan = $request->get('triwulan', 'Semua');
         
         $fakultasModel = $fakultas ? Fakultas::findByKode($fakultas) : null;
         $fakultasName = $fakultasModel ? $fakultasModel->nama : 'Semua_Fakultas';
@@ -533,7 +542,7 @@ class AdminController extends Controller
         $filename = str_replace(['/', ' '], ['_', '_'], $filename);
         
         return \Maatwebsite\Excel\Facades\Excel::download(
-            new \App\Exports\RekapIkuExport($fakultas, $tahunAkademik, $role),
+            new \App\Exports\RekapIkuExport($fakultas, $tahunAkademik, $role, $triwulan),
             $filename
         );
     }

@@ -21,6 +21,16 @@
                     <label class="block text-sm font-medium text-slate-700 mb-1">Tahun</label>
                     <x-tahun-akademik-select :selected="$iku11->tahun_akademik" />
                 </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Triwulan <span class="text-rose-500">*</span></label>
+                            <select name="triwulan" class="w-full rounded-lg border-slate-300 focus:ring-blue-500" required>
+                                <option value="">-- Pilih --</option>
+                                <option value="1" {{ old('triwulan', $iku11->triwulan) == 1 ? 'selected' : '' }}>Triwulan 1</option>
+                                <option value="2" {{ old('triwulan', $iku11->triwulan) == 2 ? 'selected' : '' }}>Triwulan 2</option>
+                                <option value="3" {{ old('triwulan', $iku11->triwulan) == 3 ? 'selected' : '' }}>Triwulan 3</option>
+                                <option value="4" {{ old('triwulan', $iku11->triwulan) == 4 ? 'selected' : '' }}>Triwulan 4</option>
+                            </select>
+                        </div>
 
                 {{-- IKU 11.1 --}}
                 <div class="border-t pt-6">

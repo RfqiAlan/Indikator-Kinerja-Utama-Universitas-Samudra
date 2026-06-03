@@ -11,12 +11,13 @@ class Iku3Controller extends Controller
     public function index(Request $request)
     {
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $triwulan = $request->get('triwulan');
         $fakultas = auth()->user()->fakultas;
         
         $data = Iku3KegiatanMahasiswa::where('tahun_akademik', $tahunAkademik)
             ->where('fakultas', $fakultas)
             ->orderBy('program_studi')
-            ->get();
+            ->when($triwulan && $triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
 
         $dbYears = Iku3KegiatanMahasiswa::where('fakultas', $fakultas)
             ->select('tahun_akademik')
@@ -48,13 +49,14 @@ class Iku3Controller extends Controller
     public function create()
     {
         $tahunAkademik = get_tahun_akademik();
-        return view('iku3.create', compact('tahunAkademik'));
+        return view('iku3.create', compact('tahunAkademik', 'triwulan'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'program_studi' => 'nullable|string',
             'total_mahasiswa' => 'required|integer|min:1',
             'magang_kurang_5' => 'nullable|integer|min:0',
@@ -157,7 +159,7 @@ class Iku3Controller extends Controller
             abort(403, 'Anda tidak memiliki akses ke data ini.');
         }
 
-        return view('iku3.edit', compact('iku3'));
+        return view('iku3.edit', compact('iku3', 'triwulan'));
     }
 
     public function update(Request $request, Iku3KegiatanMahasiswa $iku3)
@@ -168,6 +170,7 @@ class Iku3Controller extends Controller
 
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'program_studi' => 'nullable|string',
             'total_mahasiswa' => 'required|integer|min:1',
             'magang_kurang_5' => 'nullable|integer|min:0',

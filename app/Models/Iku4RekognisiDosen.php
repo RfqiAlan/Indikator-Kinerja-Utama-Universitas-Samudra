@@ -13,6 +13,7 @@ class Iku4RekognisiDosen extends Model
 
     protected $fillable = [
         'tahun_akademik',
+        'triwulan',
         'fakultas',
         'total_dosen_pt',
         'karya_tulis_ilmiah',

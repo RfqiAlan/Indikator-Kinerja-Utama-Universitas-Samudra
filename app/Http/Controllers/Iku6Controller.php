@@ -11,10 +11,11 @@ class Iku6Controller extends Controller
     public function index(Request $request)
     {
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $triwulan = $request->get('triwulan');
         $fakultas = auth()->user()->fakultas;
         
         $data = Iku6Publikasi::where('tahun_akademik', $tahunAkademik)
-            ->where('fakultas', $fakultas)->get();
+            ->where('fakultas', $fakultas)->when($triwulan && $triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
 
         $dbYears = Iku6Publikasi::where('fakultas', $fakultas)
             ->select('tahun_akademik')
@@ -56,13 +57,14 @@ class Iku6Controller extends Controller
                 ->with('warning', 'Data IKU 6 untuk tahun ini sudah ada. Silakan edit data yang sudah ada.');
         }
 
-        return view('iku6.create', compact('tahunAkademik'));
+        return view('iku6.create', compact('tahunAkademik', 'triwulan'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'total_publikasi' => 'required|integer|min:1',
             'publikasi_top_tier' => 'required|integer|min:0',
             'publikasi_q1' => 'required|integer|min:0',
@@ -128,7 +130,7 @@ class Iku6Controller extends Controller
             abort(403, 'Anda tidak memiliki akses ke data ini.');
         }
 
-        return view('iku6.edit', compact('iku6'));
+        return view('iku6.edit', compact('iku6', 'triwulan'));
     }
 
     public function update(Request $request, Iku6Publikasi $iku6)
@@ -139,6 +141,7 @@ class Iku6Controller extends Controller
 
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'total_publikasi' => 'required|integer|min:1',
             'publikasi_top_tier' => 'required|integer|min:0',
             'publikasi_q1' => 'required|integer|min:0',

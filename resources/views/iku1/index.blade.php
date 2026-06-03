@@ -19,12 +19,20 @@
                     <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Mengukur keberhasilan mahasiswa menyelesaikan studi tepat waktu.</p>
                 </div>
                 <div class="flex items-center gap-3">
-                    <form method="GET" action="{{ route('user.iku1.index') }}" class="flex items-center">
+                    <form method="GET" action="{{ route('user.iku1.index') }}" class="flex items-center gap-2">
                         <select name="tahun" onchange="this.form.submit()"
                             class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm">
                             @foreach($availableYears as $year)
                             <option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>
                             @endforeach
+                        </select>
+                        <select name="triwulan" onchange="this.form.submit()"
+                            class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm">
+                            <option value="Semua" {{ ($triwulan ?? "Semua") == "Semua" ? "selected" : "" }}>Semua Triwulan</option>
+                            <option value="1" {{ ($triwulan ?? "") == "1" ? "selected" : "" }}>Triwulan 1</option>
+                            <option value="2" {{ ($triwulan ?? "") == "2" ? "selected" : "" }}>Triwulan 2</option>
+                            <option value="3" {{ ($triwulan ?? "") == "3" ? "selected" : "" }}>Triwulan 3</option>
+                            <option value="4" {{ ($triwulan ?? "") == "4" ? "selected" : "" }}>Triwulan 4</option>
                         </select>
                     </form>
                     
@@ -144,7 +152,7 @@
                             @foreach($data as $item)
                             <tr class="group hover:bg-slate-50/50 dark:hover:bg-slate-700/30 transition-colors duration-150">
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center">
+                                    <div class="flex items-center gap-2">
                                         <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900/50 dark:text-blue-300 font-bold text-xs ring-4 ring-white dark:ring-slate-800">
                                             {{ $item->jenjang }}
                                         </div>

@@ -13,6 +13,7 @@ class Iku7Sdgs extends Model
 
     protected $fillable = [
         'tahun_akademik',
+        'triwulan',
         'fakultas',
         'total_program',
         'sdg_1',

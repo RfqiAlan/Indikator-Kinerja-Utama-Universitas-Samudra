@@ -11,11 +11,15 @@ class Iku11Controller extends Controller
     public function index(Request $request)
     {
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $triwulan = $request->get('triwulan');
         $fakultas = auth()->user()->fakultas ?? 'universitas';
         
         $data = Iku11TataKelola::where('tahun_akademik', $tahunAkademik)
             ->where('fakultas', $fakultas)
             ->first();
+        if ($triwulan && $triwulan !== 'Semua') {
+            $data = $data->where('triwulan', $triwulan);
+        }
 
         $dbYears = Iku11TataKelola::where('fakultas', $fakultas)
             ->select('tahun_akademik')
@@ -54,13 +58,14 @@ class Iku11Controller extends Controller
         }
 
         $opiniOptions = Iku11TataKelola::OPINI_OPTIONS;
-        return view('iku11.create', compact('tahunAkademik', 'opiniOptions'));
+        return view('iku11.create', compact('tahunAkademik', 'opiniOptions', 'triwulan'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'tahun_akademik'              => 'required|string',
+            'triwulan'                    => 'required|integer|between:1,4',
             // IKU 11.1
             'opini_audit'                 => 'nullable|in:wtp,wdp',
             // IKU 11.2
@@ -128,7 +133,7 @@ class Iku11Controller extends Controller
         }
 
         $opiniOptions = Iku11TataKelola::OPINI_OPTIONS;
-        return view('iku11.edit', compact('iku11', 'opiniOptions'));
+        return view('iku11.edit', compact('iku11', 'opiniOptions', 'triwulan'));
     }
 
     public function update(Request $request, Iku11TataKelola $iku11)
@@ -140,6 +145,7 @@ class Iku11Controller extends Controller
 
         $validated = $request->validate([
             'tahun_akademik'              => 'required|string',
+            'triwulan'                    => 'required|integer|between:1,4',
             'opini_audit'                 => 'nullable|in:wtp,wdp',
             'nilai_sakip'                 => 'nullable|numeric|min:0|max:100',
             'pelanggaran_plagiarisme'     => 'required|integer|min:0',

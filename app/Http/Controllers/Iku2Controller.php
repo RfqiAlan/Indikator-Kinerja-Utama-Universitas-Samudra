@@ -11,12 +11,13 @@ class Iku2Controller extends Controller
     public function index(Request $request)
     {
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $triwulan = $request->get('triwulan');
         $fakultas = auth()->user()->fakultas;
 
         $data = Iku2LulusanBekerja::where('tahun_akademik', $tahunAkademik)
             ->where('fakultas', $fakultas)
             ->orderBy('program_studi')
-            ->get();
+            ->when($triwulan && $triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
 
         $dbYears = Iku2LulusanBekerja::where('fakultas', $fakultas)
             ->select('tahun_akademik')
@@ -56,13 +57,14 @@ class Iku2Controller extends Controller
     public function create()
     {
         $tahunAkademik = get_tahun_akademik();
-        return view('iku2.create', compact('tahunAkademik'));
+        return view('iku2.create', compact('tahunAkademik', 'triwulan'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'program_studi' => 'required|string',
             'total_lulusan' => 'required|integer|min:1',
             'total_responden' => 'required|integer|min:0',
@@ -146,7 +148,7 @@ class Iku2Controller extends Controller
             abort(403, 'Anda tidak memiliki akses ke data ini.');
         }
 
-        return view('iku2.edit', compact('iku2'));
+        return view('iku2.edit', compact('iku2', 'triwulan'));
     }
 
     public function update(Request $request, Iku2LulusanBekerja $iku2)
@@ -157,6 +159,7 @@ class Iku2Controller extends Controller
 
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'program_studi' => 'required|string',
             'total_lulusan' => 'required|integer|min:1',
             'total_responden' => 'required|integer|min:0',

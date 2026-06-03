@@ -17,11 +17,19 @@
                     <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">Mengukur kualitas pelayanan, kepatuhan, dan komitmen anti korupsi.</p>
                 </div>
                 <div class="flex items-center gap-3">
-                    <form method="GET" action="{{ route('user.iku11.index') }}" class="flex items-center">
+                    <form method="GET" action="{{ route('user.iku11.index') }}" class="flex items-center gap-2">
                         <select name="tahun" onchange="this.form.submit()" class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm w-full sm:w-auto">
                             @foreach($availableYears as $year)
                                 <option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>{{ $year }}</option>
                             @endforeach
+                        </select>
+                        <select name="triwulan" onchange="this.form.submit()"
+                            class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm">
+                            <option value="Semua" {{ ($triwulan ?? "Semua") == "Semua" ? "selected" : "" }}>Semua Triwulan</option>
+                            <option value="1" {{ ($triwulan ?? "") == "1" ? "selected" : "" }}>Triwulan 1</option>
+                            <option value="2" {{ ($triwulan ?? "") == "2" ? "selected" : "" }}>Triwulan 2</option>
+                            <option value="3" {{ ($triwulan ?? "") == "3" ? "selected" : "" }}>Triwulan 3</option>
+                            <option value="4" {{ ($triwulan ?? "") == "4" ? "selected" : "" }}>Triwulan 4</option>
                         </select>
                     </form>
                     @if(!$data)

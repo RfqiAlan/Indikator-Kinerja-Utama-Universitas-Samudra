@@ -10,6 +10,7 @@ class Iku1Sub1 extends Model
 
     protected $fillable = [
         'tahun_akademik',
+        'triwulan',
         'fakultas',
         'total_mahasiswa_aktif',
         'mahasiswa_aktif_s2',

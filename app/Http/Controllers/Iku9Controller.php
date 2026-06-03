@@ -11,10 +11,14 @@ class Iku9Controller extends Controller
     public function index(Request $request)
     {
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $triwulan = $request->get('triwulan');
         $fakultas = auth()->user()->fakultas;
         
         $data = Iku9Pendapatan::where('tahun_akademik', $tahunAkademik)
             ->where('fakultas', $fakultas)->first();
+        if ($triwulan && $triwulan !== 'Semua') {
+            $data = $data->where('triwulan', $triwulan);
+        }
 
         $dbYears = Iku9Pendapatan::where('fakultas', $fakultas)
             ->select('tahun_akademik')->distinct()->pluck('tahun_akademik');
@@ -22,7 +26,7 @@ class Iku9Controller extends Controller
         $availableYears = collect(get_tahun_akademik_list())
             ->merge($dbYears)->unique()->sortDesc()->values();
 
-        return view('iku9.index', compact('data', 'tahunAkademik', 'availableYears'));
+        return view('iku9.index', compact('data', 'tahunAkademik', 'availableYears', 'triwulan'));
     }
 
     public function create()
@@ -37,13 +41,14 @@ class Iku9Controller extends Controller
                 ->with('warning', 'Data IKU 9 untuk tahun ini sudah ada.');
         }
 
-        return view('iku9.create', compact('tahunAkademik'));
+        return view('iku9.create', compact('tahunAkademik', 'triwulan'));
     }
 
     private function validationRules()
     {
         return [
             'tahun_akademik'              => 'required|string',
+            'triwulan'                    => 'required|integer|between:1,4',
             'total_pendapatan'            => 'required|numeric|min:0',
             // IKU 9.1
             'pendapatan_riset_inovasi'    => 'required|numeric|min:0',
@@ -105,7 +110,7 @@ class Iku9Controller extends Controller
     public function edit(Iku9Pendapatan $iku9)
     {
         if ($iku9->fakultas !== auth()->user()->fakultas) abort(403);
-        return view('iku9.edit', compact('iku9'));
+        return view('iku9.edit', compact('iku9', 'triwulan'));
     }
 
     public function update(Request $request, Iku9Pendapatan $iku9)

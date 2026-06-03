@@ -25,12 +25,13 @@ class Iku10Controller extends Controller implements \Illuminate\Routing\Controll
     public function index(Request $request)
     {
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $triwulan = $request->get('triwulan');
         $fakultas = auth()->user()->fakultas;
         
         $data = Iku10ZonaIntegritas::where('tahun_akademik', $tahunAkademik)
             ->where('fakultas', $fakultas)
             ->orderBy('nama_unit')
-            ->get();
+            ->when($triwulan && $triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
 
         $dbYears = Iku10ZonaIntegritas::where('fakultas', $fakultas)
             ->select('tahun_akademik')
@@ -60,13 +61,14 @@ class Iku10Controller extends Controller implements \Illuminate\Routing\Controll
     {
         $tahunAkademik = get_tahun_akademik();
         $statusOptions = Iku10ZonaIntegritas::STATUS_OPTIONS;
-        return view('iku10.create', compact('tahunAkademik', 'statusOptions'));
+        return view('iku10.create', compact('tahunAkademik', 'statusOptions', 'triwulan'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'nama_unit' => 'required|string',
             'status' => 'required|in:diajukan,lolos_tpi,wbk,wbbm',
             'tanggal_pengajuan' => 'nullable|date',
@@ -122,7 +124,7 @@ class Iku10Controller extends Controller implements \Illuminate\Routing\Controll
         }
 
         $statusOptions = Iku10ZonaIntegritas::STATUS_OPTIONS;
-        return view('iku10.edit', compact('iku10', 'statusOptions'));
+        return view('iku10.edit', compact('iku10', 'statusOptions', 'triwulan'));
     }
 
     public function update(Request $request, Iku10ZonaIntegritas $iku10)
@@ -133,6 +135,7 @@ class Iku10Controller extends Controller implements \Illuminate\Routing\Controll
 
         $validated = $request->validate([
             'tahun_akademik' => 'required|string',
+            'triwulan' => 'required|integer|between:1,4',
             'nama_unit' => 'required|string',
             'status' => 'required|in:diajukan,lolos_tpi,wbk,wbbm',
             'tanggal_pengajuan' => 'nullable|date',

@@ -10,6 +10,7 @@ class Iku12KesejahteraanDosen extends Model
 
     protected $fillable = [
         'tahun_akademik',
+        'triwulan',
         'fakultas',
         'ada_dokumen_perencanaan',
         'memuat_kesejahteraan_finansial',

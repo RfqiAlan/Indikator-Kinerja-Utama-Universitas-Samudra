@@ -17,6 +17,16 @@
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div><label class="block text-sm font-medium text-slate-700 mb-1">Tahun <span class="text-rose-500">*</span></label><x-tahun-akademik-select :selected="$tahunAkademik" /></div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Triwulan <span class="text-rose-500">*</span></label>
+                            <select name="triwulan" class="w-full rounded-lg border-slate-300 focus:ring-blue-500" required>
+                                <option value="">-- Pilih --</option>
+                                <option value="1">Triwulan 1</option>
+                                <option value="2">Triwulan 2</option>
+                                <option value="3">Triwulan 3</option>
+                                <option value="4">Triwulan 4</option>
+                            </select>
+                        </div>
                 </div>
 
                 <div class="border-t pt-6"><h3 class="font-semibold text-slate-800 mb-4">Sub-indikator 1: Dosen dengan Rekognisi Internasional</h3>

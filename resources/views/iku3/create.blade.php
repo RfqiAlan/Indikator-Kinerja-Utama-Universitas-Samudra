@@ -33,6 +33,16 @@
                             <x-tahun-akademik-select :selected="$tahunAkademik" />
                         </div>
                         <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Triwulan <span class="text-rose-500">*</span></label>
+                            <select name="triwulan" class="w-full rounded-lg border-slate-300 focus:ring-blue-500" required>
+                                <option value="">-- Pilih --</option>
+                                <option value="1">Triwulan 1</option>
+                                <option value="2">Triwulan 2</option>
+                                <option value="3">Triwulan 3</option>
+                                <option value="4">Triwulan 4</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">Program Studi <span class="text-rose-500">*</span></label>
                             <select name="program_studi" class="w-full rounded-lg border-slate-300 focus:ring-blue-500" required>
                                 <option value="">-- Pilih Program Studi --</option>
