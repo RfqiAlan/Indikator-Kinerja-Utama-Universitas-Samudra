@@ -57,7 +57,7 @@ class Iku1Controller extends Controller
             ->sortDesc()
             ->values();
 
-        return view('iku1.index', compact('data', 'aeePt', 'tahunAkademik', 'availableYears', 'triwulan'));
+        return view('iku1.index', compact('data', 'aeePt', 'tahunAkademik', 'availableYears'));
     }
 
     /**
@@ -67,7 +67,7 @@ class Iku1Controller extends Controller
     {
         $tahunAkademik = get_tahun_akademik();
         
-        return view('iku1.create', compact('tahunAkademik', 'triwulan'));
+        return view('iku1.create', compact('tahunAkademik'));
     }
 
     /**
@@ -143,7 +143,7 @@ class Iku1Controller extends Controller
             abort(403, 'Anda tidak memiliki akses ke data ini.');
         }
 
-        return view('iku1.edit', compact('iku1', 'triwulan'));
+        return view('iku1.edit', compact('iku1'));
     }
 
     /**

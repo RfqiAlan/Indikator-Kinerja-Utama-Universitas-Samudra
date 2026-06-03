@@ -25,13 +25,13 @@ class Iku1Sub1Controller extends Controller
         $dbYears = Iku1Sub1::select('tahun_akademik')->distinct()->pluck('tahun_akademik');
         $availableYears = collect(get_tahun_akademik_list())->merge($dbYears)->unique()->sortDesc()->values();
 
-        return view('iku1_sub1.index', compact('data', 'tahunAkademik', 'availableYears', 'triwulan'));
+        return view('iku1_sub1.index', compact('data', 'tahunAkademik', 'availableYears'));
     }
 
     public function create()
     {
         $tahunAkademik = get_tahun_akademik();
-        return view('iku1_sub1.create', compact('tahunAkademik', 'triwulan'));
+        return view('iku1_sub1.create', compact('tahunAkademik'));
     }
 
     public function store(Request $request)
@@ -92,7 +92,7 @@ class Iku1Sub1Controller extends Controller
             abort(403, 'Anda tidak memiliki akses ke data ini.');
         }
 
-        return view('iku1_sub1.edit', compact('iku1Sub1', 'triwulan'));
+        return view('iku1_sub1.edit', compact('iku1Sub1'));
     }
 
     public function update(Request $request, Iku1Sub1 $iku1Sub1)

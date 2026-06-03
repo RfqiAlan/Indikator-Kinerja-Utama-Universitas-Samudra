@@ -61,7 +61,7 @@ class Iku10Controller extends Controller implements \Illuminate\Routing\Controll
     {
         $tahunAkademik = get_tahun_akademik();
         $statusOptions = Iku10ZonaIntegritas::STATUS_OPTIONS;
-        return view('iku10.create', compact('tahunAkademik', 'statusOptions', 'triwulan'));
+        return view('iku10.create', compact('tahunAkademik', 'statusOptions'));
     }
 
     public function store(Request $request)
@@ -124,7 +124,7 @@ class Iku10Controller extends Controller implements \Illuminate\Routing\Controll
         }
 
         $statusOptions = Iku10ZonaIntegritas::STATUS_OPTIONS;
-        return view('iku10.edit', compact('iku10', 'statusOptions', 'triwulan'));
+        return view('iku10.edit', compact('iku10', 'statusOptions'));
     }
 
     public function update(Request $request, Iku10ZonaIntegritas $iku10)

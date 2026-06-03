@@ -58,7 +58,7 @@ class Iku11Controller extends Controller
         }
 
         $opiniOptions = Iku11TataKelola::OPINI_OPTIONS;
-        return view('iku11.create', compact('tahunAkademik', 'opiniOptions', 'triwulan'));
+        return view('iku11.create', compact('tahunAkademik', 'opiniOptions'));
     }
 
     public function store(Request $request)
@@ -133,7 +133,7 @@ class Iku11Controller extends Controller
         }
 
         $opiniOptions = Iku11TataKelola::OPINI_OPTIONS;
-        return view('iku11.edit', compact('iku11', 'opiniOptions', 'triwulan'));
+        return view('iku11.edit', compact('iku11', 'opiniOptions'));
     }
 
     public function update(Request $request, Iku11TataKelola $iku11)

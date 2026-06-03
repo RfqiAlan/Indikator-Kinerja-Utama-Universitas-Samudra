@@ -32,7 +32,7 @@ class Iku13Controller extends Controller
             ->sortDesc()
             ->values();
 
-        return view('iku13.index', compact('data', 'tahunAkademik', 'availableYears', 'triwulan'));
+        return view('iku13.index', compact('data', 'tahunAkademik', 'availableYears'));
     }
 
     public function create()
@@ -48,7 +48,7 @@ class Iku13Controller extends Controller
                 ->with('warning', 'Data IKU 13 untuk tahun ini sudah ada. Silakan edit data yang sudah ada.');
         }
 
-        return view('iku13.create', compact('tahunAkademik', 'triwulan'));
+        return view('iku13.create', compact('tahunAkademik'));
     }
 
     public function store(Request $request)
@@ -104,7 +104,7 @@ class Iku13Controller extends Controller
             abort(403, 'Anda tidak memiliki akses ke data ini.');
         }
 
-        return view('iku13.edit', compact('iku13', 'triwulan'));
+        return view('iku13.edit', compact('iku13'));
     }
 
     public function update(Request $request, Iku13KinerjaAnggaran $iku13)

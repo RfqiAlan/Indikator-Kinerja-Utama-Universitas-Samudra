@@ -57,7 +57,7 @@ class Iku2Controller extends Controller
     public function create()
     {
         $tahunAkademik = get_tahun_akademik();
-        return view('iku2.create', compact('tahunAkademik', 'triwulan'));
+        return view('iku2.create', compact('tahunAkademik'));
     }
 
     public function store(Request $request)
@@ -148,7 +148,7 @@ class Iku2Controller extends Controller
             abort(403, 'Anda tidak memiliki akses ke data ini.');
         }
 
-        return view('iku2.edit', compact('iku2', 'triwulan'));
+        return view('iku2.edit', compact('iku2'));
     }
 
     public function update(Request $request, Iku2LulusanBekerja $iku2)

@@ -26,7 +26,7 @@ class Iku9Controller extends Controller
         $availableYears = collect(get_tahun_akademik_list())
             ->merge($dbYears)->unique()->sortDesc()->values();
 
-        return view('iku9.index', compact('data', 'tahunAkademik', 'availableYears', 'triwulan'));
+        return view('iku9.index', compact('data', 'tahunAkademik', 'availableYears'));
     }
 
     public function create()
@@ -41,7 +41,7 @@ class Iku9Controller extends Controller
                 ->with('warning', 'Data IKU 9 untuk tahun ini sudah ada.');
         }
 
-        return view('iku9.create', compact('tahunAkademik', 'triwulan'));
+        return view('iku9.create', compact('tahunAkademik'));
     }
 
     private function validationRules()
@@ -110,7 +110,7 @@ class Iku9Controller extends Controller
     public function edit(Iku9Pendapatan $iku9)
     {
         if ($iku9->fakultas !== auth()->user()->fakultas) abort(403);
-        return view('iku9.edit', compact('iku9', 'triwulan'));
+        return view('iku9.edit', compact('iku9'));
     }
 
     public function update(Request $request, Iku9Pendapatan $iku9)

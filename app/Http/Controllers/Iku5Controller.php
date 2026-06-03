@@ -57,7 +57,7 @@ class Iku5Controller extends Controller
                 ->with('warning', 'Data IKU 5 untuk tahun ini sudah ada. Silakan edit data yang sudah ada.');
         }
 
-        return view('iku5.create', compact('tahunAkademik', 'triwulan'));
+        return view('iku5.create', compact('tahunAkademik'));
     }
 
     public function store(Request $request)
@@ -115,7 +115,7 @@ class Iku5Controller extends Controller
             abort(403, 'Anda tidak memiliki akses ke data ini.');
         }
 
-        return view('iku5.edit', compact('iku5', 'triwulan'));
+        return view('iku5.edit', compact('iku5'));
     }
 
     public function update(Request $request, Iku5LuaranKerjasama $iku5)
