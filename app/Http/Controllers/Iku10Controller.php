@@ -53,8 +53,7 @@ class Iku10Controller extends Controller implements \Illuminate\Routing\Controll
             'tahunAkademik', 
             'availableYears',
             'totalUnit',
-            'countByStatus'
-        ));
+            'countByStatus', 'triwulan'));
     }
 
     public function create()

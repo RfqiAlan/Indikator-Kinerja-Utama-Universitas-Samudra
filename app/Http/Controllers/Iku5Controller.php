@@ -40,8 +40,7 @@ class Iku5Controller extends Controller
             'availableYears',
             'totalKerjasamaPt',
             'totalLuaran',
-            'overallPercentage'
-        ));
+            'overallPercentage', 'triwulan'));
     }
 
     public function create()

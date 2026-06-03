@@ -50,8 +50,7 @@ class Iku2Controller extends Controller
             'totalBekerja',
             'totalStudiLanjut',
             'totalWirausaha',
-            'overallPercentage'
-        ));
+            'overallPercentage', 'triwulan'));
     }
 
     public function create()

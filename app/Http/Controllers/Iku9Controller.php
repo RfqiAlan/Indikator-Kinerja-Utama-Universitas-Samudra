@@ -26,7 +26,7 @@ class Iku9Controller extends Controller
         $availableYears = collect(get_tahun_akademik_list())
             ->merge($dbYears)->unique()->sortDesc()->values();
 
-        return view('iku9.index', compact('data', 'tahunAkademik', 'availableYears'));
+        return view('iku9.index', compact('data', 'tahunAkademik', 'availableYears', 'triwulan'));
     }
 
     public function create()

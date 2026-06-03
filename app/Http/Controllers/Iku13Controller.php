@@ -32,7 +32,7 @@ class Iku13Controller extends Controller
             ->sortDesc()
             ->values();
 
-        return view('iku13.index', compact('data', 'tahunAkademik', 'availableYears'));
+        return view('iku13.index', compact('data', 'tahunAkademik', 'availableYears', 'triwulan'));
     }
 
     public function create()

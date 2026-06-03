@@ -40,8 +40,7 @@ class Iku7Controller extends Controller
             'availableYears',
             'totalProgram',
             'totalProgramSdgs',
-            'overallPercentage'
-        ));
+            'overallPercentage', 'triwulan'));
     }
 
     public function create()

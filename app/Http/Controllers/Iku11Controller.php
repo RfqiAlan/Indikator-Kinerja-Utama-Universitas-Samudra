@@ -40,8 +40,7 @@ class Iku11Controller extends Controller
             'tahunAkademik', 
             'availableYears',
             'opiniOptions',
-            'predikatOptions'
-        ));
+            'predikatOptions', 'triwulan'));
     }
 
     public function create()

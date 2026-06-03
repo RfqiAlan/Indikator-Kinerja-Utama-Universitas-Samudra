@@ -57,7 +57,7 @@ class Iku1Controller extends Controller
             ->sortDesc()
             ->values();
 
-        return view('iku1.index', compact('data', 'aeePt', 'tahunAkademik', 'availableYears'));
+        return view('iku1.index', compact('data', 'aeePt', 'tahunAkademik', 'availableYears', 'triwulan'));
     }
 
     /**

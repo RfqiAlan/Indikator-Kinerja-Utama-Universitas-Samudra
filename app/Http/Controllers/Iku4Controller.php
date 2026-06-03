@@ -46,8 +46,7 @@ class Iku4Controller extends Controller
             'availableYears',
             'overallRekognisiPercentage',
             'overallS3Percentage',
-            'overallPercentage'
-        ));
+            'overallPercentage', 'triwulan'));
     }
 
     public function create()

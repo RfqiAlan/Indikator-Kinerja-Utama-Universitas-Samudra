@@ -42,8 +42,7 @@ class Iku3Controller extends Controller
             'availableYears',
             'totalMahasiswa',
             'totalBerkegiatan',
-            'overallPercentage'
-        ));
+            'overallPercentage', 'triwulan'));
     }
 
     public function create()

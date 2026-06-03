@@ -25,7 +25,7 @@ class Iku1Sub1Controller extends Controller
         $dbYears = Iku1Sub1::select('tahun_akademik')->distinct()->pluck('tahun_akademik');
         $availableYears = collect(get_tahun_akademik_list())->merge($dbYears)->unique()->sortDesc()->values();
 
-        return view('iku1_sub1.index', compact('data', 'tahunAkademik', 'availableYears'));
+        return view('iku1_sub1.index', compact('data', 'tahunAkademik', 'availableYears', 'triwulan'));
     }
 
     public function create()

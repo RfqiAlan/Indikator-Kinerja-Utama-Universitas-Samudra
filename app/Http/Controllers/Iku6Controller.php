@@ -40,8 +40,7 @@ class Iku6Controller extends Controller
             'availableYears',
             'totalPublikasi',
             'skorPublikasi',
-            'overallPercentage'
-        ));
+            'overallPercentage', 'triwulan'));
     }
 
     public function create()

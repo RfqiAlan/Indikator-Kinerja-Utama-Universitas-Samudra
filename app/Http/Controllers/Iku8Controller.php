@@ -40,8 +40,7 @@ class Iku8Controller extends Controller
             'availableYears',
             'totalSdm',
             'totalTerlibat',
-            'overallPercentage'
-        ));
+            'overallPercentage', 'triwulan'));
     }
 
     public function create()
