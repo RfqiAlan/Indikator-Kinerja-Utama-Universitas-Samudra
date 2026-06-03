@@ -276,6 +276,7 @@ class AdminController extends Controller
         // --- IKU 1: AEE per jenjang ---
         // D1, D2, D3, D4, S1, S2, S3
         $iku1Data = Iku1Aee::where('tahun_akademik', $tahunAkademik)
+            ->when($triwulan !== 'Semua', fn($q) => $q->where('triwulan', $triwulan))
             ->selectRaw('jenjang, SUM(jumlah_lulus_tepat_waktu) as lulus, SUM(total_mahasiswa_aktif) as total')
             ->groupBy('jenjang')
             ->get()
@@ -297,6 +298,7 @@ class AdminController extends Controller
 
         // --- Sub IKU 1.1 ---
         $iku1Sub1 = \App\Models\Iku1Sub1::where('tahun_akademik', $tahunAkademik)
+            ->when($triwulan !== 'Semua', fn($q) => $q->where('triwulan', $triwulan))
             ->selectRaw('SUM(total_mahasiswa_aktif) as total, SUM(mahasiswa_aktif_s2) as s2, SUM(mahasiswa_aktif_s3) as s3, SUM(mahasiswa_internasional) as internasional')
             ->first();
             
@@ -312,6 +314,7 @@ class AdminController extends Controller
 
         // --- IKU 2: Lulusan Bekerja ---
         $iku2 = Iku2LulusanBekerja::where('tahun_akademik', $tahunAkademik)
+            ->when($triwulan !== 'Semua', fn($q) => $q->where('triwulan', $triwulan))
             ->selectRaw('SUM(total_lulusan) as total_lulusan, SUM(total_responden) as total_responden, SUM(skor_bekerja) as bekerja, SUM(studi_lanjut * 0.6) as studi, SUM(skor_wirausaha) as wirausaha')
             ->first();
             
@@ -324,6 +327,7 @@ class AdminController extends Controller
 
         // --- IKU 3: Kegiatan Mahasiswa ---
         $iku3 = Iku3KegiatanMahasiswa::where('tahun_akademik', $tahunAkademik)
+            ->when($triwulan !== 'Semua', fn($q) => $q->where('triwulan', $triwulan))
             ->selectRaw('SUM(total_mahasiswa) as total_mhs, SUM(skor_bobot_kegiatan) as total_kegiatan')
             ->first();
             
@@ -335,6 +339,7 @@ class AdminController extends Controller
 
         // --- IKU 5: Luaran Kerjasama ---
         $iku5 = \App\Models\Iku5LuaranKerjasama::where('tahun_akademik', $tahunAkademik)
+            ->when($triwulan !== 'Semua', fn($q) => $q->where('triwulan', $triwulan))
             ->selectRaw('SUM(total_kerjasama_pt) as total_kerjasama_pt, SUM(total_luaran) as total_luaran')
             ->first();
         $iku5Rekap = [
@@ -345,6 +350,7 @@ class AdminController extends Controller
 
         // --- IKU 7: SDGs ---
         $iku7 = \App\Models\Iku7Sdgs::where('tahun_akademik', $tahunAkademik)
+            ->when($triwulan !== 'Semua', fn($q) => $q->where('triwulan', $triwulan))
             ->selectRaw('SUM(total_program) as total_program, SUM(total_program_sdgs) as total_program_sdgs, SUM(sdg_1) as sdg_1, SUM(sdg_4) as sdg_4, SUM(sdg_17) as sdg_17, SUM(sdg_5 + sdg_13) as sdg_lainnya')
             ->first();
         $iku7Rekap = [
@@ -361,6 +367,7 @@ class AdminController extends Controller
         $totalFakultas = \App\Models\Fakultas::count();
         if($totalFakultas == 0) $totalFakultas = 5; // Default 5 jika belum ada di db master
         $iku12 = \App\Models\Iku12KesejahteraanDosen::where('tahun_akademik', $tahunAkademik)
+            ->when($triwulan !== 'Semua', fn($q) => $q->where('triwulan', $triwulan))
             ->where('status_validasi', true)
             ->count();
         $iku12Rekap = [
@@ -371,6 +378,7 @@ class AdminController extends Controller
 
         // --- IKU 9: Pendapatan ---
         $iku9 = \App\Models\Iku9Pendapatan::where('tahun_akademik', $tahunAkademik)
+            ->when($triwulan !== 'Semua', fn($q) => $q->where('triwulan', $triwulan))
             ->selectRaw('
                 SUM(total_pendapatan) as total_pendapatan, 
                 SUM(pendapatan_non_mahasiswa) as pendapatan_non_mahasiswa,
@@ -416,6 +424,7 @@ class AdminController extends Controller
 
         // --- IKU 4: Rekognisi Dosen ---
         $iku4 = \App\Models\Iku4RekognisiDosen::where('tahun_akademik', $tahunAkademik)
+            ->when($triwulan !== 'Semua', fn($q) => $q->where('triwulan', $triwulan))
             ->selectRaw('SUM(total_dosen_pt) as total_dosen_pt, SUM(total_dosen_rekognisi) as total_rekognisi, SUM(total_dosen_tetap_pt) as total_tetap, SUM(total_dosen_s3) as total_s3')
             ->first();
         $iku4Rekap = [
@@ -431,6 +440,7 @@ class AdminController extends Controller
         // Formula: (Nilai Bobot Publikasi + Nilai Bonus Kolaborasi) / Total Publikasi PT × 100
         // skor_publikasi sudah mencakup bobot per Q dan bonus kolaborasi (sesuai model)
         $iku6 = \App\Models\Iku6Publikasi::where('tahun_akademik', $tahunAkademik)
+            ->when($triwulan !== 'Semua', fn($q) => $q->where('triwulan', $triwulan))
             ->selectRaw('
                 SUM(total_publikasi) as total,
                 SUM(publikasi_top_tier) as top_tier,
@@ -456,6 +466,7 @@ class AdminController extends Controller
 
         // --- IKU 8: SDM Kebijakan ---
         $iku8 = \App\Models\Iku8SdmKebijakan::where('tahun_akademik', $tahunAkademik)
+            ->when($triwulan !== 'Semua', fn($q) => $q->where('triwulan', $triwulan))
             ->selectRaw('SUM(total_sdm) as sdm, SUM(total_terlibat) as terlibat')
             ->first();
         $iku8Rekap = [
@@ -465,7 +476,9 @@ class AdminController extends Controller
         ];
 
         // --- IKU 10: Zona Integritas ---
-        $iku10 = \App\Models\Iku10ZonaIntegritas::where('tahun_akademik', $tahunAkademik)->get();
+        $iku10 = \App\Models\Iku10ZonaIntegritas::where('tahun_akademik', $tahunAkademik)
+            ->when($triwulan !== 'Semua', fn($q) => $q->where('triwulan', $triwulan))
+            ->get();
         $iku10Rekap = [
             'total' => $iku10->count(),
             'diajukan' => $iku10->where('status', 'diajukan')->count(),
@@ -475,8 +488,11 @@ class AdminController extends Controller
         ];
 
         // --- IKU 11: Tata Kelola ---
-        $iku11Data = \App\Models\Iku11TataKelola::where('tahun_akademik', $tahunAkademik)->get();
+        $iku11Data = \App\Models\Iku11TataKelola::where('tahun_akademik', $tahunAkademik)
+            ->when($triwulan !== 'Semua', fn($q) => $q->where('triwulan', $triwulan))
+            ->get();
         $iku11Sum = \App\Models\Iku11TataKelola::where('tahun_akademik', $tahunAkademik)
+            ->when($triwulan !== 'Semua', fn($q) => $q->where('triwulan', $triwulan))
             ->selectRaw('SUM(jumlah_pelanggaran) as pelanggaran, SUM(kegiatan_direncanakan) as ren, SUM(kegiatan_terlaksana) as lak, AVG(nilai_sakip) as avg_sakip')
             ->first();
             
