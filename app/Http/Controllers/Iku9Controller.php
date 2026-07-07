@@ -33,13 +33,6 @@ class Iku9Controller extends Controller
     {
         $tahunAkademik = get_tahun_akademik();
         $fakultas = auth()->user()->fakultas;
-        $existing = Iku9Pendapatan::where('tahun_akademik', $tahunAkademik)
-            ->where('fakultas', $fakultas)->first();
-
-        if ($existing) {
-            return redirect()->route('user.iku9.edit', $existing->id)
-                ->with('warning', 'Data IKU 9 untuk tahun ini sudah ada.');
-        }
 
         return view('iku9.create', compact('tahunAkademik'));
     }
@@ -81,6 +74,7 @@ class Iku9Controller extends Controller
 
         $fakultas = auth()->user()->fakultas;
         $existing = Iku9Pendapatan::where('tahun_akademik', $validated['tahun_akademik'])
+            ->where('triwulan', $validated['triwulan'])
             ->where('fakultas', $fakultas)->first();
 
         if ($existing) {

@@ -94,6 +94,7 @@ class Iku7Controller extends Controller
 
         // Check for duplicate
         $existing = Iku7Sdgs::where('tahun_akademik', $validated['tahun_akademik'])
+            ->where('triwulan', $validated['triwulan'])
             ->where('fakultas', $fakultas)
             ->first();
 

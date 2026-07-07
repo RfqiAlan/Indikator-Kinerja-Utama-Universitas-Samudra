@@ -39,14 +39,6 @@ class Iku12Controller extends Controller
     {
         $tahunAkademik = get_tahun_akademik();
         $fakultas = auth()->user()->fakultas ?? 'universitas';
-        $existing = Iku12KesejahteraanDosen::where('tahun_akademik', $tahunAkademik)
-            ->where('fakultas', $fakultas)
-            ->first();
-
-        if ($existing) {
-            return redirect()->route('user.iku12.edit', $existing->id)
-                ->with('warning', 'Data IKU 12 untuk tahun ini sudah ada. Silakan edit data yang sudah ada.');
-        }
 
         return view('iku12.create', compact('tahunAkademik'));
     }
@@ -70,6 +62,7 @@ class Iku12Controller extends Controller
 
         $fakultas = auth()->user()->fakultas ?? 'universitas';
         $existing = Iku12KesejahteraanDosen::where('tahun_akademik', $validated['tahun_akademik'])
+            ->where('triwulan', $validated['triwulan'])
             ->where('fakultas', $fakultas)
             ->first();
 

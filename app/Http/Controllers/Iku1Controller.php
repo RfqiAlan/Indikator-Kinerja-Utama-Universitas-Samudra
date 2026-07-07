@@ -94,8 +94,9 @@ class Iku1Controller extends Controller
         $prodi = Prodi::where('kode', $validated['program_studi'])->first();
         $validated['jenjang'] = $prodi->jenjang ?? 'S1';
         
-        // Check for duplicate - same prodi, tahun, fakultas
+        // Check for duplicate - same prodi, tahun, fakultas, triwulan
         $existing = Iku1Aee::where('tahun_akademik', $validated['tahun_akademik'])
+            ->where('triwulan', $validated['triwulan'])
             ->where('fakultas', $fakultas)
             ->where('program_studi', $validated['program_studi'])
             ->first();

@@ -119,6 +119,7 @@ class Iku3Controller extends Controller
         
         // Check for duplicate
         $existing = Iku3KegiatanMahasiswa::where('tahun_akademik', $validated['tahun_akademik'])
+            ->where('triwulan', $validated['triwulan'])
             ->where('fakultas', $fakultas)
             ->where('program_studi', $validated['program_studi'])
             ->first();

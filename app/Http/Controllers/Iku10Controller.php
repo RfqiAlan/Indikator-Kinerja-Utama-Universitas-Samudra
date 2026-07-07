@@ -85,6 +85,7 @@ class Iku10Controller extends Controller implements \Illuminate\Routing\Controll
 
         // Check for duplicate
         $existing = Iku10ZonaIntegritas::where('tahun_akademik', $validated['tahun_akademik'])
+            ->where('triwulan', $validated['triwulan'])
             ->where('fakultas', $validated['fakultas'])
             ->where('nama_unit', $validated['nama_unit'])
             ->first();

@@ -51,6 +51,7 @@ class Iku1Sub1Controller extends Controller
         $fakultas = auth()->user()->fakultas;
         
         $existing = Iku1Sub1::where('tahun_akademik', $validated['tahun_akademik'])
+            ->where('triwulan', $validated['triwulan'])
             ->where('fakultas', $fakultas)
             ->first();
 
