@@ -31,7 +31,7 @@ class RekapIkuExport implements WithMultipleSheets
     protected ?string $triwulan;
     protected ?string $role;
 
-    public function __construct(?string $fakultas = null, string $tahunAkademik = null, ?string $role = null)
+    public function __construct(?string $fakultas = null, string $tahunAkademik = null, ?string $role = null, ?string $triwulan = null)
     {
         $this->fakultas = $fakultas;
         $this->tahunAkademik = $tahunAkademik ?? date('Y') . '/' . (date('Y') + 1);
@@ -91,7 +91,7 @@ abstract class BaseIkuSheet implements FromCollection, WithTitle, WithHeadings, 
     protected ?string $triwulan;
     protected ?string $role;
 
-    public function __construct(?string $fakultas, string $tahunAkademik)
+    public function __construct(?string $fakultas, string $tahunAkademik, ?string $triwulan = null)
     {
         $this->fakultas = $fakultas;
         $this->tahunAkademik = $tahunAkademik;
