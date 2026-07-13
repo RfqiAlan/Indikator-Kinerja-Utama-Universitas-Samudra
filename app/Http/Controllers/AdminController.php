@@ -548,13 +548,13 @@ class AdminController extends Controller
         $tahunAkademik = $request->get('tahun', get_tahun_akademik());
         $triwulan = $request->get('triwulan', 'Semua');
         $role = $request->get('role');
-        $triwulan = $request->get('triwulan', 'Semua');
         
         $fakultasModel = $fakultas ? Fakultas::findByKode($fakultas) : null;
         $fakultasName = $fakultasModel ? $fakultasModel->nama : 'Semua_Fakultas';
         $roleName = $role ? $role : 'Semua_IKU';
+        $triwulanName = $triwulan !== 'Semua' ? "TW{$triwulan}" : 'Semua_TW';
         
-        $filename = "Rekap_IKU_{$fakultasName}_{$roleName}_{$tahunAkademik}.xlsx";
+        $filename = "Rekap_IKU_{$fakultasName}_{$roleName}_{$tahunAkademik}_{$triwulanName}.xlsx";
         $filename = str_replace(['/', ' '], ['_', '_'], $filename);
         
         return \Maatwebsite\Excel\Facades\Excel::download(
