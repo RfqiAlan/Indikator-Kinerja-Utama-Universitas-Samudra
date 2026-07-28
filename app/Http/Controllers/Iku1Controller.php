@@ -43,7 +43,7 @@ class Iku1Controller extends Controller
                        ->orderBy('jenjang')
                        ->when($triwulan && $triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); })->get();
         
-        $aeePt = Iku1Aee::calculateAeePt($tahunAkademik, $fakultas);
+        $aeePt = Iku1Aee::calculateAeePt($tahunAkademik, $fakultas, $triwulan);
         
         // Get available years
         $dbYears = Iku1Aee::where('fakultas', $fakultas)

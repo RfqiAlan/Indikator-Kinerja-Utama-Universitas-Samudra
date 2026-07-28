@@ -99,13 +99,16 @@ class Iku1Aee extends Model
     /**
      * Calculate AEE PT (Average of all jenjang for a given tahun akademik)
      */
-    public static function calculateAeePt(string $tahunAkademik, ?string $fakultas = null): float
+    public static function calculateAeePt(string $tahunAkademik, ?string $fakultas = null, ?string $triwulan = null): float
     {
-        $query = self::where('tahun_akademik',
-        'triwulan', $tahunAkademik);
+        $query = self::where('tahun_akademik', $tahunAkademik);
         
         if ($fakultas) {
             $query->where('fakultas', $fakultas);
+        }
+        
+        if ($triwulan && $triwulan !== 'Semua') {
+            $query->where('triwulan', $triwulan);
         }
         
         $data = $query->get();

@@ -7,6 +7,9 @@
 
         <title>{{ config('app.name', 'IKU UNSAM') }}</title>
 
+        <!-- Favicon -->
+        <link rel="icon" href="{{ asset('favicon.ico') }}?v=2" type="image/x-icon"/>
+        <link rel="apple-touch-icon" href="{{ asset('favicon.ico') }}?v=2">
 
 
         <!-- Fonts -->
