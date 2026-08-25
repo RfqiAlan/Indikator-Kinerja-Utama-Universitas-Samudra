@@ -49,6 +49,14 @@
             </label>
         </div>
 
+        <!-- Google reCAPTCHA v2 (muncul setelah 3x gagal login) -->
+        @if ($showCaptcha)
+            <div class="mt-4">
+                <div class="g-recaptcha" data-sitekey="{{ $recaptchaSiteKey }}"></div>
+                <x-input-error :messages="$errors->get('g-recaptcha-response')" class="mt-2" />
+            </div>
+        @endif
+
         <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))
                 <a class="underline text-sm text-slate-600 hover:text-blue-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-white" href="{{ route('password.request') }}">
@@ -61,4 +69,10 @@
             </x-primary-button>
         </div>
     </form>
+
+    <!-- Load reCAPTCHA script only when needed -->
+    @if ($showCaptcha)
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    @endif
 </x-guest-layout>
+

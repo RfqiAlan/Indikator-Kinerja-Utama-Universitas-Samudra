@@ -5,6 +5,7 @@ namespace App\Http\Requests\Auth;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -26,9 +27,26 @@ class LoginRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
+        ];
+
+        // Require CAPTCHA after 3 failed login attempts
+        if ($this->shouldRequireCaptcha()) {
+            $rules['g-recaptcha-response'] = ['required'];
+        }
+
+        return $rules;
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     */
+    public function messages(): array
+    {
+        return [
+            'g-recaptcha-response.required' => 'Silakan selesaikan verifikasi CAPTCHA.',
         ];
     }
 
@@ -41,8 +59,17 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
+        // Verify reCAPTCHA if required
+        if ($this->shouldRequireCaptcha()) {
+            $this->verifyCaptcha();
+        }
+
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
+
+            // Increment failed login counter in session
+            $failedAttempts = session('login_failed_attempts', 0) + 1;
+            session(['login_failed_attempts' => $failedAttempts]);
 
             // Log failed login attempt
             security_log('login_failed', $this->string('email'), 'Login gagal - password salah');
@@ -51,6 +78,9 @@ class LoginRequest extends FormRequest
                 'email' => trans('auth.failed'),
             ]);
         }
+
+        // Reset failed attempts on successful login
+        session()->forget('login_failed_attempts');
 
         RateLimiter::clear($this->throttleKey());
     }
@@ -87,5 +117,35 @@ class LoginRequest extends FormRequest
     public function throttleKey(): string
     {
         return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+    }
+
+    /**
+     * Determine if CAPTCHA should be required (after 3 failed attempts).
+     */
+    public function shouldRequireCaptcha(): bool
+    {
+        return session('login_failed_attempts', 0) >= 3
+            && config('services.recaptcha.site_key')
+            && config('services.recaptcha.site_key') !== 'your-recaptcha-site-key';
+    }
+
+    /**
+     * Verify the reCAPTCHA response with Google.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function verifyCaptcha(): void
+    {
+        $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret' => config('services.recaptcha.secret_key'),
+            'response' => $this->input('g-recaptcha-response'),
+            'remoteip' => $this->ip(),
+        ]);
+
+        if (! $response->json('success')) {
+            throw ValidationException::withMessages([
+                'g-recaptcha-response' => 'Verifikasi CAPTCHA gagal. Silakan coba lagi.',
+            ]);
+        }
     }
 }

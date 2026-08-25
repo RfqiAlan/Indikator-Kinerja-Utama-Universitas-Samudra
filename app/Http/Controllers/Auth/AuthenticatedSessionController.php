@@ -16,7 +16,15 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        $failedAttempts = session('login_failed_attempts', 0);
+        $showCaptcha = $failedAttempts >= 3
+            && config('services.recaptcha.site_key')
+            && config('services.recaptcha.site_key') !== 'your-recaptcha-site-key';
+
+        return view('auth.login', [
+            'showCaptcha' => $showCaptcha,
+            'recaptchaSiteKey' => config('services.recaptcha.site_key'),
+        ]);
     }
 
     /**
