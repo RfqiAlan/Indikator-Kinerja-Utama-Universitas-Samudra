@@ -112,6 +112,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/rekap-universitas', [AdminController::class, 'rekapUniversitas'])->name('rekap-universitas');
     Route::get('/capaian-kinerja', [AdminController::class, 'capaianKinerja'])->name('capaian-kinerja');
     Route::get('/arsip-laporan', [AdminController::class, 'arsipLaporan'])->name('arsip-laporan');
+    Route::get('/iku-academy', [AdminController::class, 'ikuAcademy'])->name('iku-academy');
 
     // User management
     Route::get('/users', [AdminController::class, 'users'])->name('users');

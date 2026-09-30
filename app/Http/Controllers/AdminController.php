@@ -288,6 +288,14 @@ class AdminController extends Controller
     }
 
     /**
+     * Display IKU Academy (Knowledge Base)
+     */
+    public function ikuAcademy()
+    {
+        return view('admin.iku-academy');
+    }
+
+    /**
      * Display Rekap Universitas
      */
     public function rekapUniversitas(Request $request)
