@@ -126,7 +126,7 @@
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Studi Lanjut</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Wirausaha</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Capaian IKU 2</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-right">Aksi</th>
+                                <th scope="col" class="px-12 py-4 font-medium text-right">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-semantic-border">

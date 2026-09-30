@@ -78,7 +78,7 @@
                                 <th scope="col" class="px-6 py-4 font-medium text-center">% S2 & S3</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">% Doktor (S3)</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">% Internasional</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-right">Aksi</th>
+                                <th scope="col" class="px-12 py-4 font-medium text-right">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 dark:divide-white/5">

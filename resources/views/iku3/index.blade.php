@@ -113,7 +113,7 @@
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Lomba (I/N/P)</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Skor</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Capaian</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-right">Aksi</th>
+                                <th scope="col" class="px-12 py-4 font-medium text-right">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 dark:divide-white/5">

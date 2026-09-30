@@ -113,7 +113,7 @@
                                 <th scope="col" class="px-6 py-2 border-b font-medium text-center" colspan="3">Sub-indikator 1 (Rekognisi)</th>
                                 <th scope="col" class="px-6 py-2 border-b font-medium text-center" colspan="3">Sub-indikator 2 (Pend. S3)</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center" rowspan="2">Ratarata Capaian</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-right" rowspan="2">Aksi</th>
+                                <th scope="col" class="px-12 py-4 font-medium text-right" rowspan="2">Aksi</th>
                             </tr>
                             <tr>
                                 <th scope="col" class="px-3 py-2 font-medium text-center text-[10px]">Dosen Fakultas</th>

@@ -129,7 +129,7 @@
                                 <th scope="col" class="px-6 py-4 font-medium" rowspan="2">Total Pendapatan</th>
                                 <th scope="col" class="px-6 py-2 border-b font-medium text-center" colspan="4">Sumber Pendapatan (%)</th>
                                 <th scope="col" class="px-6 py-2 border-b font-medium text-center" colspan="2">Efektivitas Pengelolaan (%)</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-center" rowspan="2">Aksi</th>
+                                <th scope="col" class="px-12 py-4 font-medium text-center" rowspan="2">Aksi</th>
                             </tr>
                             <tr>
                                 <th scope="col" class="px-3 py-2 font-medium text-center text-[10px]">9.1 Non-UKT</th>

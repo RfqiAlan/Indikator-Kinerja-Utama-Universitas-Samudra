@@ -91,7 +91,7 @@
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Q4</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Prosiding</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Capaian</th>
-                                <th scope="col" class="px-6 py-4 font-medium text-right">Aksi</th>
+                                <th scope="col" class="px-12 py-4 font-medium text-right">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 dark:divide-white/5">
