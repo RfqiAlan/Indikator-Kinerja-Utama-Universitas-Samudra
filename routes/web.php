@@ -110,6 +110,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/activities', [AdminController::class, 'activities'])->name('activities');
 
     Route::get('/rekap-universitas', [AdminController::class, 'rekapUniversitas'])->name('rekap-universitas');
+    Route::get('/capaian-kinerja', [AdminController::class, 'capaianKinerja'])->name('capaian-kinerja');
+    Route::get('/arsip-laporan', [AdminController::class, 'arsipLaporan'])->name('arsip-laporan');
 
     // User management
     Route::get('/users', [AdminController::class, 'users'])->name('users');

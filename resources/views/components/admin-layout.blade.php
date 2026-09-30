@@ -1,4 +1,4 @@
-@props(['activePage' => 'dashboard'])
+@props(['activePage' => 'dashboard', 'breadcrumbs' => []])
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -7,18 +7,48 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Admin - IKU UNSAM</title>
+    <title>IKU UNSAM</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Google Fonts for Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .sidebar-item { display: flex; align-items: center; gap: 12px; padding: 12px 20px; border-radius: 12px; transition: all 0.2s ease-in-out; font-weight: 500; font-size: 14px; margin-bottom: 4px; }
+        .sidebar-item:hover { background-color: #f1f5f9; color: #0f172a; }
+        .sidebar-item.active { background-color: #0ea5e9; color: white; box-shadow: 0 4px 10px -2px rgba(14, 165, 233, 0.4); }
+        .sidebar-item.active .badge-dot { background-color: #fbbf24; width: 8px; height: 8px; border-radius: 50%; margin-left: auto; box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.3); }
+        
+        .floating-sidebar {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.06);
+            margin: 16px;
+            height: calc(100vh - 32px);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Custom scrollbar for sidebar */
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .custom-scrollbar:hover::-webkit-scrollbar-thumb { background: #94a3b8; }
+    </style>
 </head>
 
-<body class="font-sans antialiased bg-slate-100" x-data="{ sidebarOpen: false }">
+<body class="antialiased text-slate-800" x-data="{ sidebarOpen: false }">
     <x-sweet-alert />
-    <div class="min-h-screen lg:flex">
+    <div class="min-h-screen flex">
+        
         <!-- Mobile Header -->
-        <div class="lg:hidden bg-slate-800 text-white p-4 flex items-center justify-between sticky top-0 z-50">
-            <h1 class="text-lg font-bold text-blue-400">IKU UNSAM</h1>
-            <button @click="sidebarOpen = !sidebarOpen" class="p-2 hover:bg-slate-700 rounded-lg">
+        <div class="lg:hidden bg-white shadow-sm p-4 flex items-center justify-between sticky top-0 z-50 w-full">
+            <h1 class="text-lg font-bold text-sky-600 flex items-center gap-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" /></svg>
+                IKU UNSAM
+            </h1>
+            <button @click="sidebarOpen = !sidebarOpen" class="p-2 hover:bg-slate-100 rounded-lg text-slate-600">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
@@ -26,154 +56,167 @@
         </div>
 
         <!-- Sidebar Overlay -->
-        <div x-show="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 bg-black/50 z-40 lg:hidden"
-            x-transition:enter="transition-opacity ease-out duration-300"
-            x-transition:leave="transition-opacity ease-in duration-200"></div>
+        <div x-show="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 lg:hidden" style="display: none;"></div>
 
-        <!-- Sidebar Spacer (Desktop) -->
-        <div class="hidden lg:block w-64 flex-shrink-0"></div>
+        <!-- Spacer for fixed sidebar in flex -->
+        <div class="hidden lg:block w-[300px] flex-shrink-0"></div>
 
         <!-- Sidebar -->
-        <aside id="admin-sidebar-scroll" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
-            class="w-64 bg-gradient-to-b from-slate-800 to-slate-900 text-white flex-shrink-0 fixed inset-y-0 z-50 transition-transform duration-300 lg:translate-x-0 lg:h-screen lg:overflow-y-auto flex flex-col">
-            <div class="p-6 border-b border-slate-700 hidden lg:block">
-                <h1 class="text-xl font-bold text-blue-400">IKU UNSAM</h1>
-                <p class="text-xs text-slate-400 mt-1">Admin Panel</p>
-            </div>
+        <aside id="admin-sidebar" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+            class="fixed inset-y-0 left-0 z-50 w-[290px] transition-transform duration-300 lg:translate-x-0 flex flex-col">
+            
+            <div class="floating-sidebar">
+                <!-- Logo Area -->
+                <div class="p-6 border-b border-slate-100 flex items-center gap-3">
+                    <div class="w-10 h-10 bg-sky-50 rounded-xl flex items-center justify-center text-sky-600 shrink-0">
+                        <!-- Academic/University Icon -->
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" /></svg>
+                    </div>
+                    <div>
+                        <h1 class="text-[13px] font-bold text-slate-800 leading-tight">Universitas Samudra</h1>
+                        <p class="text-[10px] text-slate-500 font-medium">Sistem Informasi IKU</p>
+                    </div>
+                </div>
 
-            <!-- Close button on mobile -->
-            <div class="lg:hidden p-4 flex justify-end border-b border-slate-700">
-                <button @click="sidebarOpen = false" class="p-2 hover:bg-slate-700 rounded-lg">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
+                <!-- Navigation -->
+                <div class="flex-1 overflow-y-auto p-4 space-y-1 custom-scrollbar">
+                    
+                    <a href="{{ route('admin.dashboard') }}" class="sidebar-item {{ $activePage === 'dashboard' ? 'active' : 'text-slate-500' }}">
+                        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+                        Dashboard PT
+                        @if($activePage === 'dashboard') <div class="badge-dot"></div> @endif
+                    </a>
 
-            <nav class="p-4 space-y-2">
-                <a href="{{ route('admin.dashboard') }}" @click="sidebarOpen = false"
-                    class="flex items-center gap-3 px-4 py-3 rounded-lg transition {{ $activePage === 'dashboard' ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-slate-700' }}">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
-                    Dashboard
-                </a>
+                    <a href="{{ route('admin.rekap-universitas') }}" class="sidebar-item {{ $activePage === 'rekap-universitas' ? 'active' : 'text-slate-500' }}">
+                        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" /></svg>
+                        Analitik Capaian
+                        @if($activePage === 'rekap-universitas') <div class="badge-dot"></div> @endif
+                    </a>
 
-                <a href="{{ route('admin.rekap-universitas') }}" @click="sidebarOpen = false"
-                    class="flex items-center gap-3 px-4 py-3 rounded-lg transition {{ $activePage === 'rekap-universitas' ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-slate-700' }}">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                    </svg>
-                    Rekap Universitas
-                </a>
+                    <a href="#" class="sidebar-item {{ $activePage === 'target' ? 'active' : 'text-slate-500' }}">
+                        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                        Manajemen Target
+                        @if($activePage === 'target') <div class="badge-dot"></div> @endif
+                    </a>
 
-                <a href="{{ route('admin.users') }}" @click="sidebarOpen = false"
-                    class="flex items-center gap-3 px-4 py-3 rounded-lg transition {{ $activePage === 'users' ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-slate-700' }}">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-                    </svg>
-                    Kelola User
-                </a>
+                    <a href="{{ route('admin.capaian-kinerja') }}" class="sidebar-item {{ $activePage === 'capaian' ? 'active' : 'text-slate-500' }}">
+                        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                        Capaian Kinerja
+                        @if($activePage === 'capaian') <div class="badge-dot"></div> @endif
+                    </a>
 
-                <a href="{{ route('admin.activities') }}" @click="sidebarOpen = false"
-                    class="flex items-center gap-3 px-4 py-3 rounded-lg transition {{ $activePage === 'activities' ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-slate-700' }}">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                    </svg>
-                    Log Aktivitas
-                </a>
+                    <a href="{{ route('admin.arsip-laporan') }}" class="sidebar-item {{ $activePage === 'arsip' ? 'active' : 'text-slate-500' }}">
+                        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" /></svg>
+                        Arsip Laporan
+                        @if($activePage === 'arsip') <div class="badge-dot"></div> @endif
+                    </a>
+                    
+                    <a href="#" class="sidebar-item {{ $activePage === 'graph' ? 'active' : 'text-slate-500' }}">
+                        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" /></svg>
+                        IKU Graph 3D
+                        @if($activePage === 'graph') <div class="badge-dot"></div> @endif
+                    </a>
 
-                <div class="pt-4 border-t border-slate-700 mt-4">
-                    <p class="px-4 text-xs text-slate-500 uppercase tracking-wider mb-2">Fakultas</p>
-                    @foreach(\App\Models\Fakultas::getAllAsConfig() as $kode => $data)
-                        <a href="{{ route('admin.fakultas', $kode) }}" @click="sidebarOpen = false"
-                            class="flex items-center gap-3 px-4 py-2 rounded-lg transition text-sm {{ $activePage === 'fakultas-' . $kode ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-slate-700' }}">
-                            <span class="w-2 h-2 rounded-full bg-blue-400"></span>
-                            {{ strtoupper($kode) }}
+                    <a href="{{ route('admin.fakultas.manage') }}" class="sidebar-item {{ $activePage === 'fakultas-manage' ? 'active' : 'text-slate-500' }}">
+                        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                        Profil Perguruan Tinggi
+                        @if($activePage === 'fakultas-manage') <div class="badge-dot"></div> @endif
+                    </a>
+
+                    <a href="#" class="sidebar-item {{ $activePage === 'academy' ? 'active' : 'text-slate-500' }}">
+                        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                        IKU Academy
+                        @if($activePage === 'academy') <div class="badge-dot"></div> @endif
+                    </a>
+
+                    <a href="{{ route('admin.users') }}" class="sidebar-item {{ $activePage === 'users' ? 'active' : 'text-slate-500' }}">
+                        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" /></svg>
+                        Manajemen User
+                        @if($activePage === 'users') <div class="badge-dot"></div> @endif
+                    </a>
+
+                    <a href="#" class="sidebar-item {{ $activePage === 'dampak' ? 'active' : 'text-slate-500' }}">
+                        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                        Laporan Berdampak
+                        @if($activePage === 'dampak') <div class="badge-dot"></div> @endif
+                    </a>
+
+                    <!-- For legacy links like Log Aktivitas -->
+                    <div class="pt-2 mt-4 border-t border-slate-100">
+                        <p class="px-3 text-[10px] text-slate-400 uppercase tracking-wider mb-1 font-bold">Lainnya</p>
+                        <a href="{{ route('admin.activities') }}" class="sidebar-item {{ $activePage === 'activities' ? 'active' : 'text-slate-500' }}">
+                            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            Log Aktivitas
                         </a>
-                    @endforeach
-                </div>
-
-                <div class="pt-4 border-t border-slate-700 mt-4">
-                    <p class="px-4 text-xs text-slate-500 uppercase tracking-wider mb-2">Pengaturan</p>
-                    <a href="{{ route('admin.fakultas.manage') }}" @click="sidebarOpen = false"
-                        class="flex items-center gap-3 px-4 py-3 rounded-lg transition {{ $activePage === 'fakultas-manage' ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-slate-700' }}">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                        </svg>
-                        Kelola Fakultas & Prodi
-                    </a>
-
-                    <a href="{{ route('profile.edit') }}" @click="sidebarOpen = false"
-                        class="flex items-center gap-3 px-4 py-3 mt-1 rounded-lg transition {{ $activePage === 'profile' ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-slate-700' }}">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                        Ganti Password
-                    </a>
-                </div>
-            </nav>
-
-            <div class="p-4 border-t border-slate-700 bg-slate-900 mt-auto">
-                <div class="flex items-center gap-3 mb-3">
-                    <div
-                        class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold">
-                        {{ substr(auth()->user()->name, 0, 1) }}
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <p class="text-sm font-medium text-white truncate">{{ auth()->user()->name }}</p>
-                        <p class="text-xs text-slate-400">Administrator</p>
                     </div>
                 </div>
-                <form action="{{ route('logout') }}" method="POST" onsubmit="confirmDelete(event, 'Anda akan keluar dari aplikasi.', 'Keluar Aplikasi?', 'Ya, keluar')">
-                    @csrf
-                    <button type="submit"
-                        class="w-full px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded-lg text-sm transition">
-                        Logout
-                    </button>
-                </form>
+
+                <!-- User Profile Pill at Bottom -->
+                <div class="p-4 mt-auto border-t border-slate-100 bg-white z-10">
+                    <div class="bg-slate-50 rounded-xl p-3 flex items-center justify-between group cursor-pointer hover:bg-slate-100 transition border border-slate-100">
+                        <div class="flex items-center gap-3 overflow-hidden">
+                            <div class="w-9 h-9 rounded-full bg-sky-500 flex items-center justify-center text-white font-semibold flex-shrink-0 text-sm shadow-sm">
+                                {{ substr(auth()->user()->name ?? 'U', 0, 1) }}
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-sm font-bold text-slate-700 truncate">{{ auth()->user()->name ?? 'User' }}</p>
+                                <p class="text-[11px] text-slate-500 truncate">Universitas Samudra</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Dropdown Trigger (dots) -->
+                        <div class="text-slate-400">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" /></svg>
+                        </div>
+                    </div>
+                    
+                    <form action="{{ route('logout') }}" method="POST" class="mt-2" onsubmit="confirmDelete(event, 'Anda akan keluar dari aplikasi.', 'Keluar Aplikasi?', 'Ya, keluar')">
+                        @csrf
+                        <button type="submit" class="w-full py-2 text-xs font-semibold text-rose-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition border border-transparent hover:border-rose-100">
+                            Keluar dari Aplikasi
+                        </button>
+                    </form>
+                </div>
             </div>
         </aside>
-        <script>
-            {
-                const a = document.getElementById('admin-sidebar-scroll');
-                if(a){
-                    a.scrollTop = sessionStorage.getItem('adminSidebarScroll') || 0;
-                    a.addEventListener('scroll', () => sessionStorage.setItem('adminSidebarScroll', a.scrollTop), {passive: true});
-                }
-            }
-        </script>
 
         <!-- Main Content -->
-        <main class="flex-1 p-4 lg:p-8">
+        <main class="flex-1 min-w-0 overflow-x-hidden pt-4 lg:pt-8 px-4 lg:px-8 pb-12">
+            
+            <!-- Breadcrumb (Optional Topbar) -->
+            @if(isset($breadcrumbs) && !empty($breadcrumbs))
+            <div class="hidden lg:flex items-center gap-2 text-[13px] text-slate-400 mb-6 font-medium">
+                <a href="{{ route('admin.dashboard') }}" class="hover:text-slate-600 transition">Campus</a>
+                <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                <span class="text-slate-700">{{ is_array($breadcrumbs) ? implode(' / ', $breadcrumbs) : $breadcrumbs }}</span>
+            </div>
+            @endif
+
+            <!-- Alert Messages -->
             @if(session('success'))
-                <div class="mb-4 p-4 bg-blue-100 border border-blue-200 text-blue-700 rounded-lg text-sm">
+                <div class="mb-6 p-4 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-xl text-sm font-medium shadow-sm flex items-center gap-3" data-aos="fade-down">
+                    <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                    </div>
                     {{ session('success') }}
                 </div>
             @endif
             @if(session('error'))
-                <div class="mb-4 p-4 bg-rose-100 border border-rose-200 text-rose-700 rounded-lg text-sm">
+                <div class="mb-6 p-4 bg-rose-50 border border-rose-100 text-rose-700 rounded-xl text-sm font-medium shadow-sm flex items-center gap-3" data-aos="fade-down">
+                    <div class="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </div>
                     {{ session('error') }}
-                </div>
-            @endif
-            @if(session('warning'))
-                <div class="mb-4 p-4 bg-amber-100 border border-amber-200 text-amber-700 rounded-lg text-sm">
-                    {{ session('warning') }}
                 </div>
             @endif
 
             {{ $slot }}
         </main>
     </div>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 50 });</script>
-</body>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 600, easing: 'ease-out', once: true, offset: 20 });
+    </script>
+</body>
 </html>

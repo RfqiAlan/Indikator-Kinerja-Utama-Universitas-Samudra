@@ -265,6 +265,29 @@ class AdminController extends Controller
     }
 
     /**
+     * Display Capaian Kinerja (Triwulan Layout)
+     */
+    public function capaianKinerja(Request $request)
+    {
+        $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $availableYears = $this->getAvailableYears();
+        $breadcrumbs = ['Capaian Kinerja', 'Achievements'];
+
+        return view('admin.capaian-kinerja', compact('tahunAkademik', 'availableYears', 'breadcrumbs'));
+    }
+
+    /**
+     * Display Arsip Laporan Kinerja
+     */
+    public function arsipLaporan(Request $request)
+    {
+        $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $availableYears = $this->getAvailableYears();
+
+        return view('admin.arsip-laporan', compact('tahunAkademik', 'availableYears'));
+    }
+
+    /**
      * Display Rekap Universitas
      */
     public function rekapUniversitas(Request $request)

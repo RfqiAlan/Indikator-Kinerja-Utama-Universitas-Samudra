@@ -3,59 +3,173 @@
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
-    <div class="mb-5 lg:mb-8 flex flex-col gap-4 sm:flex-row sm:items-center justify-between" data-aos="fade-up">
-        <!-- Dashboard Header Banner -->
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 lg:p-8 w-full relative overflow-hidden">
-            <!-- Subtle accent line on top -->
-            <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+    <div class="mb-8" data-aos="fade-up">
+        <!-- Dashboard Header & Welcome -->
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-8">
+            <div>
+                <div class="flex items-center gap-3 text-xs font-bold text-sky-600 mb-2 uppercase tracking-wide">
+                    <span class="flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg> Universitas Samudra</span>
+                    <span class="text-slate-300">|</span>
+                    <span class="text-slate-500"># 001053</span>
+                    <span class="text-slate-300">|</span>
+                    <span class="px-2 py-0.5 bg-sky-100 rounded-md text-sky-700">PTN-SATKER</span>
+                </div>
+                <h1 class="text-3xl lg:text-4xl font-extrabold text-slate-800 tracking-tight">Selamat datang, <span class="text-sky-600">Universitas!</span> 👋</h1>
+                <p class="text-slate-500 font-medium mt-2">Pantau kemajuan dan kelola capaian Indikator Kinerja Utama (IKU) Anda di sini.</p>
+            </div>
 
-            <div class="relative z-10">
-                <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 lg:gap-6">
-                    <!-- Dashboard Info -->
-                    <div class="flex-1">
-                        <div class="flex items-center gap-4 mb-2">
-                            <div class="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 font-bold text-xl border border-blue-100 shadow-sm">
-                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h1 class="text-2xl lg:text-3xl font-extrabold text-slate-800 tracking-tight">Dashboard Admin</h1>
-                                <p class="text-slate-500 text-sm font-medium mt-1">Pantau & kelola data seluruh fakultas</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Year Selector & Actions -->
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-                        <!-- Year Dropdown -->
-                        <div class="flex items-center gap-2 bg-slate-50 rounded-lg p-1.5 border border-slate-200">
-                            <form action="{{ route('admin.dashboard') }}" method="GET">
-                                <select name="tahun" onchange="this.form.submit()" class="bg-white border text-sm font-bold text-slate-800 border-slate-300 py-2 pl-4 pr-10 rounded-md cursor-pointer focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm hover:border-blue-400 transition-colors" style="background-image: url(&quot;data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e&quot;); background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; appearance: none;">
-                                    @foreach($availableYears as $year)
-                                        <option value="{{ $year }}" {{ $tahunAkademik === $year ? 'selected' : '' }}>Tahun {{ $year }}</option>
-                                    @endforeach
-                                </select>
-                        <select name="triwulan" onchange="this.form.submit()"
-                            class="text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm">
-                            <option value="Semua" {{ ($triwulan ?? "Semua") == "Semua" ? "selected" : "" }}>Semua Triwulan</option>
-                            <option value="1" {{ ($triwulan ?? "") == "1" ? "selected" : "" }}>Triwulan 1</option>
-                            <option value="2" {{ ($triwulan ?? "") == "2" ? "selected" : "" }}>Triwulan 2</option>
-                            <option value="3" {{ ($triwulan ?? "") == "3" ? "selected" : "" }}>Triwulan 3</option>
-                            <option value="4" {{ ($triwulan ?? "") == "4" ? "selected" : "" }}>Triwulan 4</option>
+            <!-- Date & Filters -->
+            <div class="flex items-center gap-4">
+                <div class="text-right hidden lg:block mr-4">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">{{ now()->format('l') }}</p>
+                    <p class="text-sm font-bold text-slate-700">{{ now()->format('d M Y') }}</p>
+                </div>
+                <div class="flex items-center gap-2 bg-white rounded-xl p-1.5 shadow-sm border border-slate-200">
+                    <form action="{{ route('admin.dashboard') }}" method="GET" class="flex gap-2">
+                        <select name="tahun" onchange="this.form.submit()" class="bg-transparent border-none text-sm font-bold text-slate-700 py-2 pl-3 pr-8 cursor-pointer focus:ring-0">
+                            @foreach($availableYears as $year)
+                                <option value="{{ $year }}" {{ $tahunAkademik === $year ? 'selected' : '' }}>📅 {{ $year }}</option>
+                            @endforeach
+                        </select>
+                        <select name="triwulan" onchange="this.form.submit()" class="bg-transparent border-none border-l border-slate-200 text-sm font-bold text-slate-700 py-2 pl-3 pr-8 cursor-pointer focus:ring-0">
+                            <option value="Semua" {{ ($triwulan ?? "Semua") == "Semua" ? "selected" : "" }}>Semua TW</option>
+                            <option value="1" {{ ($triwulan ?? "") == "1" ? "selected" : "" }}>TW 1</option>
+                            <option value="2" {{ ($triwulan ?? "") == "2" ? "selected" : "" }}>TW 2</option>
+                            <option value="3" {{ ($triwulan ?? "") == "3" ? "selected" : "" }}>TW 3</option>
+                            <option value="4" {{ ($triwulan ?? "") == "4" ? "selected" : "" }}>TW 4</option>
                         </select>
                     </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification List (Mockup based on reference) -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 mb-8">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-sm font-bold text-slate-700 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
+                    PEMBERITAHUAN
+                </h3>
+                <span class="text-xs font-bold text-rose-500 bg-rose-50 px-2 py-1 rounded-md">4 perlu tindak lanjut</span>
+            </div>
+
+            <div class="space-y-3">
+                <!-- Notif 1 -->
+                <div class="flex items-center justify-between p-4 rounded-xl border border-rose-100 bg-white">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-full bg-rose-50 flex items-center justify-center text-rose-500 shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
                         </div>
-                        
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-rose-50 text-rose-600 text-sm font-bold hover:bg-rose-100 hover:text-rose-700 transition border border-rose-100 shadow-sm">
-                                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-                                </svg>
-                                Logout
-                            </button>
-                        </form>
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-800">Ubah Password Anda</h4>
+                            <p class="text-[13px] text-slate-500 mt-0.5">Anda masih menggunakan password standar. Segera ubah demi keamanan data.</p>
+                        </div>
+                    </div>
+                    <a href="{{ route('profile.edit') }}" class="shrink-0 px-4 py-2 bg-rose-500 hover:bg-rose-600 text-white text-xs font-bold rounded-lg transition shadow-sm">Ganti Password</a>
+                </div>
+
+                <!-- Notif 2 -->
+                <div class="flex items-center justify-between p-4 rounded-xl border border-amber-200 bg-white">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center text-amber-500 shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-800">Capaian TW1 Belum Lengkap</h4>
+                            <p class="text-[13px] text-slate-500 mt-0.5">Baru 97% indikator terisi. Ajukan perpanjangan bila masih perlu melengkapi.</p>
+                        </div>
+                    </div>
+                    <button class="shrink-0 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-lg transition shadow-sm">Lengkapi Capaian</button>
+                </div>
+
+                <!-- Notif 3 -->
+                <div class="flex items-center justify-between p-4 rounded-xl border border-amber-200 bg-white">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center text-amber-500 shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-800">Capaian TW2 Belum Lengkap</h4>
+                            <p class="text-[13px] text-slate-500 mt-0.5">Baru 94% indikator terisi. Ajukan perpanjangan bila masih perlu melengkapi.</p>
+                        </div>
+                    </div>
+                    <button class="shrink-0 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-lg transition shadow-sm">Lengkapi Capaian</button>
+                </div>
+
+                <!-- Notif 4 -->
+                <div class="flex items-center justify-between p-4 rounded-xl border border-indigo-100 bg-white">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-500 shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" /></svg>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-800">Lapor Capaian TW3</h4>
+                            <p class="text-[13px] text-slate-500 mt-0.5">Laporan capaian triwulan ini belum dibuat. Baru 0% indikator terisi. Tenggat: 30 Oct 2026.</p>
+                        </div>
+                    </div>
+                    <button class="shrink-0 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg transition shadow-sm">Input Capaian</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Tracker -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+            <div class="flex items-center justify-between mb-8">
+                <h3 class="text-xs font-bold text-slate-400 flex items-center gap-2 uppercase tracking-widest">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" /></svg>
+                    PROGRES PENETAPAN TARGET {{ $tahunAkademik }}
+                </h3>
+                <span class="text-xs font-bold text-amber-500">Menunggu TTE PT</span>
+            </div>
+
+            <div class="relative max-w-4xl mx-auto mb-2">
+                <!-- Track Line -->
+                <div class="absolute top-1/2 left-0 w-full h-1 bg-slate-100 -translate-y-1/2 rounded-full z-0"></div>
+                <!-- Active Line (Up to step 3) -->
+                <div class="absolute top-1/2 left-0 w-2/5 h-1 bg-sky-500 -translate-y-1/2 rounded-full z-0"></div>
+
+                <div class="relative z-10 flex justify-between">
+                    <!-- Step 1 -->
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-sky-500 text-white flex items-center justify-center mb-2 shadow-[0_0_0_4px_white]">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        </div>
+                        <span class="text-[10px] font-bold text-sky-600 uppercase tracking-wider">PENGAJUAN</span>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-sky-500 text-white flex items-center justify-center mb-2 shadow-[0_0_0_4px_white]">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        </div>
+                        <span class="text-[10px] font-bold text-sky-600 uppercase tracking-wider">APPROVAL</span>
+                    </div>
+                    <!-- Step 3 (Current) -->
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-white border-2 border-slate-300 text-slate-500 flex items-center justify-center mb-2 shadow-[0_0_0_4px_white]">
+                            <span class="text-xs font-bold">3</span>
+                        </div>
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">TTE PT</span>
+                    </div>
+                    <!-- Step 4 -->
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-white border-2 border-slate-200 text-slate-400 flex items-center justify-center mb-2 shadow-[0_0_0_4px_white]">
+                            <span class="text-xs font-bold">4</span>
+                        </div>
+                        <span class="text-[10px] font-bold text-slate-300 uppercase tracking-wider">VERIFIED TTE</span>
+                    </div>
+                    <!-- Step 5 -->
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-white border-2 border-slate-200 text-slate-400 flex items-center justify-center mb-2 shadow-[0_0_0_4px_white]">
+                            <span class="text-xs font-bold">5</span>
+                        </div>
+                        <span class="text-[10px] font-bold text-slate-300 uppercase tracking-wider">TTE MENTRI</span>
+                    </div>
+                    <!-- Step 6 -->
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-white border-2 border-slate-200 text-slate-400 flex items-center justify-center mb-2 shadow-[0_0_0_4px_white]">
+                            <span class="text-xs font-bold">6</span>
+                        </div>
+                        <span class="text-[10px] font-bold text-slate-300 uppercase tracking-wider">SELESAI</span>
                     </div>
                 </div>
             </div>
