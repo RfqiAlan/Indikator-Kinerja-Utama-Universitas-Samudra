@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Edit IKU 3</title>@vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"></head>
-<body class="font-sans antialiased bg-white text-slate-900">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <x-theme-script /></head>
+<body class="font-sans antialiased bg-semantic-bg text-semantic-text">
     <x-user-layout activeIku="IKU 3">
         <x-slot name="header">
             <div>
@@ -53,18 +54,18 @@
                 </div>
 
                 {{-- Info Bobot --}}
-                <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">
-                    <h4 class="font-semibold text-amber-800 mb-3 flex items-center gap-2">
+                <div class="bg-blue-50 border border-amber-200 rounded-xl p-4">
+                    <h4 class="font-semibold text-blue-800 mb-3 flex items-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         Bobot Penilaian
                     </h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-amber-700">
-                        <div class="bg-amber-100/60 rounded-lg p-3">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-blue-700">
+                        <div class="bg-blue-100/60 rounded-lg p-3">
                             <p class="font-semibold mb-1">📚 Non-Kompetisi — Bobot berdasarkan SKS:</p>
                             <p>≤ 5 SKS = <strong>0.4</strong> | 6–10 SKS = <strong>0.6</strong> | &gt; 10 SKS = <strong>1.0</strong></p>
                             <p class="mt-1 italic">(Magang, Riset, Pertukaran Mahasiswa, KKN)</p>
                         </div>
-                        <div class="bg-amber-100/60 rounded-lg p-3">
+                        <div class="bg-blue-100/60 rounded-lg p-3">
                             <p class="font-semibold mb-1">🏆 Lomba / Kompetisi:</p>
                             <ul class="list-disc list-inside">
                                 <li>Int: Juara 1 (1.0), J2/3/Fav (0.5), Harapan (0.3), Finalis (0.2)</li>
@@ -93,22 +94,22 @@
                         </div>
 
                         <!-- Riset -->
-                        <div class="bg-purple-50 p-4 rounded-xl">
-                            <h4 class="font-semibold text-purple-800 mb-3 flex items-center gap-2">🔬 Riset / Asistensi Peneliti</h4>
+                        <div class="bg-blue-50 p-4 rounded-xl">
+                            <h4 class="font-semibold text-blue-600 mb-3 flex items-center gap-2">🔬 Riset / Asistensi Peneliti</h4>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div><label class="block text-xs font-semibold text-purple-700 mb-1">≤ 5 SKS (Bobot: 0.4)</label><input type="number" name="riset_kurang_5" x-model.number="rs_k5" value="{{ old('riset_kurang_5', $iku3->riset_kurang_5 ?? 0) }}" class="w-full rounded-lg border-purple-200 text-center text-sm focus:ring-purple-500" min="0"></div>
-                                <div><label class="block text-xs font-semibold text-purple-700 mb-1">6–10 SKS (Bobot: 0.6)</label><input type="number" name="riset_6_10" x-model.number="rs_6_10" value="{{ old('riset_6_10', $iku3->riset_6_10 ?? 0) }}" class="w-full rounded-lg border-purple-200 text-center text-sm focus:ring-purple-500" min="0"></div>
-                                <div><label class="block text-xs font-semibold text-purple-700 mb-1">&gt; 10 SKS (Bobot: 1.0)</label><input type="number" name="riset_lebih_10" x-model.number="rs_l10" value="{{ old('riset_lebih_10', $iku3->riset_lebih_10 ?? 0) }}" class="w-full rounded-lg border-purple-200 text-center text-sm focus:ring-purple-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-blue-600 mb-1">≤ 5 SKS (Bobot: 0.4)</label><input type="number" name="riset_kurang_5" x-model.number="rs_k5" value="{{ old('riset_kurang_5', $iku3->riset_kurang_5 ?? 0) }}" class="w-full rounded-lg border-blue-100 text-center text-sm focus:ring-purple-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-blue-600 mb-1">6–10 SKS (Bobot: 0.6)</label><input type="number" name="riset_6_10" x-model.number="rs_6_10" value="{{ old('riset_6_10', $iku3->riset_6_10 ?? 0) }}" class="w-full rounded-lg border-blue-100 text-center text-sm focus:ring-purple-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-blue-600 mb-1">&gt; 10 SKS (Bobot: 1.0)</label><input type="number" name="riset_lebih_10" x-model.number="rs_l10" value="{{ old('riset_lebih_10', $iku3->riset_lebih_10 ?? 0) }}" class="w-full rounded-lg border-blue-100 text-center text-sm focus:ring-purple-500" min="0"></div>
                             </div>
                         </div>
 
                         <!-- Pertukaran -->
-                        <div class="bg-emerald-50 p-4 rounded-xl">
-                            <h4 class="font-semibold text-emerald-800 mb-3 flex items-center gap-r2">🌍 Pertukaran Mahasiswa</h4>
+                        <div class="bg-blue-50 p-4 rounded-xl">
+                            <h4 class="font-semibold text-blue-800 mb-3 flex items-center gap-r2">🌍 Pertukaran Mahasiswa</h4>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div><label class="block text-xs font-semibold text-emerald-700 mb-1">≤ 5 SKS (Bobot: 0.4)</label><input type="number" name="pertukaran_kurang_5" x-model.number="pt_k5" value="{{ old('pertukaran_kurang_5', $iku3->pertukaran_kurang_5 ?? 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>
-                                <div><label class="block text-xs font-semibold text-emerald-700 mb-1">6–10 SKS (Bobot: 0.6)</label><input type="number" name="pertukaran_6_10" x-model.number="pt_6_10" value="{{ old('pertukaran_6_10', $iku3->pertukaran_6_10 ?? 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>
-                                <div><label class="block text-xs font-semibold text-emerald-700 mb-1">&gt; 10 SKS (Bobot: 1.0)</label><input type="number" name="pertukaran_lebih_10" x-model.number="pt_l10" value="{{ old('pertukaran_lebih_10', $iku3->pertukaran_lebih_10 ?? 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-blue-700 mb-1">≤ 5 SKS (Bobot: 0.4)</label><input type="number" name="pertukaran_kurang_5" x-model.number="pt_k5" value="{{ old('pertukaran_kurang_5', $iku3->pertukaran_kurang_5 ?? 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-blue-700 mb-1">6–10 SKS (Bobot: 0.6)</label><input type="number" name="pertukaran_6_10" x-model.number="pt_6_10" value="{{ old('pertukaran_6_10', $iku3->pertukaran_6_10 ?? 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-blue-700 mb-1">&gt; 10 SKS (Bobot: 1.0)</label><input type="number" name="pertukaran_lebih_10" x-model.number="pt_l10" value="{{ old('pertukaran_lebih_10', $iku3->pertukaran_lebih_10 ?? 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>
                             </div>
                         </div>
 
@@ -131,13 +132,13 @@
                     
                     <div class="space-y-4">
                         <!-- Internasional -->
-                        <div class="bg-purple-50 p-4 rounded-xl">
-                            <h4 class="font-semibold text-purple-800 mb-3 flex items-center gap-2">🌐 Tingkat Internasional</h4>
+                        <div class="bg-blue-50 p-4 rounded-xl">
+                            <h4 class="font-semibold text-blue-600 mb-3 flex items-center gap-2">🌐 Tingkat Internasional</h4>
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                <div><label class="block text-xs font-semibold text-purple-700 mb-1">Juara 1 (B: 1.0)</label><input type="number" name="lomba_int_juara1" x-model.number="l_int_j1" value="{{ old('lomba_int_juara1', $iku3->lomba_int_juara1 ?? 0) }}" class="w-full rounded-lg border-purple-200 text-center text-sm focus:ring-purple-500" min="0"></div>
-                                <div><label class="block text-xs font-semibold text-purple-700 mb-1">Juara 2,3,Fav (B: 0.5)</label><input type="number" name="lomba_int_juara23" x-model.number="l_int_j23" value="{{ old('lomba_int_juara23', $iku3->lomba_int_juara23 ?? 0) }}" class="w-full rounded-lg border-purple-200 text-center text-sm focus:ring-purple-500" min="0"></div>
-                                <div><label class="block text-xs font-semibold text-purple-700 mb-1">Harapan (B: 0.3)</label><input type="number" name="lomba_int_harapan" x-model.number="l_int_harapan" value="{{ old('lomba_int_harapan', $iku3->lomba_int_harapan ?? 0) }}" class="w-full rounded-lg border-purple-200 text-center text-sm focus:ring-purple-500" min="0"></div>
-                                <div><label class="block text-xs font-semibold text-purple-700 mb-1">Finalis (B: 0.2)</label><input type="number" name="lomba_int_finalis" x-model.number="l_int_finalis" value="{{ old('lomba_int_finalis', $iku3->lomba_int_finalis ?? 0) }}" class="w-full rounded-lg border-purple-200 text-center text-sm focus:ring-purple-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-blue-600 mb-1">Juara 1 (B: 1.0)</label><input type="number" name="lomba_int_juara1" x-model.number="l_int_j1" value="{{ old('lomba_int_juara1', $iku3->lomba_int_juara1 ?? 0) }}" class="w-full rounded-lg border-blue-100 text-center text-sm focus:ring-purple-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-blue-600 mb-1">Juara 2,3,Fav (B: 0.5)</label><input type="number" name="lomba_int_juara23" x-model.number="l_int_j23" value="{{ old('lomba_int_juara23', $iku3->lomba_int_juara23 ?? 0) }}" class="w-full rounded-lg border-blue-100 text-center text-sm focus:ring-purple-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-blue-600 mb-1">Harapan (B: 0.3)</label><input type="number" name="lomba_int_harapan" x-model.number="l_int_harapan" value="{{ old('lomba_int_harapan', $iku3->lomba_int_harapan ?? 0) }}" class="w-full rounded-lg border-blue-100 text-center text-sm focus:ring-purple-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-blue-600 mb-1">Finalis (B: 0.2)</label><input type="number" name="lomba_int_finalis" x-model.number="l_int_finalis" value="{{ old('lomba_int_finalis', $iku3->lomba_int_finalis ?? 0) }}" class="w-full rounded-lg border-blue-100 text-center text-sm focus:ring-purple-500" min="0"></div>
                             </div>
                         </div>
                         
@@ -153,13 +154,13 @@
                         </div>
 
                         <!-- Provinsi -->
-                        <div class="bg-emerald-50 p-4 rounded-xl">
-                            <h4 class="font-semibold text-emerald-800 mb-3 flex items-center gap-2">🏙️ Tingkat Provinsi</h4>
+                        <div class="bg-blue-50 p-4 rounded-xl">
+                            <h4 class="font-semibold text-blue-800 mb-3 flex items-center gap-2">🏙️ Tingkat Provinsi</h4>
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                <div><label class="block text-xs font-semibold text-emerald-700 mb-1">Juara 1 (B: 0.4)</label><input type="number" name="lomba_prov_juara1" x-model.number="l_prov_j1" value="{{ old('lomba_prov_juara1', $iku3->lomba_prov_juara1 ?? 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>
-                                <div><label class="block text-xs font-semibold text-emerald-700 mb-1">Juara 2,3,Fav (B: 0.2)</label><input type="number" name="lomba_prov_juara23" x-model.number="l_prov_j23" value="{{ old('lomba_prov_juara23', $iku3->lomba_prov_juara23 ?? 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>
-                                <div><label class="block text-xs font-semibold text-emerald-700 mb-1">Harapan (B: 0.1)</label><input type="number" name="lomba_prov_harapan" x-model.number="l_prov_harapan" value="{{ old('lomba_prov_harapan', $iku3->lomba_prov_harapan ?? 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>
-                                <div><label class="block text-xs font-semibold text-emerald-700 mb-1">Finalis (B: 0.05)</label><input type="number" name="lomba_prov_finalis" x-model.number="l_prov_finalis" value="{{ old('lomba_prov_finalis', $iku3->lomba_prov_finalis ?? 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-blue-700 mb-1">Juara 1 (B: 0.4)</label><input type="number" name="lomba_prov_juara1" x-model.number="l_prov_j1" value="{{ old('lomba_prov_juara1', $iku3->lomba_prov_juara1 ?? 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-blue-700 mb-1">Juara 2,3,Fav (B: 0.2)</label><input type="number" name="lomba_prov_juara23" x-model.number="l_prov_j23" value="{{ old('lomba_prov_juara23', $iku3->lomba_prov_juara23 ?? 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-blue-700 mb-1">Harapan (B: 0.1)</label><input type="number" name="lomba_prov_harapan" x-model.number="l_prov_harapan" value="{{ old('lomba_prov_harapan', $iku3->lomba_prov_harapan ?? 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>
+                                <div><label class="block text-xs font-semibold text-blue-700 mb-1">Finalis (B: 0.05)</label><input type="number" name="lomba_prov_finalis" x-model.number="l_prov_finalis" value="{{ old('lomba_prov_finalis', $iku3->lomba_prov_finalis ?? 0) }}" class="w-full rounded-lg border-emerald-200 text-center text-sm focus:ring-emerald-500" min="0"></div>
                             </div>
                         </div>
                     </div>
@@ -170,9 +171,9 @@
                     <h4 class="font-semibold text-slate-800 mb-4">Preview Perhitungan</h4>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
                         <div><p class="text-xs text-slate-500">Total Berkegiatan</p><p class="text-2xl font-bold text-blue-600" x-text="totalKegiatan">0</p></div>
-                        <div><p class="text-xs text-slate-500">Skor Berbobot</p><p class="text-2xl font-bold text-purple-600" x-text="skorBobot.toFixed(2)">0</p></div>
+                        <div><p class="text-xs text-slate-500">Skor Berbobot</p><p class="text-2xl font-bold text-blue-600" x-text="skorBobot.toFixed(2)">0</p></div>
                         <div><p class="text-xs text-slate-500">Total Mahasiswa</p><p class="text-2xl font-bold text-slate-600" x-text="totalMahasiswa">0</p></div>
-                        <div><p class="text-xs text-slate-500">Persentase IKU 3</p><p class="text-2xl font-bold" :class="persentase >= 20 ? 'text-emerald-600' : 'text-rose-600'" x-text="persentase.toFixed(2) + '%'">0%</p></div>
+                        <div><p class="text-xs text-slate-500">Persentase IKU 3</p><p class="text-2xl font-bold" :class="persentase >= 20 ? 'text-slate-700' : 'text-rose-600'" x-text="persentase.toFixed(2) + '%'">0%</p></div>
                     </div>
                     <p class="text-xs text-slate-500 mt-3 text-center">Formula: (Σ jumlah × bobot) / Total Mahasiswa × 100%</p>
                 </div>

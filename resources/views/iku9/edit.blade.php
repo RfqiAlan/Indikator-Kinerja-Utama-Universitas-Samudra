@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Edit IKU 9</title>@vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"></head>
-<body class="font-sans antialiased bg-white text-slate-900">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <x-theme-script /></head>
+<body class="font-sans antialiased bg-semantic-bg text-semantic-text">
     <x-user-layout activeIku="IKU 9">
         <x-slot name="header">
             <div><h2 class="text-2xl font-bold text-slate-800">Edit Data IKU 9</h2><p class="text-sm text-slate-500 mt-1">{{ auth()->user()->fakultas_nama ?? 'Fakultas' }} - Keuangan & Pendapatan PT</p></div>
@@ -39,7 +40,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">Pendapatan Riset & Inovasi (Rp)</label><x-currency-input name="pendapatan_riset_inovasi" model="risetInovasi" value="{{ old('pendapatan_riset_inovasi', $iku9->pendapatan_riset_inovasi) }}" class="w-full rounded-lg border-blue-200" min="0" /></div>
                         <div class="bg-cyan-50 p-3 rounded-lg"><label class="block text-sm font-medium text-cyan-700 mb-1">Pendapatan Kerja Sama & Layanan (Rp)</label><x-currency-input name="pendapatan_kerjasama_layanan" model="kerjasamaLayanan" value="{{ old('pendapatan_kerjasama_layanan', $iku9->pendapatan_kerjasama_layanan) }}" class="w-full rounded-lg border-cyan-200" min="0" /></div>
-                        <div class="bg-indigo-50 p-3 rounded-lg"><label class="block text-sm font-medium text-indigo-700 mb-1">Pendapatan Usaha & Unit Bisnis (Rp)</label><x-currency-input name="pendapatan_usaha_bisnis" model="usahaBisnis" value="{{ old('pendapatan_usaha_bisnis', $iku9->pendapatan_usaha_bisnis) }}" class="w-full rounded-lg border-indigo-200" min="0" /></div>
+                        <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-600 mb-1">Pendapatan Usaha & Unit Bisnis (Rp)</label><x-currency-input name="pendapatan_usaha_bisnis" model="usahaBisnis" value="{{ old('pendapatan_usaha_bisnis', $iku9->pendapatan_usaha_bisnis) }}" class="w-full rounded-lg border-blue-100" min="0" /></div>
                     </div>
                     <div class="mt-3 bg-blue-50/50 rounded-lg p-3 flex justify-between items-center">
                         <span class="text-sm text-slate-600">Persentase Non-UKT:</span>
@@ -63,14 +64,14 @@
                         <div>
                             <h3 class="font-semibold text-slate-800 mb-1">9.3 — DIPA/APBN</h3>
                             <p class="text-xs text-slate-400 mb-3">Formula: (DIPA/APBN / Total Pendapatan) × 100%</p>
-                            <div class="bg-emerald-50 p-3 rounded-lg"><label class="block text-sm font-medium text-emerald-700 mb-1">Pendapatan DIPA/APBN (Rp)</label><x-currency-input name="pendapatan_dipa_apbn" model="dipaApbn" value="{{ old('pendapatan_dipa_apbn', $iku9->pendapatan_dipa_apbn) }}" class="w-full rounded-lg border-emerald-200" min="0" /></div>
-                            <div class="mt-2 text-right"><span class="text-sm font-bold text-emerald-700" x-text="persenDipa.toFixed(2) + '%'">0%</span></div>
+                            <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">Pendapatan DIPA/APBN (Rp)</label><x-currency-input name="pendapatan_dipa_apbn" model="dipaApbn" value="{{ old('pendapatan_dipa_apbn', $iku9->pendapatan_dipa_apbn) }}" class="w-full rounded-lg border-emerald-200" min="0" /></div>
+                            <div class="mt-2 text-right"><span class="text-sm font-bold text-blue-700" x-text="persenDipa.toFixed(2) + '%'">0%</span></div>
                         </div>
                         <div>
                             <h3 class="font-semibold text-slate-800 mb-1">9.4 — Pendapatan Industri</h3>
                             <p class="text-xs text-slate-400 mb-3">Formula: (Pendapatan Industri / Total Pendapatan) × 100%</p>
-                            <div class="bg-amber-50 p-3 rounded-lg"><label class="block text-sm font-medium text-amber-700 mb-1">Pendapatan dari Industri (Rp)</label><x-currency-input name="pendapatan_industri" model="industri" value="{{ old('pendapatan_industri', $iku9->pendapatan_industri) }}" class="w-full rounded-lg border-amber-200" min="0" /></div>
-                            <div class="mt-2 text-right"><span class="text-sm font-bold text-amber-700" x-text="persenIndustri.toFixed(2) + '%'">0%</span></div>
+                            <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">Pendapatan dari Industri (Rp)</label><x-currency-input name="pendapatan_industri" model="industri" value="{{ old('pendapatan_industri', $iku9->pendapatan_industri) }}" class="w-full rounded-lg border-amber-200" min="0" /></div>
+                            <div class="mt-2 text-right"><span class="text-sm font-bold text-blue-700" x-text="persenIndustri.toFixed(2) + '%'">0%</span></div>
                         </div>
                     </div>
                 </div>
@@ -79,35 +80,35 @@
                 <div class="border-t pt-6">
                     <h3 class="font-semibold text-slate-800 mb-1">9.5 — Dana Abadi terhadap Total Aset</h3>
                     <p class="text-xs text-slate-400 mb-3">Formula: (Dana Abadi / Total Aset) × 100%</p>
-                    <div class="bg-violet-50 p-3 rounded-lg"><label class="block text-sm font-medium text-violet-700 mb-1">Total Dana Abadi (Rp)</label><x-currency-input name="dana_abadi" model="danaAbadi" value="{{ old('dana_abadi', $iku9->dana_abadi) }}" class="w-full rounded-lg border-violet-200" min="0" /></div>
-                    <div class="mt-2 text-right"><span class="text-sm font-bold text-violet-700" x-text="persenDanaAbadi.toFixed(2) + '%'">0%</span></div>
+                    <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-600 mb-1">Total Dana Abadi (Rp)</label><x-currency-input name="dana_abadi" model="danaAbadi" value="{{ old('dana_abadi', $iku9->dana_abadi) }}" class="w-full rounded-lg border-blue-100" min="0" /></div>
+                    <div class="mt-2 text-right"><span class="text-sm font-bold text-blue-600" x-text="persenDanaAbadi.toFixed(2) + '%'">0%</span></div>
                 </div>
 
                 {{-- IKU 9.6–9.9 --}}
                 <div class="border-t pt-6">
                     <h3 class="font-semibold text-slate-800 mb-1">9.6–9.9 — Alokasi Dana Masyarakat</h3>
                     <p class="text-xs text-slate-400 mb-4">Target masing-masing alokasi: 5% dari Dana Masyarakat.</p>
-                    <div class="mb-4 bg-teal-50 p-3 rounded-lg"><label class="block text-sm font-medium text-teal-700 mb-1">Total Pendapatan Dana Masyarakat (Rp)</label><x-currency-input name="dana_masyarakat" model="danaMasyarakat" value="{{ old('dana_masyarakat', $iku9->dana_masyarakat) }}" class="w-full rounded-lg border-teal-200" min="0" /></div>
+                    <div class="mb-4 bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-600 mb-1">Total Pendapatan Dana Masyarakat (Rp)</label><x-currency-input name="dana_masyarakat" model="danaMasyarakat" value="{{ old('dana_masyarakat', $iku9->dana_masyarakat) }}" class="w-full rounded-lg border-blue-100" min="0" /></div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="bg-teal-50/50 p-3 rounded-lg">
-                            <label class="block text-sm font-medium text-teal-700 mb-1">Alokasi Riset (Rp)</label>
-                            <x-currency-input name="alokasi_riset" model="alokasiRiset" value="{{ old('alokasi_riset', $iku9->alokasi_riset) }}" class="w-full rounded-lg border-teal-200" min="0" />
-                            <p class="text-xs text-teal-500 mt-1">Target: Rp <span x-text="targetAlokasi.toLocaleString('id')">0</span></p>
+                        <div class="bg-blue-50/50 p-3 rounded-lg">
+                            <label class="block text-sm font-medium text-blue-600 mb-1">Alokasi Riset (Rp)</label>
+                            <x-currency-input name="alokasi_riset" model="alokasiRiset" value="{{ old('alokasi_riset', $iku9->alokasi_riset) }}" class="w-full rounded-lg border-blue-100" min="0" />
+                            <p class="text-xs text-blue-600 mt-1">Target: Rp <span x-text="targetAlokasi.toLocaleString('id')">0</span></p>
                         </div>
-                        <div class="bg-teal-50/50 p-3 rounded-lg">
-                            <label class="block text-sm font-medium text-teal-700 mb-1">Alokasi Kompetensi Dosen (Rp)</label>
-                            <x-currency-input name="alokasi_kompetensi_dosen" model="alokasiDosen" value="{{ old('alokasi_kompetensi_dosen', $iku9->alokasi_kompetensi_dosen) }}" class="w-full rounded-lg border-teal-200" min="0" />
-                            <p class="text-xs text-teal-500 mt-1">Target: Rp <span x-text="targetAlokasi.toLocaleString('id')">0</span></p>
+                        <div class="bg-blue-50/50 p-3 rounded-lg">
+                            <label class="block text-sm font-medium text-blue-600 mb-1">Alokasi Kompetensi Dosen (Rp)</label>
+                            <x-currency-input name="alokasi_kompetensi_dosen" model="alokasiDosen" value="{{ old('alokasi_kompetensi_dosen', $iku9->alokasi_kompetensi_dosen) }}" class="w-full rounded-lg border-blue-100" min="0" />
+                            <p class="text-xs text-blue-600 mt-1">Target: Rp <span x-text="targetAlokasi.toLocaleString('id')">0</span></p>
                         </div>
-                        <div class="bg-teal-50/50 p-3 rounded-lg">
-                            <label class="block text-sm font-medium text-teal-700 mb-1">Alokasi Laboratorium (Rp)</label>
-                            <x-currency-input name="alokasi_laboratorium" model="alokasiLab" value="{{ old('alokasi_laboratorium', $iku9->alokasi_laboratorium) }}" class="w-full rounded-lg border-teal-200" min="0" />
-                            <p class="text-xs text-teal-500 mt-1">Target: Rp <span x-text="targetAlokasi.toLocaleString('id')">0</span></p>
+                        <div class="bg-blue-50/50 p-3 rounded-lg">
+                            <label class="block text-sm font-medium text-blue-600 mb-1">Alokasi Laboratorium (Rp)</label>
+                            <x-currency-input name="alokasi_laboratorium" model="alokasiLab" value="{{ old('alokasi_laboratorium', $iku9->alokasi_laboratorium) }}" class="w-full rounded-lg border-blue-100" min="0" />
+                            <p class="text-xs text-blue-600 mt-1">Target: Rp <span x-text="targetAlokasi.toLocaleString('id')">0</span></p>
                         </div>
                     </div>
-                    <div class="mt-3 bg-teal-50/30 rounded-lg p-3 flex justify-between items-center">
+                    <div class="mt-3 bg-blue-50/30 rounded-lg p-3 flex justify-between items-center">
                         <span class="text-sm text-slate-600">Persentase Alokasi Dana Masyarakat:</span>
-                        <span class="text-lg font-bold text-teal-700" x-text="persenAlokasiDM.toFixed(2) + '%'">0%</span>
+                        <span class="text-lg font-bold text-blue-600" x-text="persenAlokasiDM.toFixed(2) + '%'">0%</span>
                     </div>
                 </div>
 

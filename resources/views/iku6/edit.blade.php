@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Edit IKU 6</title>@vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"></head>
-<body class="font-sans antialiased bg-white text-slate-900">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <x-theme-script /></head>
+<body class="font-sans antialiased bg-semantic-bg text-semantic-text">
     <x-user-layout activeIku="IKU 6">
         <x-slot name="header">
             <div><h2 class="text-2xl font-bold text-slate-800">Edit Data IKU 6</h2><p class="text-sm text-slate-500 mt-1">{{ auth()->user()->fakultas_nama ?? 'Fakultas' }} - Publikasi Scopus/WoS</p></div>
@@ -32,12 +33,12 @@
                 </div>
                 <div class="border-t pt-6"><h3 class="font-semibold text-slate-800 mb-4">Publikasi per Quartile</h3>
                     <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
-                        <div class="bg-indigo-50 p-3 rounded-lg"><label class="block text-sm font-medium text-indigo-700 mb-1">Top Tier (1.2)</label><input type="number" name="publikasi_top_tier" x-model.number="toptier" value="{{ old('publikasi_top_tier', $iku6->publikasi_top_tier ?? 0) }}" class="w-full rounded-lg border-indigo-200" min="0"></div>
+                        <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-600 mb-1">Top Tier (1.2)</label><input type="number" name="publikasi_top_tier" x-model.number="toptier" value="{{ old('publikasi_top_tier', $iku6->publikasi_top_tier ?? 0) }}" class="w-full rounded-lg border-blue-100" min="0"></div>
                         <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">Q1 (Bobot 1.0)</label><input type="number" name="publikasi_q1" x-model.number="q1" value="{{ old('publikasi_q1', $iku6->publikasi_q1 ?? 0) }}" class="w-full rounded-lg border-blue-200" min="0"></div>
                         <div class="bg-cyan-50 p-3 rounded-lg"><label class="block text-sm font-medium text-cyan-700 mb-1">Q2 (Bobot 0.75)</label><input type="number" name="publikasi_q2" x-model.number="q2" value="{{ old('publikasi_q2', $iku6->publikasi_q2) }}" class="w-full rounded-lg border-cyan-200" min="0"></div>
-                        <div class="bg-indigo-50 p-3 rounded-lg"><label class="block text-sm font-medium text-indigo-700 mb-1">Q3 (Bobot 0.50)</label><input type="number" name="publikasi_q3" x-model.number="q3" value="{{ old('publikasi_q3', $iku6->publikasi_q3) }}" class="w-full rounded-lg border-indigo-200" min="0"></div>
+                        <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-600 mb-1">Q3 (Bobot 0.50)</label><input type="number" name="publikasi_q3" x-model.number="q3" value="{{ old('publikasi_q3', $iku6->publikasi_q3) }}" class="w-full rounded-lg border-blue-100" min="0"></div>
                         <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">Q4 (Bobot 0.25)</label><input type="number" name="publikasi_q4" x-model.number="q4" value="{{ old('publikasi_q4', $iku6->publikasi_q4) }}" class="w-full rounded-lg border-blue-200" min="0"></div>
-                        <div class="bg-violet-50 p-3 rounded-lg"><label class="block text-sm font-medium text-violet-700 mb-1">Prosiding (Bobot 0.25)</label><input type="number" name="prosiding_internasional" x-model.number="prosiding" value="{{ old('prosiding_internasional', $iku6->prosiding_internasional ?? 0) }}" class="w-full rounded-lg border-violet-200" min="0"></div>
+                        <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-600 mb-1">Prosiding (Bobot 0.25)</label><input type="number" name="prosiding_internasional" x-model.number="prosiding" value="{{ old('prosiding_internasional', $iku6->prosiding_internasional ?? 0) }}" class="w-full rounded-lg border-blue-100" min="0"></div>
                     </div>
                     <div class="mt-4">
                         <label class="block text-sm font-medium text-slate-700 mb-1">Publikasi Kolaborasi (Bonus 0.25)</label>

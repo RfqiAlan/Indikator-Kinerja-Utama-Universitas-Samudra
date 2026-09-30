@@ -19,6 +19,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <x-theme-script />
     </head>
     <body class="font-sans antialiased bg-white text-slate-900">
         <div class="min-h-screen bg-white">

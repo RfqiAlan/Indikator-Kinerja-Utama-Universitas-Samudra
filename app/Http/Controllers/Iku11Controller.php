@@ -71,7 +71,7 @@ class Iku11Controller extends Controller
             'kegiatan_direncanakan'       => 'required|integer|min:0',
             'kegiatan_terlaksana'         => 'required|integer|min:0',
             'keterangan'                  => 'nullable|string',
-            'lampiran'                    => 'required|array',
+            'lampiran' => 'required|array',
             'lampiran.*'                  => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,rar,zip|max:51200',
         ]);
 

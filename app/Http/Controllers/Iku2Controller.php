@@ -31,7 +31,8 @@ class Iku2Controller extends Controller
             ->values();
 
         // Calculate overall IKU 2 using DB-level aggregation
-        $q = Iku2LulusanBekerja::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
+        $q = Iku2LulusanBekerja::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)
+            ->when($triwulan && $triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); });
         $totalLulusan     = $q->sum('total_lulusan');
         $totalResponden   = $q->sum('total_responden');
         $totalBekerja     = $q->sum('skor_bekerja');

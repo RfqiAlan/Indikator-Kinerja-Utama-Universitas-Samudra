@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Tambah IKU 10</title>@vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"></head>
-<body class="font-sans antialiased bg-white text-slate-900">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <x-theme-script /></head>
+<body class="font-sans antialiased bg-semantic-bg text-semantic-text">
     <x-user-layout activeIku="IKU 10">
         <x-slot name="header">
             <div><h2 class="text-2xl font-bold text-slate-800">Tambah Data IKU 10</h2><p class="text-sm text-slate-500 mt-1">{{ auth()->user()->fakultas_nama ?? 'Fakultas' }} - Zona Integritas</p></div>
@@ -32,7 +33,7 @@
                 <div class="border-t pt-6"><h3 class="font-semibold text-slate-800 mb-4">Status Zona Integritas</h3>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         @foreach($statusOptions as $kode => $label)
-                        <label class="flex items-center p-4 rounded-lg border cursor-pointer hover:bg-slate-50 {{ $kode == 'wbbm' ? 'border-indigo-300 bg-indigo-50' : ($kode == 'wbk' ? 'border-blue-300 bg-blue-50' : 'border-slate-200') }}">
+                        <label class="flex items-center p-4 rounded-lg border cursor-pointer hover:bg-slate-50 {{ $kode == 'wbbm' ? 'border-blue-100 bg-blue-50' : ($kode == 'wbk' ? 'border-blue-300 bg-blue-50' : 'border-slate-200') }}">
                             <input type="radio" name="status" value="{{ $kode }}" class="text-blue-600 focus:ring-blue-500" {{ old('status') == $kode ? 'checked' : '' }} required>
                             <span class="ml-2 font-medium text-slate-700">{{ $label }}</span>
                         </label>

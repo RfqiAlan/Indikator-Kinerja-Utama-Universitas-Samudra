@@ -26,6 +26,7 @@
             opacity: 0.6;
         }
     </style>
+    <x-theme-script />
 </head>
 <body class="antialiased text-slate-800 bg-slate-50 selection:bg-blue-500 selection:text-white min-h-screen flex flex-col items-center justify-center border-t-4 border-blue-500 hero-pattern relative overflow-hidden">
 

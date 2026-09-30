@@ -6,8 +6,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'IKU UNSAM') }} - Edit IKU 13</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <x-theme-script />
 </head>
-<body class="font-sans antialiased bg-slate-50 text-slate-900">
+<body class="font-sans antialiased bg-semantic-bg text-semantic-text">
     <x-user-layout activeIku="IKU 13">
         <x-slot name="header">
             <div class="flex items-center gap-4">
@@ -59,7 +60,7 @@
                         
                         <div class="flex items-center gap-3 w-full sm:w-auto">
                             <a href="{{ route('user.iku13.index') }}" class="flex-1 sm:flex-none text-center px-5 py-2.5 text-sm font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors">Batal</a>
-                            <button type="submit" class="flex-1 sm:flex-none px-6 py-2.5 text-sm font-bold text-white bg-amber-500 hover:bg-amber-600 rounded-xl transition-colors flex items-center justify-center gap-2 shadow-sm">
+                            <button type="submit" class="flex-1 sm:flex-none px-6 py-2.5 text-sm font-bold text-white bg-blue-500 hover:bg-amber-600 rounded-xl transition-colors flex items-center justify-center gap-2 shadow-sm">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
                                 Simpan Perubahan
                             </button>

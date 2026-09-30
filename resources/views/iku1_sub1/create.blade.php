@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Tambah Sub IKU 1.1</title>@vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"></head>
-<body class="font-sans antialiased bg-white text-slate-900">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <x-theme-script /></head>
+<body class="font-sans antialiased bg-semantic-bg text-semantic-text">
     <x-user-layout activeIku="IKU 1.1">
         <x-slot name="header">
             <div>
@@ -40,7 +41,7 @@
 
                 <div class="border-b pb-6">
                     <h3 class="font-semibold text-slate-800 mb-4 flex items-center">
-                        <span class="bg-cyan-100 text-cyan-600 w-7 h-7 rounded-full flex items-center justify-center text-sm mr-2">2</span>
+                        <span class="bg-cyan-100 text-blue-600 w-7 h-7 rounded-full flex items-center justify-center text-sm mr-2">2</span>
                         Data Mahasiswa
                     </h3>
                     

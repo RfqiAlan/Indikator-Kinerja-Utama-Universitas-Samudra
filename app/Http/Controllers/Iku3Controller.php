@@ -31,7 +31,8 @@ class Iku3Controller extends Controller
             ->values();
 
         // Calculate overall using DB-level aggregation
-        $q = Iku3KegiatanMahasiswa::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
+        $q = Iku3KegiatanMahasiswa::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)
+            ->when($triwulan && $triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); });
         $totalMahasiswa   = $q->sum('total_mahasiswa');
         $totalBerkegiatan = $q->sum('total_berkegiatan');
         $overallPercentage = $totalMahasiswa > 0 ? ($totalBerkegiatan / $totalMahasiswa) * 100 : 0;

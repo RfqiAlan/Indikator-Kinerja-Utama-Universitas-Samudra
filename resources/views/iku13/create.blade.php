@@ -6,8 +6,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'IKU UNSAM') }} - Upload IKU 13</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <x-theme-script />
 </head>
-<body class="font-sans antialiased bg-slate-50 text-slate-900">
+<body class="font-sans antialiased bg-semantic-bg text-semantic-text">
     <x-user-layout activeIku="IKU 13">
         <x-slot name="header">
             <div class="flex items-center gap-4">

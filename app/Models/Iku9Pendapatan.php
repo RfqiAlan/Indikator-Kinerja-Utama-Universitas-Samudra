@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Iku9Pendapatan extends Model
 {
-    use HasFactory;
+    use HasFactory, \App\Traits\EnforcesTriwulanLock;
 
     protected $table = 'iku9_pendapatan';
 

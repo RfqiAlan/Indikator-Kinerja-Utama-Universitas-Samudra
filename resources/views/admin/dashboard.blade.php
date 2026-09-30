@@ -54,61 +54,37 @@
             </div>
 
             <div class="space-y-3">
-                <!-- Notif 1 -->
-                <div class="flex items-center justify-between p-4 rounded-xl border border-rose-100 bg-white">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-full bg-rose-50 flex items-center justify-center text-rose-500 shrink-0">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                @forelse($notifications as $notif)
+                    @php
+                        $isWarning = $notif['type'] === 'warning';
+                        $bgIcon = $isWarning ? 'bg-amber-50' : 'bg-indigo-50';
+                        $textIcon = $isWarning ? 'text-amber-500' : 'text-indigo-500';
+                        $borderClass = $isWarning ? 'border-amber-100' : 'border-indigo-100';
+                        $btnClass = $isWarning ? 'bg-amber-500 hover:bg-amber-600' : 'bg-indigo-600 hover:bg-indigo-700';
+                        $iconSvg = $isWarning 
+                            ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />'
+                            : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />';
+                    @endphp
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl border {{ $borderClass }} bg-white gap-4">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full {{ $bgIcon }} flex items-center justify-center {{ $textIcon }} shrink-0">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $iconSvg !!}</svg>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-slate-800">{{ $notif['title'] }}</h4>
+                                <p class="text-[13px] text-slate-500 mt-0.5">{{ $notif['desc'] }}</p>
+                            </div>
                         </div>
-                        <div>
-                            <h4 class="text-sm font-bold text-slate-800">Ubah Password Anda</h4>
-                            <p class="text-[13px] text-slate-500 mt-0.5">Anda masih menggunakan password standar. Segera ubah demi keamanan data.</p>
-                        </div>
+                        <a href="{{ $notif['action_url'] }}" class="shrink-0 px-4 py-2 {{ $btnClass }} text-white text-xs font-bold rounded-lg transition shadow-sm text-center">
+                            {{ $notif['action_label'] }}
+                        </a>
                     </div>
-                    <a href="{{ route('profile.edit') }}" class="shrink-0 px-4 py-2 bg-rose-500 hover:bg-rose-600 text-white text-xs font-bold rounded-lg transition shadow-sm">Ganti Password</a>
-                </div>
-
-                <!-- Notif 2 -->
-                <div class="flex items-center justify-between p-4 rounded-xl border border-amber-200 bg-white">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center text-amber-500 shrink-0">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        </div>
-                        <div>
-                            <h4 class="text-sm font-bold text-slate-800">Capaian TW1 Belum Lengkap</h4>
-                            <p class="text-[13px] text-slate-500 mt-0.5">Baru 97% indikator terisi. Ajukan perpanjangan bila masih perlu melengkapi.</p>
-                        </div>
+                @empty
+                    <div class="p-6 text-center text-slate-400 font-medium text-sm border border-slate-100 rounded-xl bg-slate-50 flex flex-col items-center gap-3">
+                        <svg class="w-8 h-8 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                        Semua tugas telah diselesaikan. Tidak ada notifikasi tertunda.
                     </div>
-                    <button class="shrink-0 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-lg transition shadow-sm">Lengkapi Capaian</button>
-                </div>
-
-                <!-- Notif 3 -->
-                <div class="flex items-center justify-between p-4 rounded-xl border border-amber-200 bg-white">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center text-amber-500 shrink-0">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        </div>
-                        <div>
-                            <h4 class="text-sm font-bold text-slate-800">Capaian TW2 Belum Lengkap</h4>
-                            <p class="text-[13px] text-slate-500 mt-0.5">Baru 94% indikator terisi. Ajukan perpanjangan bila masih perlu melengkapi.</p>
-                        </div>
-                    </div>
-                    <button class="shrink-0 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-lg transition shadow-sm">Lengkapi Capaian</button>
-                </div>
-
-                <!-- Notif 4 -->
-                <div class="flex items-center justify-between p-4 rounded-xl border border-indigo-100 bg-white">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-500 shrink-0">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" /></svg>
-                        </div>
-                        <div>
-                            <h4 class="text-sm font-bold text-slate-800">Lapor Capaian TW3</h4>
-                            <p class="text-[13px] text-slate-500 mt-0.5">Laporan capaian triwulan ini belum dibuat. Baru 0% indikator terisi. Tenggat: 30 Oct 2026.</p>
-                        </div>
-                    </div>
-                    <button class="shrink-0 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg transition shadow-sm">Input Capaian</button>
-                </div>
+                @endforelse
             </div>
         </div>
 

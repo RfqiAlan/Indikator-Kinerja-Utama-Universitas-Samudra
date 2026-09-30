@@ -29,7 +29,8 @@ class Iku7Controller extends Controller
             ->values();
 
         // Calculate overall using DB-level aggregation
-        $q = Iku7Sdgs::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
+        $q = Iku7Sdgs::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)
+            ->when($triwulan && $triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); });
         $totalProgram    = $q->sum('total_program');
         $totalProgramSdgs = $q->sum('total_program_sdgs');
         $overallPercentage = $totalProgram > 0 ? ($totalProgramSdgs / $totalProgram) * 100 : 0;

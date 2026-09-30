@@ -29,7 +29,8 @@ class Iku4Controller extends Controller
             ->values();
 
         // Calculate overall using DB-level aggregation
-        $q = Iku4RekognisiDosen::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
+        $q = Iku4RekognisiDosen::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)
+            ->when($triwulan && $triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); });
         $totalDosenPt      = $q->sum('total_dosen_pt');
         $totalDosenRekognisi = $q->sum('total_dosen_rekognisi');
         $overallRekognisiPercentage = $totalDosenPt > 0 ? ($totalDosenRekognisi / $totalDosenPt) * 100 : 0;

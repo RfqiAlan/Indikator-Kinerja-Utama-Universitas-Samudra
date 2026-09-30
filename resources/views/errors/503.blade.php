@@ -121,6 +121,7 @@
             p { font-size: 15px; }
         }
     </style>
+    <x-theme-script />
 </head>
 <body>
     <div class="card-wrapper">

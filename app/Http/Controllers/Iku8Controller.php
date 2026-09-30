@@ -29,7 +29,8 @@ class Iku8Controller extends Controller
             ->values();
 
         // Calculate overall using DB-level aggregation
-        $q = Iku8SdmKebijakan::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
+        $q = Iku8SdmKebijakan::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)
+            ->when($triwulan && $triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); });
         $totalSdm      = $q->sum('total_sdm');
         $totalTerlibat = $q->sum('total_terlibat');
         $overallPercentage = $totalSdm > 0 ? ($totalTerlibat / $totalSdm) * 100 : 0;

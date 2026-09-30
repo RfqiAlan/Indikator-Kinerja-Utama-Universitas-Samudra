@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Edit IKU 2</title>@vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"></head>
-<body class="font-sans antialiased bg-white text-slate-900">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <x-theme-script /></head>
+<body class="font-sans antialiased bg-semantic-bg text-semantic-text">
     <x-user-layout activeIku="IKU 2">
         <x-slot name="header"><h2 class="text-2xl font-bold text-slate-800">Edit Data IKU 2</h2><p class="text-sm text-slate-500 mt-1">Lulusan Bekerja/Studi Lanjut/Wirausaha</p></x-slot>
         <div class="py-6 max-w-4xl mx-auto" x-data="formIku2()">
@@ -54,7 +55,7 @@
 
                 <div class="border-b pb-6">
                     <h3 class="font-semibold text-slate-800 mb-4 flex items-center">
-                        <span class="bg-cyan-100 text-cyan-600 w-7 h-7 rounded-full flex items-center justify-center text-sm mr-2">2</span>
+                        <span class="bg-cyan-100 text-blue-600 w-7 h-7 rounded-full flex items-center justify-center text-sm mr-2">2</span>
                         Kategori Bekerja (dengan Bobot)
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -65,74 +66,74 @@
                         </div>
                         <div class="bg-cyan-50 p-4 rounded-lg">
                             <label class="block text-sm font-medium text-cyan-700 mb-1">&lt;1 thn, Gaji &gt;1.2 UMP</label>
-                            <p class="text-xs text-cyan-600 mb-2">Bobot: 0.8</p>
+                            <p class="text-xs text-blue-600 mb-2">Bobot: 0.8</p>
                             <input type="number" name="bekerja_bobot_0_8" x-model.number="bekerja0_8" class="w-full rounded-lg border-cyan-200" min="0">
                         </div>
-                        <div class="bg-indigo-50 p-4 rounded-lg">
-                            <label class="block text-sm font-medium text-indigo-700 mb-1">&lt;1 thn, Gaji &lt;1.2 UMP</label>
-                            <p class="text-xs text-indigo-600 mb-2">Bobot: 0.6</p>
-                            <input type="number" name="bekerja_bobot_0_6" x-model.number="bekerja0_6" class="w-full rounded-lg border-indigo-200" min="0">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <label class="block text-sm font-medium text-blue-600 mb-1">&lt;1 thn, Gaji &lt;1.2 UMP</label>
+                            <p class="text-xs text-blue-600 mb-2">Bobot: 0.6</p>
+                            <input type="number" name="bekerja_bobot_0_6" x-model.number="bekerja0_6" class="w-full rounded-lg border-blue-100" min="0">
                         </div>
                     </div>
                 </div>
 
                 <div class="border-b pb-6">
                     <h3 class="font-semibold text-slate-800 mb-4 flex items-center">
-                        <span class="bg-indigo-100 text-indigo-600 w-7 h-7 rounded-full flex items-center justify-center text-sm mr-2">3</span>
+                        <span class="bg-blue-100 text-blue-600 w-7 h-7 rounded-full flex items-center justify-center text-sm mr-2">3</span>
                         Studi Lanjut & Wirausaha
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div class="bg-emerald-50 p-4 rounded-lg">
-                            <label class="block text-sm font-medium text-emerald-700 mb-1">Studi Lanjut</label>
-                            <p class="text-xs text-emerald-600 mb-2">Bobot: 0.6</p>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <label class="block text-sm font-medium text-blue-700 mb-1">Studi Lanjut</label>
+                            <p class="text-xs text-slate-700 mb-2">Bobot: 0.6</p>
                             <input type="number" name="studi_lanjut" x-model.number="studiLanjut" class="w-full rounded-lg border-emerald-200" min="0">
                         </div>
                     </div>
                     
                     <h4 class="text-sm font-bold text-slate-700 mb-3 block">Posisi Founder/Co-Founder</h4>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-                        <div class="bg-amber-50 p-3 rounded-lg">
-                            <label class="block text-xs font-medium text-amber-700 mb-1">&lt;6 bln &gt;1.2 UMP</label>
-                            <span class="text-[10px] text-amber-600">Bobot: 1.2</span>
+                        <div class="bg-blue-50 p-3 rounded-lg">
+                            <label class="block text-xs font-medium text-blue-700 mb-1">&lt;6 bln &gt;1.2 UMP</label>
+                            <span class="text-[10px] text-slate-700">Bobot: 1.2</span>
                             <input type="number" name="wirausaha_founder_1_2" x-model.number="f1_2" class="w-full rounded-lg border-amber-200 text-sm mt-1" min="0">
                         </div>
-                        <div class="bg-amber-50 p-3 rounded-lg">
-                            <label class="block text-xs font-medium text-amber-700 mb-1">&gt;6 bln &gt;1.2 UMP</label>
-                            <span class="text-[10px] text-amber-600">Bobot: 1.0</span>
+                        <div class="bg-blue-50 p-3 rounded-lg">
+                            <label class="block text-xs font-medium text-blue-700 mb-1">&gt;6 bln &gt;1.2 UMP</label>
+                            <span class="text-[10px] text-slate-700">Bobot: 1.0</span>
                             <input type="number" name="wirausaha_founder_1_0" x-model.number="f1_0" class="w-full rounded-lg border-amber-200 text-sm mt-1" min="0">
                         </div>
-                        <div class="bg-amber-50 p-3 rounded-lg">
-                            <label class="block text-xs font-medium text-amber-700 mb-1">&lt;6 bln &lt;1.2 UMP</label>
-                            <span class="text-[10px] text-amber-600">Bobot: 0.8</span>
+                        <div class="bg-blue-50 p-3 rounded-lg">
+                            <label class="block text-xs font-medium text-blue-700 mb-1">&lt;6 bln &lt;1.2 UMP</label>
+                            <span class="text-[10px] text-slate-700">Bobot: 0.8</span>
                             <input type="number" name="wirausaha_founder_0_8" x-model.number="f0_8" class="w-full rounded-lg border-amber-200 text-sm mt-1" min="0">
                         </div>
-                        <div class="bg-amber-50 p-3 rounded-lg">
-                            <label class="block text-xs font-medium text-amber-700 mb-1">&gt;6 bln &lt;1.2 UMP</label>
-                            <span class="text-[10px] text-amber-600">Bobot: 0.6</span>
+                        <div class="bg-blue-50 p-3 rounded-lg">
+                            <label class="block text-xs font-medium text-blue-700 mb-1">&gt;6 bln &lt;1.2 UMP</label>
+                            <span class="text-[10px] text-slate-700">Bobot: 0.6</span>
                             <input type="number" name="wirausaha_founder_0_6" x-model.number="f0_6" class="w-full rounded-lg border-amber-200 text-sm mt-1" min="0">
                         </div>
                     </div>
 
                     <h4 class="text-sm font-bold text-slate-700 mb-3 block">Posisi Freelancer</h4>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                        <div class="bg-orange-50 p-3 rounded-lg">
-                            <label class="block text-xs font-medium text-orange-700 mb-1">&lt;6 bln &gt;1.2 UMP</label>
-                            <span class="text-[10px] text-orange-600">Bobot: 0.5</span>
+                        <div class="bg-blue-50 p-3 rounded-lg">
+                            <label class="block text-xs font-medium text-blue-700 mb-1">&lt;6 bln &gt;1.2 UMP</label>
+                            <span class="text-[10px] text-slate-700">Bobot: 0.5</span>
                             <input type="number" name="wirausaha_freelancer_0_5" x-model.number="fr0_5" class="w-full rounded-lg border-orange-200 text-sm mt-1" min="0">
                         </div>
-                        <div class="bg-orange-50 p-3 rounded-lg">
-                            <label class="block text-xs font-medium text-orange-700 mb-1">&gt;6 bln &gt;1.2 UMP</label>
-                            <span class="text-[10px] text-orange-600">Bobot: 0.4</span>
+                        <div class="bg-blue-50 p-3 rounded-lg">
+                            <label class="block text-xs font-medium text-blue-700 mb-1">&gt;6 bln &gt;1.2 UMP</label>
+                            <span class="text-[10px] text-slate-700">Bobot: 0.4</span>
                             <input type="number" name="wirausaha_freelancer_0_4" x-model.number="fr0_4" class="w-full rounded-lg border-orange-200 text-sm mt-1" min="0">
                         </div>
-                        <div class="bg-orange-50 p-3 rounded-lg">
-                            <label class="block text-xs font-medium text-orange-700 mb-1">&lt;6 bln &lt;1.2 UMP</label>
-                            <span class="text-[10px] text-orange-600">Bobot: 0.3</span>
+                        <div class="bg-blue-50 p-3 rounded-lg">
+                            <label class="block text-xs font-medium text-blue-700 mb-1">&lt;6 bln &lt;1.2 UMP</label>
+                            <span class="text-[10px] text-slate-700">Bobot: 0.3</span>
                             <input type="number" name="wirausaha_freelancer_0_3" x-model.number="fr0_3" class="w-full rounded-lg border-orange-200 text-sm mt-1" min="0">
                         </div>
-                        <div class="bg-orange-50 p-3 rounded-lg">
-                            <label class="block text-xs font-medium text-orange-700 mb-1">&gt;6 bln &lt;1.2 UMP</label>
-                            <span class="text-[10px] text-orange-600">Bobot: 0.2</span>
+                        <div class="bg-blue-50 p-3 rounded-lg">
+                            <label class="block text-xs font-medium text-blue-700 mb-1">&gt;6 bln &lt;1.2 UMP</label>
+                            <span class="text-[10px] text-slate-700">Bobot: 0.2</span>
                             <input type="number" name="wirausaha_freelancer_0_2" x-model.number="fr0_2" class="w-full rounded-lg border-orange-200 text-sm mt-1" min="0">
                         </div>
                     </div>
@@ -142,12 +143,12 @@
                     <h4 class="font-semibold text-slate-800 mb-4">Preview Perhitungan</h4>
                     <div class="grid grid-cols-4 gap-4 text-center">
                         <div><p class="text-xs text-slate-500">Skor Bekerja</p><p class="text-xl font-bold text-blue-600" x-text="skorBekerja.toFixed(2)">0</p></div>
-                        <div><p class="text-xs text-slate-500">Studi Lanjut</p><p class="text-xl font-bold text-cyan-600" x-text="studiLanjut">0</p></div>
-                        <div><p class="text-xs text-slate-500">Skor Wirausaha</p><p class="text-xl font-bold text-amber-600" x-text="skorWirausaha.toFixed(2)">0</p></div>
+                        <div><p class="text-xs text-slate-500">Studi Lanjut</p><p class="text-xl font-bold text-blue-600" x-text="studiLanjut">0</p></div>
+                        <div><p class="text-xs text-slate-500">Skor Wirausaha</p><p class="text-xl font-bold text-slate-700" x-text="skorWirausaha.toFixed(2)">0</p></div>
                         <div>
                             <p class="text-xs text-slate-500">Persentase IKU 2</p>
-                            <p class="text-2xl font-bold" :class="persentase >= 20 ? 'text-emerald-600' : 'text-rose-600'" x-text="persentase.toFixed(2) + '%'">0%</p>
-                            <p class="text-[10px]" :class="totalResponden >= minResponden ? 'text-emerald-600' : 'text-rose-600'" x-text="totalResponden >= minResponden ? 'Memenuhi Min. Responden' : 'Belum Memenuhi Min. Responden'"></p>
+                            <p class="text-2xl font-bold" :class="persentase >= 20 ? 'text-slate-700' : 'text-rose-600'" x-text="persentase.toFixed(2) + '%'">0%</p>
+                            <p class="text-[10px]" :class="totalResponden >= minResponden ? 'text-slate-700' : 'text-rose-600'" x-text="totalResponden >= minResponden ? 'Memenuhi Min. Responden' : 'Belum Memenuhi Min. Responden'"></p>
                         </div>
                     </div>
                 </div>

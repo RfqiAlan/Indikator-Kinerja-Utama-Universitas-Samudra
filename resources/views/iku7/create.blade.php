@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Tambah IKU 7</title>@vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"></head>
-<body class="font-sans antialiased bg-white text-slate-900">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <x-theme-script /></head>
+<body class="font-sans antialiased bg-semantic-bg text-semantic-text">
     <x-user-layout activeIku="IKU 7">
         <x-slot name="header">
             <div><h2 class="text-2xl font-bold text-slate-800">Tambah Data IKU 7</h2><p class="text-sm text-slate-500 mt-1">{{ auth()->user()->fakultas_nama ?? 'Fakultas' }} - Keterlibatan SDGs</p></div>
@@ -32,9 +33,9 @@
                 <div class="border-t pt-6"><h3 class="font-semibold text-slate-800 mb-4">SDGs (1, 4, 5, 13, 17)</h3>
                     <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                         <div class="bg-rose-50 p-3 rounded-lg"><label class="block text-sm font-medium text-rose-700 mb-1">SDG 1 (No Poverty)</label><input type="number" name="sdg_1" x-model.number="sdg1" value="{{ old('sdg_1', 0) }}" class="w-full rounded-lg border-rose-200" min="0"></div>
-                        <div class="bg-amber-50 p-3 rounded-lg"><label class="block text-sm font-medium text-amber-700 mb-1">SDG 4 (Education)</label><input type="number" name="sdg_4" x-model.number="sdg4" value="{{ old('sdg_4', 0) }}" class="w-full rounded-lg border-amber-200" min="0"></div>
+                        <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">SDG 4 (Education)</label><input type="number" name="sdg_4" x-model.number="sdg4" value="{{ old('sdg_4', 0) }}" class="w-full rounded-lg border-amber-200" min="0"></div>
                         <div class="bg-red-50 p-3 rounded-lg"><label class="block text-sm font-medium text-red-700 mb-1">SDG 5 (Gender Eq)</label><input type="number" name="sdg_5" x-model.number="sdg5" value="{{ old('sdg_5', 0) }}" class="w-full rounded-lg border-red-200" min="0"></div>
-                        <div class="bg-emerald-50 p-3 rounded-lg"><label class="block text-sm font-medium text-emerald-700 mb-1">SDG 13 (Climate)</label><input type="number" name="sdg_13" x-model.number="sdg13" value="{{ old('sdg_13', 0) }}" class="w-full rounded-lg border-emerald-200" min="0"></div>
+                        <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">SDG 13 (Climate)</label><input type="number" name="sdg_13" x-model.number="sdg13" value="{{ old('sdg_13', 0) }}" class="w-full rounded-lg border-emerald-200" min="0"></div>
                         <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">SDG 17 (Partnership)</label><input type="number" name="sdg_17" x-model.number="sdg17" value="{{ old('sdg_17', 0) }}" class="w-full rounded-lg border-blue-200" min="0"></div>
                     </div>
                 </div>

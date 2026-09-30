@@ -44,7 +44,7 @@ class Iku1Sub1Controller extends Controller
             'mahasiswa_aktif_s3' => 'required|integer|min:0',
             'mahasiswa_internasional' => 'required|integer|min:0',
             'keterangan' => 'nullable|string',
-            'lampiran' => 'nullable|array',
+            'lampiran' => 'required|array',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,rar,zip|max:51200',
         ]);
 

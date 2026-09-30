@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Tambah IKU 5</title>@vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"></head>
-<body class="font-sans antialiased bg-white text-slate-900">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <x-theme-script /></head>
+<body class="font-sans antialiased bg-semantic-bg text-semantic-text">
     <x-user-layout activeIku="IKU 5">
         <x-slot name="header">
             <div><h2 class="text-2xl font-bold text-slate-800">Tambah Data IKU 5</h2><p class="text-sm text-slate-500 mt-1">{{ auth()->user()->fakultas_nama ?? 'Fakultas' }} - Rasio Luaran Kerja Sama Perguruan Tinggi</p></div>
@@ -40,7 +41,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-700 mb-1">Karya Tulis Ilmiah</label><input type="number" name="karya_tulis_ilmiah" x-model.number="karyaTulis" value="{{ old('karya_tulis_ilmiah', 0) }}" class="w-full rounded-lg border-blue-200" min="0"></div>
                         <div class="bg-cyan-50 p-3 rounded-lg"><label class="block text-sm font-medium text-cyan-700 mb-1">Karya Terapan</label><input type="number" name="karya_terapan" x-model.number="karyaTerapan" value="{{ old('karya_terapan', 0) }}" class="w-full rounded-lg border-cyan-200" min="0"></div>
-                        <div class="bg-indigo-50 p-3 rounded-lg"><label class="block text-sm font-medium text-indigo-700 mb-1">Karya Seni</label><input type="number" name="karya_seni" x-model.number="karyaSeni" value="{{ old('karya_seni', 0) }}" class="w-full rounded-lg border-indigo-200" min="0"></div>
+                        <div class="bg-blue-50 p-3 rounded-lg"><label class="block text-sm font-medium text-blue-600 mb-1">Karya Seni</label><input type="number" name="karya_seni" x-model.number="karyaSeni" value="{{ old('karya_seni', 0) }}" class="w-full rounded-lg border-blue-100" min="0"></div>
                     </div>
                 </div>
                 <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-6">

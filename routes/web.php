@@ -8,15 +8,20 @@ use App\Http\Controllers\Iku1Controller;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
-// Public dashboard
-Route::get('/', [DashboardController::class, 'index'])->name('home');
+// Redirect root to login
+Route::get('/', function () {
+    return redirect()->route('login');
+})->name('home');
 
 
 
 // Authenticated dashboard (with login)
-Route::get('/dashboard', [DashboardController::class, 'dashboard'])
+Route::get('/user/dashboard', [DashboardController::class, 'dashboard'])
     ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+    ->name('user.dashboard');
+Route::get('/dashboard', function() {
+    return redirect()->route('user.dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 // Profile routes
 Route::middleware('auth')->group(function () {
@@ -107,10 +112,16 @@ Route::middleware(['auth', 'role:user,TimKerjaSama,TimKeuangan,TimPerencanaan'])
 // Admin routes (view all activities)
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard-eksekutif', [AdminController::class, 'dashboardEksekutif'])->name('dashboard-eksekutif');
     Route::get('/activities', [AdminController::class, 'activities'])->name('activities');
 
     Route::get('/rekap-universitas', [AdminController::class, 'rekapUniversitas'])->name('rekap-universitas');
+    Route::get('/manajemen-target', [AdminController::class, 'manajemenTarget'])->name('manajemen-target');
     Route::get('/capaian-kinerja', [AdminController::class, 'capaianKinerja'])->name('capaian-kinerja');
+    Route::get('/kelola-capaian', [AdminController::class, 'kelolaCapaian'])->name('kelola-capaian');
+    Route::get('/verifikasi', [AdminController::class, 'verifikasi'])->name('verifikasi');
+    Route::get('/pengelolaan-periode', [AdminController::class, 'pengelolaanPeriode'])->name('pengelolaan-periode');
+    Route::post('/pengelolaan-periode', [AdminController::class, 'storePeriode'])->name('pengelolaan-periode.store');
     Route::get('/arsip-laporan', [AdminController::class, 'arsipLaporan'])->name('arsip-laporan');
     Route::get('/iku-academy', [AdminController::class, 'ikuAcademy'])->name('iku-academy');
 

@@ -87,13 +87,14 @@
             background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #0ea5e9 100%);
         }
     </style>
+    <x-theme-script />
 </head>
-<body class="font-sans antialiased bg-slate-50 text-slate-900">
+<body class="font-sans antialiased bg-semantic-bg text-semantic-text">
     <x-user-layout :activeIku="$activeIku ?? null">
         <x-slot name="header">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 w-full">
                 <div>
-                    <h2 class="text-lg sm:text-xl font-bold text-slate-800 tracking-tight">Semua Indikator Kinerja</h2>
+                    <h2 class="text-lg sm:text-xl font-bold text-slate-800 dark:text-[#E5E7EB] tracking-tight">Semua Indikator Kinerja</h2>
                     <p class="text-xs text-slate-500 mt-0.5 font-medium">Pilih modul IKU untuk mengelola data capaian</p>
                 </div>
             </div>

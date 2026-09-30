@@ -6,8 +6,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'IKU UNSAM') }} - Tambah IKU 12</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <x-theme-script />
 </head>
-<body class="font-sans antialiased bg-slate-50 text-slate-900">
+<body class="font-sans antialiased bg-semantic-bg text-semantic-text">
     <x-user-layout activeIku="IKU 12">
         <x-slot name="header">
             <div class="flex items-center gap-4">
@@ -40,8 +41,8 @@
 
                     <!-- Section: Kelengkapan Dokumen Perencanaan -->
                     <div>
-                        <h3 class="text-lg font-bold text-slate-800 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
-                            <span class="w-6 h-6 rounded bg-blue-100 text-blue-700 flex items-center justify-center text-sm">1</span>
+                        <h3 class="text-lg font-bold text-slate-800 mb-4 pb-2 border-b border-slate-100 dark:border-white/5 flex items-center gap-2">
+                            <span class="w-6 h-6 rounded bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 flex items-center justify-center text-sm">1</span>
                             Ketersediaan Dokumen Perencanaan
                         </h3>
                         <div class="space-y-4">
@@ -89,32 +90,32 @@
 
                     <!-- Section: Validasi & Integrasi -->
                     <div>
-                        <h3 class="text-lg font-bold text-slate-800 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
-                            <span class="w-6 h-6 rounded bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm">2</span>
+                        <h3 class="text-lg font-bold text-slate-800 mb-4 pb-2 border-b border-slate-100 dark:border-white/5 flex items-center gap-2">
+                            <span class="w-6 h-6 rounded bg-blue-100 text-blue-600 flex items-center justify-center text-sm">2</span>
                             Validasi & Integrasi
                         </h3>
                         <div class="space-y-4">
-                            <label class="flex items-start gap-3 p-4 rounded-xl border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50/50 cursor-pointer transition-colors">
+                            <label class="flex items-start gap-3 p-4 rounded-xl border border-slate-200 hover:border-blue-100 hover:bg-blue-50/50 cursor-pointer transition-colors">
                                 <div class="flex items-center h-5 mt-0.5">
-                                    <input type="checkbox" name="ada_indikator_kinerja" value="1" class="w-5 h-5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+                                    <input type="checkbox" name="ada_indikator_kinerja" value="1" class="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-indigo-500">
                                 </div>
                                 <div>
                                     <span class="block text-sm font-bold text-slate-800">Perencanaan disertai indikator kinerja, target, dan horizon waktu</span>
                                 </div>
                             </label>
 
-                            <label class="flex items-start gap-3 p-4 rounded-xl border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50/50 cursor-pointer transition-colors">
+                            <label class="flex items-start gap-3 p-4 rounded-xl border border-slate-200 hover:border-blue-100 hover:bg-blue-50/50 cursor-pointer transition-colors">
                                 <div class="flex items-center h-5 mt-0.5">
-                                    <input type="checkbox" name="terintegrasi_renstra" value="1" class="w-5 h-5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+                                    <input type="checkbox" name="terintegrasi_renstra" value="1" class="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-indigo-500">
                                 </div>
                                 <div>
                                     <span class="block text-sm font-bold text-slate-800">Terintegrasi dengan Renstra / RKAT</span>
                                 </div>
                             </label>
 
-                            <label class="flex items-start gap-3 p-4 rounded-xl border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50/50 cursor-pointer transition-colors">
+                            <label class="flex items-start gap-3 p-4 rounded-xl border border-slate-200 hover:border-blue-100 hover:bg-blue-50/50 cursor-pointer transition-colors">
                                 <div class="flex items-center h-5 mt-0.5">
-                                    <input type="checkbox" name="ditetapkan_pimpinan" value="1" class="w-5 h-5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+                                    <input type="checkbox" name="ditetapkan_pimpinan" value="1" class="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-indigo-500">
                                 </div>
                                 <div>
                                     <span class="block text-sm font-bold text-slate-800">Ditetapkan Secara Resmi Oleh Pimpinan (SK)</span>

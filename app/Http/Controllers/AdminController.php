@@ -17,6 +17,7 @@ use App\Models\Iku8SdmKebijakan;
 use App\Models\Iku9Pendapatan;
 use App\Models\Iku10ZonaIntegritas;
 use App\Models\Iku11TataKelola;
+use App\Models\PeriodeTriwulan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -110,7 +111,41 @@ class AdminController extends Controller
             ];
         }
 
-        return view('admin.dashboard', compact('fakultasStats', 'totalUsers', 'totalActivities', 'tahunAkademik', 'triwulan', 'availableYears', 'yearlyComparison'));
+        // Generate dynamic notifications based on system state
+        $notifications = [];
+        
+        // Check if there are any recent activities for this Triwulan
+        $recentActivity = ActivityLog::where('created_at', '>=', now()->subDays(7))->count();
+        if ($recentActivity === 0 && $triwulan !== 'Semua') {
+            $notifications[] = [
+                'type' => 'warning',
+                'title' => 'Aktivitas Pelaporan Sepi',
+                'desc' => "Belum ada aktivitas pelaporan IKU dalam 7 hari terakhir untuk TW $triwulan.",
+                'action_label' => 'Lihat Log',
+                'action_url' => route('admin.activities')
+            ];
+        }
+
+        // Example logic for "Menunggu TTE PT" (can be tied to a Target table later)
+        $notifications[] = [
+            'type' => 'info',
+            'title' => "Penetapan Target $tahunAkademik",
+            'desc' => "Target IKU tahun $tahunAkademik sedang menunggu proses Tanda Tangan Elektronik Pimpinan Perguruan Tinggi.",
+            'action_label' => 'Manajemen Target',
+            'action_url' => route('admin.manajemen-target')
+        ];
+
+        return view('admin.dashboard', compact('fakultasStats', 'totalUsers', 'totalActivities', 'tahunAkademik', 'triwulan', 'availableYears', 'yearlyComparison', 'notifications'));
+    }
+
+    /**
+     * Display Executive Dashboard (Read-only high level stats)
+     */
+    public function dashboardEksekutif(Request $request)
+    {
+        $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $availableYears = $this->getAvailableYears();
+        return view('admin.dashboard-eksekutif', compact('tahunAkademik', 'availableYears'));
     }
 
     /**
@@ -265,6 +300,18 @@ class AdminController extends Controller
     }
 
     /**
+     * Display Manajemen Target
+     */
+    public function manajemenTarget(Request $request)
+    {
+        $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $availableYears = $this->getAvailableYears();
+        $breadcrumbs = ['Manajemen Target', 'Target'];
+
+        return view('admin.manajemen-target', compact('tahunAkademik', 'availableYears', 'breadcrumbs'));
+    }
+
+    /**
      * Display Capaian Kinerja (Triwulan Layout)
      */
     public function capaianKinerja(Request $request)
@@ -274,6 +321,71 @@ class AdminController extends Controller
         $breadcrumbs = ['Capaian Kinerja', 'Achievements'];
 
         return view('admin.capaian-kinerja', compact('tahunAkademik', 'availableYears', 'breadcrumbs'));
+    }
+
+    /**
+     * Display Kelola Capaian (Input Form Per Triwulan)
+     */
+    public function kelolaCapaian(Request $request)
+    {
+        $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $triwulan = $request->get('tw', 1);
+        $availableYears = $this->getAvailableYears();
+        $breadcrumbs = ['Capaian Kinerja', "TW $triwulan $tahunAkademik"];
+
+        return view('admin.kelola-capaian', compact('tahunAkademik', 'triwulan', 'availableYears', 'breadcrumbs'));
+    }
+
+    /**
+     * Display Verifikasi Page
+     */
+    public function verifikasi(Request $request)
+    {
+        $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $availableYears = $this->getAvailableYears();
+        return view('admin.verifikasi', compact('tahunAkademik', 'availableYears'));
+    }
+
+    /**
+     * Display Pengaturan Periode Page
+     */
+    public function pengelolaanPeriode(Request $request)
+    {
+        $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $availableYears = $this->getAvailableYears();
+        
+        $periodes = PeriodeTriwulan::where('tahun_akademik', $tahunAkademik)->get()->keyBy('tw');
+        
+        return view('admin.pengelolaan-periode', compact('tahunAkademik', 'availableYears', 'periodes'));
+    }
+
+    public function storePeriode(Request $request)
+    {
+        $tahun = $request->tahun_akademik;
+        $tw_data = $request->tw; // array of tw => [is_locked, lock_deadline]
+        
+        if (is_array($tw_data)) {
+            foreach ($tw_data as $tw => $data) {
+                PeriodeTriwulan::updateOrCreate(
+                    ['tahun_akademik' => $tahun, 'tw' => $tw],
+                    [
+                        'is_locked' => isset($data['is_locked']) ? 1 : 0,
+                        'lock_deadline' => $data['lock_deadline'] ?: null
+                    ]
+                );
+            }
+        }
+        
+        ActivityLog::create([
+            'user_id' => auth()->id(),
+            'action' => 'update',
+            'model' => 'PeriodeTriwulan',
+            'description' => 'Memperbarui pengaturan periode triwulan tahun ' . $tahun,
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+        ]);
+        
+        return back()->with('success', 'Pengaturan periode berhasil disimpan!');
     }
 
     /**

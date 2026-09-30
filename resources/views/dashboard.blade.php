@@ -74,8 +74,9 @@
             background-clip: text;
         }
     </style>
+    <x-theme-script />
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased selection:bg-blue-100 selection:text-blue-900">
+<body class="bg-semantic-bg text-semantic-text antialiased selection:bg-blue-100 selection:text-blue-900">
     <div class="min-h-screen flex flex-col relative overflow-hidden">
         
         <!-- Animated Background Mesh -->
@@ -135,6 +136,16 @@
                 </p>
                 
                 <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center" data-aos="fade-up" data-aos-delay="300">
+                    <form action="{{ url('/') }}" method="GET" class="inline-block relative">
+                        <select name="tahun" onchange="this.form.submit()" class="appearance-none pl-6 pr-12 py-4 bg-white/80 backdrop-blur border border-slate-200 text-base font-bold text-slate-800 rounded-full cursor-pointer hover:bg-white focus:ring-4 focus:ring-blue-500/20 shadow-xl hover:shadow-2xl hover:-translate-y-1 outline-none transition-all">
+                            @foreach($availableYears as $year)
+                                <option value="{{ $year }}" {{ $tahunAkademik == $year ? 'selected' : '' }}>Tahun Akademik {{ $year }}</option>
+                            @endforeach
+                        </select>
+                        <div class="absolute inset-y-0 right-0 pr-5 flex items-center pointer-events-none">
+                            <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </div>
+                    </form>
                     <a href="#indikator" class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white transition-all duration-200 bg-slate-900 border border-transparent rounded-full hover:bg-slate-800 shadow-xl hover:shadow-2xl hover:-translate-y-1">
                         Lihat Capaian
                         <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>

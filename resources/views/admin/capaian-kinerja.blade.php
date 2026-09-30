@@ -193,7 +193,7 @@
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">DATA DUKUNG TERKUMPUL</p>
                         <p class="text-lg font-extrabold text-slate-800 mt-0.5"><span class="text-3xl">30</span> <span class="text-sm font-medium text-slate-400">/ 31 Indikator</span></p>
                     </div>
-                    <a href="#" class="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 text-xs font-bold rounded-lg hover:bg-slate-50 transition flex items-center gap-2 shadow-sm">
+                    <a href="{{ route('admin.kelola-capaian', ['tw' => 1]) }}" class="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 text-xs font-bold rounded-lg hover:bg-slate-50 transition flex items-center gap-2 shadow-sm">
                         LIHAT CAPAIAN
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                     </a>
@@ -266,7 +266,7 @@
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">DATA DUKUNG TERKUMPUL</p>
                         <p class="text-lg font-extrabold text-slate-800 mt-0.5"><span class="text-3xl">31</span> <span class="text-sm font-medium text-slate-400">/ 31 Indikator</span></p>
                     </div>
-                    <a href="#" class="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 text-xs font-bold rounded-lg hover:bg-slate-50 transition flex items-center gap-2 shadow-sm">
+                    <a href="{{ route('admin.kelola-capaian', ['tw' => 2]) }}" class="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 text-xs font-bold rounded-lg hover:bg-slate-50 transition flex items-center gap-2 shadow-sm">
                         LIHAT CAPAIAN
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                     </a>
@@ -334,7 +334,7 @@
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">DATA DUKUNG TERKUMPUL</p>
                         <p class="text-lg font-extrabold text-slate-800 mt-0.5"><span class="text-3xl">0</span> <span class="text-sm font-medium text-slate-400">/ 31 Indikator</span></p>
                     </div>
-                    <a href="#" class="px-5 py-2.5 bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold rounded-lg transition flex items-center gap-2 shadow-sm">
+                    <a href="{{ route('admin.kelola-capaian', ['tw' => 3]) }}" class="px-5 py-2.5 bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold rounded-lg transition flex items-center gap-2 shadow-sm">
                         KELOLA CAPAIAN
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
                     </a>

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Tambah IKU 1</title>@vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"></head>
-<body class="font-sans antialiased bg-white text-slate-900">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <x-theme-script /></head>
+<body class="font-sans antialiased bg-semantic-bg text-semantic-text">
     <x-user-layout activeIku="IKU 1">
         <x-slot name="header">
             <div>
@@ -56,7 +57,7 @@
 
                 <div class="border-b pb-6">
                     <h3 class="font-semibold text-slate-800 mb-4 flex items-center">
-                        <span class="bg-cyan-100 text-cyan-600 w-7 h-7 rounded-full flex items-center justify-center text-sm mr-2">2</span>
+                        <span class="bg-cyan-100 text-blue-600 w-7 h-7 rounded-full flex items-center justify-center text-sm mr-2">2</span>
                         Data Kelulusan
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -74,7 +75,7 @@
                     <h4 class="font-semibold text-slate-800 mb-4">Preview Perhitungan</h4>
                     <div class="grid grid-cols-3 gap-4 text-center">
                         <div><p class="text-xs text-slate-500">AEE Prodi</p><p class="text-2xl font-bold" :class="aee > 0 ? 'text-blue-600' : 'text-slate-400'" x-text="aee.toFixed(2) + '%'">0%</p></div>
-                        <div><p class="text-xs text-slate-500">AEE Ideal</p><p class="text-2xl font-bold text-cyan-600" x-text="aeeIdeal + '%'">25%</p></div>
+                        <div><p class="text-xs text-slate-500">AEE Ideal</p><p class="text-2xl font-bold text-blue-600" x-text="aeeIdeal + '%'">25%</p></div>
                         <div><p class="text-xs text-slate-500">Status</p><p class="text-lg font-bold" :class="aee >= aeeIdeal ? 'text-blue-600' : 'text-rose-600'" x-text="aee >= aeeIdeal ? '✓ Tercapai' : '✗ Belum Tercapai'">-</p></div>
                     </div>
                 </div>

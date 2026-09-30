@@ -1,4 +1,4 @@
-@props(['activeIku' => null])
+@props(['activeIku' => null, 'activePage' => null])
 
 @php
     $ikuItems = [
@@ -54,17 +54,18 @@
     }
 @endphp
 
-<div class="min-h-screen lg:h-[100dvh] w-full overflow-x-hidden lg:overflow-hidden flex flex-col lg:flex-row bg-slate-50 text-slate-800 font-sans antialiased"
-    x-data="{ sidebarOpen: false }">
+<div class="min-h-screen lg:h-[100dvh] w-full overflow-x-hidden lg:overflow-hidden flex flex-col lg:flex-row bg-semantic-bg text-semantic-text font-sans antialiased transition-colors duration-300"
+    x-data="{ sidebarOpen: false, darkMode: localStorage.getItem('darkMode') === 'true' }"
+    x-init="$watch('darkMode', val => { localStorage.setItem('darkMode', val); document.documentElement.classList.toggle('dark', val) }); if(darkMode) document.documentElement.classList.add('dark')">
 
     <div
-        class="lg:hidden h-16 bg-white/90 backdrop-blur-xl border-b border-slate-200/50 px-4 shrink-0 flex items-center justify-between sticky top-0 z-50 shadow-sm">
+        class="lg:hidden h-16 bg-semantic-surface/90 backdrop-blur-xl border-b border-slate-200/50 dark:border-white/5 px-4 shrink-0 flex items-center justify-between sticky top-0 z-50 shadow-sm">
         <a href="{{ route('home') }}" class="flex items-center gap-3 group">
             <div
-                class="w-8 h-8 rounded-xl bg-white flex items-center justify-center shadow-md shadow-blue-600/10 group-hover:scale-105 transition-transform duration-300 group-hover:shadow-blue-600/20">
+                class="w-8 h-8 rounded-xl bg-semantic-surface flex items-center justify-center shadow-md shadow-blue-600/10 group-hover:scale-105 transition-transform duration-300 dark:ring-1 dark:ring-white/10">
                 <img src="{{ asset('build/assets/logo.png') }}" alt="Logo" class="h-5 w-5 object-contain rounded-md" />
             </div>
-            <span class="text-xl font-extrabold text-slate-800">IKU UNSAM</span>
+            <span class="text-xl font-extrabold text-semantic-text">IKU UNSAM</span>
         </a>
         <button @click="sidebarOpen = !sidebarOpen"
             class="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl transition-colors active:scale-95">
@@ -81,17 +82,17 @@
         x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"></div>
 
     <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
-        class="fixed lg:static inset-y-0 left-0 z-50 w-[280px] bg-white border-r border-slate-200/60 lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col shadow-2xl lg:shadow-none pointer-events-auto">
+        class="fixed lg:static inset-y-0 left-0 z-50 w-[280px] bg-semantic-surface border-r border-semantic-border lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col shadow-2xl lg:shadow-none pointer-events-auto">
 
-        <div class="hidden lg:flex shrink-0 h-16 items-center px-6 border-b border-slate-200/60 bg-white">
+        <div class="hidden lg:flex shrink-0 h-16 items-center px-6 border-b border-semantic-border bg-semantic-surface">
             <a href="{{ route('home') }}" class="flex items-center gap-3 group w-full">
                 <div
-                    class="w-8 h-8 rounded-xl flex items-center justify-center bg-white shadow-lg shadow-blue-600/10 group-hover:scale-105 transition-all duration-300 group-hover:shadow-blue-600/20">
+                    class="w-8 h-8 rounded-xl flex items-center justify-center bg-semantic-surface shadow-lg shadow-blue-600/10 group-hover:scale-105 transition-all duration-300 dark:ring-1 dark:ring-white/10">
                     <img src="{{ asset('build/assets/logo.png') }}" alt="Logo"
                         class="h-4 w-4 object-contain rounded-sm" />
                 </div>
-                <span class="text-lg font-extrabold tracking-tight text-slate-800">IKU <span
-                        class="text-blue-600">UNSAM</span></span>
+                <span class="text-lg font-extrabold tracking-tight text-semantic-text">IKU <span
+                        class="text-blue-600 dark:text-blue-400">UNSAM</span></span>
             </a>
         </div>
 
@@ -106,17 +107,17 @@
             </button>
         </div>
 
-        <div class="px-5 py-6 shrink-0 border-b border-slate-100">
+        <div class="px-5 py-6 shrink-0 border-b border-semantic-border">
             <div
-                class="flex items-center gap-4 bg-slate-50 border border-slate-200/60 p-3 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300">
+                class="flex items-center gap-4 bg-semantic-surface-elevated border border-semantic-border p-3 rounded-2xl shadow-sm">
                 <div
-                    class="h-10 w-10 shrink-0 rounded-full bg-blue-100 border border-blue-200 flex items-center justify-center text-blue-700 font-bold text-lg shadow-inner">
+                    class="h-10 w-10 shrink-0 rounded-full bg-blue-100 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 flex items-center justify-center text-blue-700 dark:text-blue-400 font-bold text-lg shadow-inner">
                     {{ substr(Auth::user()->name ?? 'A', 0, 1) }}
                 </div>
                 <div class="min-w-0 flex-1">
-                    <p class="text-sm font-bold text-slate-800 truncate">{{ Auth::user()->name ?? 'Admin' }}</p>
-                    <p class="text-xs font-medium text-slate-500 truncate mt-0.5 flex items-center gap-1">
-                        <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
+                    <p class="text-sm font-bold text-semantic-text truncate">{{ Auth::user()->name ?? 'Admin' }}</p>
+                    <p class="text-xs font-medium text-semantic-text-muted truncate mt-0.5 flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
                         {{ Auth::user()->fakultas_nama ?? 'Operator Data' }}
                     </p>
                 </div>
@@ -125,6 +126,23 @@
 
         <div id="user-sidebar-scroll"
             class="flex-1 overflow-y-auto px-4 py-6 scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
+            
+            <div class="mb-6">
+                <nav class="space-y-1">
+                    <a href="{{ route('user.dashboard') }}" @click="sidebarOpen = false" class="flex items-center gap-3 py-2.5 px-3 rounded-xl transition-all duration-200 group {{ $activePage === 'dashboard' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20 ring-1 ring-blue-500' : 'text-semantic-text-muted hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-700 dark:hover:text-blue-400' }}">
+                        <div class="flex shrink-0 items-center justify-center rounded-lg transition-all duration-200 w-8 h-8 {{ $activePage === 'dashboard' ? 'text-white' : 'bg-semantic-surface-elevated text-slate-400 dark:text-slate-500 group-hover:bg-blue-100 dark:group-hover:bg-blue-500/10 group-hover:text-blue-600 dark:group-hover:text-blue-400 dark:ring-1 dark:ring-white/5' }}">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                            </svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <span class="block text-sm font-bold truncate">Dashboard</span>
+                            <span class="block text-[11px] font-medium leading-tight truncate mt-0.5 opacity-90 {{ $activePage === 'dashboard' ? 'text-blue-50' : 'text-slate-400 dark:text-slate-500 group-hover:text-blue-600/70 dark:group-hover:text-blue-400/70' }}">Overview Capaian Fakultas</span>
+                        </div>
+                    </a>
+                </nav>
+            </div>
+
             <div class="mb-6">
                 <p class="px-3 text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3">Indikator Kinerja
                 </p>
@@ -139,15 +157,15 @@
                                                    {{ $isSubItem ? 'pl-10 pr-3 relative' : 'px-3' }}
                                                    {{ $isActive
                         ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20 ring-1 ring-blue-500'
-                        : 'text-slate-600 hover:bg-slate-50 hover:text-blue-700' }}">
+                        : 'text-semantic-text-muted hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-700 dark:hover:text-blue-400' }}">
                         
                                         @if($isSubItem && !$isActive)
-                                        <div class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-[1px] bg-slate-300"></div>
-                                        <div class="absolute left-4 top-0 h-1/2 w-[1px] bg-slate-300"></div>
+                                        <div class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-[1px] bg-slate-300 dark:bg-slate-700"></div>
+                                        <div class="absolute left-4 top-0 h-1/2 w-[1px] bg-slate-300 dark:bg-slate-700"></div>
                                         @endif
 
                                         <div
-                                            class="flex shrink-0 items-center justify-center rounded-lg transition-all duration-200 {{ $isSubItem ? 'w-6 h-6' : 'w-8 h-8' }} {{ $isActive ? 'text-white' : 'bg-slate-100 text-slate-400 group-hover:bg-blue-100 group-hover:text-blue-600' }}">
+                                            class="flex shrink-0 items-center justify-center rounded-lg transition-all duration-200 {{ $isSubItem ? 'w-6 h-6' : 'w-8 h-8' }} {{ $isActive ? 'text-white' : 'bg-semantic-surface-elevated text-slate-400 dark:text-slate-500 group-hover:bg-blue-100 dark:group-hover:bg-blue-500/10 group-hover:text-blue-600 dark:group-hover:text-blue-400 dark:ring-1 dark:ring-white/5' }}">
                                             <svg class="{{ $isSubItem ? 'h-3.5 w-3.5' : 'h-4 w-4' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="{{ $item['icon'] }}"></path>
@@ -155,9 +173,9 @@
                                         </div>
 
                                         <div class="min-w-0 flex-1">
-                                            <span class="block {{ $isSubItem ? 'text-xs' : 'text-sm' }} font-bold truncate">{{ $item['id'] }}</span>
+                                            <span class="block {{ $isSubItem ? 'text-xs' : 'text-sm' }} font-bold truncate {{ $isActive ? '' : 'dark:text-[#E5E7EB]' }}">{{ $item['id'] }}</span>
                                             <span
-                                                class="block text-[11px] font-medium leading-tight truncate mt-0.5 opacity-90 {{ $isActive ? 'text-blue-50' : 'text-slate-400 group-hover:text-blue-600/70' }}">
+                                                class="block text-[11px] font-medium leading-tight truncate mt-0.5 opacity-90 {{ $isActive ? 'text-blue-50' : 'text-slate-400 dark:text-slate-500 group-hover:text-blue-600/70 dark:group-hover:text-blue-400/70' }}">
                                                 {{ $item['title'] }}
                                             </span>
                                         </div>
@@ -166,25 +184,25 @@
                 </nav>
             </div>
 
-            <div class="border-t border-slate-100 pt-5">
+        <div class="border-t border-semantic-border pt-5">
                 <a href="{{ route('user.iku.index') }}" @click="sidebarOpen = false"
-                    class="flex items-center gap-3 px-3 py-2.5 rounded-xl group transition-all duration-200 text-slate-600 hover:bg-slate-50 hover:text-blue-700">
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-xl group transition-all duration-200 text-semantic-text-muted hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-700 dark:hover:text-blue-400">
                     <div
-                        class="flex shrink-0 items-center justify-center rounded-lg w-8 h-8 bg-slate-100 text-slate-400 group-hover:bg-blue-100 group-hover:text-blue-600 transition-all duration-300">
+                        class="flex shrink-0 items-center justify-center rounded-lg w-8 h-8 bg-semantic-surface-elevated text-slate-400 dark:text-slate-500 group-hover:bg-blue-100 dark:group-hover:bg-blue-500/10 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-all duration-300 dark:ring-1 dark:ring-white/5">
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16">
                             </path>
                         </svg>
                     </div>
-                    <span class="text-sm font-bold">Semua Data IKU</span>
+                    <span class="text-sm font-bold dark:text-[#E5E7EB]">Semua Data IKU</span>
                 </a>
             </div>
 
-            <div class="border-t border-slate-100 mt-2 pt-2">
+            <div class="border-t border-semantic-border mt-2 pt-2">
                 <a href="{{ route('profile.edit') }}" @click="sidebarOpen = false"
-                    class="flex items-center gap-3 px-3 py-2.5 rounded-xl group transition-all duration-200 text-slate-600 hover:bg-slate-50 hover:text-blue-700">
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-xl group transition-all duration-200 text-semantic-text-muted hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-700 dark:hover:text-blue-400">
                     <div
-                        class="flex shrink-0 items-center justify-center rounded-lg w-8 h-8 bg-slate-100 text-slate-400 group-hover:bg-blue-100 group-hover:text-blue-600 transition-all duration-300">
+                        class="flex shrink-0 items-center justify-center rounded-lg w-8 h-8 bg-semantic-surface-elevated text-slate-400 dark:text-slate-500 group-hover:bg-blue-100 dark:group-hover:bg-blue-500/10 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-all duration-300 dark:ring-1 dark:ring-white/5">
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
@@ -205,12 +223,20 @@
             }
         </script>
 
-        <div class="p-4 shrink-0 border-t border-slate-100 bg-white">
+        <div class="p-4 shrink-0 border-t border-semantic-border bg-semantic-surface">
+            <!-- Dark Mode Toggle -->
+            <button @click="darkMode = !darkMode"
+                class="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-sm font-bold mb-2 transition-all duration-300"
+                :class="darkMode ? 'text-amber-400 bg-slate-800 hover:bg-slate-700 ring-1 ring-white/10' : 'text-slate-600 bg-slate-100 hover:bg-slate-200'">
+                <svg x-show="!darkMode" class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                <svg x-show="darkMode" class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <span x-text="darkMode ? 'Mode Terang' : 'Mode Gelap'"></span>
+            </button>
             <form method="POST" action="{{ route('logout') }}"
                 onsubmit="confirmDelete(event, 'Anda akan keluar dari aplikasi.', 'Keluar Aplikasi?', 'Ya, keluar')">
                 @csrf
                 <button type="submit"
-                    class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 hover:text-rose-700 transition-all duration-300 ring-1 ring-rose-100 hover:ring-rose-200">
+                    class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-500/10 hover:bg-rose-100 dark:hover:bg-rose-500/20 transition-all duration-300 ring-1 ring-rose-100 dark:ring-rose-500/20 hover:ring-rose-200">
                     <svg class="h-4 w-4 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
@@ -222,10 +248,10 @@
         </div>
     </aside>
 
-    <div class="flex-1 flex flex-col min-w-0 min-h-0 bg-slate-50 lg:border-l lg:border-slate-200/50">
+    <div class="flex-1 flex flex-col min-w-0 min-h-0 bg-semantic-bg lg:border-l lg:border-slate-200/50 dark:lg:border-white/5">
 
         <header
-            class="hidden lg:flex shrink-0 h-16 items-center justify-between px-8 border-b border-slate-200/50 bg-white/90 backdrop-blur-md z-30 sticky top-0 transition-all duration-300">
+            class="hidden lg:flex shrink-0 h-16 items-center justify-between px-8 border-b border-slate-200/50 dark:border-white/5 bg-semantic-surface/90 backdrop-blur-md z-30 sticky top-0 transition-all duration-300">
 
             <div class="flex-1 min-w-0 pr-4">
                 {{ $header ?? '' }}
@@ -265,13 +291,64 @@
 
         @if(isset($header))
             <div
-                class="lg:hidden p-5 border-b border-slate-200/50 bg-white/90 backdrop-blur-md shadow-sm sticky top-16 z-30">
+                class="lg:hidden p-5 border-b border-slate-200/50 dark:border-white/5 bg-semantic-surface/90 backdrop-blur-md shadow-sm sticky top-16 z-30">
                 {{ $header }}
             </div>
         @endif
 
         <main class="flex-1 min-h-0 p-4 lg:p-8 overflow-visible lg:overflow-y-auto overflow-x-hidden">
             <div class="max-w-7xl w-full mx-auto pb-12">
+                @php
+                    if(function_exists('get_tahun_akademik')){
+                        $tahunAkademikLayout = get_tahun_akademik();
+                        $lockedPeriodes = \App\Models\PeriodeTriwulan::where('tahun_akademik', $tahunAkademikLayout)
+                            ->where(function($q) {
+                                $q->where('is_locked', 1)
+                                  ->orWhere(function($sq) {
+                                      $sq->whereNotNull('lock_deadline')->where('lock_deadline', '<', now());
+                                  });
+                            })->pluck('tw')->toArray();
+                    } else {
+                        $lockedPeriodes = [];
+                    }
+                    $reqTw = request()->get('triwulan', 'Semua');
+                    $showBanner = false;
+                    $bannerTw = [];
+
+                    if (request()->routeIs('*.index')) {
+                        if ($reqTw !== 'Semua') {
+                            if (in_array((int)$reqTw, $lockedPeriodes) || in_array((string)$reqTw, $lockedPeriodes)) {
+                                $showBanner = true;
+                                $bannerTw = [$reqTw];
+                            }
+                        } else {
+                            if (count($lockedPeriodes) > 0) {
+                                $showBanner = true;
+                                $bannerTw = $lockedPeriodes;
+                            }
+                        }
+                    }
+                @endphp
+
+                @if($showBanner)
+                    <div class="mb-6 bg-rose-50 border-l-4 border-rose-500 p-4 rounded-r-lg shadow-sm" data-aos="fade-down">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-rose-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-bold text-rose-800">
+                                    Pemberitahuan Penguncian Periode
+                                </h3>
+                                <div class="mt-1 text-sm text-rose-700 font-medium">
+                                    <p>Triwulan <strong>{{ implode(', ', $bannerTw) }}</strong> tahun akademik <strong>{{ $tahunAkademikLayout ?? '' }}</strong> telah dikunci. Anda tidak dapat melakukan penginputan, pengubahan, atau penghapusan data pada Triwulan tersebut.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
                 <x-sweet-alert />
                 {{ $slot }}
             </div>
@@ -298,3 +375,113 @@
         background-color: #94a3b8;
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const lockedTWs = @json($lockedPeriodes ?? []);
+        
+        // 1. Block "Tambah Data"
+        const addBtns = document.querySelectorAll('a[href*="/create"]');
+        addBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // Get the currently selected Triwulan filter (if any)
+                const filterTw = document.querySelector('select[name="triwulan"]');
+                
+                // If 'Semua' is selected, force them to pick a Triwulan first
+                if (filterTw && filterTw.value === 'Semua') {
+                    e.preventDefault();
+                    
+                    filterTw.focus();
+                    filterTw.classList.add('ring-2', 'ring-rose-500', 'border-rose-500');
+                    
+                    let warningMsg = document.getElementById('tw-warning-msg');
+                    if (!warningMsg) {
+                        warningMsg = document.createElement('div');
+                        warningMsg.id = 'tw-warning-msg';
+                        warningMsg.className = 'absolute text-xs text-rose-600 font-bold bg-rose-50 px-2.5 py-1.5 rounded-lg border border-rose-200 animate-pulse whitespace-nowrap shadow-md z-50';
+                        warningMsg.innerHTML = '<span class="mr-1">↑</span> Pilih triwulan terlebih dahulu!';
+                        
+                        const rect = filterTw.getBoundingClientRect();
+                        warningMsg.style.top = (window.scrollY + rect.bottom + 8) + 'px';
+                        warningMsg.style.left = (window.scrollX + rect.left) + 'px';
+                        
+                        document.body.appendChild(warningMsg);
+                    }
+                    
+                    setTimeout(() => {
+                        filterTw.classList.remove('ring-2', 'ring-rose-500', 'border-rose-500');
+                        if (warningMsg) warningMsg.remove();
+                    }, 2500);
+                    
+                    return; // Stop here
+                }
+                
+                let isBlocked = false;
+                let blockedMsg = '';
+
+                if (filterTw && filterTw.value !== 'Semua') {
+                    const tw = parseInt(filterTw.value);
+                    if (tw && (lockedTWs.includes(tw) || lockedTWs.includes(tw.toString()))) {
+                        isBlocked = true;
+                        blockedMsg = 'Triwulan ' + tw + ' telah dikunci! Anda tidak dapat menambah data untuk triwulan ini.';
+                    }
+                } else if (!filterTw && lockedTWs.length >= 4) {
+                    isBlocked = true;
+                    blockedMsg = 'Semua Triwulan untuk tahun ini telah dikunci. Anda tidak dapat menambah data baru.';
+                }
+
+                if (isBlocked) {
+                    e.preventDefault();
+                    if(typeof showError === 'function') {
+                        showError(blockedMsg);
+                    } else {
+                        alert(blockedMsg);
+                    }
+                }
+            });
+        });
+        
+        // 2. Block "Edit" and "Delete" for specific locked Triwulans
+        if (lockedTWs.length > 0) {
+            document.body.addEventListener('click', function(e) {
+                const tr = e.target.closest('tr[data-tw]');
+                if (tr) {
+                    const tw = parseInt(tr.getAttribute('data-tw'));
+                    // Check if this row's TW is in the locked list
+                    if (lockedTWs.includes(tw) || lockedTWs.includes(tw.toString())) {
+                        
+                        const isEdit = e.target.closest('a[href*="/edit"]');
+                        const isDelete = e.target.closest('button[title="Hapus"]') || e.target.closest('form[action] button') || e.target.closest('button[onclick*="confirmDelete"]');
+                        
+                        if (isEdit || isDelete) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            
+                            if(typeof showError === 'function') {
+                                showError('Triwulan ' + tw + ' telah dikunci! Anda tidak dapat mengubah atau menghapus data ini.');
+                            } else {
+                                alert('Triwulan ' + tw + ' telah dikunci! Anda tidak dapat mengubah atau menghapus data ini.');
+                            }
+                        }
+                    }
+                }
+            }, true); // Use capture phase to intercept before inline onclicks (like confirmDelete)
+        }
+        
+        // 3. Disable locked Triwulans in dropdowns (create/edit forms)
+        const twSelects = document.querySelectorAll('select[name="triwulan"]');
+        twSelects.forEach(select => {
+            // Only disable if it's a form for data entry, skip if it's the filter dropdown ("Semua Triwulan")
+            const hasSemua = Array.from(select.options).some(opt => opt.value === 'Semua' || opt.text.includes('Semua'));
+            if (!hasSemua) {
+                Array.from(select.options).forEach(opt => {
+                    const val = parseInt(opt.value);
+                    if (val && (lockedTWs.includes(val) || lockedTWs.includes(val.toString()))) {
+                        opt.disabled = true;
+                        opt.text += ' (Dikunci)';
+                    }
+                });
+            }
+        });
+    });
+</script>

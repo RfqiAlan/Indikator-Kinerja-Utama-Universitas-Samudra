@@ -17,7 +17,6 @@
         .sidebar-item { display: flex; align-items: center; gap: 12px; padding: 12px 20px; border-radius: 12px; transition: all 0.2s ease-in-out; font-weight: 500; font-size: 14px; margin-bottom: 4px; color: rgba(255,255,255,0.7); }
         .sidebar-item:hover { background-color: rgba(255,255,255,0.08); color: white; }
         .sidebar-item.active { background-color: #0ea5e9; color: white; box-shadow: 0 4px 10px -2px rgba(14, 165, 233, 0.4); }
-        .sidebar-item.active .badge-dot { background-color: #fbbf24; width: 8px; height: 8px; border-radius: 50%; margin-left: auto; box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.3); }
         
         .floating-sidebar {
             background: linear-gradient(180deg, #4a1942 0%, #2d1128 40%, #1a0a15 100%);
@@ -36,6 +35,7 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
         .custom-scrollbar:hover::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.25); }
     </style>
+    <x-theme-script />
 </head>
 
 <body class="antialiased text-slate-800" x-data="{ sidebarOpen: false }">
@@ -87,13 +87,19 @@
                         @if($activePage === 'dashboard') <div class="badge-dot"></div> @endif
                     </a>
 
+                    <a href="{{ route('admin.dashboard-eksekutif') }}" class="sidebar-item {{ $activePage === 'dashboard-eksekutif' ? 'active' : '' }}">
+                        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                        Dashboard Pimpinan
+                        @if($activePage === 'dashboard-eksekutif') <div class="badge-dot"></div> @endif
+                    </a>
+
                     <a href="{{ route('admin.rekap-universitas') }}" class="sidebar-item {{ $activePage === 'rekap-universitas' ? 'active' : '' }}">
                         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" /></svg>
                         Analitik Capaian
                         @if($activePage === 'rekap-universitas') <div class="badge-dot"></div> @endif
                     </a>
 
-                    <a href="#" class="sidebar-item {{ $activePage === 'target' ? 'active' : '' }}">
+                    <a href="{{ route('admin.manajemen-target') }}" class="sidebar-item {{ $activePage === 'target' ? 'active' : '' }}">
                         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                         Manajemen Target
                         @if($activePage === 'target') <div class="badge-dot"></div> @endif
@@ -103,6 +109,12 @@
                         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
                         Capaian Kinerja
                         @if($activePage === 'capaian') <div class="badge-dot"></div> @endif
+                    </a>
+
+                    <a href="{{ route('admin.verifikasi') }}" class="sidebar-item {{ $activePage === 'verifikasi' ? 'active' : '' }}">
+                        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        Verifikasi Laporan
+                        @if($activePage === 'verifikasi') <div class="badge-dot"></div> @endif
                     </a>
 
                     <a href="{{ route('admin.arsip-laporan') }}" class="sidebar-item {{ $activePage === 'arsip' ? 'active' : '' }}">
@@ -115,6 +127,12 @@
                         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" /></svg>
                         IKU Graph 3D
                         @if($activePage === 'graph') <div class="badge-dot"></div> @endif
+                    </a>
+
+                    <a href="{{ route('admin.pengelolaan-periode') }}" class="sidebar-item {{ $activePage === 'periode' ? 'active' : '' }}">
+                        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" /></svg>
+                        Pengaturan Periode
+                        @if($activePage === 'periode') <div class="badge-dot"></div> @endif
                     </a>
 
                     <a href="{{ route('admin.fakultas.manage') }}" class="sidebar-item {{ $activePage === 'fakultas-manage' ? 'active' : '' }}">

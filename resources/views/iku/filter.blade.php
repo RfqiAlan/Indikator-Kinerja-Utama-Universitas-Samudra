@@ -8,13 +8,14 @@
     <title>{{ config('app.name', 'IKU UNSAM') }} - {{ $ikuType }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <x-theme-script />
 </head>
 
-<body class="font-sans antialiased bg-white text-slate-900">
+<body class="font-sans antialiased bg-semantic-bg text-semantic-text">
     <x-user-layout :activeIku="$activeIku">
         <x-slot name="header">
             <div>
-                <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">{{ $ikuType }}</h2>
+                <h2 class="text-xl font-semibold text-gray-800">{{ $ikuType }}</h2>
                 <p class="text-sm text-gray-500">{{ $ikuInfo['title'] }}</p>
             </div>
         </x-slot>
@@ -40,10 +41,10 @@
             </div>
         </div>
 
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden" data-aos="fade-up">
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up">
             <div class="p-6">
                 <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">Data {{ $ikuType }}</h3>
+                    <h3 class="text-lg font-bold text-gray-900">Data {{ $ikuType }}</h3>
                     <a href="{{ route('user.iku.create', ['iku' => $ikuType]) }}"
                         class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
                         + Tambah Data
@@ -51,36 +52,36 @@
                 </div>
 
                 <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                        <thead class="bg-gray-50 dark:bg-gray-700">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
                             <tr>
                                 <th
-                                    class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase">
+                                    class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
                                     No</th>
                                 <th
-                                    class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase">
+                                    class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
                                     Kriteria</th>
                                 <th
-                                    class="px-6 py-3 text-right text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase">
+                                    class="px-6 py-3 text-right text-xs font-semibold text-gray-600 uppercase">
                                     Jumlah</th>
                                 <th
-                                    class="px-6 py-3 text-right text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase">
+                                    class="px-6 py-3 text-right text-xs font-semibold text-gray-600 uppercase">
                                     Capaian (%)</th>
                                 <th
-                                    class="px-6 py-3 text-right text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase">
+                                    class="px-6 py-3 text-right text-xs font-semibold text-gray-600 uppercase">
                                     Target (%)</th>
                                 <th
-                                    class="px-6 py-3 text-center text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase">
+                                    class="px-6 py-3 text-center text-xs font-semibold text-gray-600 uppercase">
                                     Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                        <tbody class="font-sans antialiased bg-white dark:bg-slate-950 divide-y divide-gray-200">
                             @forelse($ikus as $index => $iku)
                                 <tr
-                                    class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors {{ $iku->target ? 'bg-blue-50 dark:bg-blue-900/20' : '' }}">
+                                    class="hover:bg-gray-50 transition-colors {{ $iku->target ? 'bg-blue-50' : '' }}">
                                     <td class="px-6 py-4 text-sm text-gray-500">{{ $index + 1 }}</td>
                                     <td
-                                        class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300 {{ $iku->target ? 'font-semibold' : '' }}">
+                                        class="px-6 py-4 text-sm text-gray-700 {{ $iku->target ? 'font-semibold' : '' }}">
                                         {{ $iku->kriteria }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-right text-gray-600">
@@ -96,7 +97,7 @@
                                     <td class="px-6 py-4 text-sm text-right">
                                         @if($iku->target !== null)
                                             <span
-                                                class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-semibold">{{ number_format($iku->target, 1) }}%</span>
+                                                class="bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-300 px-2 py-1 rounded text-xs font-semibold">{{ number_format($iku->target, 1) }}%</span>
                                         @else
                                             <span class="text-gray-400">-</span>
                                         @endif

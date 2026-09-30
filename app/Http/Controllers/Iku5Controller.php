@@ -29,7 +29,8 @@ class Iku5Controller extends Controller
             ->values();
 
         // Calculate overall using DB-level aggregation
-        $q = Iku5LuaranKerjasama::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas);
+        $q = Iku5LuaranKerjasama::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)
+            ->when($triwulan && $triwulan !== 'Semua', function($q) use ($triwulan) { return $q->where('triwulan', $triwulan); });
         $totalKerjasamaPt = $q->sum('total_kerjasama_pt');
         $totalLuaran      = $q->sum('total_luaran');
         $overallPercentage = $totalKerjasamaPt > 0 ? ($totalLuaran / $totalKerjasamaPt) * 100 : 0;

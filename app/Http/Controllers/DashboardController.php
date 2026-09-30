@@ -217,7 +217,7 @@ class DashboardController extends Controller
     /**
      * Authenticated dashboard (redirect based on role)
      */
-    public function dashboard()
+    public function dashboard(Request $request)
     {
         $user = auth()->user();
         
@@ -225,6 +225,134 @@ class DashboardController extends Controller
             return redirect()->route('admin.dashboard');
         }
         
-        return redirect()->route('user.iku.index');
+        $tahunAkademik = $request->get('tahun', get_tahun_akademik());
+        $availableYears = collect(get_tahun_akademik_list())->sortDesc()->values();
+        $fakultas = $user->fakultas;
+
+        $twData = [];
+        $overallTotalPercentage = 0;
+        $overallValidIkus = 0;
+        
+        $models = [
+            'iku1' => \App\Models\Iku1Aee::class,
+            'iku2' => \App\Models\Iku2LulusanBekerja::class,
+            'iku3' => \App\Models\Iku3KegiatanMahasiswa::class,
+            'iku4' => \App\Models\Iku4RekognisiDosen::class,
+            'iku5' => \App\Models\Iku5LuaranKerjasama::class,
+            'iku6' => \App\Models\Iku6Publikasi::class,
+            'iku7' => \App\Models\Iku7Sdgs::class,
+            'iku8' => \App\Models\Iku8SdmKebijakan::class,
+        ];
+
+        for ($tw = 1; $tw <= 4; $tw++) {
+            $isianCount = 0;
+            $ikuPercentageSum = 0;
+
+            foreach ($models as $key => $modelClass) {
+                $data = $this->calculateIkuPercentage($modelClass, $tahunAkademik, $fakultas, $tw, $key);
+                if ($data['count'] > 0) {
+                    $isianCount++;
+                    $ikuPercentageSum += $data['percentage'];
+                }
+            }
+
+            $capaianTW = $isianCount > 0 ? $ikuPercentageSum / $isianCount : 0;
+            $isianPercentage = ($isianCount / count($models)) * 100;
+
+            $overallTotalPercentage += $capaianTW;
+            if ($isianCount > 0) $overallValidIkus++;
+
+            $periode = \App\Models\PeriodeTriwulan::where('tahun_akademik', $tahunAkademik)->where('tw', $tw)->first();
+            $status = $periode && $periode->is_locked ? 'TUTUP' : 'BUKA';
+
+            $twData[$tw] = [
+                'capaian' => round($capaianTW, 2),
+                'isian_percentage' => round($isianPercentage, 2),
+                'isian_count' => $isianCount,
+                'status' => $status
+            ];
+        }
+
+        $ikuChartData = [
+            'all' => [],
+            'tw1' => [],
+            'tw2' => [],
+            'tw3' => [],
+            'tw4' => [],
+        ];
+        
+        foreach ($models as $key => $modelClass) {
+            $sum = 0;
+            $count = 0;
+            for ($t = 1; $t <= 4; $t++) {
+                $data = $this->calculateIkuPercentage($modelClass, $tahunAkademik, $fakultas, $t, $key);
+                $val = $data['count'] > 0 ? $data['percentage'] : 0;
+                $ikuChartData['tw'.$t][$key] = round($val, 2);
+                
+                if ($data['count'] > 0) {
+                    $sum += $val;
+                    $count++;
+                }
+            }
+            $ikuChartData['all'][$key] = $count > 0 ? round($sum / $count, 2) : 0;
+        }
+
+        $overallCapaian = $overallValidIkus > 0 ? $overallTotalPercentage / $overallValidIkus : 0;
+        $overallCapaian = str_replace('.', ',', round($overallCapaian, 2));
+
+        return view('dashboard-fakultas', compact('user', 'tahunAkademik', 'availableYears', 'twData', 'overallCapaian', 'ikuChartData'));
+    }
+
+    private function calculateIkuPercentage($model, string $tahunAkademik, string $fakultas, string $tw, string $ikuKey): array
+    {
+        $q = $model::where('tahun_akademik', $tahunAkademik)->where('fakultas', $fakultas)->where('triwulan', $tw);
+        $count = $q->count();
+        if ($count == 0) return ['percentage' => 0, 'count' => 0];
+
+        $percentage = 0;
+        switch($ikuKey) {
+            case 'iku1': $percentage = $q->avg('tingkat_pencapaian'); break;
+            case 'iku2': 
+                $lulusan = $q->sum('total_lulusan');
+                $percentage = $lulusan > 0 ? (($q->sum('skor_bekerja') + $q->sum('studi_lanjut') + $q->sum('skor_wirausaha')) / $lulusan) * 100 : 0;
+                break;
+            case 'iku3':
+                $mhs = $q->sum('total_mahasiswa');
+                $percentage = $mhs > 0 ? ($q->sum('total_berkegiatan') / $mhs) * 100 : 0;
+                break;
+            case 'iku4': $percentage = $q->avg('persentase_iku4'); break;
+            case 'iku5':
+                $ks = $q->sum('total_kerjasama_pt');
+                $percentage = $ks > 0 ? ($q->sum('total_luaran') / $ks) * 100 : 0;
+                break;
+            case 'iku6':
+                $pub = $q->sum('total_publikasi');
+                $percentage = $pub > 0 ? ($q->sum('skor_publikasi') / $pub) * 100 : 0;
+                break;
+            case 'iku7':
+                $prog = $q->sum('total_program');
+                $percentage = $prog > 0 ? ($q->sum('total_program_sdgs') / $prog) * 100 : 0;
+                break;
+            case 'iku8':
+                $sdm = $q->sum('total_sdm');
+                $percentage = $sdm > 0 ? ($q->sum('total_terlibat') / $sdm) * 100 : 0;
+                break;
+            case 'iku9': 
+                $percentage = $q->avg('persen_non_ukt'); 
+                break;
+            case 'iku10':
+                // Currently just returns the raw count as percentage in public dashboard, let's keep it consistent or cap at 100
+                $percentage = $count; 
+                break;
+            case 'iku11':
+                $percentage = $q->avg('nilai_sakip');
+                break;
+            case 'iku12':
+                // Clone query to not affect count
+                $valid = (clone $q)->where('status_validasi', true)->count();
+                $percentage = $count > 0 ? ($valid / $count) * 100 : 0;
+                break;
+        }
+        return ['percentage' => round($percentage ?? 0, 2), 'count' => $count];
     }
 }
