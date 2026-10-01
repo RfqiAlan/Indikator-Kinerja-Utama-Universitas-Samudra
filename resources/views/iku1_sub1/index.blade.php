@@ -78,7 +78,7 @@
                                 <th scope="col" class="px-6 py-4 font-medium text-center">% S2 & S3</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">% Doktor (S3)</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">% Internasional</th>
-                                <th scope="col" class="px-12 py-4 font-medium text-right">Aksi</th>
+                                <th scope="col" class="px-12 py-4 font-medium text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 dark:divide-white/5">
@@ -104,8 +104,8 @@
                                 <td class="px-6 py-4 text-center">
                                     <div class="text-sm text-slate-900 font-medium">{{ number_format($item->persentase_internasional, 2) }}%</div>
                                 </td>
-                                <td class="px-6 py-4 text-right">
-                                    <div class="flex items-center justify-end space-x-2">
+                                <td class="px-6 py-4 text-center">
+                                    <div class="flex items-center justify-center space-x-2">
                                         <a href="{{ route('user.iku1_sub1.edit', $item) }}"
                                             class="p-2 text-cyan-600 hover:bg-cyan-50 rounded-lg transition-colors"
                                             title="Edit">

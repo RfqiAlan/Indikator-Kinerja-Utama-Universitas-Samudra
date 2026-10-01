@@ -37,7 +37,7 @@
                                 <tr>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Waktu</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Pengguna</th>
-                                    <th class="px-12 py-3 text-left text-xs font-medium text-slate-500 uppercase">Aksi</th>
+                                    <th class="px-12 py-3 text-center text-xs font-medium text-slate-500 uppercase">Aksi</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Deskripsi</th>
                                 </tr>
                             </thead>

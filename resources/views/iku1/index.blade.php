@@ -146,7 +146,7 @@
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Lulus Tepat Waktu</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">AEE Realisasi</th>
                                 <th scope="col" class="px-6 py-4 font-medium">Tingkat Pencapaian</th>
-                                <th scope="col" class="px-12 py-4 font-medium text-right">Aksi</th>
+                                <th scope="col" class="px-12 py-4 font-medium text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 dark:divide-white/5">
@@ -200,8 +200,8 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 text-right">
-                                    <div class="flex items-center justify-end space-x-2">
+                                <td class="px-6 py-4 text-center">
+                                    <div class="flex items-center justify-center space-x-2">
                                         <a href="{{ route('user.iku1.edit', $item) }}"
                                             class="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors"
                                             title="Edit">
