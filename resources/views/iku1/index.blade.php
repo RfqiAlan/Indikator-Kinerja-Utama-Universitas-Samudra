@@ -142,6 +142,9 @@
                         <thead class="text-xs text-slate-500 dark:text-slate-400 uppercase bg-slate-50/80 dark:bg-slate-800/50 border-b border-slate-100 dark:border-white/5">
                             <tr>
                                 <th scope="col" class="px-6 py-4 font-medium">Program Studi</th>
+                                @if(($triwulan ?? 'Semua') == 'Semua')
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Triwulan</th>
+                                @endif
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Mahasiswa</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Lulus Tepat Waktu</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">AEE Realisasi</th>
@@ -167,6 +170,13 @@
                                         </div>
                                     </div>
                                 </td>
+                                @if(($triwulan ?? 'Semua') == 'Semua')
+                                <td class="px-6 py-4 text-center">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300">
+                                        TW {{ $item->triwulan ?? '-' }}
+                                    </span>
+                                </td>
+                                @endif
                                 <td class="px-6 py-4 text-center">
                                     <div class="text-sm text-slate-900 font-medium">{{ number_format($item->total_mahasiswa_aktif) }}</div>
                                     <div class="text-xs text-slate-400">Total Aktif</div>

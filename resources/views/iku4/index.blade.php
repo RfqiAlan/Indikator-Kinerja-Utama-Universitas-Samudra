@@ -110,6 +110,9 @@
                         <thead class="text-xs text-slate-500 dark:text-slate-400 uppercase bg-slate-50/80 dark:bg-slate-800/50 border-b border-slate-100 dark:border-white/5">
                             <tr>
                                 <th scope="col" class="px-6 py-4 font-medium" rowspan="2">Tahun</th>
+@if(($triwulan ?? 'Semua') == 'Semua')
+<th scope="col" class="px-6 py-4 font-medium text-center" rowspan="2">Triwulan</th>
+@endif
                                 <th scope="col" class="px-6 py-2 border-b font-medium text-center" colspan="3">Sub-indikator 1 (Rekognisi)</th>
                                 <th scope="col" class="px-6 py-2 border-b font-medium text-center" colspan="3">Sub-indikator 2 (Pend. S3)</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center" rowspan="2">Ratarata Capaian</th>
@@ -130,6 +133,11 @@
                                 <td class="px-6 py-4 font-medium text-slate-900 dark:text-[#E5E7EB]">
                                     {{ $item->tahun_akademik }}
                                 </td>
+@if(($triwulan ?? 'Semua') == 'Semua')
+<td class="px-6 py-4 font-medium text-center text-slate-900 dark:text-[#E5E7EB]">
+    TW {{ $item->triwulan ?? '-' }}
+</td>
+@endif
                                 <!-- Sub 1 -->
                                 <td class="px-3 py-4 text-center text-slate-600 dark:text-[#E5E7EB]">
                                     {{ number_format($item->total_dosen_pt) }}

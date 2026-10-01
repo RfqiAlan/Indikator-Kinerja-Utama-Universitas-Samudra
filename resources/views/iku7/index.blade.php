@@ -104,6 +104,9 @@
                         <thead class="text-xs text-slate-500 dark:text-slate-400 uppercase bg-slate-50/80 dark:bg-slate-800/50 border-b border-slate-100 dark:border-white/5">
                             <tr>
                                 <th scope="col" class="px-6 py-4 font-medium">Tahun</th>
+@if(($triwulan ?? 'Semua') == 'Semua')
+<th scope="col" class="px-6 py-4 font-medium text-center">Triwulan</th>
+@endif
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Total Program</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Program SDGs</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Penelitian SDGs</th>
@@ -116,6 +119,11 @@
                             @foreach($data as $item)
                             <tr data-tw="{{ $item->triwulan ?? '' }}" class="group hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors duration-150">
                                 <td class="px-6 py-4 font-medium text-slate-900 dark:text-[#E5E7EB]">{{ $item->tahun_akademik }}</td>
+@if(($triwulan ?? 'Semua') == 'Semua')
+<td class="px-6 py-4 font-medium text-center text-slate-900 dark:text-[#E5E7EB]">
+    TW {{ $item->triwulan ?? '-' }}
+</td>
+@endif
                                 <td class="px-6 py-4 text-center text-slate-600 dark:text-[#E5E7EB]">{{ number_format($item->total_program) }}</td>
                                 <td class="px-6 py-4 text-center font-semibold text-blue-600">{{ number_format($item->total_program_sdgs) }}</td>
                                 <td class="px-6 py-4 text-center text-slate-600 dark:text-[#E5E7EB]">{{ number_format($item->penelitian_sdgs ?? 0) }}</td>

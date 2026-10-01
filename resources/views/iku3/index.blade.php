@@ -105,6 +105,9 @@
                         <thead class="text-xs text-slate-500 dark:text-slate-400 uppercase bg-slate-50/80 dark:bg-slate-800/50 border-b border-slate-100 dark:border-white/5">
                             <tr>
                                 <th scope="col" class="px-6 py-4 font-medium">Program Studi</th>
+                                @if(($triwulan ?? 'Semua') == 'Semua')
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Triwulan</th>
+                                @endif
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Total MHS</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Magang (≤5/6-10/>10)</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Riset (≤5/6-10/>10)</th>
@@ -125,6 +128,13 @@
                             @endphp
                             <tr data-tw="{{ $item->triwulan ?? '' }}" class="group hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors duration-150">
                                 <td class="px-6 py-4 font-medium text-slate-900 dark:text-[#E5E7EB]">{{ strtoupper($item->program_studi ?? '-') }}</td>
+                                @if(($triwulan ?? 'Semua') == 'Semua')
+                                <td class="px-6 py-4 text-center">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300">
+                                        TW {{ $item->triwulan ?? '-' }}
+                                    </span>
+                                </td>
+                                @endif
                                 <td class="px-6 py-4 text-center text-slate-900">{{ number_format($item->total_mahasiswa) }}</td>
                                 <td class="px-6 py-4 text-center text-slate-600 dark:text-[#E5E7EB]">{{ $item->magang_kurang_5 ?? 0 }}/{{ $item->magang_6_10 ?? 0 }}/{{ $item->magang_lebih_10 ?? 0 }}</td>
                                 <td class="px-6 py-4 text-center text-slate-600 dark:text-[#E5E7EB]">{{ $item->riset_kurang_5 ?? 0 }}/{{ $item->riset_6_10 ?? 0 }}/{{ $item->riset_lebih_10 ?? 0 }}</td>

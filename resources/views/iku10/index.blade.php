@@ -150,6 +150,11 @@
                                 <td class="px-6 py-4 text-center text-slate-500">
                                     {{ $item->tahun_akademik }}
                                 </td>
+@if(($triwulan ?? 'Semua') == 'Semua')
+<td class="px-6 py-4 font-medium text-center text-slate-900 dark:text-[#E5E7EB]">
+    TW {{ $item->triwulan ?? '-' }}
+</td>
+@endif
                                 <td class="px-6 py-4 text-center">
                                      <div class="flex items-center justify-center space-x-2">
                                         <a href="{{ route('user.iku10.edit', $item) }}" class="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors" title="Edit">
