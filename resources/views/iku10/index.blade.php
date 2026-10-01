@@ -125,6 +125,9 @@
                                 <th scope="col" class="px-6 py-4 font-medium">Nama Unit Kerja</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Status Predikat</th>
                                 <th scope="col" class="px-6 py-4 font-medium text-center">Tahun Pengajuan</th>
+                                @if(($triwulan ?? 'Semua') == 'Semua')
+                                <th scope="col" class="px-6 py-4 font-medium text-center">Triwulan</th>
+                                @endif
                                 <th scope="col" class="px-12 py-4 font-medium text-center">Aksi</th>
                             </tr>
                         </thead>
