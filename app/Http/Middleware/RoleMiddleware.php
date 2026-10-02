@@ -19,6 +19,10 @@ class RoleMiddleware
             return redirect()->route('login');
         }
 
+        if ($request->user()->role === 'admin') {
+            return $next($request);
+        }
+
         if (!in_array($request->user()->role, $roles)) {
             // Redirect to appropriate dashboard instead of showing 403 error
             if ($request->user()->role === 'admin') {
