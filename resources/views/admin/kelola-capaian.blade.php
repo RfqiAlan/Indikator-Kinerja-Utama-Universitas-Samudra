@@ -77,7 +77,7 @@
                     </div>
                 </div>
             </div>
-            <a href="{{ route('iku.index') }}" class="shrink-0 px-5 py-2.5 bg-slate-50 border border-slate-200 hover:bg-sky-50 hover:border-sky-200 hover:text-sky-700 text-slate-600 text-xs font-bold rounded-xl transition">
+            <a href="{{ route('user.iku.index') }}" class="shrink-0 px-5 py-2.5 bg-slate-50 border border-slate-200 hover:bg-sky-50 hover:border-sky-200 hover:text-sky-700 text-slate-600 text-xs font-bold rounded-xl transition">
                 Isi Capaian IKU 1
             </a>
         </div>
@@ -99,7 +99,7 @@
                     </div>
                 </div>
             </div>
-            <a href="{{ route('iku.index') }}" class="shrink-0 px-5 py-2.5 bg-slate-50 border border-slate-200 hover:bg-sky-50 hover:border-sky-200 hover:text-sky-700 text-slate-600 text-xs font-bold rounded-xl transition">
+            <a href="{{ route('user.iku.index') }}" class="shrink-0 px-5 py-2.5 bg-slate-50 border border-slate-200 hover:bg-sky-50 hover:border-sky-200 hover:text-sky-700 text-slate-600 text-xs font-bold rounded-xl transition">
                 Isi Capaian IKU 2
             </a>
         </div>
@@ -121,7 +121,7 @@
                     </div>
                 </div>
             </div>
-            <a href="{{ route('iku.index') }}" class="shrink-0 px-5 py-2.5 bg-slate-50 border border-slate-200 hover:bg-sky-50 hover:border-sky-200 hover:text-sky-700 text-slate-600 text-xs font-bold rounded-xl transition">
+            <a href="{{ route('user.iku.index') }}" class="shrink-0 px-5 py-2.5 bg-slate-50 border border-slate-200 hover:bg-sky-50 hover:border-sky-200 hover:text-sky-700 text-slate-600 text-xs font-bold rounded-xl transition">
                 Isi Capaian IKU 3
             </a>
         </div>
