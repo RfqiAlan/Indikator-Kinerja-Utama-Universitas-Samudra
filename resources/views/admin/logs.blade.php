@@ -69,25 +69,49 @@
                             }
                         @endphp
                         
-                        <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-700/50">
-                            <!-- Header Error -->
-                            <div class="mb-2">
-                                @if($timestamp)
-                                    <span class="inline-block px-2 py-0.5 mr-2 mb-2 rounded text-[11px] font-semibold border {{ $badgeColor }}">
-                                        {{ $timestamp }}
-                                    </span>
-                                @endif
-                                <div class="whitespace-pre-wrap break-words {{ $titleColor }} text-[14px]">
-                                    {{ $message }}
+                        <div x-data="{ expanded: false }" class="bg-slate-800/40 rounded-xl border border-slate-700/50 overflow-hidden transition-all duration-200 hover:bg-slate-800/60">
+                            <!-- Header / Trigger (List Item) -->
+                            <button @click="expanded = !expanded" class="w-full text-left p-4 flex items-start gap-4 focus:outline-none">
+                                <div class="shrink-0 mt-0.5">
+                                    @if($timestamp)
+                                        <span class="inline-block px-2 py-1 rounded text-[11px] font-semibold border {{ $badgeColor }}">
+                                            {{ $timestamp }}
+                                        </span>
+                                    @else
+                                        <span class="inline-block px-2 py-1 rounded text-[11px] font-semibold border bg-slate-700/50 text-slate-300 border-slate-600/50">
+                                            Unknown Time
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="flex-1 min-w-0 pr-4">
+                                    <div class="truncate {{ $titleColor }} text-[13px] font-medium leading-relaxed">
+                                        {{ $message }}
+                                    </div>
+                                </div>
+                                <div class="shrink-0 text-slate-500 transition-transform duration-300" :class="expanded ? 'rotate-180' : ''">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
+                            </button>
+                            
+                            <!-- Detail / Stack Trace (Content) -->
+                            <div x-show="expanded" x-collapse x-cloak>
+                                <div class="p-4 pt-0 border-t border-slate-700/30">
+                                    <div class="mt-4 p-4 bg-slate-900/80 rounded-lg border border-slate-700/50">
+                                        <div class="whitespace-pre-wrap break-words {{ $titleColor }} text-[13px] font-semibold mb-3 pb-3 border-b border-slate-700/50">
+                                            {{ $message }}
+                                        </div>
+                                        @if(!empty($stackTrace))
+                                            <div class="whitespace-pre-wrap break-words text-slate-400 text-[12px] opacity-80 leading-relaxed font-mono custom-scrollbar overflow-x-auto max-h-[300px]">
+                                                {{ $stackTrace }}
+                                            </div>
+                                        @else
+                                            <div class="text-slate-500 text-xs italic">Tidak ada detail stack trace untuk error ini.</div>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
-                            
-                            <!-- Stack Trace -->
-                            @if(!empty($stackTrace))
-                                <div class="mt-3 pt-3 border-t border-slate-700/50 whitespace-pre-wrap break-words text-slate-400 text-[12px] opacity-80">
-                                    {{ $stackTrace }}
-                                </div>
-                            @endif
                         </div>
                     @endforeach
                 </div>

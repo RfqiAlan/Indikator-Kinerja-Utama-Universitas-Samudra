@@ -35,6 +35,8 @@
                 ['no' => 9, 'nama' => 'Pendapatan Non-UKT', 'desc' => 'Mengukur diversifikasi pendapatan perguruan tinggi di luar uang kuliah tunggal.', 'formula' => 'IKU9 = (Pendapatan Non-Mahasiswa / Total Pendapatan) × 100%', 'bukti' => 'Laporan keuangan, bukti penerimaan, kontrak kerjasama', 'color' => 'orange'],
                 ['no' => 10, 'nama' => 'Zona Integritas', 'desc' => 'Mengukur upaya pencegahan korupsi dan peningkatan kualitas pelayanan publik di perguruan tinggi.', 'formula' => 'Status: Diajukan → Lolos TPI → WBK → WBBM', 'bukti' => 'SK pengajuan ZI, hasil evaluasi, bukti pelayanan prima', 'color' => 'purple'],
                 ['no' => 11, 'nama' => 'Tata Kelola', 'desc' => 'Mengukur kualitas tata kelola perguruan tinggi melalui opini audit, SAKIP, dan pencegahan fraud.', 'formula' => 'Opini Audit: WTP | Predikat SAKIP | Jumlah Pelanggaran', 'bukti' => 'Laporan audit BPK, hasil evaluasi SAKIP, laporan kepatuhan', 'color' => 'fuchsia'],
+                ['no' => 12, 'nama' => 'Kesejahteraan Dosen', 'desc' => 'Mengukur tingkat kesejahteraan dosen berdasarkan standar penghasilan dan remunerasi.', 'formula' => 'IKU12 = (Dosen Penghasilan Sesuai Standar / Total Dosen) × 100%', 'bukti' => 'Laporan penggajian, slip gaji, standar remunerasi', 'color' => 'pink'],
+                ['no' => 13, 'nama' => 'Kinerja Anggaran', 'desc' => 'Mengukur serapan dan efisiensi pelaksanaan anggaran perguruan tinggi.', 'formula' => 'IKU13 = (Realisasi Anggaran / Pagu Anggaran) × 100%', 'bukti' => 'Laporan Realisasi Anggaran (LRA), DIPA, dokumen pencairan', 'color' => 'slate'],
             ];
             $colorMap = [
                 'sky' => ['bg' => 'bg-sky-50', 'text' => 'text-sky-600', 'border' => 'border-sky-100', 'badge' => 'bg-sky-100 text-sky-700'],
@@ -48,6 +50,8 @@
                 'orange' => ['bg' => 'bg-orange-50', 'text' => 'text-orange-600', 'border' => 'border-orange-100', 'badge' => 'bg-orange-100 text-orange-700'],
                 'purple' => ['bg' => 'bg-purple-50', 'text' => 'text-purple-600', 'border' => 'border-purple-100', 'badge' => 'bg-purple-100 text-purple-700'],
                 'fuchsia' => ['bg' => 'bg-fuchsia-50', 'text' => 'text-fuchsia-600', 'border' => 'border-fuchsia-100', 'badge' => 'bg-fuchsia-100 text-fuchsia-700'],
+                'pink' => ['bg' => 'bg-pink-50', 'text' => 'text-pink-600', 'border' => 'border-pink-100', 'badge' => 'bg-pink-100 text-pink-700'],
+                'slate' => ['bg' => 'bg-slate-100', 'text' => 'text-slate-600', 'border' => 'border-slate-200', 'badge' => 'bg-slate-200 text-slate-700'],
             ];
         @endphp
 

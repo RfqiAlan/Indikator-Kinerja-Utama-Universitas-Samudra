@@ -46,7 +46,7 @@ class Iku1Controller extends Controller
         $aeePt = Iku1Aee::calculateAeePt($tahunAkademik, $fakultas, $triwulan);
         
         // Get available years
-        $dbYears = Iku1Ae::where('fakultas', $fakultas)
+        $dbYears = Iku1Aee::where('fakultas', $fakultas)
                                  ->select('tahun_akademik')
                                  ->distinct()
                                  ->pluck('tahun_akademik');
