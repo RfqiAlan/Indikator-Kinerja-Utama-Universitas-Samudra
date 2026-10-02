@@ -124,6 +124,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/pengelolaan-periode', [AdminController::class, 'storePeriode'])->name('pengelolaan-periode.store');
     Route::get('/arsip-laporan', [AdminController::class, 'arsipLaporan'])->name('arsip-laporan');
     Route::get('/iku-academy', [AdminController::class, 'ikuAcademy'])->name('iku-academy');
+    
+    // System Logs Viewer
+    Route::get('/system-logs', [\App\Http\Controllers\AdminLogController::class, 'index'])->name('logs.index');
+    Route::post('/system-logs/clear', [\App\Http\Controllers\AdminLogController::class, 'clear'])->name('logs.clear');
 
     // User management
     Route::get('/users', [AdminController::class, 'users'])->name('users');
