@@ -82,7 +82,7 @@
                     <p class="text-sm font-semibold tracking-wide text-slate-500 uppercase mt-1">Fakultas</p>
                 </div>
                 <div class="col-span-2 md:col-span-1 border-t border-slate-200 md:border-t-0 md:border-l border-slate-200/60 pt-6 md:pt-0 md:pl-6 text-center md:text-left">
-                    <img src="{{ asset('build/assets/logo.png') }}" alt="Universitas Samudra" class="h-12 w-auto mx-auto md:mx-0 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                    <img src="{{ asset('assets/logo.png') }}" alt="Universitas Samudra" class="h-12 w-auto mx-auto md:mx-0 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
                 </div>
             </div>
         </div>

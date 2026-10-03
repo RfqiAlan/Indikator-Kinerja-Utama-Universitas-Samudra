@@ -63,7 +63,7 @@
         <a href="{{ route('home') }}" class="flex items-center gap-3 group">
             <div
                 class="w-8 h-8 rounded-xl bg-semantic-surface flex items-center justify-center shadow-md shadow-blue-600/10 group-hover:scale-105 transition-transform duration-300 dark:ring-1 dark:ring-white/10">
-                <img src="{{ asset('build/assets/logo.png') }}" alt="Logo" class="h-5 w-5 object-contain rounded-md" />
+                <img src="{{ asset('assets/logo.png') }}" alt="Logo" class="h-5 w-5 object-contain rounded-md" />
             </div>
             <span class="text-xl font-extrabold text-semantic-text">IKU UNSAM</span>
         </a>
@@ -88,7 +88,7 @@
             <a href="{{ route('home') }}" class="flex items-center gap-3 group w-full">
                 <div
                     class="w-8 h-8 rounded-xl flex items-center justify-center bg-semantic-surface shadow-lg shadow-blue-600/10 group-hover:scale-105 transition-all duration-300 dark:ring-1 dark:ring-white/10">
-                    <img src="{{ asset('build/assets/logo.png') }}" alt="Logo"
+                    <img src="{{ asset('assets/logo.png') }}" alt="Logo"
                         class="h-4 w-4 object-contain rounded-sm" />
                 </div>
                 <span class="text-lg font-extrabold tracking-tight text-semantic-text">IKU <span

@@ -1,1 +1,1 @@
-<img src="{{ asset('build/assets/logo.png') }}" alt="Logo" {{ $attributes->merge(['class' => 'object-cover']) }} />
+<img src="{{ asset('assets/logo.png') }}" alt="Logo" {{ $attributes->merge(['class' => 'object-cover']) }} />

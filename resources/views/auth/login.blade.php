@@ -73,12 +73,12 @@
                 <div class="flex items-center justify-center gap-6 mb-8 w-full">
                     <!-- Kemdikbud Logo -->
                     <div class="flex items-center">
-                    <img src="{{ asset('build/assets/logo_kementrian_baru.webp') }}" alt="Logo Kementerian" class="h-10 object-contain">
+                    <img src="{{ asset('assets/logo_kementrian_baru.webp') }}" alt="Logo Kementerian" class="h-10 object-contain">
                     </div>
                     <div class="w-px h-8 bg-slate-300"></div>
                     <!-- Universitas Samudra Logo -->
                     <div class="flex items-center gap-2">
-                        <img src="{{ asset('build/assets/logo.png') }}" alt="Logo Unsam" class="w-11 h-11 object-contain">
+                        <img src="{{ asset('assets/logo.png') }}" alt="Logo Unsam" class="w-11 h-11 object-contain">
                         <div class="text-[12px] font-extrabold text-slate-900 leading-tight">
                             Universitas<br>Samudra
                         </div>

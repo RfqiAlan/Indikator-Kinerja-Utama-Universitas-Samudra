@@ -100,11 +100,11 @@
             
             <!-- Custom Loading Screen (Menutupi bawaan DearFlip) -->
             <div id="custom-loader" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-900 z-[99999] text-slate-400 px-4 text-center transition-opacity duration-500">
-                <div class="relative mb-6">
+                <div class="relative mb-6 flex justify-center items-center">
                     <!-- Efek glow lembut di belakang logo -->
                     <div class="absolute inset-0 bg-white/10 blur-xl rounded-full animate-pulse"></div>
                     <!-- Logo Utama berdenyut -->
-                    <img src="{{ asset('build/assets/logo.png') }}" alt="Logo Universitas Samudra" class="h-24 w-auto animate-pulse relative z-10 drop-shadow-xl">
+                    <img src="{{ asset('assets/logo.png') }}" alt="Logo Universitas Samudra" height="96" style="height: 6rem; width: auto; max-width: 150px;" class="h-24 w-auto animate-pulse relative z-10 drop-shadow-xl">
                 </div>
                 <p class="text-sm font-medium tracking-wide animate-pulse">Memuat Dokumen Renstra...</p>
             </div>
@@ -113,7 +113,7 @@
             <div class="relative w-full px-1 sm:px-4 md:px-0 md:w-11/12 max-w-7xl h-full group">
                 
                 <!-- DearFlip Target -->
-                <div class="_df_book w-full h-full" source="{{ asset('build/assets/Renstra Universitas Samudra 2025-2026 Revisi.pdf') }}" webgl="false" singlepage="true" backgroundcolor="#1e293b"></div>
+                <div class="_df_book w-full h-full" source="{{ asset('assets/Renstra Universitas Samudra 2025-2026 Revisi.pdf') }}" webgl="false" singlepage="true" backgroundcolor="#1e293b"></div>
             </div>
         </div>
     </div>

@@ -93,7 +93,7 @@
                     <div class="flex items-center">
                         <a href="{{ route('home') }}" class="flex items-center gap-3 group">
                             <div class="relative w-12 h-12 bg-white rounded-xl shadow-sm border border-slate-100 p-2 overflow-hidden group-hover:shadow-md transition-all">
-                                <img src="{{ asset('build/assets/logo.png') }}" alt="Logo UNSAM" class="w-full h-full object-contain relative z-10" />
+                                <img src="{{ asset('assets/logo.png') }}" alt="Logo UNSAM" class="w-full h-full object-contain relative z-10" />
                                 <div class="absolute inset-0 bg-gradient-to-tr from-blue-50 to-blue-50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             </div>
                             <div class="flex flex-col">
@@ -352,7 +352,7 @@
         <footer class="bg-white/80 backdrop-blur-md border-t border-slate-200 py-8 relative z-10 mt-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
                 <div class="flex items-center gap-3">
-                    <img src="{{ asset('build/assets/logo.png') }}" alt="Logo" class="h-8 w-8 rounded-lg object-contain" />
+                    <img src="{{ asset('assets/logo.png') }}" alt="Logo" class="h-8 w-8 rounded-lg object-contain" />
                     <div>
                         <span class="block font-bold outfit text-slate-800 text-lg">Indikator Kinerja Utama</span>
                         <span class="block text-xs font-semibold text-slate-500 tracking-wider uppercase">Universitas Samudra</span>
