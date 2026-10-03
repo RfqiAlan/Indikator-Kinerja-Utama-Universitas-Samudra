@@ -50,6 +50,13 @@
             display: none !important;
         }
 
+        /* Sembunyikan loading spinner bawaan DearFlip */
+        .df-loading {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+        }
+
         /* Ubah warna icon navigasi bawaan menjadi putih agar kontras */
         .df-ui-btn.df-ui-next,
         .df-ui-btn.df-ui-prev {
@@ -89,15 +96,17 @@
         </header>
 
         <!-- Container Induk Flipbook -->
-        <div class="flipbook-wrapper flex justify-center items-center">
+        <div class="flipbook-wrapper relative flex justify-center items-center">
             
-            <!-- Loading State -->
-            <div class="absolute inset-0 flex flex-col items-center justify-center -z-10 text-slate-500 px-4 text-center">
-                <svg class="animate-spin h-8 w-8 text-slate-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                <p class="text-sm font-medium">Memuat Dokumen Renstra...</p>
+            <!-- Custom Loading Screen (Menutupi bawaan DearFlip) -->
+            <div id="custom-loader" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-900 z-[99999] text-slate-400 px-4 text-center transition-opacity duration-500">
+                <div class="relative mb-6">
+                    <!-- Efek glow lembut di belakang logo -->
+                    <div class="absolute inset-0 bg-white/10 blur-xl rounded-full animate-pulse"></div>
+                    <!-- Logo Utama berdenyut -->
+                    <img src="{{ asset('build/assets/logo.png') }}" alt="Logo Universitas Samudra" class="h-24 w-auto animate-pulse relative z-10 drop-shadow-xl">
+                </div>
+                <p class="text-sm font-medium tracking-wide animate-pulse">Memuat Dokumen Renstra...</p>
             </div>
 
             <!-- Wrapper Dalam (Responsif: lebar 100% di HP, dibatasi di Desktop) -->
@@ -120,6 +129,17 @@
         var dFlipLocation = "https://cdn.jsdelivr.net/npm/@dearhive/dearflip-jquery-flipbook@1.7.3/dflip/";
         var DFLIP = DFLIP || {};
         DFLIP.WEBGL = false;
+
+        $(document).ready(function() {
+            // Mengecek apakah DearFlip sudah selesai memuat halaman PDF
+            var checkLoad = setInterval(function() {
+                // Jika elemen halaman PDF sudah muncul di dalam DOM
+                if ($('.df-page-wrapper, .df-1d-page, .df-container').find('.df-page').length > 0 || $('.df-page-content').length > 0) {
+                    $('#custom-loader').fadeOut(800); // Hilangkan logo loading secara perlahan
+                    clearInterval(checkLoad);
+                }
+            }, 300);
+        });
     </script>
 </body>
 </html>
