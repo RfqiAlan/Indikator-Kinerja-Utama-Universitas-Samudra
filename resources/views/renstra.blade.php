@@ -17,6 +17,7 @@
             margin: 0;
             padding: 0;
             height: 100vh;
+            height: 100dvh; /* Solusi untuk mobile (mengatasi UI URL bar yang menutupi bawah) */
             width: 100vw;
             overflow: hidden;
             background-color: #0f172a; /* Tailwind slate-900 */
@@ -27,6 +28,7 @@
             display: flex;
             flex-direction: column;
             height: 100vh;
+            height: 100dvh; /* Solusi untuk mobile */
             width: 100vw;
         }
 
