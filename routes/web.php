@@ -13,6 +13,9 @@ Route::get('/', function () {
     return redirect()->route('login');
 })->name('home');
 
+// Public route for Renstra Flipbook
+Route::view('/renstra', 'renstra')->name('renstra.flipbook');
+
 
 
 // Authenticated dashboard (with login)
