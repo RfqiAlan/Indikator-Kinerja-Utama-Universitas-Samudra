@@ -45,16 +45,15 @@
             width: 100% !important;
         }
 
-        /* Sembunyikan elemen bawaan DearFlip yang mengganggu / dobel */
-        .df-ui-btn.df-ui-logo,
-        .df-ui-btn.df-ui-next, 
-        .df-ui-btn.df-ui-prev,
-        .df-ui-next, 
-        .df-ui-prev {
+        /* Sembunyikan logo bawaan DearFlip */
+        .df-ui-btn.df-ui-logo {
             display: none !important;
-            visibility: hidden !important;
-            opacity: 0 !important;
-            pointer-events: none !important;
+        }
+
+        /* Ubah warna icon navigasi bawaan menjadi putih agar kontras */
+        .df-ui-btn.df-ui-next,
+        .df-ui-btn.df-ui-prev {
+            color: #ffffff !important;
         }
     </style>
 </head>
@@ -104,22 +103,8 @@
             <!-- Wrapper Dalam (Responsif: lebar 100% di HP, dibatasi di Desktop) -->
             <div class="relative w-full px-1 sm:px-4 md:px-0 md:w-11/12 max-w-7xl h-full group">
                 
-                <!-- Tombol Navigasi Kustom Kiri (Prev) - Disembunyikan di HP -->
-                <button id="custom-prev-btn" class="hidden md:flex absolute md:-left-12 lg:-left-16 top-1/2 -translate-y-1/2 z-50 p-3 lg:p-4 bg-slate-900/60 hover:bg-slate-800 text-white rounded-full shadow-lg backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-500">
-                    <svg class="w-6 h-6 lg:w-8 lg:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path>
-                    </svg>
-                </button>
-
-                <!-- Tombol Navigasi Kustom Kanan (Next) - Disembunyikan di HP -->
-                <button id="custom-next-btn" class="hidden md:flex absolute md:-right-12 lg:-right-16 top-1/2 -translate-y-1/2 z-50 p-3 lg:p-4 bg-slate-900/60 hover:bg-slate-800 text-white rounded-full shadow-lg backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-500">
-                    <svg class="w-6 h-6 lg:w-8 lg:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                </button>
-
                 <!-- DearFlip Target -->
-                <div class="_df_book w-full h-full" source="{{ asset('build/assets/Renstra Universitas Samudra 2025-2026 Revisi.pdf') }}" webgl="true" backgroundcolor="#1e293b"></div>
+                <div class="_df_book w-full h-full" source="{{ asset('build/assets/Renstra Universitas Samudra 2025-2026 Revisi.pdf') }}" webgl="false" singlepage="true" backgroundcolor="#1e293b"></div>
             </div>
         </div>
     </div>
@@ -134,18 +119,7 @@
     <script>
         var dFlipLocation = "https://cdn.jsdelivr.net/npm/@dearhive/dearflip-jquery-flipbook@1.7.3/dflip/";
         var DFLIP = DFLIP || {};
-        DFLIP.WEBGL = true;
-
-        $(document).ready(function() {
-            // Menghubungkan tombol kustom dengan navigasi bawaan DearFlip
-            $('#custom-prev-btn').on('click', function() {
-                $('.df-ui-prev').trigger('click');
-            });
-            
-            $('#custom-next-btn').on('click', function() {
-                $('.df-ui-next').trigger('click');
-            });
-        });
+        DFLIP.WEBGL = false;
     </script>
 </body>
 </html>
