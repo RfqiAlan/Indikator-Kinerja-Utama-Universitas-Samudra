@@ -25,11 +25,12 @@ class GoogleDriveService
     /**
      * Upload file to Google Drive and return the shareable link.
      *
-     * @param UploadedFile $file       File yang diupload
-     * @param string       $ikuFolder  Subfolder IKU, misal 'IKU1'
+     * @param UploadedFile $file          File yang diupload
+     * @param string       $ikuFolder     Subfolder IKU, misal 'IKU1'
      * @param string       $fakultasName  Nama fakultas untuk folder terpisah, misal 'Fakultas Ekonomi dan Bisnis'
+     * @param mixed        $triwulan      Triwulan (1, 2, 3, 4 atau 'Triwulan 1', dst.)
      */
-    public function upload(UploadedFile $file, string $ikuFolder = '', string $fakultasName = ''): ?string
+    public function upload(UploadedFile $file, string $ikuFolder = '', string $fakultasName = '', $triwulan = null): ?string
     {
         try {
             $driveService = $this->getDriveService();
@@ -37,11 +38,19 @@ class GoogleDriveService
                 return null;
             }
 
-            // Determine target folder: Root → Fakultas → IKU
-            if ($fakultasName && $ikuFolder) {
+            // Determine target folder: Root → Fakultas → IKU → Triwulan
+            if ($fakultasName && $ikuFolder && $triwulan) {
+                $parentId = $this->getOrCreateNestedSubfolderWithTriwulan($fakultasName, $ikuFolder, $triwulan);
+            } elseif ($fakultasName && $ikuFolder) {
                 $parentId = $this->getOrCreateNestedSubfolder($fakultasName, $ikuFolder);
             } elseif ($ikuFolder) {
-                $parentId = $this->getOrCreateSubfolder($ikuFolder, $this->folderId);
+                if ($triwulan) {
+                    $ikuFolderId = $this->getOrCreateSubfolder($ikuFolder, $this->folderId);
+                    $twName = $this->formatTriwulanFolderName($triwulan);
+                    $parentId = $this->getOrCreateSubfolder($twName, $ikuFolderId);
+                } else {
+                    $parentId = $this->getOrCreateSubfolder($ikuFolder, $this->folderId);
+                }
             } else {
                 $parentId = $this->folderId;
             }
@@ -85,6 +94,7 @@ class GoogleDriveService
                 'folderId' => $this->folderId,
                 'ikuFolder' => $ikuFolder,
                 'fakultasName' => $fakultasName,
+                'triwulan' => $triwulan,
             ]);
             return null;
         }
@@ -123,6 +133,31 @@ class GoogleDriveService
 
         // Step 2: Get or create IKU folder inside Fakultas folder
         return $this->getOrCreateSubfolder($ikuFolder, $fakultasFolderId);
+    }
+
+    /**
+     * Get or create nested subfolder: Root → Fakultas → IKU → Triwulan
+     */
+    protected function getOrCreateNestedSubfolderWithTriwulan(string $fakultasName, string $ikuFolder, $triwulan): string
+    {
+        $ikuFolderId = $this->getOrCreateNestedSubfolder($fakultasName, $ikuFolder);
+        $twName = $this->formatTriwulanFolderName($triwulan);
+        return $this->getOrCreateSubfolder($twName, $ikuFolderId);
+    }
+
+    /**
+     * Format triwulan string for folder name (e.g. "Triwulan 1")
+     */
+    protected function formatTriwulanFolderName($triwulan): string
+    {
+        $tw = trim((string) $triwulan);
+        if (is_numeric($tw)) {
+            return "Triwulan {$tw}";
+        }
+        if (stripos($tw, 'triwulan') === false && stripos($tw, 'tw') === false) {
+            return "Triwulan {$tw}";
+        }
+        return $tw;
     }
 
     /**

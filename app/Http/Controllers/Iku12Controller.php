@@ -14,12 +14,12 @@ class Iku12Controller extends Controller
         $triwulan = $request->get('triwulan');
         $fakultas = auth()->user()->fakultas ?? 'universitas';
         
-        $data = Iku12KesejahteraanDosen::where('tahun_akademik', $tahunAkademik)
-            ->where('fakultas', $fakultas)
-            ->first();
+        $query = Iku12KesejahteraanDosen::where('tahun_akademik', $tahunAkademik)
+            ->where('fakultas', $fakultas);
         if ($triwulan && $triwulan !== 'Semua') {
-            $data = $data->where('triwulan', $triwulan);
+            $query->where('triwulan', $triwulan);
         }
+        $data = $query->first();
 
         $dbYears = Iku12KesejahteraanDosen::where('fakultas', $fakultas)
             ->select('tahun_akademik')
@@ -94,7 +94,7 @@ class Iku12Controller extends Controller
             $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
             $links = [];
             foreach ($request->file('lampiran') as $file) {
-                $link = $driveService->upload($file, 'IKU12', $fakultasNama);
+                $link = $driveService->upload($file, 'IKU12', $fakultasNama, $validated['triwulan'] ?? null);
                 if ($link) {
                     $links[] = $link;
                 }
@@ -156,7 +156,7 @@ class Iku12Controller extends Controller
             $existingLinks = $iku12->lampiran_link ?? [];
             $newLinks = [];
             foreach ($request->file('lampiran') as $file) {
-                $link = $driveService->upload($file, 'IKU12', $fakultasNama);
+                $link = $driveService->upload($file, 'IKU12', $fakultasNama, $validated['triwulan'] ?? $iku12->triwulan);
                 if ($link) {
                     $newLinks[] = $link;
                 }

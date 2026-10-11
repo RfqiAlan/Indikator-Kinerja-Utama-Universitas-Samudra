@@ -101,7 +101,7 @@ class Iku10Controller extends Controller implements \Illuminate\Routing\Controll
             $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
             $links = [];
             foreach ($request->file('lampiran') as $file) {
-                $link = $driveService->upload($file, 'IKU10', $fakultasNama);
+                $link = $driveService->upload($file, 'IKU10', $fakultasNama, $validated['triwulan'] ?? null);
                 if ($link) {
                     $links[] = $link;
                 }
@@ -157,7 +157,7 @@ class Iku10Controller extends Controller implements \Illuminate\Routing\Controll
             $existingLinks = $iku10->lampiran_link ?? [];
             $newLinks = [];
             foreach ($request->file('lampiran') as $file) {
-                $link = $driveService->upload($file, 'IKU10', $fakultasNama);
+                $link = $driveService->upload($file, 'IKU10', $fakultasNama, $validated['triwulan'] ?? $iku10->triwulan);
                 if ($link) {
                     $newLinks[] = $link;
                 }

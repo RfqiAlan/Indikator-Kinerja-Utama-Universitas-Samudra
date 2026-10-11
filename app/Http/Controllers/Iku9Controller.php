@@ -14,11 +14,12 @@ class Iku9Controller extends Controller
         $triwulan = $request->get('triwulan');
         $fakultas = auth()->user()->fakultas;
         
-        $data = Iku9Pendapatan::where('tahun_akademik', $tahunAkademik)
-            ->where('fakultas', $fakultas)->first();
+        $query = Iku9Pendapatan::where('tahun_akademik', $tahunAkademik)
+            ->where('fakultas', $fakultas);
         if ($triwulan && $triwulan !== 'Semua') {
-            $data = $data->where('triwulan', $triwulan);
+            $query->where('triwulan', $triwulan);
         }
+        $data = $query->first();
 
         $dbYears = Iku9Pendapatan::where('fakultas', $fakultas)
             ->select('tahun_akademik')->distinct()->pluck('tahun_akademik');
@@ -89,7 +90,7 @@ class Iku9Controller extends Controller
             $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
             $links = [];
             foreach ($request->file('lampiran') as $file) {
-                $link = $driveService->upload($file, 'IKU9', $fakultasNama);
+                $link = $driveService->upload($file, 'IKU9', $fakultasNama, $validated['triwulan'] ?? null);
                 if ($link) $links[] = $link;
             }
             if (!empty($links)) $validated['lampiran_link'] = $links;
@@ -119,7 +120,7 @@ class Iku9Controller extends Controller
             $existingLinks = $iku9->lampiran_link ?? [];
             $newLinks = [];
             foreach ($request->file('lampiran') as $file) {
-                $link = $driveService->upload($file, 'IKU9', $fakultasNama);
+                $link = $driveService->upload($file, 'IKU9', $fakultasNama, $validated['triwulan'] ?? $iku9->triwulan);
                 if ($link) $newLinks[] = $link;
             }
             $validated['lampiran_link'] = array_merge($existingLinks, $newLinks);

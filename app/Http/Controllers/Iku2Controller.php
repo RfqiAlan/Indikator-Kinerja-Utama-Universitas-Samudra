@@ -127,7 +127,7 @@ class Iku2Controller extends Controller
             $fakultasNama = auth()->user()->fakultas_nama ?? 'Umum';
             $links = [];
             foreach ($request->file('lampiran') as $file) {
-                $link = $driveService->upload($file, 'IKU2', $fakultasNama);
+                $link = $driveService->upload($file, 'IKU2', $fakultasNama, $validated['triwulan'] ?? null);
                 if ($link) {
                     $links[] = $link;
                 }
@@ -211,7 +211,7 @@ class Iku2Controller extends Controller
             $existingLinks = $iku2->lampiran_link ?? [];
             $newLinks = [];
             foreach ($request->file('lampiran') as $file) {
-                $link = $driveService->upload($file, 'IKU2', $fakultasNama);
+                $link = $driveService->upload($file, 'IKU2', $fakultasNama, $validated['triwulan'] ?? $iku2->triwulan);
                 if ($link) {
                     $newLinks[] = $link;
                 }
